@@ -8,6 +8,7 @@ from .decode_export import (
     HYWM2PreviewPointCloud,
 )
 from .ply_viewer import HYWM2PLYAdvancedGaussianViewer
+from .splat_viewer import HYWM2SplatAdvancedViewer
 
 NODE_CLASS_MAPPINGS = {
     "LoadHYWM2Model": LoadHYWM2Model,
@@ -18,6 +19,7 @@ NODE_CLASS_MAPPINGS = {
     "HYWM2ExportGaussiansSplat": HYWM2ExportGaussiansSplat,
     "HYWM2PreviewPointCloud": HYWM2PreviewPointCloud,
     "HYWM2PLYAdvancedGaussianViewer": HYWM2PLYAdvancedGaussianViewer,
+    "HYWM2SplatAdvancedViewer": HYWM2SplatAdvancedViewer,
 }
 
 NODE_DISPLAY_NAME_MAPPINGS = {
@@ -29,4 +31,5 @@ NODE_DISPLAY_NAME_MAPPINGS = {
     "HYWM2ExportGaussiansSplat": "HYWM2 Export Gaussians .splat",
     "HYWM2PreviewPointCloud": "HYWM2 Preview Point Cloud",
     "HYWM2PLYAdvancedGaussianViewer": "PLY Advanced Gaussian Viewer",
+    "HYWM2SplatAdvancedViewer": "Splat Advanced Viewer",
 }
