@@ -390,12 +390,44 @@ function _spectateInit() {
   yaw = Math.atan2(horiz.dot(right0), horiz.dot(fwd0));
 }
 
+let _origControlsUpdate = null;
+
 function setSpectate(on) {
   spectate = !!on;
   spectateBtn.classList.toggle("active", spectate);
   spectateBtn.textContent = spectate ? "Exit Spectate" : "Spectate";
   spectateHelp.classList.toggle("show", spectate);
-  if (viewer?.controls) viewer.controls.enabled = !spectate;
+
+  // mkkellogg's Viewer calls controls.update() every frame inside its
+  // render loop. Stock OrbitControls.update() re-derives the camera
+  // position from `target + spherical_offset` and forces lookAt(target)
+  // unconditionally — `enabled = false` only gates input handling, not
+  // the per-frame camera write. So while spectating we stub it out.
+  if (viewer?.controls) {
+    if (spectate) {
+      if (!_origControlsUpdate) _origControlsUpdate = viewer.controls.update;
+      viewer.controls.update = function () { /* no-op while spectating */ };
+      viewer.controls.enabled = false;
+    } else {
+      if (_origControlsUpdate) {
+        viewer.controls.update = _origControlsUpdate;
+        _origControlsUpdate = null;
+      }
+      viewer.controls.enabled = true;
+      try {
+        const cam = viewer.camera;
+        if (cam && viewer.controls.target) {
+          // Resync orbit target to a point in front of the camera so
+          // the next orbit drag pivots around the spot the user
+          // stopped at, not the original load-time origin.
+          const dir = new THREE.Vector3(0, 0, -1).applyQuaternion(cam.quaternion);
+          viewer.controls.target.copy(cam.position).addScaledVector(dir, 1);
+          viewer.controls.update();
+        }
+      } catch {}
+    }
+  }
+
   if (spectate) {
     _spectateInit();
     splatHost.requestPointerLock?.();
