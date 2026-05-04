@@ -1,3 +1,7 @@
+
+
+https://github.com/user-attachments/assets/9c402c05-2a99-4cb6-b131-c1035fb6eab1
+
 # ComfyUI-HYWM2
 
 ComfyUI custom nodes wrapping [HY-World 2.0 / WorldMirror 2.0](https://github.com/Tencent-Hunyuan/HY-World-2.0) (Tencent Hunyuan) for 3D reconstruction from multi-view images and video — depth, surface normals, camera parameters, dense point clouds, and 3D Gaussian Splatting in a single feed-forward pass.
