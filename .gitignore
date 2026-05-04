@@ -7,3 +7,9 @@ venv/
 *.egg-info/
 build/
 dist/
+
+# Auto-populated at startup by prestartup_script.py via comfy_3d_viewers.copy_viewer
+web/
+
+# Jupyter / IDE crud
+.ipynb_checkpoints/
