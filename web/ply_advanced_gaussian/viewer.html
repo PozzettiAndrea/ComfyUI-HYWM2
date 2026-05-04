@@ -8,8 +8,9 @@
   html, body { margin: 0; padding: 0; height: 100%; width: 100%; background: #111; color: #e0e0e0; font-family: -apple-system, "Segoe UI", system-ui, sans-serif; font-size: 12px; overflow: hidden; }
   #root { display: flex; height: 100vh; width: 100vw; }
   #left { flex: 1 1 70%; min-width: 280px; position: relative; background: #0a0a0a; }
-  #canvas { width: 100%; height: 100%; display: block; }
-  #status { position: absolute; left: 8px; top: 8px; padding: 4px 8px; background: rgba(20,20,20,0.85); border: 1px solid #2a2a2a; border-radius: 3px; pointer-events: none; max-width: calc(100% - 16px); font-size: 11px; }
+  #splat-host { position: absolute; inset: 0; }
+  #splat-host canvas { display: block; }
+  #status { position: absolute; left: 8px; top: 8px; padding: 4px 8px; background: rgba(20,20,20,0.85); border: 1px solid #2a2a2a; border-radius: 3px; pointer-events: none; max-width: calc(100% - 16px); font-size: 11px; z-index: 5; }
   #status.error { color: #ff8a8a; border-color: #5a2222; background: rgba(60,20,20,0.85); }
   #axis-buttons { position: absolute; right: 8px; top: 8px; display: flex; gap: 2px; z-index: 5; }
   .axis-btn { padding: 2px 6px; background: rgba(20,20,20,0.85); border: 1px solid #2a2a2a; color: #bbb; font-size: 10px; cursor: pointer; border-radius: 2px; font-family: ui-monospace, "SF Mono", monospace; line-height: 1.2; min-width: 28px; }
@@ -31,29 +32,25 @@
   td.v { color: #ddd; font-family: ui-monospace, "SF Mono", monospace; }
   td.t { color: #ccaa88; font-family: ui-monospace, "SF Mono", monospace; font-size: 10px; }
   .interp { color: #88c878; font-size: 10px; font-style: italic; }
-  .badge { display: inline-block; padding: 1px 5px; margin-right: 3px; border-radius: 2px; font-size: 9px; background: #233; color: #6cc; vertical-align: middle; }
-  .badge.miss { background: #322; color: #c66; }
   .controls { display: grid; grid-template-columns: auto 1fr; gap: 5px 8px; align-items: center; }
   .controls label { color: #888; font-size: 10px; }
   .controls input[type="range"] { width: 100%; }
   .small { color: #777; font-size: 10px; line-height: 1.4; }
-  .err { color: #ff8a8a; }
-  .ok { color: #88c878; }
 </style>
 </head>
 <body>
 <div id="root">
   <div id="left">
-    <canvas id="canvas"></canvas>
+    <div id="splat-host"></div>
     <div id="status">Awaiting PLY…</div>
     <div id="axis-buttons">
-      <button class="axis-btn" data-view="+xy" title="Camera on +Z, looking at XY plane (front)">+XY</button>
-      <button class="axis-btn" data-view="-xy" title="Camera on -Z, looking at XY plane (back)">-XY</button>
-      <button class="axis-btn" data-view="+xz" title="Camera on +Y, looking down at XZ plane (top)">+XZ</button>
-      <button class="axis-btn" data-view="-xz" title="Camera on -Y, looking up at XZ plane (bottom)">-XZ</button>
-      <button class="axis-btn" data-view="+yz" title="Camera on +X, looking at YZ plane (right)">+YZ</button>
-      <button class="axis-btn" data-view="-yz" title="Camera on -X, looking at YZ plane (left)">-YZ</button>
-      <button class="axis-btn reset" data-view="reset" title="Reset framing to bounding box (R)">⟲</button>
+      <button class="axis-btn" data-view="+xy" title="Camera on +Z, looking at XY (front)">+XY</button>
+      <button class="axis-btn" data-view="-xy" title="Camera on -Z, looking at XY (back)">-XY</button>
+      <button class="axis-btn" data-view="+xz" title="Camera on +Y, looking at XZ (top)">+XZ</button>
+      <button class="axis-btn" data-view="-xz" title="Camera on -Y, looking at XZ (bottom)">-XZ</button>
+      <button class="axis-btn" data-view="+yz" title="Camera on +X, looking at YZ (right)">+YZ</button>
+      <button class="axis-btn" data-view="-yz" title="Camera on -X, looking at YZ (left)">-YZ</button>
+      <button class="axis-btn reset" data-view="reset" title="Reframe to bounding box (R)">⟲</button>
     </div>
   </div>
   <div id="right">
@@ -76,10 +73,7 @@
         <table id="t-fields"><thead><tr><th>Name</th><th>Type</th><th>min</th><th>max</th><th>Interpretation</th><th>✓</th></tr></thead><tbody></tbody></table>
         <p class="small">✓ column: green = observed range matches the
           expected range for this 3DGS field; orange = out of expected range
-          (parser may be reading the wrong field, or this PLY uses a
-          non-standard convention). f_dc_* are SH DC coefficients; opacity is
-          logit (sigmoid at render); scale_* are log-scales (exp at render);
-          rot_* are quaternion components.</p>
+          (parser bug or non-standard PLY).</p>
       </div>
       <div class="pane" id="pane-stats">
         <h3>Per-Field Statistics</h3>
@@ -88,66 +82,57 @@
       </div>
       <div class="pane" id="pane-debug">
         <h3>Byte Layout (binary PLYs)</h3>
-        <p class="small">Each row shows the field's declared offset within
-          one vertex record + the actual values our parser extracted from
-          vertices 0 and 1. Mismatch between value type and declared type
-          is the smoking gun for stride / endian bugs.</p>
+        <p class="small">Per-field offset within one vertex record + the
+          actual decoded v[0]/v[1].</p>
         <table id="t-debug"><thead><tr><th>Off</th><th>Name</th><th>Type</th><th>v[0]</th><th>v[1]</th></tr></thead><tbody></tbody></table>
         <h3>Stride / Order Sanity</h3>
         <table id="t-stride"></table>
-        <p class="small">If the per-field min/max in the Fields tab look
-          plausible (✓), the order interpretation is correct. The byte
-          layout above corroborates that we walked the record in the
-          declared order with the right widths.</p>
       </div>
       <div class="pane" id="pane-render">
-        <h3>Layers</h3>
-        <p class="small">Off = plain point cloud (white, constant size, no
-          transparency). Toggle each layer to fold in the corresponding
-          PLY field. Greyed-out toggles mean the field isn't present in
-          this PLY.</p>
+        <h3>Renderer</h3>
+        <p class="small">Real 3D Gaussian Splatting rasterization via
+          <a href="https://github.com/mkkellogg/GaussianSplats3D"
+             target="_blank" rel="noreferrer"
+             style="color:#6cc">@mkkellogg/GaussianSplats3D</a>:
+          alpha-sorted ellipsoid splatting with SH₀ shading. Loaded as an
+          ESM module from esm.sh — no local bundle to maintain.</p>
+        <h3>Camera</h3>
         <div class="controls">
-          <label for="use-color">Color (f_dc → SH₀ → RGB)</label>
-          <input type="checkbox" id="use-color" />
-          <label for="use-opacity">Opacity (sigmoid(opacity))</label>
-          <input type="checkbox" id="use-opacity" />
-          <label for="use-scales">Scales (exp(scale_*) → point size)</label>
-          <input type="checkbox" id="use-scales" />
-        </div>
-        <h3>Pipeline</h3>
-        <table id="t-render"></table>
-        <h3>Display</h3>
-        <div class="controls">
-          <label for="point-size">Point size</label>
-          <input type="range" id="point-size" min="0.05" max="4" step="0.05" value="0.4" />
-          <label for="scale-mul">Scale multiplier</label>
-          <input type="range" id="scale-mul" min="0.1" max="20" step="0.1" value="1" />
-          <label for="opacity-mul">Opacity mul</label>
-          <input type="range" id="opacity-mul" min="0" max="1" step="0.05" value="1" />
+          <label for="fov">Vertical FOV</label>
+          <input type="range" id="fov" min="15" max="100" step="1" value="50" />
           <label for="background">Background</label>
           <input type="color" id="background" value="#0a0a0a" />
-          <label for="rotate">Auto-rotate</label>
-          <input type="checkbox" id="rotate" />
+          <label for="up-axis">Up axis</label>
+          <select id="up-axis">
+            <option value="-y">-Y (OpenCV / WorldMirror, default)</option>
+            <option value="+y">+Y (three.js)</option>
+            <option value="+z">+Z</option>
+          </select>
         </div>
-        <h3>Camera</h3>
-        <div class="small">Drag = orbit · Right-drag = pan · Wheel = zoom · R = reset</div>
+        <p class="small">Drag = orbit · Right-drag = pan · Wheel = zoom.
+          Press R to reframe.</p>
+        <h3>Pipeline</h3>
+        <table id="t-render"></table>
       </div>
     </div>
   </div>
 </div>
 
 <script type="importmap">
-{ "imports": { "three": "https://unpkg.com/three@0.164.1/build/three.module.js" } }
+{
+  "imports": {
+    "three": "https://esm.sh/three@0.164.1",
+    "@mkkellogg/gaussian-splats-3d": "https://esm.sh/@mkkellogg/gaussian-splats-3d@0.4.5?deps=three@0.164.1"
+  }
+}
 </script>
 <script type="module">
 import * as THREE from "three";
+import * as GaussianSplats3D from "@mkkellogg/gaussian-splats-3d";
 
-// ============================================================
-// Globals + boot signal
-// ============================================================
 const SH_C0 = 0.28209479177387814;
 const status = document.getElementById("status");
-const canvas = document.getElementById("canvas");
+const splatHost = document.getElementById("splat-host");
 const setStatus = (msg, isErr=false) => {
   status.textContent = msg;
   status.classList.toggle("error", !!isErr);
@@ -155,9 +140,9 @@ const setStatus = (msg, isErr=false) => {
 
 window.parent?.postMessage({ type: "HYWM2_VIEWER_READY" }, "*");
 
-// ============================================================
+// ===========================================================
 // Tabs
-// ============================================================
+// ===========================================================
 document.querySelectorAll(".tab").forEach(tab => {
   tab.addEventListener("click", () => {
     document.querySelectorAll(".tab").forEach(t => t.classList.toggle("active", t === tab));
@@ -166,168 +151,93 @@ document.querySelectorAll(".tab").forEach(tab => {
   });
 });
 
-// ============================================================
-// THREE.js scene + tiny orbit controls
-// ============================================================
-const scene = new THREE.Scene();
-scene.background = new THREE.Color(0x0a0a0a);
-const camera = new THREE.PerspectiveCamera(50, 1, 0.001, 1000);
-camera.position.set(0, 0, 3);
+// ===========================================================
+// mkkellogg Viewer — real 3DGS rasterizer
+// ===========================================================
+let viewer = null;
+let bbox = null;                                 // THREE.Box3 from our parsed positions
+let currentSceneAttached = false;
 
-const renderer = new THREE.WebGLRenderer({ canvas, antialias: true });
-renderer.setPixelRatio(window.devicePixelRatio);
-
-let pointObj = null;
-let bbox = null;
-let uniforms = null;
-let autoRotate = false;
-
-function resize() {
-  const w = canvas.clientWidth || 1;
-  const h = canvas.clientHeight || 1;
-  renderer.setSize(w, h, false);
-  camera.aspect = w / h;
-  camera.updateProjectionMatrix();
-}
-window.addEventListener("resize", resize);
-resize();
-
-// orbit / pan / zoom
-const target = new THREE.Vector3(0, 0, 0);
-let spherical = new THREE.Spherical(3, Math.PI / 2, 0);
-function updateCamera() {
-  const offset = new THREE.Vector3().setFromSpherical(spherical);
-  camera.position.copy(target).add(offset);
-  camera.lookAt(target);
-}
-updateCamera();
-
-let dragMode = null;
-let lastX = 0, lastY = 0;
-canvas.addEventListener("contextmenu", e => e.preventDefault());
-canvas.addEventListener("mousedown", e => {
-  dragMode = e.button === 2 ? "pan" : "orbit";
-  lastX = e.clientX; lastY = e.clientY;
-});
-window.addEventListener("mouseup", () => { dragMode = null; });
-window.addEventListener("mousemove", e => {
-  if (!dragMode) return;
-  const dx = e.clientX - lastX, dy = e.clientY - lastY;
-  lastX = e.clientX; lastY = e.clientY;
-  if (dragMode === "orbit") {
-    spherical.theta -= dx * 0.005;
-    spherical.phi = Math.max(0.01, Math.min(Math.PI - 0.01, spherical.phi - dy * 0.005));
-    updateCamera();
-  } else {
-    const panScale = spherical.radius * 0.0015;
-    const xAxis = new THREE.Vector3().setFromMatrixColumn(camera.matrix, 0);
-    const yAxis = new THREE.Vector3().setFromMatrixColumn(camera.matrix, 1);
-    target.addScaledVector(xAxis, -dx * panScale);
-    target.addScaledVector(yAxis,  dy * panScale);
-    updateCamera();
+function getCameraUp() {
+  switch (document.getElementById("up-axis").value) {
+    case "+y": return [0, 1, 0];
+    case "+z": return [0, 0, 1];
+    case "-y": default: return [0, -1, 0];
   }
-});
-canvas.addEventListener("wheel", e => {
-  e.preventDefault();
-  spherical.radius = Math.max(0.001, spherical.radius * (1 + Math.sign(e.deltaY) * 0.1));
-  updateCamera();
-}, { passive: false });
-window.addEventListener("keydown", e => {
-  if (e.key.toLowerCase() === "r" && bbox) frameBoundingBox();
-});
-
-function frameBoundingBox() {
-  const sphere = bbox.getBoundingSphere(new THREE.Sphere());
-  target.copy(sphere.center);
-  spherical.radius = Math.max(sphere.radius * 2.2, 0.05);
-  updateCamera();
 }
 
-// Three.js Spherical: x = r·sin(phi)·sin(theta), y = r·cos(phi),
-// z = r·sin(phi)·cos(theta). So theta=0,phi=π/2 puts the camera on +Z.
-const _AXIS_VIEWS = {
-  "+xy": { theta: 0,             phi: Math.PI / 2 },           // camera on +Z, looking at XY (front)
-  "-xy": { theta: Math.PI,       phi: Math.PI / 2 },           // -Z (back)
-  "+xz": { theta: 0,             phi: 0.001 },                 // +Y (top)
-  "-xz": { theta: 0,             phi: Math.PI - 0.001 },       // -Y (bottom)
-  "+yz": { theta: Math.PI / 2,   phi: Math.PI / 2 },           // +X (right)
-  "-yz": { theta: -Math.PI / 2,  phi: Math.PI / 2 },           // -X (left)
-};
-function snapToAxisView(name) {
-  if (name === "reset") {
-    if (bbox) frameBoundingBox();
-    return;
+async function recreateViewer() {
+  // mkkellogg's Viewer doesn't support live reconfiguration of cameraUp /
+  // sphericalHarmonicsDegree — easiest is to dispose and rebuild.
+  if (viewer) {
+    try { viewer.stop(); } catch {}
+    try { await viewer.dispose(); } catch {}
+    viewer = null;
+    currentSceneAttached = false;
   }
-  const conf = _AXIS_VIEWS[name];
-  if (!conf) return;
-  if (bbox) {
-    const sphere = bbox.getBoundingSphere(new THREE.Sphere());
-    target.copy(sphere.center);
-    spherical.radius = Math.max(sphere.radius * 2.2, 0.05);
-  }
-  spherical.theta = conf.theta;
-  spherical.phi = conf.phi;
-  updateCamera();
-}
-document.querySelectorAll("#axis-buttons .axis-btn").forEach(btn => {
-  btn.addEventListener("click", () => snapToAxisView(btn.dataset.view));
-});
+  splatHost.replaceChildren();
 
-function animate() {
-  requestAnimationFrame(animate);
-  if (autoRotate && pointObj) {
-    spherical.theta += 0.003;
-    updateCamera();
-  }
-  renderer.render(scene, camera);
-}
-animate();
-
-// ============================================================
-// Display controls
-// ============================================================
-document.getElementById("point-size").addEventListener("input", e => {
-  if (uniforms) uniforms.pointSize.value = parseFloat(e.target.value);
-});
-document.getElementById("opacity-mul").addEventListener("input", e => {
-  if (uniforms) uniforms.opacityMul.value = parseFloat(e.target.value);
-});
-document.getElementById("scale-mul").addEventListener("input", e => {
-  if (uniforms) uniforms.scaleMul.value = parseFloat(e.target.value);
-});
-for (const id of ["use-color", "use-opacity", "use-scales"]) {
-  document.getElementById(id).addEventListener("change", () => {
-    if (!uniforms) return;
-    uniforms.useColor.value   = document.getElementById("use-color").checked   ? 1.0 : 0.0;
-    uniforms.useOpacity.value = document.getElementById("use-opacity").checked ? 1.0 : 0.0;
-    uniforms.useScales.value  = document.getElementById("use-scales").checked  ? 1.0 : 0.0;
+  const fov = parseFloat(document.getElementById("fov").value || "50");
+  viewer = new GaussianSplats3D.Viewer({
+    cameraUp: getCameraUp(),
+    initialCameraPosition: [0, 0, 2],
+    initialCameraLookAt: [0, 0, 0],
+    sphericalHarmonicsDegree: 0,
+    rootElement: splatHost,
+    selfDrivenMode: true,
+    useBuiltInControls: true,
+    sharedMemoryForWorkers: false,
+    gpuAcceleratedSort: false,
   });
+  viewer.start();
+
+  // Patch FOV on the underlying perspective camera.
+  if (viewer.camera && "fov" in viewer.camera) {
+    viewer.camera.fov = fov;
+    viewer.camera.updateProjectionMatrix?.();
+  }
+
+  // Background colour.
+  applyBackgroundColor();
 }
-document.getElementById("background").addEventListener("input", e => {
-  scene.background = new THREE.Color(e.target.value);
+await recreateViewer();
+
+function applyBackgroundColor() {
+  const hex = document.getElementById("background").value;
+  if (!viewer) return;
+  // mkkellogg holds the renderer; clear color works directly.
+  try {
+    viewer.renderer?.setClearColor(new THREE.Color(hex), 1.0);
+  } catch {}
+}
+
+document.getElementById("fov").addEventListener("input", e => {
+  if (viewer?.camera && "fov" in viewer.camera) {
+    viewer.camera.fov = parseFloat(e.target.value);
+    viewer.camera.updateProjectionMatrix?.();
+  }
 });
-document.getElementById("rotate").addEventListener("change", e => {
-  autoRotate = e.target.checked;
+document.getElementById("background").addEventListener("input", applyBackgroundColor);
+document.getElementById("up-axis").addEventListener("change", async () => {
+  // Rebuild the viewer with the new up-vector. Re-load if a scene is attached.
+  const lastUrl = currentSceneUrl;
+  await recreateViewer();
+  if (lastUrl) await attachSplatScene(lastUrl);
 });
 
-// ============================================================
-// PLY parser — header + raw vertex buffer
-// ============================================================
+// ===========================================================
+// PLY parser (kept from previous version — feeds the side panel)
+// ===========================================================
 function parsePlyHeader(bytes) {
   const td = new TextDecoder();
   let headerEnd = -1;
-  // scan for end_header
   const limit = Math.min(bytes.length, 1 << 20);
-  for (let i = 0; i < limit - 10; i++) {
-    if (bytes[i] === 101 /*e*/ &&
-        td.decode(bytes.slice(i, i + 11)) === "end_header\n") {
-      headerEnd = i + 11;
-      break;
-    }
-    if (bytes[i] === 101 /*e*/ &&
-        td.decode(bytes.slice(i, i + 12)) === "end_header\r\n") {
-      headerEnd = i + 12;
-      break;
+  for (let i = 0; i < limit - 12; i++) {
+    if (bytes[i] === 101 /*e*/) {
+      const s11 = td.decode(bytes.slice(i, i + 11));
+      if (s11 === "end_header\n") { headerEnd = i + 11; break; }
+      const s12 = td.decode(bytes.slice(i, i + 12));
+      if (s12 === "end_header\r\n") { headerEnd = i + 12; break; }
     }
   }
   if (headerEnd < 0) throw new Error("Could not find end_header");
@@ -341,8 +251,7 @@ function parsePlyHeader(bytes) {
     const tokens = ln.trim().split(/\s+/);
     if (tokens[0] === "ply" || tokens[0] === "end_header") continue;
     if (tokens[0] === "format") {
-      meta.format = tokens[1];
-      meta.version = tokens[2];
+      meta.format = tokens[1]; meta.version = tokens[2];
     } else if (tokens[0] === "comment") {
       meta.comments.push(tokens.slice(1).join(" "));
     } else if (tokens[0] === "element") {
@@ -415,29 +324,23 @@ function parsePlyVertices(buffer, meta, headerEnd) {
   return { fields, count: n, stride, format: meta.format };
 }
 
-// ============================================================
+// ===========================================================
 // Field interpretation rules (3DGS PLY convention)
-// ============================================================
+// ===========================================================
 const INTERP_RULES = [
   { match: /^x$|^y$|^z$/, label: "position (world coords)", expected: null },
   { match: /^nx$|^ny$|^nz$/, label: "stored normal (unused at render — 3DGS PLYs zero them)", expected: [-1.001, 1.001] },
   { match: /^f_dc_[012]$/, label: "SH₀ DC band → RGB = clamp(0.5 + C₀·v, 0, 1), C₀ = 0.282", expected: [-5, 8] },
-  { match: /^f_rest_/, label: "higher-order SH coefficient (band ≥ 1) — ignored by point preview", expected: [-5, 5] },
+  { match: /^f_rest_/, label: "higher-order SH coefficient (band ≥ 1)", expected: [-5, 5] },
   { match: /^opacity$/, label: "logit → α = sigmoid(opacity)", expected: [-15, 15] },
   { match: /^scale_[012]$/, label: "log-scale → σᵢ = exp(scaleᵢ)", expected: [-15, 2] },
   { match: /^rot_[0123]$/, label: "quaternion component (normalized at render: [w,x,y,z])", expected: [-1.001, 1.001] },
   { match: /^red$|^green$|^blue$/, label: "vertex color (uchar 0..255 → /255)", expected: [0, 255] },
 ];
-
 function interpretField(name) {
-  for (const rule of INTERP_RULES) {
-    if (rule.match.test(name)) return rule;
-  }
+  for (const rule of INTERP_RULES) if (rule.match.test(name)) return rule;
   return { match: null, label: "raw value (no built-in interpretation)", expected: null };
 }
-
-const TYPE_BYTES_TABLE = { char: 1, uchar: 1, int8: 1, uint8: 1, short: 2, ushort: 2, int16: 2, uint16: 2, int: 4, uint: 4, int32: 4, uint32: 4, float: 4, float32: 4, double: 8, float64: 8 };
-function typeByteSize(t) { return TYPE_BYTES_TABLE[t] ?? 0; }
 
 function computeFieldRanges(fields) {
   const out = {};
@@ -447,9 +350,7 @@ function computeFieldRanges(fields) {
     for (let i = 0; i < arr.length; i += step) {
       const v = arr[i];
       if (!Number.isFinite(v)) continue;
-      if (v < mn) mn = v;
-      if (v > mx) mx = v;
-      sum += v; n++;
+      if (v < mn) mn = v; if (v > mx) mx = v; sum += v; n++;
     }
     out[name] = { min: mn, max: mx, mean: n ? sum / n : NaN };
   }
@@ -461,10 +362,6 @@ function fmt(v) {
   if (Math.abs(v) >= 1000 || (Math.abs(v) > 0 && Math.abs(v) < 0.001)) return v.toExponential(3);
   return v.toFixed(4);
 }
-
-// ============================================================
-// Build point cloud + populate panel
-// ============================================================
 function fillTable(tbl, rows) {
   tbl.innerHTML = "";
   for (const [k, v, t] of rows) {
@@ -479,7 +376,6 @@ function fillTable(tbl, rows) {
     tbl.appendChild(tr);
   }
 }
-
 function fillFieldsTable(tbl, props, ranges) {
   const tbody = tbl.querySelector("tbody");
   tbody.innerHTML = "";
@@ -500,15 +396,25 @@ function fillFieldsTable(tbl, props, ranges) {
       tdC.style.color = ok ? "#88c878" : "#ffae42";
       tdC.title = `expected ${fmt(lo)} … ${fmt(hi)} · observed ${fmt(r.min)} … ${fmt(r.max)}`;
     } else {
-      tdC.textContent = "·";
-      tdC.style.color = "#555";
+      tdC.textContent = "·"; tdC.style.color = "#555";
       tdC.title = "no expected range for this field";
     }
     tr.appendChild(tdN); tr.appendChild(tdT); tr.appendChild(tdMn); tr.appendChild(tdMx); tr.appendChild(tdI); tr.appendChild(tdC);
     tbody.appendChild(tr);
   }
 }
-
+function fillStatsTable(tbl, ranges) {
+  const tbody = tbl.querySelector("tbody");
+  tbody.innerHTML = "";
+  for (const [name, r] of Object.entries(ranges)) {
+    const tr = document.createElement("tr");
+    for (const txt of [name, fmt(r.min), fmt(r.mean), fmt(r.max)]) {
+      const td = document.createElement("td"); td.className = "v"; td.textContent = txt;
+      tr.appendChild(td);
+    }
+    tbody.appendChild(tr);
+  }
+}
 function fillDebugTables(debugTbl, strideTbl, props, fields, format, stride) {
   const tbody = debugTbl.querySelector("tbody");
   tbody.innerHTML = "";
@@ -521,210 +427,118 @@ function fillDebugTables(debugTbl, strideTbl, props, fields, format, stride) {
     for (const [cls, txt] of [
       ["t", String(off)],
       ["k", p.name],
-      ["t", `${p.type} (${typeByteSize(p.type)}B)`],
+      ["t", `${p.type} (${TYPE_BYTES[p.type] ?? "?"}B)`],
       ["v", fmt(v0)],
       ["v", fmt(v1)],
     ]) {
-      const td = document.createElement("td");
-      td.className = cls;
-      td.textContent = txt;
+      const td = document.createElement("td"); td.className = cls; td.textContent = txt;
       tr.appendChild(td);
     }
     tbody.appendChild(tr);
-    off += typeByteSize(p.type);
+    off += TYPE_BYTES[p.type] ?? 0;
   }
-
   fillTable(strideTbl, [
     ["Format", format || "—"],
     ["Vertex stride", `${stride} bytes`],
     ["Property count", String(props.length)],
-    ["Endianness", format === "binary_little_endian" ? "little (correct for x86 / x64)" :
+    ["Endianness", format === "binary_little_endian" ? "little (x86 / x64)" :
                    format === "binary_big_endian" ? "big" : (format === "ascii" ? "n/a" : "—")],
   ]);
 }
 
-function fillStatsTable(tbl, ranges) {
-  const tbody = tbl.querySelector("tbody");
-  tbody.innerHTML = "";
-  for (const [name, r] of Object.entries(ranges)) {
-    const tr = document.createElement("tr");
-    for (const txt of [name, fmt(r.min), fmt(r.mean), fmt(r.max)]) {
-      const td = document.createElement("td");
-      td.className = "v";
-      td.textContent = txt;
-      tr.appendChild(td);
-    }
-    tbody.appendChild(tr);
+// ===========================================================
+// Camera control: bbox framing + axis-snap buttons
+// ===========================================================
+function getControls() { return viewer?.controls || null; }
+function getCamera() { return viewer?.camera || null; }
+
+function frameBoundingBox() {
+  if (!bbox || !viewer) return;
+  const sphere = bbox.getBoundingSphere(new THREE.Sphere());
+  const cam = getCamera();
+  const ctrl = getControls();
+  if (!cam) return;
+  const dist = Math.max(sphere.radius * 2.2, 0.05);
+  const dir = new THREE.Vector3(0, 0, 1);                   // +Z, default
+  cam.position.copy(sphere.center.clone().add(dir.multiplyScalar(dist)));
+  cam.lookAt(sphere.center);
+  if (ctrl) {
+    ctrl.target.copy(sphere.center);
+    ctrl.update?.();
   }
+  cam.updateProjectionMatrix?.();
 }
 
-function pickField(fields, name) { return fields[name] || null; }
-
-function buildPointCloud(parsed) {
-  if (pointObj) {
-    scene.remove(pointObj);
-    pointObj.geometry.dispose();
-    pointObj.material.dispose();
-    pointObj = null;
+const _AXIS_DIRS = {
+  "+xy": new THREE.Vector3(0, 0, 1),
+  "-xy": new THREE.Vector3(0, 0, -1),
+  "+xz": new THREE.Vector3(0, 1, 0),
+  "-xz": new THREE.Vector3(0, -1, 0),
+  "+yz": new THREE.Vector3(1, 0, 0),
+  "-yz": new THREE.Vector3(-1, 0, 0),
+};
+function snapToAxis(name) {
+  if (name === "reset") return frameBoundingBox();
+  const dir = _AXIS_DIRS[name];
+  if (!dir || !bbox || !viewer) return;
+  const sphere = bbox.getBoundingSphere(new THREE.Sphere());
+  const cam = getCamera();
+  const ctrl = getControls();
+  if (!cam) return;
+  const radius = Math.max(sphere.radius * 2.2, 0.05);
+  cam.position.copy(sphere.center).addScaledVector(dir, radius);
+  cam.lookAt(sphere.center);
+  if (ctrl) {
+    ctrl.target.copy(sphere.center);
+    ctrl.update?.();
   }
+}
+document.querySelectorAll("#axis-buttons .axis-btn").forEach(btn => {
+  btn.addEventListener("click", () => snapToAxis(btn.dataset.view));
+});
+window.addEventListener("keydown", e => {
+  if (e.key.toLowerCase() === "r") frameBoundingBox();
+});
 
-  const { fields, count } = parsed;
-  const xs = pickField(fields, "x"), ys = pickField(fields, "y"), zs = pickField(fields, "z");
-  if (!xs || !ys || !zs) throw new Error("PLY has no x/y/z properties");
+// ===========================================================
+// Load PLY end-to-end
+// ===========================================================
+let currentSceneUrl = null;
 
-  const positions = new Float32Array(count * 3);
-  for (let i = 0; i < count; i++) {
-    positions[i*3]   = xs[i];
-    positions[i*3+1] = ys[i];
-    positions[i*3+2] = zs[i];
+async function attachSplatScene(url) {
+  if (!viewer) return;
+  if (currentSceneAttached) {
+    // mkkellogg supports multiple scenes; for our viewer we only ever
+    // want one — clear before re-adding.
+    try { await viewer.removeSplatScene(0); } catch {}
+    currentSceneAttached = false;
   }
-
-  // ---- Optional attributes — bake them all; the shader gates them via toggles ----
-  const fdc0 = pickField(fields, "f_dc_0"),
-        fdc1 = pickField(fields, "f_dc_1"),
-        fdc2 = pickField(fields, "f_dc_2");
-  const r8 = pickField(fields, "red"),
-        g8 = pickField(fields, "green"),
-        b8 = pickField(fields, "blue");
-  const hasColor = !!(fdc0 && fdc1 && fdc2) || !!(r8 && g8 && b8);
-  const colors = new Float32Array(count * 3);
-  if (fdc0 && fdc1 && fdc2) {
-    for (let i = 0; i < count; i++) {
-      colors[i*3]   = Math.max(0, Math.min(1, 0.5 + SH_C0 * fdc0[i]));
-      colors[i*3+1] = Math.max(0, Math.min(1, 0.5 + SH_C0 * fdc1[i]));
-      colors[i*3+2] = Math.max(0, Math.min(1, 0.5 + SH_C0 * fdc2[i]));
-    }
-  } else if (r8 && g8 && b8) {
-    for (let i = 0; i < count; i++) {
-      colors[i*3]   = r8[i] / 255;
-      colors[i*3+1] = g8[i] / 255;
-      colors[i*3+2] = b8[i] / 255;
-    }
-  } else {
-    colors.fill(1);
-  }
-
-  const op = pickField(fields, "opacity");
-  const hasOpacity = !!op;
-  const alpha = new Float32Array(count);
-  if (op) {
-    let inUnit = true;
-    for (let i = 0; i < Math.min(count, 1024); i++) {
-      if (op[i] < 0 || op[i] > 1) { inUnit = false; break; }
-    }
-    for (let i = 0; i < count; i++) {
-      alpha[i] = inUnit ? Math.max(0, Math.min(1, op[i])) : 1 / (1 + Math.exp(-op[i]));
-    }
-  } else {
-    alpha.fill(1);
-  }
-
-  const sx = pickField(fields, "scale_0"),
-        sy = pickField(fields, "scale_1"),
-        sz = pickField(fields, "scale_2");
-  const hasScales = !!(sx && sy && sz);
-  const radii = new Float32Array(count);
-  if (hasScales) {
-    for (let i = 0; i < count; i++) {
-      // Use the largest σᵢ = exp(scaleᵢ) per-Gaussian as a screen-space size cue.
-      const s = Math.max(Math.exp(sx[i]), Math.exp(sy[i]), Math.exp(sz[i]));
-      radii[i] = s;
-    }
-  } else {
-    radii.fill(1);
-  }
-
-  const geom = new THREE.BufferGeometry();
-  geom.setAttribute("position", new THREE.BufferAttribute(positions, 3));
-  geom.setAttribute("color", new THREE.BufferAttribute(colors, 3));
-  geom.setAttribute("alpha", new THREE.BufferAttribute(alpha, 1));
-  geom.setAttribute("radius", new THREE.BufferAttribute(radii, 1));
-
-  // Sync toggle DOM availability with field availability, but DON'T touch
-  // their checked state — the user's choices persist across reloads.
-  for (const [id, ok] of [
-    ["use-color",   hasColor],
-    ["use-opacity", hasOpacity],
-    ["use-scales",  hasScales],
-  ]) {
-    const cb = document.getElementById(id);
-    cb.disabled = !ok;
-    cb.parentElement.style.opacity = ok ? "1.0" : "0.45";
-    if (!ok) cb.checked = false;
-  }
-
-  uniforms = {
-    pointSize:  { value: parseFloat(document.getElementById("point-size").value) },
-    opacityMul: { value: parseFloat(document.getElementById("opacity-mul").value) },
-    scaleMul:   { value: parseFloat(document.getElementById("scale-mul").value) },
-    useColor:   { value: document.getElementById("use-color").checked   ? 1.0 : 0.0 },
-    useOpacity: { value: document.getElementById("use-opacity").checked ? 1.0 : 0.0 },
-    useScales:  { value: document.getElementById("use-scales").checked  ? 1.0 : 0.0 },
-  };
-
-  const material = new THREE.ShaderMaterial({
-    uniforms,
-    vertexShader: `
-      attribute vec3 color;
-      attribute float alpha;
-      attribute float radius;
-      varying vec3 vColor;
-      varying float vAlpha;
-      uniform float pointSize;
-      uniform float scaleMul;
-      uniform float useColor;
-      uniform float useOpacity;
-      uniform float useScales;
-      void main() {
-        vColor = mix(vec3(0.85), color, useColor);
-        vAlpha = mix(1.0, alpha, useOpacity);
-        vec4 mv = modelViewMatrix * vec4(position, 1.0);
-        gl_Position = projectionMatrix * mv;
-        float sizeFactor = mix(1.0, radius * scaleMul, useScales);
-        // Clamp to a reasonable px range so a single huge Gaussian doesn't
-        // fill the screen.
-        gl_PointSize = clamp(pointSize * sizeFactor * (300.0 / max(0.001, -mv.z)), 1.0, 32.0);
-      }
-    `,
-    fragmentShader: `
-      varying vec3 vColor;
-      varying float vAlpha;
-      uniform float opacityMul;
-      void main() {
-        vec2 d = gl_PointCoord - vec2(0.5);
-        float r2 = dot(d, d);
-        if (r2 > 0.25) discard;
-        float a = vAlpha * opacityMul * smoothstep(0.25, 0.0, r2);
-        if (a < 0.01) discard;
-        gl_FragColor = vec4(vColor, a);
-      }
-    `,
-    transparent: true,
-    depthWrite: false,
+  await viewer.addSplatScene(url, {
+    format: GaussianSplats3D.SceneFormat.Ply,
+    showLoadingUI: false,
+    progressiveLoad: false,
+    splatAlphaRemovalThreshold: 5,
   });
-
-  const pts = new THREE.Points(geom, material);
-  scene.add(pts);
-  pointObj = pts;
-  bbox = new THREE.Box3().setFromBufferAttribute(geom.attributes.position);
-  frameBoundingBox();
+  currentSceneAttached = true;
 }
 
-// ============================================================
-// Wire it all up: load PLY URL → parse → render → fill panels
-// ============================================================
 async function loadPly(url, fileMeta) {
+  currentSceneUrl = url;
   setStatus(`Fetching ${fileMeta.filename || "PLY"}…`);
+
+  // Fetch the bytes once: reuse the same buffer for our parser AND the
+  // mkkellogg loader (it accepts a URL but we still need the buffer for
+  // the side-panel parser).
   const resp = await fetch(url);
   if (!resp.ok) throw new Error(`Fetch failed: ${resp.status} ${resp.statusText}`);
   const buf = await resp.arrayBuffer();
   setStatus(`Parsing ${(buf.byteLength / 1048576).toFixed(2)} MB…`);
 
+  // ----- side-panel parse -----
   const bytes = new Uint8Array(buf);
   const { meta, headerEnd } = parsePlyHeader(bytes);
   const parsed = parsePlyVertices(buf, meta, headerEnd);
 
-  // Header pane
   fillTable(document.getElementById("t-file"), [
     ["Filename", fileMeta.filename || "—"],
     ["Size", `${(buf.byteLength / 1048576).toFixed(2)} MB (${buf.byteLength.toLocaleString()} bytes)`],
@@ -738,51 +552,34 @@ async function loadPly(url, fileMeta) {
     ["Comments", meta.comments.length ? meta.comments.join(" / ") : "(none)"],
   ]);
 
-  // Compute per-field ranges once and reuse across tabs
   const vertexEl = meta.elements.find(e => e.name === "vertex");
   const ranges = computeFieldRanges(parsed.fields);
-
-  // Fields pane (with min/max + sanity check vs. expected 3DGS ranges)
   fillFieldsTable(document.getElementById("t-fields"), vertexEl.properties, ranges);
-
-  // Stats pane (sample)
   fillStatsTable(document.getElementById("t-stats"), ranges);
-
-  // Debug pane: byte layout + first two vertices' actual decoded values.
   fillDebugTables(
     document.getElementById("t-debug"),
     document.getElementById("t-stride"),
-    vertexEl.properties,
-    parsed.fields,
-    meta.format,
-    parsed.stride,
+    vertexEl.properties, parsed.fields, meta.format, parsed.stride,
   );
 
-  // Render pane
   const has = (re) => vertexEl.properties.some(p => re.test(p.name));
-  const rows = [
-    ["Position",  has(/^x$/) && has(/^y$/) && has(/^z$/) ? "x,y,z (float32)" : "missing", has(/^x$/) ? "✓ used directly" : "—"],
-    ["Color",     has(/^f_dc_0$/) ? "f_dc_0..2 (SH₀)" : (has(/^red$/) ? "red,green,blue (uchar)" : "missing"),
-                  has(/^f_dc_0$/) ? "RGB = clamp(0.5 + C₀·f_dc, 0, 1)"
-                                  : (has(/^red$/) ? "RGB = uchar/255" : "white fallback")],
-    ["Alpha",     has(/^opacity$/) ? "opacity (float32)" : "missing",
-                  has(/^opacity$/) ? "α = sigmoid(opacity) (or pass-through if already 0..1)" : "α = 1"],
-    ["Scale",     has(/^scale_0$/) ? "scale_0..2 (log-scale)" : "missing",
-                  "preview is point-sprite — scales unused (would be exp(s))"],
-    ["Rotation",  has(/^rot_0$/) ? "rot_0..3 (quaternion)" : "missing",
-                  "preview is point-sprite — rotation unused (would be normalized quat)"],
-    ["Higher-order SH", vertexEl.properties.some(p => /^f_rest_/.test(p.name)) ? "f_rest_*" : "—",
-                  "ignored in point preview"],
+  const renderRows = [
+    ["Position", has(/^x$/) && has(/^y$/) && has(/^z$/) ? "x,y,z" : "missing", "fed to mkkellogg verbatim"],
+    ["Color",    has(/^f_dc_0$/) ? "f_dc_0..2 (SH₀)" : (has(/^red$/) ? "red,green,blue" : "missing"),
+                 "decoded by mkkellogg's PLY loader"],
+    ["Alpha",    has(/^opacity$/) ? "opacity" : "missing", "sigmoid by mkkellogg"],
+    ["Scales",   has(/^scale_0$/) ? "scale_0..2" : "missing", "exp by mkkellogg"],
+    ["Rotation", has(/^rot_0$/) ? "rot_0..3" : "missing", "normalized quat by mkkellogg"],
+    ["SH bands ≥ 1", has(/^f_rest_/) ? "f_rest_*" : "—", "ignored — sphericalHarmonicsDegree=0"],
   ];
   const tRender = document.getElementById("t-render");
   tRender.innerHTML = "";
-  // header row
   const head = document.createElement("tr");
   for (const h of ["Stage", "Source", "Interpretation"]) {
     const th = document.createElement("th"); th.textContent = h; head.appendChild(th);
   }
   tRender.appendChild(head);
-  for (const row of rows) {
+  for (const row of renderRows) {
     const tr = document.createElement("tr");
     for (const [i, cell] of row.entries()) {
       const td = document.createElement("td");
@@ -793,10 +590,28 @@ async function loadPly(url, fileMeta) {
     tRender.appendChild(tr);
   }
 
-  setStatus(`Loaded ${parsed.count.toLocaleString()} vertices.`);
-  buildPointCloud(parsed);
+  // BBox from the parsed positions for our axis-snap buttons.
+  const xs = parsed.fields["x"], ys = parsed.fields["y"], zs = parsed.fields["z"];
+  if (xs && ys && zs) {
+    let minX = Infinity, minY = Infinity, minZ = Infinity;
+    let maxX = -Infinity, maxY = -Infinity, maxZ = -Infinity;
+    for (let i = 0; i < parsed.count; i++) {
+      const x = xs[i], y = ys[i], z = zs[i];
+      if (x < minX) minX = x; if (y < minY) minY = y; if (z < minZ) minZ = z;
+      if (x > maxX) maxX = x; if (y > maxY) maxY = y; if (z > maxZ) maxZ = z;
+    }
+    bbox = new THREE.Box3(
+      new THREE.Vector3(minX, minY, minZ),
+      new THREE.Vector3(maxX, maxY, maxZ),
+    );
+  }
 
-  // ----- Browser-console debug dump (mirrors the in-pane tables) -----
+  setStatus(`Loading ${parsed.count.toLocaleString()} splats into renderer…`);
+  await attachSplatScene(url);
+  setStatus(`Loaded ${parsed.count.toLocaleString()} splats.`);
+  frameBoundingBox();
+
+  // ----- console dump -----
   const tag = `[HYWM2 PLY Advanced Viewer] ${fileMeta.filename || "PLY"}`;
   console.groupCollapsed(`%c${tag}`, "color:#6cc;font-weight:bold");
   console.log("File", {
@@ -811,7 +626,6 @@ async function loadPly(url, fileMeta) {
     vertexCount: parsed.count,
     stride: parsed.stride,
   });
-
   let off = 0;
   const fieldsRows = [];
   const sanityWarnings = [];
@@ -827,40 +641,32 @@ async function loadPly(url, fileMeta) {
     }
     const arr = parsed.fields[p.name];
     fieldsRows.push({
-      offset: off,
-      name: p.name,
-      type: p.type,
-      bytes: TYPE_BYTES[p.type] ?? "?",
+      offset: off, name: p.name, type: p.type, bytes: TYPE_BYTES[p.type] ?? "?",
       min: Number.isFinite(r.min) ? +r.min.toFixed(6) : NaN,
       max: Number.isFinite(r.max) ? +r.max.toFixed(6) : NaN,
       mean: Number.isFinite(r.mean) ? +r.mean.toFixed(6) : NaN,
       "v[0]": arr ? arr[0] : null,
       "v[1]": arr && arr.length > 1 ? arr[1] : null,
-      sanity,
-      interpretation: rule.label,
+      sanity, interpretation: rule.label,
     });
     off += TYPE_BYTES[p.type] ?? 0;
   }
   console.log(`Fields  (stride = ${parsed.stride} B, ${vertexEl.properties.length} properties)`);
-  if (console.table) console.table(fieldsRows);
-  else console.log(fieldsRows);
-
+  if (console.table) console.table(fieldsRows); else console.log(fieldsRows);
   if (sanityWarnings.length) {
     console.warn(`⚠ ${sanityWarnings.length} field(s) outside expected 3DGS range`);
-    if (console.table) console.table(sanityWarnings);
-    else console.warn(sanityWarnings);
+    if (console.table) console.table(sanityWarnings); else console.warn(sanityWarnings);
   } else {
     console.log("%c✓ All fields with known 3DGS expected ranges look sane.",
                 "color:#88c878");
   }
-
-  console.log("Render pipeline", rows.map(([stage, source, interpretation]) => ({ stage, source, interpretation })));
+  console.log("Render pipeline", renderRows.map(([stage, source, interpretation]) => ({ stage, source, interpretation })));
   console.groupEnd();
 }
 
-// ============================================================
-// Message bridge from extension.js
-// ============================================================
+// ===========================================================
+// Bridge from extension.js
+// ===========================================================
 window.addEventListener("message", async (event) => {
   if (!event?.data) return;
   if (event.data.type !== "HYWM2_LOAD_PLY") return;
