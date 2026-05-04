@@ -290,13 +290,15 @@ class HYWM2DecodeGaussians(io.ComfyNode):
                 io.Custom("HYWM2_PREDICTIONS").Input("predictions"),
                 io.Float.Input("weight_threshold", default=0.0, min=0.0, max=1.0, step=0.01,
                                tooltip="Drop Gaussians below this per-point weight (0 = keep all)."),
+                io.Float.Input("downsample", default=1.0, min=0.0, max=1.0, step=0.01,
+                               tooltip="Random keep ratio after weight filtering (1.0 = keep all, 0.1 = keep 10%%)."),
             ],
             outputs=[io.Custom("HYWM2_GAUSSIANS").Output(display_name="gaussians")],
         )
 
     @classmethod
     @torch.no_grad()
-    def execute(cls, predictions, weight_threshold):
+    def execute(cls, predictions, weight_threshold, downsample):
         preds = _unwrap(predictions)
         if "splats" not in preds:
             raise RuntimeError("HYWM2DecodeGaussians: predictions has no 'splats' key (gs head disabled?)")
@@ -327,6 +329,18 @@ class HYWM2DecodeGaussians(io.ComfyNode):
             )
             log.info("HYWM2DecodeGaussians: kept %d/%d gaussians (weight>=%.2f)",
                      keep.sum().item(), keep.numel(), weight_threshold)
+
+        ratio = max(0.0, min(1.0, float(downsample)))
+        if ratio < 1.0 and means.shape[0] > 0:
+            n = means.shape[0]
+            k = max(1, int(round(n * ratio))) if ratio > 0 else 0
+            if k < n:
+                idx = torch.randperm(n)[:k]
+                means, quats, scales, opacities, rgbs = (
+                    means[idx], quats[idx], scales[idx], opacities[idx], rgbs[idx]
+                )
+                log.info("HYWM2DecodeGaussians: downsampled %d → %d (ratio=%.3f)",
+                         n, k, ratio)
 
         return io.NodeOutput({
             "means": means,
