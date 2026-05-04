@@ -3,14 +3,14 @@ levels = ["install", "registration", "instantiation", "execution"]
 publish = true
 
 [test.workflows]
-cpu = []
-gpu = "all"
+cpu = ["depth_normal"]
+gpu = ["recon"]
 
 [test.platforms]
-linux = false
-macos = false
-windows = false
-windows_portable = false
+linux = true
+macos = true
+windows = true
+windows_portable = true
 linux_gpu = true
 windows_gpu = true
 windows_portable_gpu = true
