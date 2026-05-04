@@ -1,11 +1,12 @@
 """HYWM2Reconstruct — WorldMirror 2.0 multi-view reconstruction.
 
-Takes a ComfyUI IMAGE batch (>= 1 view) and emits FIVE typed outputs:
-  - images       (IMAGE)              — depth viz batch
-  - normals      (IMAGE)              — surface-normals viz batch
-  - points       (HYWM2_POINTS)       — colored point cloud (means + colors)
-  - gaussians    (HYWM2_GAUSSIANS)    — 3DGS attributes (means/quats/scales/...)
-  - predictions  (HYWM2_PREDICTIONS)  — full wrapper dict for power users
+Takes a ComfyUI IMAGE batch (>= 1 view) and emits SIX typed outputs:
+  - images                 (IMAGE)             — depth viz batch
+  - normals                (IMAGE)             — surface-normals viz batch
+  - points                 (HYWM2_POINTS)      — colored point cloud
+  - gaussians              (HYWM2_GAUSSIANS)   — 3DGS attributes
+  - predicted_extrinsics   (EXTRINSICS)        — w2c [N,4,4] (CameraPack)
+  - predicted_intrinsics   (INTRINSICS)        — K     [N,3,3]
 
 The vendored upstream pipeline expects file paths, so we materialize the
 input batch as PNGs in a temp dir; same approach the upstream gradio app uses.
@@ -165,11 +166,19 @@ class HYWM2Reconstruct(io.ComfyNode):
                     display_name="gaussians",
                     tooltip="3DGS attributes (means/quats/scales/opacities/rgbs).",
                 ),
-                io.Custom("HYWM2_PREDICTIONS").Output(
-                    display_name="predictions",
+                io.Custom("EXTRINSICS").Output(
+                    display_name="predicted_extrinsics",
                     tooltip=(
-                        "Full WorldMirror predictions wrapper: depth, normals, pts3d, "
-                        "camera_poses, camera_intrs, splats, imgs, infer_time, target_size."
+                        "Predicted camera extrinsics tensor [N,4,4] in world-to-camera "
+                        "(CameraPack) convention — i.e. the inverse of the model's c2w "
+                        "camera_poses. First view is normalized to identity by upstream."
+                    ),
+                ),
+                io.Custom("INTRINSICS").Output(
+                    display_name="predicted_intrinsics",
+                    tooltip=(
+                        "Predicted camera intrinsics tensor [N,3,3] (K matrix per view, "
+                        "in pixel units of the effective inference resolution)."
                     ),
                 ),
             ],
@@ -270,14 +279,6 @@ class HYWM2Reconstruct(io.ComfyNode):
 
         log.info("HYWM2Reconstruct: forward pass done in %.2fs", infer_time)
 
-        wrapper = {
-            "predictions": predictions,
-            "imgs": imgs,
-            "infer_time": infer_time,
-            "target_size": effective,
-            "model_handle": model,
-        }
-
         # ----- inline decode (formerly Decode* nodes) -----
         from .decode_export import (
             decode_depth_image, decode_normals_image,
@@ -313,7 +314,24 @@ class HYWM2Reconstruct(io.ComfyNode):
                 "rgbs": empty,
             }
 
-        return io.NodeOutput(depth_img, normals_img, points, gaussians, wrapper)
+        # ----- predicted cameras (CameraPack convention: w2c [N,4,4], K [N,3,3]) -----
+        c2w = predictions.get("camera_poses")          # [B,S,4,4] (OpenCV c2w)
+        intr = predictions.get("camera_intrs")         # [B,S,3,3]
+        if c2w is not None:
+            c2w_t = c2w.detach().float().cpu()
+            if c2w_t.dim() == 4 and c2w_t.shape[0] == 1:
+                c2w_t = c2w_t[0]                       # [S,4,4]
+            extrinsics_w2c = torch.linalg.inv(c2w_t)
+        else:
+            extrinsics_w2c = torch.eye(4).unsqueeze(0)
+        if intr is not None:
+            intr_t = intr.detach().float().cpu()
+            if intr_t.dim() == 4 and intr_t.shape[0] == 1:
+                intr_t = intr_t[0]                     # [S,3,3]
+        else:
+            intr_t = torch.eye(3).unsqueeze(0)
+
+        return io.NodeOutput(depth_img, normals_img, points, gaussians, extrinsics_w2c, intr_t)
 
     # ------------------------------------------------------------------
     # Pipeline lifecycle
