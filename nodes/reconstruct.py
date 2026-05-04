@@ -83,13 +83,29 @@ class HYWM2Reconstruct(io.ComfyNode):
                     "images",
                     tooltip="Multi-view image batch (S >= 1; >= 2 recommended).",
                 ),
+                io.Custom("EXTRINSICS").Input(
+                    "prior_extrinsics",
+                    optional=True,
+                    tooltip=(
+                        "Optional camera extrinsics tensor [N,4,4] (world-to-camera, "
+                        "CameraPack convention). Wired automatically by HYWM2SamplePanorama."
+                    ),
+                ),
+                io.Custom("INTRINSICS").Input(
+                    "prior_intrinsics",
+                    optional=True,
+                    tooltip=(
+                        "Optional camera intrinsics tensor [N,3,3] (or [3,3] broadcast to all views). "
+                        "Wired automatically by HYWM2SamplePanorama."
+                    ),
+                ),
                 io.String.Input(
                     "prior_camera_json",
                     default="",
                     multiline=False,
                     tooltip=(
-                        "Optional path to a camera_params.json with prior extrinsics/intrinsics "
-                        "(OpenCV c2w + 3x3 K). Leave blank to let the model predict cameras."
+                        "Optional path to a camera_params.json with prior extrinsics/intrinsics. "
+                        "Leave blank if you used the EXTRINSICS / INTRINSICS inputs above."
                     ),
                 ),
             ],
@@ -110,7 +126,9 @@ class HYWM2Reconstruct(io.ComfyNode):
         cls,
         model: Any,
         images: torch.Tensor,
-        prior_camera_json: str,
+        prior_camera_json: str = "",
+        prior_extrinsics: torch.Tensor | None = None,
+        prior_intrinsics: torch.Tensor | None = None,
     ):
         if not isinstance(model, dict) or "model_dir" not in model:
             raise ValueError(
@@ -121,8 +139,11 @@ class HYWM2Reconstruct(io.ComfyNode):
             raise ValueError("HYWM2Reconstruct: images batch is empty")
 
         log.info(
-            "HYWM2Reconstruct: model_dir=%s, images shape=%s, prior_camera_json=%r",
+            "HYWM2Reconstruct: model_dir=%s, images shape=%s, prior_camera_json=%r, "
+            "prior_extrinsics=%s, prior_intrinsics=%s",
             model["model_dir"], tuple(images.shape), prior_camera_json,
+            None if prior_extrinsics is None else tuple(prior_extrinsics.shape),
+            None if prior_intrinsics is None else tuple(prior_intrinsics.shape),
         )
 
         # Materialize the IMAGE batch as PNGs so we can reuse the upstream
@@ -131,6 +152,17 @@ class HYWM2Reconstruct(io.ComfyNode):
             tmp_dir = Path(tmp_str)
             img_paths = cls._dump_image_batch(images, tmp_dir)
             log.info("HYWM2Reconstruct: wrote %d frame(s) to %s", len(img_paths), tmp_dir)
+
+            # If the user passed in tensors, materialize them as the prior
+            # JSON the upstream pipeline expects.
+            if (prior_extrinsics is not None) or (prior_intrinsics is not None):
+                if prior_camera_json.strip():
+                    log.warning(
+                        "HYWM2Reconstruct: both tensor priors and prior_camera_json provided; "
+                        "tensor priors win.")
+                prior_camera_json = cls._dump_camera_priors_json(
+                    img_paths, tmp_dir, prior_extrinsics, prior_intrinsics
+                )
 
             pipeline = cls._get_pipeline(model)
 
@@ -282,3 +314,73 @@ class HYWM2Reconstruct(io.ComfyNode):
             Image.fromarray(arr).save(path)
             paths.append(str(path))
         return paths
+
+    @staticmethod
+    def _dump_camera_priors_json(
+        img_paths: list,
+        out_dir: Path,
+        extrinsics: torch.Tensor | None,
+        intrinsics: torch.Tensor | None,
+    ) -> str:
+        """Convert in-memory EXTRINSICS (w2c) + INTRINSICS (3x3) tensors to the
+        JSON format that upstream `load_prior_camera` expects.
+
+        - EXTRINSICS in: [N,4,4] world-to-camera (CameraPack convention).
+        - WorldMirror wants camera-to-world, so we invert per-frame.
+        - INTRINSICS in: [N,3,3] or [3,3] (broadcast). We pass through; upstream
+          applies the resize+crop transform to align with the preprocessed image.
+        """
+        import json
+
+        N = len(img_paths)
+        stems = [Path(p).stem for p in img_paths]
+        out: dict = {}
+
+        if extrinsics is not None:
+            ext = extrinsics.detach().float().cpu()
+            if ext.dim() == 4 and ext.shape[0] == 1:
+                ext = ext[0]                              # [N,4,4]
+            if ext.dim() == 3 and ext.shape[1:] == (3, 4):  # accept 3x4
+                pad = torch.tensor([0, 0, 0, 1], dtype=ext.dtype).expand(ext.shape[0], 1, 4)
+                ext = torch.cat([ext, pad], dim=1)
+            if ext.dim() != 3 or ext.shape[1:] != (4, 4):
+                raise ValueError(
+                    f"prior_extrinsics: expected [N,4,4], got {tuple(ext.shape)}"
+                )
+            if ext.shape[0] != N:
+                raise ValueError(
+                    f"prior_extrinsics N={ext.shape[0]} != number of images {N}"
+                )
+            # w2c -> c2w
+            c2w = torch.linalg.inv(ext)
+            out["extrinsics"] = [
+                {"camera_id": stems[i], "matrix": c2w[i].tolist()} for i in range(N)
+            ]
+
+        if intrinsics is not None:
+            intr = intrinsics.detach().float().cpu()
+            if intr.dim() == 2:
+                intr = intr.unsqueeze(0).expand(N, 3, 3).contiguous()
+            elif intr.dim() == 3 and intr.shape[0] == 1 and N > 1:
+                intr = intr.expand(N, 3, 3).contiguous()
+            if intr.dim() == 4 and intr.shape[0] == 1:
+                intr = intr[0]
+            # Allow 4x4 fall-through (drop homogenous row/col)
+            if intr.dim() == 3 and intr.shape[1:] == (4, 4):
+                intr = intr[:, :3, :3].contiguous()
+            if intr.dim() != 3 or intr.shape[1:] != (3, 3):
+                raise ValueError(
+                    f"prior_intrinsics: expected [N,3,3] (or [3,3]), got {tuple(intr.shape)}"
+                )
+            if intr.shape[0] != N:
+                raise ValueError(
+                    f"prior_intrinsics N={intr.shape[0]} != number of images {N}"
+                )
+            out["intrinsics"] = [
+                {"camera_id": stems[i], "matrix": intr[i].tolist()} for i in range(N)
+            ]
+
+        json_path = out_dir / "prior_camera.json"
+        with json_path.open("w") as f:
+            json.dump(out, f)
+        return str(json_path)

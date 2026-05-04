@@ -79,15 +79,16 @@ def _sample_perspective_from_equirectangular(
                             padding_mode="border", align_corners=True)
     perspective = sampled[0].permute(1, 2, 0)
 
+    # Pinhole intrinsics in pixel coords (3x3, CameraPack convention).
     intrinsics = torch.tensor([
-        [f_px, 0,    cx,   0],
-        [0,    f_px, cy,   0],
-        [0,    0,    1,    0],
-        [0,    0,    0,    1],
+        [f_px, 0,    cx],
+        [0,    f_px, cy],
+        [0,    0,    1 ],
     ], dtype=torch.float32, device=device)
 
+    # World-to-camera extrinsics (CameraPack convention).
     extrinsics = torch.eye(4, dtype=torch.float32, device=device)
-    extrinsics[:3, :3] = R.T  # world-to-camera
+    extrinsics[:3, :3] = R.T
     return perspective, extrinsics, intrinsics
 
 
