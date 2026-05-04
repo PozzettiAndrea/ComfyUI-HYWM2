@@ -11,6 +11,7 @@ gradio app uses.
 
 import gc
 import logging
+import math
 import tempfile
 from pathlib import Path
 from typing import Any
@@ -19,9 +20,34 @@ import numpy as np
 import torch
 from PIL import Image
 import comfy.model_management as mm
+import comfy.model_patcher
 from comfy_api.latest import io
 
 log = logging.getLogger("hywm2")
+
+# Empirical: ViT tokens we can afford per GB of *free* VRAM during a
+# single forward pass (bf16 + FA-2). The FFN expansion is the binding
+# constraint.
+_TOKENS_PER_GB = 1500
+_PATCH = 14
+_MIN_EFFECTIVE = 224  # absolute floor (matches DINO pretraining min)
+
+
+def _auto_target_size(num_views: int, requested: int, free_gb: float) -> int:
+    """Snap `requested` down so total tokens stay inside the VRAM budget.
+
+    Returns a multiple of 14 in [_MIN_EFFECTIVE, requested].
+    """
+    if num_views <= 0 or free_gb <= 0:
+        return requested
+    budget_tokens = max(2000, int(free_gb * _TOKENS_PER_GB))
+    patches_per_view = budget_tokens / num_views
+    eff = int(_PATCH * math.sqrt(max(patches_per_view, 1)))
+    eff = (eff // _PATCH) * _PATCH
+    eff = max(_MIN_EFFECTIVE, min(eff, requested))
+    # Snap requested too in case caller didn't
+    eff = (eff // _PATCH) * _PATCH
+    return max(_MIN_EFFECTIVE, eff)
 
 
 class HYWM2Reconstruct(io.ComfyNode):
@@ -36,6 +62,7 @@ class HYWM2Reconstruct(io.ComfyNode):
     # Key tracks (model_dir, enable_bf16, disable_heads_tuple).
     _pipeline = None
     _pipeline_key = None
+    _patcher = None  # comfy.model_patcher.ModelPatcher wrapping pipeline.model
 
     @classmethod
     def define_schema(cls):
@@ -107,13 +134,31 @@ class HYWM2Reconstruct(io.ComfyNode):
 
             pipeline = cls._get_pipeline(model)
 
-            # Adaptive resolution: snap to multiples of 14, capped at target_size.
+            # Hand control of GPU residency to ComfyUI's model manager.
+            if cls._patcher is not None:
+                mm.load_models_gpu([cls._patcher])
+
+            # Resolution policy:
+            #   1. Snap requested target down to image's actual longest edge
+            #      (compute_adaptive_target_size handles 1/14 snap + clamp).
+            #   2. Auto-shrink further based on view count + free VRAM so a
+            #      21-view 952 panorama doesn't OOM on an 8 GB card.
             from .hyworld2.worldrecon.hyworldmirror.utils.inference_utils import (
                 compute_adaptive_target_size,
             )
             target_size = int(model.get("target_size", 952))
-            effective = compute_adaptive_target_size(img_paths, target_size)
-            log.info("HYWM2Reconstruct: target_size=%d effective=%d", target_size, effective)
+            adaptive = compute_adaptive_target_size(img_paths, target_size)
+            free_gb = 0.0
+            if torch.cuda.is_available():
+                try:
+                    free_gb = mm.get_free_memory(pipeline.device) / (1024 ** 3)
+                except Exception:
+                    free_gb = torch.cuda.mem_get_info(pipeline.device)[0] / (1024 ** 3)
+            effective = _auto_target_size(len(img_paths), adaptive, free_gb)
+            log.info(
+                "HYWM2Reconstruct: views=%d requested=%d adaptive=%d free=%.1fGB -> effective=%d",
+                len(img_paths), target_size, adaptive, free_gb, effective,
+            )
 
             prior_cam = prior_camera_json.strip() or None
             if prior_cam and not Path(prior_cam).is_file():
@@ -145,10 +190,11 @@ class HYWM2Reconstruct(io.ComfyNode):
     # ------------------------------------------------------------------
     @classmethod
     def _get_pipeline(cls, model_handle: dict):
-        """Lazy-load and cache the WorldMirrorPipeline.
+        """Lazy-load and cache the WorldMirrorPipeline + a ComfyUI ModelPatcher.
 
         Reloads if the loader handle changed (e.g. user toggled bf16 or
-        disabled a head between runs).
+        disabled a head between runs). Caller is responsible for
+        ``mm.load_models_gpu([cls._patcher])`` before forward.
         """
         key = (
             model_handle["model_dir"],
@@ -156,16 +202,16 @@ class HYWM2Reconstruct(io.ComfyNode):
             tuple(sorted(model_handle.get("disable_heads", []) or [])),
         )
         if cls._pipeline is not None and cls._pipeline_key == key:
-            # Make sure the cached pipeline is on GPU (ComfyUI may have
-            # offloaded it between runs to free VRAM for other models).
-            try:
-                cls._pipeline.model.to(cls._pipeline.device)
-                cls._pipeline.model.eval()
-            except Exception:
-                pass
             return cls._pipeline
 
         # Free any previous instance before loading a new one.
+        if cls._patcher is not None:
+            try:
+                cls._patcher.unpatch_model(device_to=cls._patcher.offload_device)
+                cls._patcher.cleanup()
+            except Exception:
+                pass
+            cls._patcher = None
         if cls._pipeline is not None:
             try:
                 cls._pipeline.model.cpu()
@@ -186,9 +232,28 @@ class HYWM2Reconstruct(io.ComfyNode):
             enable_bf16=bool(model_handle.get("enable_bf16", True)),
             disable_heads=list(model_handle.get("disable_heads") or []) or None,
         )
+
+        # Move to CPU so ComfyUI ModelPatcher owns GPU residency policy.
+        load_device = mm.get_torch_device()
+        offload_device = mm.unet_offload_device()
+        try:
+            pipeline.model.to(offload_device)
+            pipeline.device = load_device  # pipeline.forward will see this
+        except Exception as e:
+            log.warning("HYWM2Reconstruct: failed to offload pipeline.model to CPU: %s", e)
+
+        # Wrap in ModelPatcher so subsequent load_models_gpu cooperates with
+        # the rest of ComfyUI's VRAM budget (other workflows can evict us).
+        cls._patcher = comfy.model_patcher.ModelPatcher(
+            pipeline.model,
+            load_device=load_device,
+            offload_device=offload_device,
+        )
+
         cls._pipeline = pipeline
         cls._pipeline_key = key
-        log.info("HYWM2Reconstruct: pipeline ready")
+        log.info("HYWM2Reconstruct: pipeline + patcher ready (load=%s offload=%s)",
+                 load_device, offload_device)
         return pipeline
 
     # ------------------------------------------------------------------
