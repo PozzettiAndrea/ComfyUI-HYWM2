@@ -113,6 +113,8 @@
         <div class="controls">
           <label for="fov">Vertical FOV</label>
           <input type="range" id="fov" min="15" max="100" step="1" value="50" />
+          <label for="opacity-mul">Opacity ×</label>
+          <input type="range" id="opacity-mul" min="0" max="3" step="0.05" value="1" />
           <label for="background">Background</label>
           <input type="color" id="background" value="#0a0a0a" />
           <label for="up-axis">Up axis</label>
@@ -481,6 +483,44 @@ async function attachSplatScene(url) {
 // ===========================================================
 // Main load path
 // ===========================================================
+// Original .splat bytes for the currently loaded scene — kept so the
+// opacity slider can rebuild the buffer with scaled alphas without
+// re-fetching from the server.
+let _origBytes = null;
+let _opacityRebuildHandle = null;
+let _lastBlobUrl = null;
+
+async function rebuildSceneWithOpacity(factor) {
+  if (!_origBytes) return;
+  const out = new Uint8Array(_origBytes.length);
+  out.set(_origBytes);
+  // Alpha lives at byte offset 27 of each 32 B record.
+  for (let i = 27; i < out.length; i += REC) {
+    const v = Math.round(_origBytes[i] * factor);
+    out[i] = v < 0 ? 0 : (v > 255 ? 255 : v);
+  }
+  const blob = new Blob([out], { type: "application/octet-stream" });
+  const url = URL.createObjectURL(blob);
+  try {
+    await attachSplatScene(url);
+  } finally {
+    if (_lastBlobUrl) URL.revokeObjectURL(_lastBlobUrl);
+    _lastBlobUrl = url;
+  }
+}
+
+document.getElementById("opacity-mul").addEventListener("input", e => {
+  // Debounce while dragging to avoid spamming rebuilds.
+  if (_opacityRebuildHandle) clearTimeout(_opacityRebuildHandle);
+  const factor = parseFloat(e.target.value);
+  _opacityRebuildHandle = setTimeout(() => {
+    _opacityRebuildHandle = null;
+    rebuildSceneWithOpacity(factor).catch(err => {
+      console.error("[Splat Viewer] opacity rebuild failed:", err);
+    });
+  }, 120);
+});
+
 async function loadSplat(url, fileMeta) {
   currentSceneUrl = url;
   setStatus(`Fetching ${fileMeta.filename || ".splat"}…`);
@@ -488,6 +528,9 @@ async function loadSplat(url, fileMeta) {
   const resp = await fetch(url);
   if (!resp.ok) throw new Error(`Fetch failed: ${resp.status} ${resp.statusText}`);
   const buf = await resp.arrayBuffer();
+  // Stash original alpha for the slider.
+  _origBytes = new Uint8Array(buf);
+  if (_lastBlobUrl) { URL.revokeObjectURL(_lastBlobUrl); _lastBlobUrl = null; }
   setStatus(`Decoding ${(buf.byteLength / 1048576).toFixed(2)} MB…`);
 
   const decoded = decodeSplat(buf);
@@ -625,7 +668,12 @@ async function loadSplat(url, fileMeta) {
   }
 
   setStatus(`Loading ${n.toLocaleString()} splats into renderer…`);
-  await attachSplatScene(url);
+  const opacityFactor = parseFloat(document.getElementById("opacity-mul").value || "1");
+  if (Math.abs(opacityFactor - 1) < 1e-3) {
+    await attachSplatScene(url);
+  } else {
+    await rebuildSceneWithOpacity(opacityFactor);
+  }
   setStatus(`Loaded ${n.toLocaleString()} splats.`);
   frameBoundingBox();
 
