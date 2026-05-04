@@ -157,7 +157,12 @@ class LoadHYWM2Model(io.ComfyNode):
 
     @staticmethod
     def _download_files(target_dir: Path, files: list):
-        """Download specific files from HuggingFace, preserving subfolder layout."""
+        """Download specific files from HuggingFace, preserving subfolder layout.
+
+        Bridges hf_hub_download's tqdm progress into ComfyUI's ProgressBar so
+        the queue UI shows real-time byte-level progress for the 4.7 GB
+        WorldMirror checkpoint.
+        """
         target_dir.mkdir(parents=True, exist_ok=True)
 
         try:
@@ -165,15 +170,43 @@ class LoadHYWM2Model(io.ComfyNode):
         except ImportError as e:
             raise ImportError("huggingface_hub required: pip install huggingface-hub") from e
 
+        import comfy.utils
+        import tqdm as _tqdm_mod
+
         log.info("Downloading from HuggingFace: %s", REPO_ID)
+
+        total_bytes = sum(EXPECTED_SIZES.get(f, 0) for f in files) or len(files)
+        pbar = comfy.utils.ProgressBar(total_bytes)
+        cumulative_done = 0
+
+        class _ComfyTqdm(_tqdm_mod.tqdm):
+            # Captures per-file byte progress and forwards it to the
+            # outer ComfyUI bar. file_base = bytes already finished
+            # before this tqdm instance started.
+            file_base = 0
+
+            def update(self, n=1):
+                ret = super().update(n)
+                if n:
+                    pbar.update_absolute(
+                        min(_ComfyTqdm.file_base + self.n, total_bytes),
+                        total_bytes,
+                    )
+                return ret
 
         for filename in files:
             log.info("Downloading %s...", filename)
+            _ComfyTqdm.file_base = cumulative_done
             hf_hub_download(
                 repo_id=REPO_ID,
                 filename=filename,
                 local_dir=str(target_dir),
-                local_dir_use_symlinks=False,
+                tqdm_class=_ComfyTqdm,
             )
+            cumulative_done = min(
+                cumulative_done + EXPECTED_SIZES.get(filename, 0),
+                total_bytes,
+            )
+            pbar.update_absolute(cumulative_done, total_bytes)
 
         log.info("Download complete")
