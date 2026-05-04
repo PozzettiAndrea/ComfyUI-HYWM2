@@ -11,6 +11,10 @@
   #canvas { width: 100%; height: 100%; display: block; }
   #status { position: absolute; left: 8px; top: 8px; padding: 4px 8px; background: rgba(20,20,20,0.85); border: 1px solid #2a2a2a; border-radius: 3px; pointer-events: none; max-width: calc(100% - 16px); font-size: 11px; }
   #status.error { color: #ff8a8a; border-color: #5a2222; background: rgba(60,20,20,0.85); }
+  #axis-buttons { position: absolute; right: 8px; top: 8px; display: flex; gap: 2px; z-index: 5; }
+  .axis-btn { padding: 2px 6px; background: rgba(20,20,20,0.85); border: 1px solid #2a2a2a; color: #bbb; font-size: 10px; cursor: pointer; border-radius: 2px; font-family: ui-monospace, "SF Mono", monospace; line-height: 1.2; min-width: 28px; }
+  .axis-btn:hover { background: rgba(50,50,50,0.95); color: #fff; border-color: #555; }
+  .axis-btn.reset { color: #6cc; }
   #right { flex: 0 0 320px; max-width: 380px; min-width: 240px; display: flex; flex-direction: column; background: #161616; border-left: 1px solid #262626; }
   #tabs { display: flex; flex-shrink: 0; border-bottom: 1px solid #262626; background: #0e0e0e; }
   .tab { padding: 7px 10px; cursor: pointer; user-select: none; color: #888; border-right: 1px solid #1d1d1d; font-size: 11px; flex: 1 1 auto; text-align: center; }
@@ -42,6 +46,15 @@
   <div id="left">
     <canvas id="canvas"></canvas>
     <div id="status">Awaiting PLY…</div>
+    <div id="axis-buttons">
+      <button class="axis-btn" data-view="+xy" title="Camera on +Z, looking at XY plane (front)">+XY</button>
+      <button class="axis-btn" data-view="-xy" title="Camera on -Z, looking at XY plane (back)">-XY</button>
+      <button class="axis-btn" data-view="+xz" title="Camera on +Y, looking down at XZ plane (top)">+XZ</button>
+      <button class="axis-btn" data-view="-xz" title="Camera on -Y, looking up at XZ plane (bottom)">-XZ</button>
+      <button class="axis-btn" data-view="+yz" title="Camera on +X, looking at YZ plane (right)">+YZ</button>
+      <button class="axis-btn" data-view="-yz" title="Camera on -X, looking at YZ plane (left)">-YZ</button>
+      <button class="axis-btn reset" data-view="reset" title="Reset framing to bounding box (R)">⟲</button>
+    </div>
   </div>
   <div id="right">
     <div id="tabs">
@@ -229,6 +242,36 @@ function frameBoundingBox() {
   spherical.radius = Math.max(sphere.radius * 2.2, 0.05);
   updateCamera();
 }
+
+// Three.js Spherical: x = r·sin(phi)·sin(theta), y = r·cos(phi),
+// z = r·sin(phi)·cos(theta). So theta=0,phi=π/2 puts the camera on +Z.
+const _AXIS_VIEWS = {
+  "+xy": { theta: 0,             phi: Math.PI / 2 },           // camera on +Z, looking at XY (front)
+  "-xy": { theta: Math.PI,       phi: Math.PI / 2 },           // -Z (back)
+  "+xz": { theta: 0,             phi: 0.001 },                 // +Y (top)
+  "-xz": { theta: 0,             phi: Math.PI - 0.001 },       // -Y (bottom)
+  "+yz": { theta: Math.PI / 2,   phi: Math.PI / 2 },           // +X (right)
+  "-yz": { theta: -Math.PI / 2,  phi: Math.PI / 2 },           // -X (left)
+};
+function snapToAxisView(name) {
+  if (name === "reset") {
+    if (bbox) frameBoundingBox();
+    return;
+  }
+  const conf = _AXIS_VIEWS[name];
+  if (!conf) return;
+  if (bbox) {
+    const sphere = bbox.getBoundingSphere(new THREE.Sphere());
+    target.copy(sphere.center);
+    spherical.radius = Math.max(sphere.radius * 2.2, 0.05);
+  }
+  spherical.theta = conf.theta;
+  spherical.phi = conf.phi;
+  updateCamera();
+}
+document.querySelectorAll("#axis-buttons .axis-btn").forEach(btn => {
+  btn.addEventListener("click", () => snapToAxisView(btn.dataset.view));
+});
 
 function animate() {
   requestAnimationFrame(animate);
