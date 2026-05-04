@@ -1,12 +1,14 @@
-"""HYWM2Reconstruct - WorldMirror 2.0 multi-view reconstruction.
+"""HYWM2Reconstruct — WorldMirror 2.0 multi-view reconstruction.
 
-Takes a ComfyUI IMAGE batch (>= 1 view) and runs the WorldMirror 2.0 forward
-pass to produce depth, surface normals, dense point clouds, camera params,
-and 3D Gaussian Splatting attributes — all in a single dict output.
+Takes a ComfyUI IMAGE batch (>= 1 view) and emits FIVE typed outputs:
+  - images       (IMAGE)              — depth viz batch
+  - normals      (IMAGE)              — surface-normals viz batch
+  - points       (HYWM2_POINTS)       — colored point cloud (means + colors)
+  - gaussians    (HYWM2_GAUSSIANS)    — 3DGS attributes (means/quats/scales/...)
+  - predictions  (HYWM2_PREDICTIONS)  — full wrapper dict for power users
 
 The vendored upstream pipeline expects file paths, so we materialize the
-input batch as PNGs in a temp dir; this is the same approach the upstream
-gradio app uses.
+input batch as PNGs in a temp dir; same approach the upstream gradio app uses.
 """
 
 import gc
@@ -53,9 +55,9 @@ def _auto_target_size(num_views: int, requested: int, free_gb: float) -> int:
 class HYWM2Reconstruct(io.ComfyNode):
     """Run WorldMirror 2.0 on a multi-view IMAGE batch.
 
-    Outputs the raw predictions dict containing depth/normals/pts3d/camera
-    poses/intrinsics/3DGS attributes; downstream nodes can decode/export
-    individual fields.
+    Emits depth-viz / normals-viz IMAGE batches, a HYWM2_POINTS colored
+    point cloud, a HYWM2_GAUSSIANS 3DGS dict, and the full predictions
+    wrapper as a fallback for downstream introspection.
     """
 
     # Cache a single pipeline instance across invocations.
@@ -108,13 +110,66 @@ class HYWM2Reconstruct(io.ComfyNode):
                         "Leave blank if you used the EXTRINSICS / INTRINSICS inputs above."
                     ),
                 ),
+                # ----- decode parameters (formerly Decode* nodes) -----
+                io.Combo.Input(
+                    "depth_colormap",
+                    options=["viridis", "grayscale"],
+                    default="viridis",
+                    tooltip="Colormap for the `images` (depth-viz) output.",
+                ),
+                io.Boolean.Input(
+                    "apply_mask",
+                    default=True,
+                    tooltip="Mask invalid pixels in depth/normals viz and drop them from the point cloud.",
+                ),
+                io.Int.Input(
+                    "view_index",
+                    default=-1, min=-1, max=64,
+                    tooltip="Which view to emit in `images` / `normals`. -1 = all.",
+                ),
+                io.Float.Input(
+                    "points_conf_percentile",
+                    default=0.0, min=0.0, max=99.0, step=1.0,
+                    tooltip="Drop bottom N%% of points by pts3d_conf (0 = keep all).",
+                ),
+                io.Int.Input(
+                    "points_max",
+                    default=2_000_000, min=10_000, max=20_000_000,
+                    tooltip="Max points after filtering; randomly subsampled if exceeded.",
+                ),
+                io.Float.Input(
+                    "gaussians_weight_threshold",
+                    default=0.0, min=0.0, max=1.0, step=0.01,
+                    tooltip="Drop Gaussians below this per-point weight (0 = keep all).",
+                ),
+                io.Float.Input(
+                    "gaussians_downsample",
+                    default=1.0, min=0.0, max=1.0, step=0.01,
+                    tooltip="Random keep ratio for Gaussians (1.0 = keep all, 0.1 = keep 10%%).",
+                ),
             ],
             outputs=[
+                io.Image.Output(
+                    display_name="images",
+                    tooltip="Depth visualization as IMAGE batch (one frame per view).",
+                ),
+                io.Image.Output(
+                    display_name="normals",
+                    tooltip="Surface normals visualization (RGB = 0.5·(n+1)).",
+                ),
+                io.Custom("HYWM2_POINTS").Output(
+                    display_name="points",
+                    tooltip="Colored point cloud (means + per-vertex RGB).",
+                ),
+                io.Custom("HYWM2_GAUSSIANS").Output(
+                    display_name="gaussians",
+                    tooltip="3DGS attributes (means/quats/scales/opacities/rgbs).",
+                ),
                 io.Custom("HYWM2_PREDICTIONS").Output(
                     display_name="predictions",
                     tooltip=(
-                        "WorldMirror predictions dict: depth, normals, pts3d, "
-                        "camera_poses, camera_intrs, splats, plus the input imgs tensor."
+                        "Full WorldMirror predictions wrapper: depth, normals, pts3d, "
+                        "camera_poses, camera_intrs, splats, imgs, infer_time, target_size."
                     ),
                 ),
             ],
@@ -129,6 +184,13 @@ class HYWM2Reconstruct(io.ComfyNode):
         prior_camera_json: str = "",
         prior_extrinsics: torch.Tensor | None = None,
         prior_intrinsics: torch.Tensor | None = None,
+        depth_colormap: str = "viridis",
+        apply_mask: bool = True,
+        view_index: int = -1,
+        points_conf_percentile: float = 0.0,
+        points_max: int = 2_000_000,
+        gaussians_weight_threshold: float = 0.0,
+        gaussians_downsample: float = 1.0,
     ):
         if not isinstance(model, dict) or "model_dir" not in model:
             raise ValueError(
@@ -208,14 +270,50 @@ class HYWM2Reconstruct(io.ComfyNode):
 
         log.info("HYWM2Reconstruct: forward pass done in %.2fs", infer_time)
 
-        out = {
+        wrapper = {
             "predictions": predictions,
             "imgs": imgs,
             "infer_time": infer_time,
             "target_size": effective,
             "model_handle": model,
         }
-        return io.NodeOutput(out)
+
+        # ----- inline decode (formerly Decode* nodes) -----
+        from .decode_export import (
+            decode_depth_image, decode_normals_image,
+            decode_points, decode_gaussians,
+        )
+
+        depth_img = decode_depth_image(
+            predictions, view_index=view_index,
+            apply_mask=apply_mask, colormap=depth_colormap,
+        )
+        normals_img = decode_normals_image(
+            predictions, view_index=view_index, apply_mask=apply_mask,
+        )
+        points = decode_points(
+            predictions, imgs,
+            apply_mask=apply_mask,
+            conf_percentile=points_conf_percentile,
+            max_points=points_max,
+        )
+        try:
+            gaussians = decode_gaussians(
+                predictions,
+                weight_threshold=gaussians_weight_threshold,
+                downsample=gaussians_downsample,
+            )
+        except RuntimeError as e:
+            # Happens if the gs head was disabled at load time.
+            log.warning("HYWM2Reconstruct: gaussians decode skipped: %s", e)
+            empty = torch.zeros((0, 3))
+            gaussians = {
+                "means": empty, "quats": torch.zeros((0, 4)),
+                "scales": empty, "opacities": torch.zeros((0,)),
+                "rgbs": empty,
+            }
+
+        return io.NodeOutput(depth_img, normals_img, points, gaussians, wrapper)
 
     # ------------------------------------------------------------------
     # Pipeline lifecycle
