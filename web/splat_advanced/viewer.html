@@ -115,6 +115,8 @@
           <input type="range" id="fov" min="15" max="100" step="1" value="50" />
           <label for="opacity-mul">Opacity ×</label>
           <input type="range" id="opacity-mul" min="0" max="3" step="0.05" value="1" />
+          <label for="size-mul">Splat size ×</label>
+          <input type="range" id="size-mul" min="0.05" max="5" step="0.05" value="1" />
           <label for="background">Background</label>
           <input type="color" id="background" value="#0a0a0a" />
           <label for="up-axis">Up axis</label>
@@ -522,15 +524,31 @@ let _origBytes = null;
 let _opacityRebuildHandle = null;
 let _lastBlobUrl = null;
 
-async function rebuildSceneWithOpacity(factor) {
+async function rebuildScene() {
   if (!_origBytes) return;
+  const opacityFactor = parseFloat(document.getElementById("opacity-mul").value || "1");
+  const sizeFactor = parseFloat(document.getElementById("size-mul").value || "1");
+
   const out = new Uint8Array(_origBytes.length);
   out.set(_origBytes);
-  // Alpha lives at byte offset 27 of each 32 B record.
-  for (let i = 27; i < out.length; i += REC) {
-    const v = Math.round(_origBytes[i] * factor);
-    out[i] = v < 0 ? 0 : (v > 255 ? 255 : v);
+  const dv = new DataView(out.buffer);
+  const needScale = Math.abs(sizeFactor - 1) > 1e-3;
+  const needAlpha = Math.abs(opacityFactor - 1) > 1e-3;
+
+  for (let i = 0; i < out.length; i += REC) {
+    if (needScale) {
+      // Scales live at offset 12..23: 3 × float32 little-endian, linear units.
+      dv.setFloat32(i + 12, dv.getFloat32(i + 12, true) * sizeFactor, true);
+      dv.setFloat32(i + 16, dv.getFloat32(i + 16, true) * sizeFactor, true);
+      dv.setFloat32(i + 20, dv.getFloat32(i + 20, true) * sizeFactor, true);
+    }
+    if (needAlpha) {
+      // Alpha lives at offset 27 (uint8).
+      const v = Math.round(_origBytes[i + 27] * opacityFactor);
+      out[i + 27] = v < 0 ? 0 : (v > 255 ? 255 : v);
+    }
   }
+
   const blob = new Blob([out], { type: "application/octet-stream" });
   const url = URL.createObjectURL(blob);
   try {
@@ -541,17 +559,18 @@ async function rebuildSceneWithOpacity(factor) {
   }
 }
 
-document.getElementById("opacity-mul").addEventListener("input", e => {
-  // Debounce while dragging to avoid spamming rebuilds.
+function _scheduleRebuild() {
   if (_opacityRebuildHandle) clearTimeout(_opacityRebuildHandle);
-  const factor = parseFloat(e.target.value);
   _opacityRebuildHandle = setTimeout(() => {
     _opacityRebuildHandle = null;
-    rebuildSceneWithOpacity(factor).catch(err => {
-      console.error("[Splat Viewer] opacity rebuild failed:", err);
+    rebuildScene().catch(err => {
+      console.error("[Splat Viewer] rebuild failed:", err);
     });
   }, 120);
-});
+}
+
+document.getElementById("opacity-mul").addEventListener("input", _scheduleRebuild);
+document.getElementById("size-mul").addEventListener("input", _scheduleRebuild);
 
 async function loadSplat(url, fileMeta) {
   currentSceneUrl = url;
@@ -701,10 +720,11 @@ async function loadSplat(url, fileMeta) {
 
   setStatus(`Loading ${n.toLocaleString()} splats into renderer…`);
   const opacityFactor = parseFloat(document.getElementById("opacity-mul").value || "1");
-  if (Math.abs(opacityFactor - 1) < 1e-3) {
+  const sizeFactor = parseFloat(document.getElementById("size-mul").value || "1");
+  if (Math.abs(opacityFactor - 1) < 1e-3 && Math.abs(sizeFactor - 1) < 1e-3) {
     await attachSplatScene(url);
   } else {
-    await rebuildSceneWithOpacity(opacityFactor);
+    await rebuildScene();
   }
   setStatus(`Loaded ${n.toLocaleString()} splats.`);
   frameBoundingBox();
