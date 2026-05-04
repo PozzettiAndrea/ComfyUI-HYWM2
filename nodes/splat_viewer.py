@@ -24,7 +24,7 @@ class HYWM2SplatAdvancedViewer(io.ComfyNode):
     def define_schema(cls):
         return io.Schema(
             node_id="HYWM2SplatAdvancedViewer",
-            display_name="Splat Advanced Viewer",
+            display_name="Splat Viewer",
             category="HYWM2",
             description=(
                 "Preview a 3DGS .splat binary in 3D and inspect its 32 B "
@@ -67,7 +67,7 @@ class HYWM2SplatAdvancedViewer(io.ComfyNode):
         size = os.path.getsize(splat_path)
         n_gaussians = size // 32
         log.info(
-            "[Splat Advanced Viewer] %s -> %s (%.2f MB, %d gaussians)",
+            "[Splat Viewer] %s -> %s (%.2f MB, %d gaussians)",
             splat_path, url, size / (1024 * 1024), n_gaussians,
         )
 

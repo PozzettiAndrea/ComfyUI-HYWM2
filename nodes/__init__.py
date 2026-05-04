@@ -31,5 +31,5 @@ NODE_DISPLAY_NAME_MAPPINGS = {
     "HYWM2ExportGaussiansSplat": "HYWM2 Export Gaussians .splat",
     "HYWM2PreviewPointCloud": "HYWM2 Preview Point Cloud",
     "HYWM2PLYAdvancedGaussianViewer": "PLY Advanced Gaussian Viewer",
-    "HYWM2SplatAdvancedViewer": "Splat Advanced Viewer",
+    "HYWM2SplatAdvancedViewer": "Splat Viewer",
 }

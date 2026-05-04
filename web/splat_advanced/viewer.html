@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="utf-8" />
-<title>HYWM2 — Splat Advanced Viewer</title>
+<title>HYWM2 — Splat Viewer</title>
 <style>
   * { box-sizing: border-box; }
   html, body { margin: 0; padding: 0; height: 100%; width: 100%; background: #111; color: #e0e0e0; font-family: -apple-system, "Segoe UI", system-ui, sans-serif; font-size: 12px; overflow: hidden; }
@@ -497,7 +497,7 @@ async function loadSplat(url, fileMeta) {
   frameBoundingBox();
 
   // Console dump
-  const tag = `[HYWM2 Splat Advanced Viewer] ${fileMeta.filename || ".splat"}`;
+  const tag = `[HYWM2 Splat Viewer] ${fileMeta.filename || ".splat"}`;
   console.groupCollapsed(`%c${tag}`, "color:#6cc;font-weight:bold");
   console.log("File", {
     filename: fileMeta.filename || null,

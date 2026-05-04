@@ -1,5 +1,5 @@
 /**
- * ComfyUI-HYWM2 — Splat Advanced Viewer extension.
+ * ComfyUI-HYWM2 — Splat Viewer extension.
  *
  * Hosts an iframe (viewer.html) inside the node, forwarding the .splat
  * URL computed server-side. Mirrors the PLY viewer extension; only the
