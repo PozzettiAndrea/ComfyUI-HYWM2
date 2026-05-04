@@ -3,7 +3,7 @@ packages = ["gsplat", "flash-attn"]
 
 [dependencies]
 av = "*"
-numpy = "<2.0.0"
+numpy = ">=1.24.0"
 pillow = ">=10.0.0"
 scipy = ">=1.11.0"
 matplotlib = ">=3.9.0"
