@@ -124,8 +124,14 @@ def _print_debug_stats(ply_path: str) -> None:
     rather than being silently swallowed — debugging the debug printer is
     the user's primary use case.
     """
-    write = sys.stdout.write
-    flush = sys.stdout.flush
+    # NOTE: comfy-env's subprocess worker forwards builtins.print over its
+    # IPC socket; sys.stdout.write() is silently dropped. So we go through
+    # print() unconditionally here.
+    def write(s):
+        print(s, end="", flush=True)
+
+    def flush():
+        return None
     bar = "═" * 100
 
     write(f"\n{bar}\n[HYWM2 PLY Advanced Viewer] {ply_path}\n")
@@ -310,12 +316,13 @@ class HYWM2PLYAdvancedGaussianViewer(io.ComfyNode):
 
         url = cls._build_view_url(ply_path)
         size = os.path.getsize(ply_path)
-        # One-line trace so it's always visible in the worker log.
-        sys.stdout.write(
+        # One-line trace via print() so the comfy-env worker forwards it.
+        print(
             f"[HYWM2 PLY Advanced Viewer] {os.path.basename(ply_path)} "
-            f"({size / (1024*1024):.2f} MB) -> {url} [print_stats={print_stats}]\n"
+            f"({size / (1024*1024):.2f} MB) -> {url} "
+            f"[print_stats={print_stats}]",
+            flush=True,
         )
-        sys.stdout.flush()
 
         if print_stats:
             _print_debug_stats(ply_path)
