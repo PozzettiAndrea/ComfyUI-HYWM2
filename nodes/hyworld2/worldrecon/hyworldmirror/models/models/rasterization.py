@@ -5,8 +5,10 @@ import torch.nn as nn
 from torch import Tensor
 from einops import rearrange
 
-from gsplat.rendering import rasterization
-from gsplat.strategy import DefaultStrategy
+# gsplat is a CUDA-only build; do NOT import at module load — that breaks
+# the CPU-only path (CI runners, dev machines without CUDA) even when the
+# `gs` head is disabled and rasterize_* never gets called. Imports are
+# resolved lazily inside the methods that need them.
 
 from ..utils.frustum import calculate_unprojected_mask
 from ..utils.geometry import depth_to_world_coords_points
@@ -14,14 +16,22 @@ from ..utils import sh_utils, act_gs
 
 from typing import List
 
+
+def _gsplat_default_strategy_cls():
+    from gsplat.strategy import DefaultStrategy
+    return DefaultStrategy
+
+
 class Rasterizer:
     def __init__(self, rasterization_mode="classic", packed=True, abs_grad=True, with_eval3d=False,
-                 camera_model="pinhole", sparse_grad=False, distributed=False, grad_strategy=DefaultStrategy):
+                 camera_model="pinhole", sparse_grad=False, distributed=False, grad_strategy=None):
         self.rasterization_mode = rasterization_mode
         self.packed = packed
         self.abs_grad = abs_grad
         self.camera_model = camera_model
         self.sparse_grad = sparse_grad
+        # `grad_strategy=None` resolves to gsplat's DefaultStrategy lazily —
+        # only paid when rasterize_* is actually called (i.e. gs head active).
         self.grad_strategy = grad_strategy
         self.distributed = distributed
         self.with_eval3d = with_eval3d
@@ -39,6 +49,12 @@ class Rasterizer:
         height: int,
         **kwargs,
     ) -> Tuple[Tensor, Tensor, Dict]:
+        # Lazy: gsplat is GPU-only and we can't fail the module load when the
+        # gs head is disabled.
+        from gsplat.rendering import rasterization
+        DefaultStrategy = _gsplat_default_strategy_cls()
+        if self.grad_strategy is None:
+            self.grad_strategy = DefaultStrategy
         render_colors, render_alphas, _ = rasterization(
             means=means,
             quats=quats,
