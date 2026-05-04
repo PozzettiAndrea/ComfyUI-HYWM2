@@ -13,7 +13,6 @@ plyfile = ">=1.0.0"
 opencv = ">=4.9.0"
 huggingface_hub = "*"
 tqdm = "*"
-open3d = "==0.18.0"
 
 [target.linux-64.dependencies]
 c-compiler = "*"
