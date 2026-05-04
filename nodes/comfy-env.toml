@@ -1,7 +1,5 @@
-python = "3.10"
-
 [cuda]
-packages = ["gsplat", "flash_attn"]
+packages = ["gsplat", "flash-attn"]
 
 [dependencies]
 av = "*"
