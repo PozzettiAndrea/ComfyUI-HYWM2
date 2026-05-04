@@ -684,6 +684,67 @@ async function loadPly(url, fileMeta) {
 
   setStatus(`Loaded ${parsed.count.toLocaleString()} vertices.`);
   buildPointCloud(parsed);
+
+  // ----- Browser-console debug dump (mirrors the in-pane tables) -----
+  const tag = `[HYWM2 PLY Advanced Viewer] ${fileMeta.filename || "PLY"}`;
+  console.groupCollapsed(`%c${tag}`, "color:#6cc;font-weight:bold");
+  console.log("File", {
+    filename: fileMeta.filename || null,
+    bytes: buf.byteLength,
+    sizeMB: +(buf.byteLength / 1048576).toFixed(3),
+    format: meta.format,
+    version: meta.version,
+    headerBytes: headerEnd,
+    comments: meta.comments,
+    elements: meta.elements.map(e => ({ name: e.name, count: e.count })),
+    vertexCount: parsed.count,
+    stride: parsed.stride,
+  });
+
+  let off = 0;
+  const fieldsRows = [];
+  const sanityWarnings = [];
+  for (const p of vertexEl.properties) {
+    const r = ranges[p.name] || { min: NaN, max: NaN, mean: NaN };
+    const rule = interpretField(p.name);
+    let sanity = "·";
+    if (rule.expected && Number.isFinite(r.min) && Number.isFinite(r.max)) {
+      const [lo, hi] = rule.expected;
+      const ok = r.min >= lo && r.max <= hi;
+      sanity = ok ? "✓" : "⚠";
+      if (!ok) sanityWarnings.push({ field: p.name, observed: [r.min, r.max], expected: rule.expected, interpretation: rule.label });
+    }
+    const arr = parsed.fields[p.name];
+    fieldsRows.push({
+      offset: off,
+      name: p.name,
+      type: p.type,
+      bytes: TYPE_BYTES[p.type] ?? "?",
+      min: Number.isFinite(r.min) ? +r.min.toFixed(6) : NaN,
+      max: Number.isFinite(r.max) ? +r.max.toFixed(6) : NaN,
+      mean: Number.isFinite(r.mean) ? +r.mean.toFixed(6) : NaN,
+      "v[0]": arr ? arr[0] : null,
+      "v[1]": arr && arr.length > 1 ? arr[1] : null,
+      sanity,
+      interpretation: rule.label,
+    });
+    off += TYPE_BYTES[p.type] ?? 0;
+  }
+  console.log(`Fields  (stride = ${parsed.stride} B, ${vertexEl.properties.length} properties)`);
+  if (console.table) console.table(fieldsRows);
+  else console.log(fieldsRows);
+
+  if (sanityWarnings.length) {
+    console.warn(`⚠ ${sanityWarnings.length} field(s) outside expected 3DGS range`);
+    if (console.table) console.table(sanityWarnings);
+    else console.warn(sanityWarnings);
+  } else {
+    console.log("%c✓ All fields with known 3DGS expected ranges look sane.",
+                "color:#88c878");
+  }
+
+  console.log("Render pipeline", rows.map(([stage, source, interpretation]) => ({ stage, source, interpretation })));
+  console.groupEnd();
 }
 
 // ============================================================
