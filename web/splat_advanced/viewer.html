@@ -487,8 +487,13 @@ async function loadSplat(url, fileMeta) {
   setStatus(`Loaded ${n.toLocaleString()} splats.`);
   frameBoundingBox();
 
+  // The "Loaded successfully" phrase is the ready signal comfy-test
+  // (utils/comfy-test/src/comfy_test/reporting/screenshot.py) uses to
+  // know when an iframe-hosted 3D viewer is done rendering — without
+  // it the screenshot waits the full 60 s timeout and then captures
+  // a blank canvas.
   console.log(
-    `%c[HYWM2 Splat Viewer]%c ${fileMeta.filename || ".splat"} · ` +
+    `%c[HYWM2 Splat Viewer]%c Loaded successfully: ${fileMeta.filename || ".splat"} · ` +
     `${(buf.byteLength / 1048576).toFixed(2)} MB · ${n.toLocaleString()} gaussians`,
     "color:#6cc;font-weight:bold", "color:inherit",
   );
