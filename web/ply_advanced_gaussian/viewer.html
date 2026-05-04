@@ -611,6 +611,14 @@ async function loadPly(url, fileMeta) {
   setStatus(`Loaded ${parsed.count.toLocaleString()} splats.`);
   frameBoundingBox();
 
+  // The "Loaded successfully" phrase is the ready signal comfy-test
+  // (utils/comfy-test/src/comfy_test/reporting/screenshot.py) waits for
+  // before screenshotting an iframe-hosted 3D viewer.
+  console.log(
+    `[HYWM2 PLY Advanced Viewer] Loaded successfully: ${fileMeta.filename || "PLY"} · ` +
+    `${parsed.count.toLocaleString()} splats`,
+  );
+
   // ----- console dump -----
   const tag = `[HYWM2 PLY Advanced Viewer] ${fileMeta.filename || "PLY"}`;
   console.groupCollapsed(`%c${tag}`, "color:#6cc;font-weight:bold");
