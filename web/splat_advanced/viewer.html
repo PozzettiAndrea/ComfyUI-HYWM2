@@ -188,7 +188,7 @@ async function recreateViewer() {
   const fov = parseFloat(document.getElementById("fov").value || "50");
   viewer = new GaussianSplats3D.Viewer({
     cameraUp: getCameraUp(),
-    initialCameraPosition: [0, 0, 2],
+    initialCameraPosition: [0, 0, -2],
     initialCameraLookAt: [0, 0, 0],
     sphericalHarmonicsDegree: 0,
     rootElement: splatHost,
@@ -308,7 +308,7 @@ function frameBoundingBox() {
   const cam = viewer.camera, ctrl = viewer.controls;
   if (!cam) return;
   const dist = Math.max(sphere.radius * 2.2, 0.05);
-  cam.position.copy(sphere.center.clone().add(new THREE.Vector3(0, 0, 1).multiplyScalar(dist)));
+  cam.position.copy(sphere.center.clone().add(new THREE.Vector3(0, 0, -1).multiplyScalar(dist)));
   cam.lookAt(sphere.center);
   if (ctrl) { ctrl.target.copy(sphere.center); ctrl.update?.(); }
   cam.updateProjectionMatrix?.();
