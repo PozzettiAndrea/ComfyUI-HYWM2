@@ -23,21 +23,9 @@
   #spectate-help { padding: 4px 8px; background: rgba(20,20,20,0.85); border: 1px solid #2a2a2a; border-radius: 3px; color: #888; font-size: 10px; font-family: ui-monospace, "SF Mono", monospace; display: none; }
   #spectate-help.show { display: block; color: #ccc; }
   #right { flex: 0 0 320px; max-width: 380px; min-width: 240px; display: flex; flex-direction: column; background: #161616; border-left: 1px solid #262626; }
-  #tabs { display: flex; flex-shrink: 0; border-bottom: 1px solid #262626; background: #0e0e0e; }
-  .tab { padding: 7px 10px; cursor: pointer; user-select: none; color: #888; border-right: 1px solid #1d1d1d; font-size: 11px; flex: 1 1 auto; text-align: center; }
-  .tab:hover { color: #ddd; background: #181818; }
-  .tab.active { color: #6cc; background: #161616; border-bottom: 2px solid #6cc; }
-  #panes { flex: 1 1 auto; overflow-y: auto; padding: 8px 10px 14px 10px; }
-  .pane { display: none; }
-  .pane.active { display: block; }
+  #panes { flex: 1 1 auto; overflow-y: auto; padding: 10px 12px 16px 12px; }
+  .pane { display: block; }
   h3 { margin: 6px 0 6px 0; font-size: 11px; letter-spacing: 0.04em; color: #9aa; text-transform: uppercase; font-weight: 600; }
-  table { width: 100%; border-collapse: collapse; margin-bottom: 12px; font-size: 11px; font-variant-numeric: tabular-nums; }
-  th, td { text-align: left; padding: 3px 6px; border-bottom: 1px solid #1f1f1f; vertical-align: top; word-break: break-word; }
-  th { color: #888; font-weight: 500; background: #131313; position: sticky; top: 0; z-index: 1; }
-  td.k { color: #6cc; font-family: ui-monospace, "SF Mono", monospace; }
-  td.v { color: #ddd; font-family: ui-monospace, "SF Mono", monospace; }
-  td.t { color: #ccaa88; font-family: ui-monospace, "SF Mono", monospace; font-size: 10px; }
-  .interp { color: #88c878; font-size: 10px; font-style: italic; }
   .controls { display: grid; grid-template-columns: auto 1fr; gap: 5px 8px; align-items: center; }
   .controls label { color: #888; font-size: 10px; }
   .controls input[type="range"] { width: 100%; }
@@ -64,51 +52,14 @@
     </div>
   </div>
   <div id="right">
-    <div id="tabs">
-      <div class="tab active" data-pane="header">Header</div>
-      <div class="tab" data-pane="fields">Fields</div>
-      <div class="tab" data-pane="stats">Stats</div>
-      <div class="tab" data-pane="layout">Layout</div>
-      <div class="tab" data-pane="render">Render</div>
-    </div>
     <div id="panes">
-      <div class="pane active" id="pane-header">
-        <h3>File</h3>
-        <table id="t-file"></table>
-        <p class="small">.splat is a fixed 32 byte/Gaussian binary
-          (Antimatter15). No header — Gaussian count is just
-          <code>filesize / 32</code>. Records are pre-sorted by
-          visibility; the loader streams them in front-to-back order.</p>
-      </div>
-      <div class="pane" id="pane-fields">
-        <h3>Per-Attribute Decoded Stats</h3>
-        <p class="small">Stats are computed by decoding the binary client-side
-          (sample of up to 200 k records). ✓ green = observed range matches
-          what the format expects; ⚠ orange = something off (corrupted file
-          or non-standard producer).</p>
-        <table id="t-fields"><thead><tr><th>Attribute</th><th>min</th><th>max</th><th>mean</th><th>Range</th><th>✓</th></tr></thead><tbody></tbody></table>
-      </div>
-      <div class="pane" id="pane-stats">
-        <h3>Per-Component Statistics</h3>
-        <p class="small">Sampled component-wise from the buffer.</p>
-        <table id="t-stats"><thead><tr><th>Component</th><th>min</th><th>mean</th><th>max</th></tr></thead><tbody></tbody></table>
-      </div>
-      <div class="pane" id="pane-layout">
-        <h3>Record Layout (32 B / Gaussian)</h3>
-        <table id="t-layout"></table>
-        <p class="small">Per-record values from records 0 and 1 are decoded
-          and shown so you can manually verify byte alignment.</p>
-        <h3>Record 0 / Record 1</h3>
-        <table id="t-records"></table>
-      </div>
-      <div class="pane" id="pane-render">
+      <div class="pane active" id="pane-render">
         <h3>Renderer</h3>
         <p class="small">Real 3DGS rasterization via
           <a href="https://github.com/mkkellogg/GaussianSplats3D"
              target="_blank" rel="noreferrer"
              style="color:#6cc">@mkkellogg/GaussianSplats3D</a>:
-          alpha-sorted ellipsoid splatting with SH₀ shading. Loaded as an
-          ESM module from esm.sh.</p>
+          alpha-sorted ellipsoid splatting with SH₀ shading.</p>
         <h3>Camera</h3>
         <div class="controls">
           <label for="fov">Vertical FOV</label>
@@ -152,17 +103,6 @@ const setStatus = (msg, isErr=false) => {
   status.classList.toggle("error", !!isErr);
 };
 window.parent?.postMessage({ type: "HYWM2_VIEWER_READY" }, "*");
-
-// ===========================================================
-// Tabs
-// ===========================================================
-document.querySelectorAll(".tab").forEach(tab => {
-  tab.addEventListener("click", () => {
-    document.querySelectorAll(".tab").forEach(t => t.classList.toggle("active", t === tab));
-    const target = tab.dataset.pane;
-    document.querySelectorAll(".pane").forEach(p => p.classList.toggle("active", p.id === `pane-${target}`));
-  });
-});
 
 // ===========================================================
 // mkkellogg Viewer
@@ -231,80 +171,11 @@ document.getElementById("up-axis").addEventListener("change", async () => {
   if (lastUrl) await attachSplatScene(lastUrl);
 });
 
-// ===========================================================
-// .splat parser — fixed 32 B/record schema
-// ===========================================================
+// .splat record size (fixed 32 B/Gaussian Antimatter15 format).
 const REC = 32;
-const FIELD_BYTES = { pos: 12, scale: 12, rgba: 4, quat: 4 };
-const FIELD_OFFSETS = { pos: 0, scale: 12, rgba: 24, quat: 28 };
-
-function decodeSplat(buf) {
-  const n = Math.floor(buf.byteLength / REC);
-  const dv = new DataView(buf);
-
-  const pos = new Float32Array(n * 3);
-  const scale = new Float32Array(n * 3);
-  const rgba = new Uint8Array(n * 4);
-  const quatRaw = new Uint8Array(n * 4);
-  const quatF = new Float32Array(n * 4);    // dequantized [-1, 1]
-
-  for (let i = 0; i < n; i++) {
-    const o = i * REC;
-    pos[i * 3 + 0] = dv.getFloat32(o + 0, true);
-    pos[i * 3 + 1] = dv.getFloat32(o + 4, true);
-    pos[i * 3 + 2] = dv.getFloat32(o + 8, true);
-    scale[i * 3 + 0] = dv.getFloat32(o + 12, true);
-    scale[i * 3 + 1] = dv.getFloat32(o + 16, true);
-    scale[i * 3 + 2] = dv.getFloat32(o + 20, true);
-    rgba[i * 4 + 0] = dv.getUint8(o + 24);
-    rgba[i * 4 + 1] = dv.getUint8(o + 25);
-    rgba[i * 4 + 2] = dv.getUint8(o + 26);
-    rgba[i * 4 + 3] = dv.getUint8(o + 27);
-    quatRaw[i * 4 + 0] = dv.getUint8(o + 28);
-    quatRaw[i * 4 + 1] = dv.getUint8(o + 29);
-    quatRaw[i * 4 + 2] = dv.getUint8(o + 30);
-    quatRaw[i * 4 + 3] = dv.getUint8(o + 31);
-    // Dequantize: 0..255 → [-1, 1] via (x - 128) / 128
-    quatF[i * 4 + 0] = (quatRaw[i * 4 + 0] - 128) / 128;
-    quatF[i * 4 + 1] = (quatRaw[i * 4 + 1] - 128) / 128;
-    quatF[i * 4 + 2] = (quatRaw[i * 4 + 2] - 128) / 128;
-    quatF[i * 4 + 3] = (quatRaw[i * 4 + 3] - 128) / 128;
-  }
-
-  return { count: n, pos, scale, rgba, quatRaw, quatF };
-}
-
-function fmt(v) {
-  if (!Number.isFinite(v)) return "—";
-  if (Math.abs(v) >= 1000 || (Math.abs(v) > 0 && Math.abs(v) < 0.001)) return v.toExponential(3);
-  return v.toFixed(4);
-}
-function arrStats(arr, sample = 200000) {
-  let mn = Infinity, mx = -Infinity, sum = 0, n = 0;
-  const step = Math.max(1, Math.floor(arr.length / sample));
-  for (let i = 0; i < arr.length; i += step) {
-    const v = arr[i];
-    if (!Number.isFinite(v)) continue;
-    if (v < mn) mn = v; if (v > mx) mx = v; sum += v; n++;
-  }
-  return { min: mn, max: mx, mean: n ? sum / n : NaN };
-}
-function fillTable(tbl, rows) {
-  tbl.innerHTML = "";
-  for (const r of rows) {
-    const tr = document.createElement("tr");
-    for (const [i, cell] of r.entries()) {
-      const td = document.createElement("td");
-      td.className = i === 0 ? "k" : (typeof cell === "string" ? "v" : "v");
-      td.textContent = String(cell);
-      tr.appendChild(td);
-    }
-    tbl.appendChild(tr);
-  }
-}
 
 // ===========================================================
-// Camera / axis snap (same as PLY viewer)
+// Camera / axis snap
 // ===========================================================
 function frameBoundingBox() {
   if (!bbox || !viewer) return;
@@ -584,131 +455,18 @@ async function loadSplat(url, fileMeta) {
   if (_lastBlobUrl) { URL.revokeObjectURL(_lastBlobUrl); _lastBlobUrl = null; }
   setStatus(`Decoding ${(buf.byteLength / 1048576).toFixed(2)} MB…`);
 
-  const decoded = decodeSplat(buf);
-  const n = decoded.count;
-
-  // Header pane
-  fillTable(document.getElementById("t-file"), [
-    ["Filename", fileMeta.filename || "—"],
-    ["Bytes", `${buf.byteLength.toLocaleString()} (${(buf.byteLength / 1048576).toFixed(2)} MB)`],
-    ["Record size", "32 B (fixed)"],
-    ["Gaussian count", n.toLocaleString()],
-    ["Trailing bytes (filesize % 32)", `${buf.byteLength % REC} ${buf.byteLength % REC === 0 ? "(clean)" : "(unexpected — file may be truncated)"}`],
-  ]);
-
-  // Stats
-  const stats = {
-    "pos.x": arrStats(decoded.pos.subarray(0, n * 3).filter((_, i) => i % 3 === 0)),
-    "pos.y": arrStats(decoded.pos.subarray(0, n * 3).filter((_, i) => i % 3 === 1)),
-    "pos.z": arrStats(decoded.pos.subarray(0, n * 3).filter((_, i) => i % 3 === 2)),
-    "scale.x": arrStats(decoded.scale.subarray(0, n * 3).filter((_, i) => i % 3 === 0)),
-    "scale.y": arrStats(decoded.scale.subarray(0, n * 3).filter((_, i) => i % 3 === 1)),
-    "scale.z": arrStats(decoded.scale.subarray(0, n * 3).filter((_, i) => i % 3 === 2)),
-    "rgba.r": arrStats(decoded.rgba.filter((_, i) => i % 4 === 0)),
-    "rgba.g": arrStats(decoded.rgba.filter((_, i) => i % 4 === 1)),
-    "rgba.b": arrStats(decoded.rgba.filter((_, i) => i % 4 === 2)),
-    "rgba.a": arrStats(decoded.rgba.filter((_, i) => i % 4 === 3)),
-    "quat.0": arrStats(decoded.quatF.filter((_, i) => i % 4 === 0)),
-    "quat.1": arrStats(decoded.quatF.filter((_, i) => i % 4 === 1)),
-    "quat.2": arrStats(decoded.quatF.filter((_, i) => i % 4 === 2)),
-    "quat.3": arrStats(decoded.quatF.filter((_, i) => i % 4 === 3)),
-  };
-  // Per-component table
-  const tStats = document.getElementById("t-stats").querySelector("tbody");
-  tStats.innerHTML = "";
-  for (const [name, s] of Object.entries(stats)) {
-    const tr = document.createElement("tr");
-    for (const txt of [name, fmt(s.min), fmt(s.mean), fmt(s.max)]) {
-      const td = document.createElement("td"); td.className = "v"; td.textContent = txt;
-      tr.appendChild(td);
-    }
-    tStats.appendChild(tr);
-  }
-
-  // Per-attribute fields with sanity
-  const FIELDS = [
-    { name: "position", expected: null,
-      min: Math.min(stats["pos.x"].min, stats["pos.y"].min, stats["pos.z"].min),
-      max: Math.max(stats["pos.x"].max, stats["pos.y"].max, stats["pos.z"].max),
-      mean: (stats["pos.x"].mean + stats["pos.y"].mean + stats["pos.z"].mean) / 3 },
-    { name: "scale (linear)", expected: [0, 100],
-      min: Math.min(stats["scale.x"].min, stats["scale.y"].min, stats["scale.z"].min),
-      max: Math.max(stats["scale.x"].max, stats["scale.y"].max, stats["scale.z"].max),
-      mean: (stats["scale.x"].mean + stats["scale.y"].mean + stats["scale.z"].mean) / 3 },
-    { name: "rgb (uchar)", expected: [0, 255],
-      min: Math.min(stats["rgba.r"].min, stats["rgba.g"].min, stats["rgba.b"].min),
-      max: Math.max(stats["rgba.r"].max, stats["rgba.g"].max, stats["rgba.b"].max),
-      mean: (stats["rgba.r"].mean + stats["rgba.g"].mean + stats["rgba.b"].mean) / 3 },
-    { name: "alpha (uchar)", expected: [0, 255],
-      min: stats["rgba.a"].min, max: stats["rgba.a"].max, mean: stats["rgba.a"].mean },
-    { name: "quat (dequantized)", expected: [-1.001, 1.001],
-      min: Math.min(stats["quat.0"].min, stats["quat.1"].min, stats["quat.2"].min, stats["quat.3"].min),
-      max: Math.max(stats["quat.0"].max, stats["quat.1"].max, stats["quat.2"].max, stats["quat.3"].max),
-      mean: (stats["quat.0"].mean + stats["quat.1"].mean + stats["quat.2"].mean + stats["quat.3"].mean) / 4 },
-  ];
-  const tFields = document.getElementById("t-fields").querySelector("tbody");
-  tFields.innerHTML = "";
-  const sanityWarnings = [];
-  for (const f of FIELDS) {
-    const tr = document.createElement("tr");
-    let sanity = "·", color = "#555", title = "no expected range";
-    if (f.expected) {
-      const [lo, hi] = f.expected;
-      const ok = f.min >= lo && f.max <= hi;
-      sanity = ok ? "✓" : "⚠";
-      color = ok ? "#88c878" : "#ffae42";
-      title = `expected ${fmt(lo)} … ${fmt(hi)} · observed ${fmt(f.min)} … ${fmt(f.max)}`;
-      if (!ok) sanityWarnings.push({ field: f.name, observed: [f.min, f.max], expected: f.expected });
-    }
-    for (const [cls, txt] of [
-      ["k", f.name],
-      ["v", fmt(f.min)],
-      ["v", fmt(f.max)],
-      ["v", fmt(f.mean)],
-      ["interp", f.expected ? `${fmt(f.expected[0])} … ${fmt(f.expected[1])}` : "—"],
-    ]) {
-      const td = document.createElement("td"); td.className = cls; td.textContent = txt;
-      tr.appendChild(td);
-    }
-    const tdC = document.createElement("td");
-    tdC.textContent = sanity; tdC.style.color = color; tdC.title = title;
-    tr.appendChild(tdC);
-    tFields.appendChild(tr);
-  }
-
-  // Layout (fixed) + first-two records
-  fillTable(document.getElementById("t-layout"), [
-    ["pos",   "0..11   (3 × float32 little-endian)"],
-    ["scale", "12..23  (3 × float32 little-endian, linear units)"],
-    ["rgba",  "24..27  (4 × uchar — RGB then alpha)"],
-    ["quat",  "28..31  (4 × uchar — (x − 128) / 128 ⇒ [-1, 1] component-wise)"],
-  ]);
-  const records = [];
-  for (let i = 0; i < Math.min(2, n); i++) {
-    records.push([
-      `r[${i}].pos`, `(${fmt(decoded.pos[i*3])}, ${fmt(decoded.pos[i*3+1])}, ${fmt(decoded.pos[i*3+2])})`,
-    ]);
-    records.push([
-      `r[${i}].scale`, `(${fmt(decoded.scale[i*3])}, ${fmt(decoded.scale[i*3+1])}, ${fmt(decoded.scale[i*3+2])})`,
-    ]);
-    records.push([
-      `r[${i}].rgba`, `(${decoded.rgba[i*4]}, ${decoded.rgba[i*4+1]}, ${decoded.rgba[i*4+2]}, ${decoded.rgba[i*4+3]})`,
-    ]);
-    const qx = decoded.quatF[i*4], qy = decoded.quatF[i*4+1],
-          qz = decoded.quatF[i*4+2], qw = decoded.quatF[i*4+3];
-    const qmag = Math.sqrt(qx*qx + qy*qy + qz*qz + qw*qw);
-    records.push([
-      `r[${i}].quat`, `(${fmt(qx)}, ${fmt(qy)}, ${fmt(qz)}, ${fmt(qw)})  |q|=${fmt(qmag)}`,
-    ]);
-  }
-  fillTable(document.getElementById("t-records"), records);
-
-  // BBox from positions
+  // Compute bbox from positions only (used by axis-snap buttons + R-key
+  // reframe). Skip the full decode + stats — we no longer surface those.
+  const n = Math.floor(buf.byteLength / REC);
   if (n > 0) {
+    const dv = new DataView(buf);
     let minX = Infinity, minY = Infinity, minZ = Infinity;
     let maxX = -Infinity, maxY = -Infinity, maxZ = -Infinity;
     for (let i = 0; i < n; i++) {
-      const x = decoded.pos[i*3], y = decoded.pos[i*3+1], z = decoded.pos[i*3+2];
+      const o = i * REC;
+      const x = dv.getFloat32(o + 0, true);
+      const y = dv.getFloat32(o + 4, true);
+      const z = dv.getFloat32(o + 8, true);
       if (x < minX) minX = x; if (y < minY) minY = y; if (z < minZ) minZ = z;
       if (x > maxX) maxX = x; if (y > maxY) maxY = y; if (z > maxZ) maxZ = z;
     }
@@ -729,27 +487,11 @@ async function loadSplat(url, fileMeta) {
   setStatus(`Loaded ${n.toLocaleString()} splats.`);
   frameBoundingBox();
 
-  // Console dump
-  const tag = `[HYWM2 Splat Viewer] ${fileMeta.filename || ".splat"}`;
-  console.groupCollapsed(`%c${tag}`, "color:#6cc;font-weight:bold");
-  console.log("File", {
-    filename: fileMeta.filename || null,
-    bytes: buf.byteLength,
-    sizeMB: +(buf.byteLength / 1048576).toFixed(3),
-    gaussianCount: n,
-    recordSize: REC,
-    trailingBytes: buf.byteLength % REC,
-  });
-  console.log("Stats", stats);
-  console.log("Fields");
-  if (console.table) console.table(FIELDS);
-  if (sanityWarnings.length) {
-    console.warn(`⚠ ${sanityWarnings.length} attribute(s) outside expected .splat range`);
-    if (console.table) console.table(sanityWarnings);
-  } else {
-    console.log("%c✓ All attributes look sane.", "color:#88c878");
-  }
-  console.groupEnd();
+  console.log(
+    `%c[HYWM2 Splat Viewer]%c ${fileMeta.filename || ".splat"} · ` +
+    `${(buf.byteLength / 1048576).toFixed(2)} MB · ${n.toLocaleString()} gaussians`,
+    "color:#6cc;font-weight:bold", "color:inherit",
+  );
 }
 
 // ===========================================================
