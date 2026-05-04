@@ -7,12 +7,24 @@ from torch import nn
 import torch.nn.functional as F
 import torch
 
+# Tolerant flash-attention import: prefer FA-3, fall back to FA-2, fall back
+# to PyTorch SDPA when neither is installed (e.g. CPU-only CI hosts).
+flash_attn_func_v3 = None
+flash_attn_func_v2 = None
+_USE_FLASH_ATTN_V3 = False
+_HAS_FLASH_ATTN = False
 try:
     from flash_attn_interface import flash_attn_func as flash_attn_func_v3
     _USE_FLASH_ATTN_V3 = True
+    _HAS_FLASH_ATTN = True
 except ImportError:
-    from flash_attn.flash_attn_interface import flash_attn_func as flash_attn_func_v2
-    _USE_FLASH_ATTN_V3 = False
+    try:
+        from flash_attn.flash_attn_interface import flash_attn_func as flash_attn_func_v2
+        _HAS_FLASH_ATTN = True
+    except ImportError:
+        # No flash-attention available — _apply_attention will route through
+        # F.scaled_dot_product_attention regardless of dtype.
+        pass
 from ...comm.padding import minimal_pad_to_divisible, depad_by_length, pad_by_length
 import torch.distributed as dist
 from ...comm.communication import _All2All, _Allgather
@@ -55,9 +67,11 @@ class Attention(nn.Module):
         return q, k, v, B, N, C
 
     def _apply_attention(self, q: Tensor, k: Tensor, v: Tensor) -> Tensor:
-        if q.dtype==torch.bfloat16 or q.dtype==torch.float16:
+        # FA path: bf16/fp16 inputs *and* a flash-attn install. Otherwise fall
+        # through to torch's SDPA (works on CPU and on GPUs without FA).
+        if _HAS_FLASH_ATTN and (q.dtype == torch.bfloat16 or q.dtype == torch.float16):
             if q.is_contiguous():
-                q = q.transpose(1,2)
+                q = q.transpose(1, 2)
             else:
                 q = q.transpose(1, 2).contiguous()
             if k.is_contiguous():
