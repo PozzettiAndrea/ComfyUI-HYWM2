@@ -22,9 +22,11 @@ from typing import Any
 import numpy as np
 import torch
 from PIL import Image
-import comfy.model_management as mm
-import comfy.model_patcher
 from comfy_api.latest import io
+# NOTE: `comfy.model_management` and `comfy.model_patcher` are imported
+# lazily inside the methods that use them. Importing them at module load
+# triggers torch.cuda.current_device(), which crashes on CPU-only CI
+# hosts where torch is built without CUDA.
 
 log = logging.getLogger("hywm2")
 
@@ -237,6 +239,10 @@ class HYWM2Reconstruct(io.ComfyNode):
 
             pipeline = cls._get_pipeline(model)
 
+            # Lazy import — comfy.model_management probes CUDA at load time
+            # and crashes on CPU-only CI hosts.
+            import comfy.model_management as mm
+
             # Hand control of GPU residency to ComfyUI's model manager.
             if cls._patcher is not None:
                 mm.load_models_gpu([cls._patcher])
@@ -380,6 +386,11 @@ class HYWM2Reconstruct(io.ComfyNode):
             enable_bf16=bool(model_handle.get("enable_bf16", True)),
             disable_heads=list(model_handle.get("disable_heads") or []) or None,
         )
+
+        # Lazy imports — comfy.model_management + comfy.model_patcher probe
+        # CUDA at module load and crash on CPU-only CI hosts.
+        import comfy.model_management as mm
+        import comfy.model_patcher
 
         # Move to CPU so ComfyUI ModelPatcher owns GPU residency policy.
         load_device = mm.get_torch_device()

@@ -4,8 +4,10 @@ import logging
 from pathlib import Path
 
 import torch
-import comfy.model_management as mm
 from comfy_api.latest import io
+# NOTE: `comfy.model_management` is imported lazily inside `execute` because
+# importing it triggers torch.cuda.current_device() — which crashes on
+# CPU-only CI hosts where torch is built without CUDA.
 
 log = logging.getLogger("hywm2")
 
@@ -118,8 +120,11 @@ class LoadHYWM2Model(io.ComfyNode):
     ):
         log.info("Loading HYWM2 / WorldMirror 2.0 model handle...")
 
-        # Resolve precision "auto" using GPU capabilities
+        # Resolve precision "auto" using GPU capabilities. Lazy import:
+        # comfy.model_management probes CUDA at module load and crashes on
+        # CPU-only CI hosts (torch built without CUDA).
         if precision == "auto":
+            import comfy.model_management as mm
             device = mm.get_torch_device()
             precision = "bf16" if mm.should_use_bf16(device) else "fp32"
         log.info("Precision: %s", precision)
