@@ -15,20 +15,28 @@ except ImportError:
     from comfy_utils import get_hywm2_models_path
 
 
-# HuggingFace repo for WorldMirror 2.0 checkpoints
-REPO_ID = "tencent/HY-World-2.0"
-SUBFOLDER = "HY-WorldMirror-2.0"
+# HuggingFace repo for WorldMirror 2.0 checkpoints.
+#
+# Default mirror is the bf16 rehost (~3.27 GB, fp32-critical layers
+# preserved per upstream's _collect_fp32_critical_modules contract).
+# To pin against the official fp32 weights, set:
+#   REPO_ID  = "tencent/HY-World-2.0"
+#   SUBFOLDER = "HY-WorldMirror-2.0"
+# and update EXPECTED_SIZES below to 5_053_553_272.
+REPO_ID = "apozz/hy-worldmirror-2-bf16"
+SUBFOLDER = ""
 
-# Required files inside the subfolder
+# Required files inside the (optional) subfolder
+_PREFIX = f"{SUBFOLDER}/" if SUBFOLDER else ""
 REQUIRED_FILES = [
-    f"{SUBFOLDER}/model.safetensors",
-    f"{SUBFOLDER}/config.json",
+    f"{_PREFIX}model.safetensors",
+    f"{_PREFIX}config.json",
 ]
 
 # Expected file sizes for verification (within 10% tolerance)
 EXPECTED_SIZES = {
-    f"{SUBFOLDER}/model.safetensors": 5_053_553_272,
-    f"{SUBFOLDER}/config.json": 842,
+    f"{_PREFIX}model.safetensors": 3_273_940_974,
+    f"{_PREFIX}config.json": 842,
 }
 
 
