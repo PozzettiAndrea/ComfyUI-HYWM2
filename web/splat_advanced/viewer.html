@@ -16,6 +16,12 @@
   .axis-btn { padding: 2px 6px; background: rgba(20,20,20,0.85); border: 1px solid #2a2a2a; color: #bbb; font-size: 10px; cursor: pointer; border-radius: 2px; font-family: ui-monospace, "SF Mono", monospace; line-height: 1.2; min-width: 28px; }
   .axis-btn:hover { background: rgba(50,50,50,0.95); color: #fff; border-color: #555; }
   .axis-btn.reset { color: #6cc; }
+  #mode-toolbar { position: absolute; left: 8px; bottom: 8px; display: flex; gap: 4px; z-index: 5; align-items: center; }
+  #spectate-btn { padding: 4px 10px; background: rgba(20,20,20,0.85); border: 1px solid #2a2a2a; color: #bbb; font-size: 11px; cursor: pointer; border-radius: 3px; font-family: ui-monospace, "SF Mono", monospace; line-height: 1.2; }
+  #spectate-btn:hover { background: rgba(50,50,50,0.95); color: #fff; border-color: #555; }
+  #spectate-btn.active { background: rgba(60,90,40,0.9); color: #fff; border-color: #6c6; }
+  #spectate-help { padding: 4px 8px; background: rgba(20,20,20,0.85); border: 1px solid #2a2a2a; border-radius: 3px; color: #888; font-size: 10px; font-family: ui-monospace, "SF Mono", monospace; display: none; }
+  #spectate-help.show { display: block; color: #ccc; }
   #right { flex: 0 0 320px; max-width: 380px; min-width: 240px; display: flex; flex-direction: column; background: #161616; border-left: 1px solid #262626; }
   #tabs { display: flex; flex-shrink: 0; border-bottom: 1px solid #262626; background: #0e0e0e; }
   .tab { padding: 7px 10px; cursor: pointer; user-select: none; color: #888; border-right: 1px solid #1d1d1d; font-size: 11px; flex: 1 1 auto; text-align: center; }
@@ -51,6 +57,10 @@
       <button class="axis-btn" data-view="+yz" title="Camera on +X, looking at YZ (right)">+YZ</button>
       <button class="axis-btn" data-view="-yz" title="Camera on -X, looking at YZ (left)">-YZ</button>
       <button class="axis-btn reset" data-view="reset" title="Reframe to bounding box (R)">⟲</button>
+    </div>
+    <div id="mode-toolbar">
+      <button id="spectate-btn" title="Toggle WASD fly-through (Esc to exit)">Spectate</button>
+      <div id="spectate-help">WASD = move · Mouse = look · Q/E = down/up · Shift = sprint · Esc = exit</div>
     </div>
   </div>
   <div id="right">
@@ -324,8 +334,131 @@ document.querySelectorAll("#axis-buttons .axis-btn").forEach(btn => {
   btn.addEventListener("click", () => snapToAxis(btn.dataset.view));
 });
 window.addEventListener("keydown", e => {
-  if (e.key.toLowerCase() === "r") frameBoundingBox();
+  if (e.key.toLowerCase() === "r" && !spectate) frameBoundingBox();
 });
+
+// ===========================================================
+// Spectate mode (FPS/WASD fly-through)
+// ===========================================================
+let spectate = false;
+let yaw = 0, pitch = 0;
+const keys = new Set();
+const spectateBtn = document.getElementById("spectate-btn");
+const spectateHelp = document.getElementById("spectate-help");
+
+function _spectateUpVec() {
+  return new THREE.Vector3(...getCameraUp());
+}
+
+/** Build a right-handed (forward, right, up) basis from current yaw/pitch. */
+function _spectateBasis() {
+  const up = _spectateUpVec().normalize();
+  // pick any horizontal axis not parallel to up
+  let seed = new THREE.Vector3(0, 0, 1);
+  if (Math.abs(seed.dot(up)) > 0.9) seed.set(1, 0, 0);
+  const right0 = new THREE.Vector3().crossVectors(seed, up).normalize();
+  const fwd0 = new THREE.Vector3().crossVectors(up, right0).normalize();
+  // yaw around up
+  const qy = new THREE.Quaternion().setFromAxisAngle(up, yaw);
+  const fwd = fwd0.clone().applyQuaternion(qy);
+  const right = new THREE.Vector3().crossVectors(fwd, up).normalize();
+  // pitch around current right
+  const qp = new THREE.Quaternion().setFromAxisAngle(right, pitch);
+  fwd.applyQuaternion(qp);
+  const upOut = new THREE.Vector3().crossVectors(right, fwd).normalize();
+  return { fwd, right, up: upOut };
+}
+
+/** Seed yaw/pitch from current camera so toggling doesn't snap. */
+function _spectateInit() {
+  const cam = viewer?.camera;
+  if (!cam) return;
+  const up = _spectateUpVec().normalize();
+  const view = new THREE.Vector3(0, 0, -1).applyQuaternion(cam.quaternion).normalize();
+  // pitch = angle to horizontal plane
+  pitch = Math.asin(Math.max(-1, Math.min(1, view.dot(up))));
+  // horizontal projection
+  const horiz = view.clone().addScaledVector(up, -view.dot(up)).normalize();
+  // pick the same seed as basis
+  let seed = new THREE.Vector3(0, 0, 1);
+  if (Math.abs(seed.dot(up)) > 0.9) seed.set(1, 0, 0);
+  const right0 = new THREE.Vector3().crossVectors(seed, up).normalize();
+  const fwd0 = new THREE.Vector3().crossVectors(up, right0).normalize();
+  // yaw = atan2 of horiz against (fwd0, right0)
+  yaw = Math.atan2(horiz.dot(right0), horiz.dot(fwd0));
+}
+
+function setSpectate(on) {
+  spectate = !!on;
+  spectateBtn.classList.toggle("active", spectate);
+  spectateBtn.textContent = spectate ? "Exit Spectate" : "Spectate";
+  spectateHelp.classList.toggle("show", spectate);
+  if (viewer?.controls) viewer.controls.enabled = !spectate;
+  if (spectate) {
+    _spectateInit();
+    splatHost.requestPointerLock?.();
+  } else {
+    if (document.pointerLockElement) document.exitPointerLock?.();
+    keys.clear();
+  }
+}
+
+spectateBtn.addEventListener("click", () => setSpectate(!spectate));
+
+document.addEventListener("pointerlockchange", () => {
+  if (spectate && document.pointerLockElement !== splatHost) {
+    setSpectate(false);
+  }
+});
+
+document.addEventListener("mousemove", (e) => {
+  if (!spectate) return;
+  const sens = 0.0025;
+  yaw -= e.movementX * sens;
+  pitch = Math.max(-Math.PI / 2 + 0.01, Math.min(Math.PI / 2 - 0.01, pitch - e.movementY * sens));
+});
+
+window.addEventListener("keydown", e => {
+  const k = e.key.toLowerCase();
+  keys.add(k);
+  if (spectate && (k === "w" || k === "a" || k === "s" || k === "d" ||
+                   k === "q" || k === "e" || k === " ")) {
+    e.preventDefault();
+  }
+  if (k === "escape" && spectate) setSpectate(false);
+});
+window.addEventListener("keyup", e => keys.delete(e.key.toLowerCase()));
+window.addEventListener("blur", () => keys.clear());
+
+// Per-frame integration loop. Speed scales with the bbox extent so
+// arrow-key magnitude is reasonable across vastly different scenes.
+let _lastT = performance.now();
+function spectateTick() {
+  requestAnimationFrame(spectateTick);
+  const now = performance.now();
+  const dt = Math.min(0.1, (now - _lastT) / 1000);
+  _lastT = now;
+  if (!spectate || !viewer?.camera) return;
+
+  const cam = viewer.camera;
+  const { fwd, right, up } = _spectateBasis();
+  cam.up.copy(up);
+
+  const sceneSize = bbox ? bbox.getSize(new THREE.Vector3()).length() : 4;
+  const baseSpeed = Math.max(0.1, sceneSize * 0.3);
+  const speed = (keys.has("shift") ? 4 : 1) * baseSpeed * dt;
+
+  if (keys.has("w")) cam.position.addScaledVector(fwd, speed);
+  if (keys.has("s")) cam.position.addScaledVector(fwd, -speed);
+  if (keys.has("a")) cam.position.addScaledVector(right, -speed);
+  if (keys.has("d")) cam.position.addScaledVector(right, speed);
+  if (keys.has("e") || keys.has(" ")) cam.position.addScaledVector(up, speed);
+  if (keys.has("q") || keys.has("control")) cam.position.addScaledVector(up, -speed);
+
+  cam.lookAt(cam.position.clone().add(fwd));
+  cam.updateMatrixWorld?.();
+}
+spectateTick();
 
 // ===========================================================
 // Scene attach
