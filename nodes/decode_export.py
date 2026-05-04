@@ -176,8 +176,10 @@ def decode_points(preds: dict, imgs: torch.Tensor | None, *,
     Returns an empty HYWM2_POINTS dict if the points head was disabled.
     """
     if "pts3d" not in preds:
-        log.info("HYWM2 decode_points: points head disabled → empty HYWM2_POINTS")
-        return {"means": torch.zeros((0, 3)), "colors": torch.zeros((0, 3))}
+        # 1-row sentinel rather than (0,3): comfy-env's worker shm serializer
+        # rejects 0-element tensors via `rebuild_storage_empty`.
+        log.info("HYWM2 decode_points: points head disabled → 1-row sentinel HYWM2_POINTS")
+        return {"means": torch.zeros((1, 3)), "colors": torch.zeros((1, 3))}
     pts = preds["pts3d"].detach().float().cpu()                  # [B,S,H,W,3]
     if pts.dim() == 5:
         pts = pts[0]                                              # [S,H,W,3]
@@ -227,13 +229,15 @@ def decode_gaussians(preds: dict, *, weight_threshold: float = 0.0,
     Returns an empty HYWM2_GAUSSIANS dict if the gs head was disabled.
     """
     if "splats" not in preds:
-        log.info("HYWM2 decode_gaussians: gs head disabled → empty HYWM2_GAUSSIANS")
+        # 1-row sentinel rather than (0,…): comfy-env's worker shm serializer
+        # rejects 0-element tensors via `rebuild_storage_empty`.
+        log.info("HYWM2 decode_gaussians: gs head disabled → 1-row sentinel HYWM2_GAUSSIANS")
         return {
-            "means": torch.zeros((0, 3)),
-            "quats": torch.zeros((0, 4)),
-            "scales": torch.zeros((0, 3)),
-            "opacities": torch.zeros((0,)),
-            "rgbs": torch.zeros((0, 3)),
+            "means": torch.zeros((1, 3)),
+            "quats": torch.tensor([[1.0, 0.0, 0.0, 0.0]]),  # identity quat
+            "scales": torch.full((1, 3), 1e-6),              # near-zero ellipsoid
+            "opacities": torch.zeros((1,)),
+            "rgbs": torch.zeros((1, 3)),
         }
     s = preds["splats"]
 
