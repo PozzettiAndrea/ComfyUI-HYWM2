@@ -298,21 +298,11 @@ class HYWM2Reconstruct(io.ComfyNode):
             conf_percentile=points_conf_percentile,
             max_points=points_max,
         )
-        try:
-            gaussians = decode_gaussians(
-                predictions,
-                weight_threshold=gaussians_weight_threshold,
-                downsample=gaussians_downsample,
-            )
-        except RuntimeError as e:
-            # Happens if the gs head was disabled at load time.
-            log.warning("HYWM2Reconstruct: gaussians decode skipped: %s", e)
-            empty = torch.zeros((0, 3))
-            gaussians = {
-                "means": empty, "quats": torch.zeros((0, 4)),
-                "scales": empty, "opacities": torch.zeros((0,)),
-                "rgbs": empty,
-            }
+        gaussians = decode_gaussians(
+            predictions,
+            weight_threshold=gaussians_weight_threshold,
+            downsample=gaussians_downsample,
+        )
 
         # ----- predicted cameras (CameraPack convention: w2c [N,4,4], K [N,3,3]) -----
         c2w = predictions.get("camera_poses")          # [B,S,4,4] (OpenCV c2w)
@@ -330,6 +320,16 @@ class HYWM2Reconstruct(io.ComfyNode):
                 intr_t = intr_t[0]                     # [S,3,3]
         else:
             intr_t = torch.eye(3).unsqueeze(0)
+
+        # Summary so the user can see at a glance which outputs are populated.
+        empty = []
+        if "depth" not in predictions:    empty.append("images(depth)")
+        if "normals" not in predictions:  empty.append("normals")
+        if "pts3d" not in predictions:    empty.append("points")
+        if "splats" not in predictions:   empty.append("gaussians")
+        if c2w is None or intr is None:   empty.append("cameras")
+        if empty:
+            log.info("HYWM2Reconstruct: empty outputs (head disabled): %s", ", ".join(empty))
 
         return io.NodeOutput(depth_img, normals_img, points, gaussians, extrinsics_w2c, intr_t)
 

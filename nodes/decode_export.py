@@ -107,9 +107,20 @@ def _resolve_output_path(filename: str, output_dir: str, ext: str) -> Path:
 # Decode primitives — used inline by reconstruct.py
 # ---------------------------------------------------------------------------
 
+def _empty_image() -> torch.Tensor:
+    """1×1 black IMAGE used as the typed-empty sentinel for disabled head outputs."""
+    return torch.zeros((1, 1, 1, 3))
+
+
 def decode_depth_image(preds: dict, *, view_index: int = -1,
                        apply_mask: bool = True, colormap: str = "viridis") -> torch.Tensor:
-    """Per-view depth → IMAGE batch (per-frame normalized + colormapped + masked)."""
+    """Per-view depth → IMAGE batch (per-frame normalized + colormapped + masked).
+
+    Returns a 1×1 black IMAGE if the depth head was disabled.
+    """
+    if "depth" not in preds:
+        log.info("HYWM2 decode_depth_image: depth head disabled → empty IMAGE")
+        return _empty_image()
     depth = preds["depth"].detach().float().cpu()                # [B,S,H,W,1]
     if depth.dim() == 5:
         depth = depth.squeeze(-1)
@@ -141,7 +152,13 @@ def decode_depth_image(preds: dict, *, view_index: int = -1,
 
 def decode_normals_image(preds: dict, *, view_index: int = -1,
                          apply_mask: bool = True) -> torch.Tensor:
-    """Per-view normals → IMAGE batch (RGB = 0.5·(n+1), masked)."""
+    """Per-view normals → IMAGE batch (RGB = 0.5·(n+1), masked).
+
+    Returns a 1×1 black IMAGE if the normals head was disabled.
+    """
+    if "normals" not in preds:
+        log.info("HYWM2 decode_normals_image: normals head disabled → empty IMAGE")
+        return _empty_image()
     normals = preds["normals"].detach().float().cpu()            # [B,S,H,W,3]
     normals = select_views(normals, view_index)
     rgb = (0.5 * (normals + 1.0)).clamp(0, 1)
@@ -154,7 +171,13 @@ def decode_normals_image(preds: dict, *, view_index: int = -1,
 def decode_points(preds: dict, imgs: torch.Tensor | None, *,
                   apply_mask: bool = True, conf_percentile: float = 0.0,
                   max_points: int = 2_000_000) -> dict:
-    """Predictions → HYWM2_POINTS (means + RGB-from-imgs, optionally filtered)."""
+    """Predictions → HYWM2_POINTS (means + RGB-from-imgs, optionally filtered).
+
+    Returns an empty HYWM2_POINTS dict if the points head was disabled.
+    """
+    if "pts3d" not in preds:
+        log.info("HYWM2 decode_points: points head disabled → empty HYWM2_POINTS")
+        return {"means": torch.zeros((0, 3)), "colors": torch.zeros((0, 3))}
     pts = preds["pts3d"].detach().float().cpu()                  # [B,S,H,W,3]
     if pts.dim() == 5:
         pts = pts[0]                                              # [S,H,W,3]
@@ -199,9 +222,19 @@ def decode_points(preds: dict, imgs: torch.Tensor | None, *,
 
 def decode_gaussians(preds: dict, *, weight_threshold: float = 0.0,
                      downsample: float = 1.0) -> dict:
-    """Predictions → HYWM2_GAUSSIANS (means/quats/scales/opacities/rgbs)."""
+    """Predictions → HYWM2_GAUSSIANS (means/quats/scales/opacities/rgbs).
+
+    Returns an empty HYWM2_GAUSSIANS dict if the gs head was disabled.
+    """
     if "splats" not in preds:
-        raise RuntimeError("HYWM2 decode_gaussians: predictions has no 'splats' key (gs head disabled?)")
+        log.info("HYWM2 decode_gaussians: gs head disabled → empty HYWM2_GAUSSIANS")
+        return {
+            "means": torch.zeros((0, 3)),
+            "quats": torch.zeros((0, 4)),
+            "scales": torch.zeros((0, 3)),
+            "opacities": torch.zeros((0,)),
+            "rgbs": torch.zeros((0, 3)),
+        }
     s = preds["splats"]
 
     means = s["means"].detach().float().cpu()
