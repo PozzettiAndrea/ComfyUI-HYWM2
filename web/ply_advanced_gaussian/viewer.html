@@ -88,12 +88,27 @@
           declared order with the right widths.</p>
       </div>
       <div class="pane" id="pane-render">
+        <h3>Layers</h3>
+        <p class="small">Off = plain point cloud (white, constant size, no
+          transparency). Toggle each layer to fold in the corresponding
+          PLY field. Greyed-out toggles mean the field isn't present in
+          this PLY.</p>
+        <div class="controls">
+          <label for="use-color">Color (f_dc → SH₀ → RGB)</label>
+          <input type="checkbox" id="use-color" />
+          <label for="use-opacity">Opacity (sigmoid(opacity))</label>
+          <input type="checkbox" id="use-opacity" />
+          <label for="use-scales">Scales (exp(scale_*) → point size)</label>
+          <input type="checkbox" id="use-scales" />
+        </div>
         <h3>Pipeline</h3>
         <table id="t-render"></table>
         <h3>Display</h3>
         <div class="controls">
           <label for="point-size">Point size</label>
           <input type="range" id="point-size" min="0.5" max="6" step="0.1" value="1.5" />
+          <label for="scale-mul">Scale multiplier</label>
+          <input type="range" id="scale-mul" min="0.1" max="50" step="0.1" value="5" />
           <label for="opacity-mul">Opacity mul</label>
           <input type="range" id="opacity-mul" min="0" max="1" step="0.05" value="1" />
           <label for="background">Background</label>
@@ -234,6 +249,17 @@ document.getElementById("point-size").addEventListener("input", e => {
 document.getElementById("opacity-mul").addEventListener("input", e => {
   if (uniforms) uniforms.opacityMul.value = parseFloat(e.target.value);
 });
+document.getElementById("scale-mul").addEventListener("input", e => {
+  if (uniforms) uniforms.scaleMul.value = parseFloat(e.target.value);
+});
+for (const id of ["use-color", "use-opacity", "use-scales"]) {
+  document.getElementById(id).addEventListener("change", () => {
+    if (!uniforms) return;
+    uniforms.useColor.value   = document.getElementById("use-color").checked   ? 1.0 : 0.0;
+    uniforms.useOpacity.value = document.getElementById("use-opacity").checked ? 1.0 : 0.0;
+    uniforms.useScales.value  = document.getElementById("use-scales").checked  ? 1.0 : 0.0;
+  });
+}
 document.getElementById("background").addEventListener("input", e => {
   scene.background = new THREE.Color(e.target.value);
 });
@@ -510,13 +536,14 @@ function buildPointCloud(parsed) {
     positions[i*3+2] = zs[i];
   }
 
-  // Color: SH₀ if present, else RGB uchar, else white
+  // ---- Optional attributes — bake them all; the shader gates them via toggles ----
   const fdc0 = pickField(fields, "f_dc_0"),
         fdc1 = pickField(fields, "f_dc_1"),
         fdc2 = pickField(fields, "f_dc_2");
   const r8 = pickField(fields, "red"),
         g8 = pickField(fields, "green"),
         b8 = pickField(fields, "blue");
+  const hasColor = !!(fdc0 && fdc1 && fdc2) || !!(r8 && g8 && b8);
   const colors = new Float32Array(count * 3);
   if (fdc0 && fdc1 && fdc2) {
     for (let i = 0; i < count; i++) {
@@ -534,8 +561,8 @@ function buildPointCloud(parsed) {
     colors.fill(1);
   }
 
-  // Opacity: sigmoid(opacity) if logit looking, else just keep 1
   const op = pickField(fields, "opacity");
+  const hasOpacity = !!op;
   const alpha = new Float32Array(count);
   if (op) {
     let inUnit = true;
@@ -549,14 +576,47 @@ function buildPointCloud(parsed) {
     alpha.fill(1);
   }
 
+  const sx = pickField(fields, "scale_0"),
+        sy = pickField(fields, "scale_1"),
+        sz = pickField(fields, "scale_2");
+  const hasScales = !!(sx && sy && sz);
+  const radii = new Float32Array(count);
+  if (hasScales) {
+    for (let i = 0; i < count; i++) {
+      // Use the largest σᵢ = exp(scaleᵢ) per-Gaussian as a screen-space size cue.
+      const s = Math.max(Math.exp(sx[i]), Math.exp(sy[i]), Math.exp(sz[i]));
+      radii[i] = s;
+    }
+  } else {
+    radii.fill(1);
+  }
+
   const geom = new THREE.BufferGeometry();
   geom.setAttribute("position", new THREE.BufferAttribute(positions, 3));
   geom.setAttribute("color", new THREE.BufferAttribute(colors, 3));
   geom.setAttribute("alpha", new THREE.BufferAttribute(alpha, 1));
+  geom.setAttribute("radius", new THREE.BufferAttribute(radii, 1));
+
+  // Sync toggle DOM availability with field availability, but DON'T touch
+  // their checked state — the user's choices persist across reloads.
+  for (const [id, ok] of [
+    ["use-color",   hasColor],
+    ["use-opacity", hasOpacity],
+    ["use-scales",  hasScales],
+  ]) {
+    const cb = document.getElementById(id);
+    cb.disabled = !ok;
+    cb.parentElement.style.opacity = ok ? "1.0" : "0.45";
+    if (!ok) cb.checked = false;
+  }
 
   uniforms = {
-    pointSize: { value: parseFloat(document.getElementById("point-size").value) },
+    pointSize:  { value: parseFloat(document.getElementById("point-size").value) },
     opacityMul: { value: parseFloat(document.getElementById("opacity-mul").value) },
+    scaleMul:   { value: parseFloat(document.getElementById("scale-mul").value) },
+    useColor:   { value: document.getElementById("use-color").checked   ? 1.0 : 0.0 },
+    useOpacity: { value: document.getElementById("use-opacity").checked ? 1.0 : 0.0 },
+    useScales:  { value: document.getElementById("use-scales").checked  ? 1.0 : 0.0 },
   };
 
   const material = new THREE.ShaderMaterial({
@@ -564,15 +624,21 @@ function buildPointCloud(parsed) {
     vertexShader: `
       attribute vec3 color;
       attribute float alpha;
+      attribute float radius;
       varying vec3 vColor;
       varying float vAlpha;
       uniform float pointSize;
+      uniform float scaleMul;
+      uniform float useColor;
+      uniform float useOpacity;
+      uniform float useScales;
       void main() {
-        vColor = color;
-        vAlpha = alpha;
+        vColor = mix(vec3(0.85), color, useColor);
+        vAlpha = mix(1.0, alpha, useOpacity);
         vec4 mv = modelViewMatrix * vec4(position, 1.0);
         gl_Position = projectionMatrix * mv;
-        gl_PointSize = pointSize * (300.0 / max(0.001, -mv.z));
+        float sizeFactor = mix(1.0, radius * scaleMul, useScales);
+        gl_PointSize = pointSize * sizeFactor * (300.0 / max(0.001, -mv.z));
       }
     `,
     fragmentShader: `
