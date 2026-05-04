@@ -495,19 +495,118 @@ async function loadSplat(url, fileMeta) {
 }
 
 // ===========================================================
+// State persistence: snapshot → host (auto-saved into node.properties)
+// and restore ← host (after a workflow load).
+// ===========================================================
+let _pendingCamRestore = null;
+
+function snapshotState() {
+  const cam = viewer?.camera;
+  const ctrl = viewer?.controls;
+  return {
+    cam: cam ? {
+      position: cam.position.toArray(),
+      quaternion: cam.quaternion.toArray(),
+    } : null,
+    target: ctrl?.target ? ctrl.target.toArray() : null,
+    opacity: parseFloat(document.getElementById("opacity-mul").value),
+    size: parseFloat(document.getElementById("size-mul").value),
+    fov: parseFloat(document.getElementById("fov").value),
+    bg: document.getElementById("background").value,
+    up: document.getElementById("up-axis").value,
+  };
+}
+
+let _lastStateSent = "";
+setInterval(() => {
+  if (!viewer) return;
+  try {
+    const s = snapshotState();
+    const json = JSON.stringify(s);
+    if (json === _lastStateSent) return;
+    _lastStateSent = json;
+    window.parent?.postMessage({ type: "HYWM2_VIEWER_STATE", state: s }, "*");
+  } catch {}
+}, 500);
+
+function _maybeRestoreCam() {
+  if (!_pendingCamRestore || !viewer?.camera) return;
+  try {
+    const cam = viewer.camera;
+    const ctrl = viewer.controls;
+    const r = _pendingCamRestore;
+    if (r.position) cam.position.fromArray(r.position);
+    if (r.quaternion) cam.quaternion.fromArray(r.quaternion);
+    if (r.target && ctrl?.target) ctrl.target.fromArray(r.target);
+    cam.updateMatrixWorld?.();
+  } catch (e) {
+    console.warn("[HYWM2 Splat Viewer] cam restore failed:", e);
+  }
+  _pendingCamRestore = null;
+}
+
+async function applyRestoredState(s) {
+  if (!s) return;
+  // Up-axis change rebuilds the viewer; do it FIRST so subsequent applies
+  // happen against the recreated viewer.
+  if (s.up && document.getElementById("up-axis").value !== s.up) {
+    document.getElementById("up-axis").value = s.up;
+    await recreateViewer();
+    if (currentSceneUrl) await attachSplatScene(currentSceneUrl);
+  }
+  if (typeof s.opacity === "number") {
+    document.getElementById("opacity-mul").value = String(s.opacity);
+  }
+  if (typeof s.size === "number") {
+    document.getElementById("size-mul").value = String(s.size);
+  }
+  if (typeof s.fov === "number") {
+    document.getElementById("fov").value = String(s.fov);
+    if (viewer?.camera && "fov" in viewer.camera) {
+      viewer.camera.fov = s.fov;
+      viewer.camera.updateProjectionMatrix?.();
+    }
+  }
+  if (s.bg) {
+    document.getElementById("background").value = s.bg;
+    applyBackgroundColor();
+  }
+  // If a scene is already loaded, apply opacity/size scaling now.
+  if (currentSceneUrl && _origBytes) {
+    await rebuildScene();
+  }
+  // Camera pose: defer if no scene loaded yet (will apply post-attach
+  // via _maybeRestoreCam). Otherwise apply immediately.
+  _pendingCamRestore = (s.cam ? { ...s.cam, target: s.target } : null);
+  if (currentSceneUrl) _maybeRestoreCam();
+}
+
+// ===========================================================
 // Bridge from extension.js
 // ===========================================================
 window.addEventListener("message", async (event) => {
   if (!event?.data) return;
-  if (event.data.type !== "HYWM2_LOAD_SPLAT") return;
-  const { url, filename, size, error } = event.data;
-  if (error) { setStatus(error, true); return; }
-  if (!url) return;
-  try {
-    await loadSplat(url, { filename, size });
-  } catch (err) {
-    console.error(err);
-    setStatus("Load error: " + (err?.message || err), true);
+  const d = event.data;
+
+  if (d.type === "HYWM2_RESTORE_STATE") {
+    try { await applyRestoredState(d.state); }
+    catch (e) { console.error("[HYWM2 Splat Viewer] restore failed:", e); }
+    return;
+  }
+
+  if (d.type === "HYWM2_LOAD_SPLAT") {
+    const { url, filename, size, error } = d;
+    if (error) { setStatus(error, true); return; }
+    if (!url) return;
+    try {
+      await loadSplat(url, { filename, size });
+      // Apply any pending camera pose now that the scene is loaded
+      // (overrides the bbox-frame default).
+      _maybeRestoreCam();
+    } catch (err) {
+      console.error(err);
+      setStatus("Load error: " + (err?.message || err), true);
+    }
   }
 });
 </script>
