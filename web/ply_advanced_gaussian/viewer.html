@@ -48,6 +48,7 @@
       <div class="tab active" data-pane="header">Header</div>
       <div class="tab" data-pane="fields">Fields</div>
       <div class="tab" data-pane="stats">Stats</div>
+      <div class="tab" data-pane="debug">Debug</div>
       <div class="tab" data-pane="render">Render</div>
     </div>
     <div id="panes">
@@ -59,16 +60,32 @@
       </div>
       <div class="pane" id="pane-fields">
         <h3>Vertex Properties</h3>
-        <table id="t-fields"><thead><tr><th>Name</th><th>Type</th><th>Interpretation</th></tr></thead><tbody></tbody></table>
-        <p class="small">Interpretations are inferred from standard 3DGS PLY conventions
-          (Kerbl et al.). f_dc_* are spherical-harmonic DC coefficients; opacity is logit
-          (sigmoid at render); scale_* are log-scales (exp at render); rot_* are
-          quaternions normalized at render.</p>
+        <table id="t-fields"><thead><tr><th>Name</th><th>Type</th><th>min</th><th>max</th><th>Interpretation</th><th>✓</th></tr></thead><tbody></tbody></table>
+        <p class="small">✓ column: green = observed range matches the
+          expected range for this 3DGS field; orange = out of expected range
+          (parser may be reading the wrong field, or this PLY uses a
+          non-standard convention). f_dc_* are SH DC coefficients; opacity is
+          logit (sigmoid at render); scale_* are log-scales (exp at render);
+          rot_* are quaternion components.</p>
       </div>
       <div class="pane" id="pane-stats">
         <h3>Per-Field Statistics</h3>
-        <p class="small">First chunk is sampled from the buffer (≤200k vertices).</p>
+        <p class="small">Sampled from the buffer (≤200k vertices).</p>
         <table id="t-stats"><thead><tr><th>Field</th><th>min</th><th>mean</th><th>max</th></tr></thead><tbody></tbody></table>
+      </div>
+      <div class="pane" id="pane-debug">
+        <h3>Byte Layout (binary PLYs)</h3>
+        <p class="small">Each row shows the field's declared offset within
+          one vertex record + the actual values our parser extracted from
+          vertices 0 and 1. Mismatch between value type and declared type
+          is the smoking gun for stride / endian bugs.</p>
+        <table id="t-debug"><thead><tr><th>Off</th><th>Name</th><th>Type</th><th>v[0]</th><th>v[1]</th></tr></thead><tbody></tbody></table>
+        <h3>Stride / Order Sanity</h3>
+        <table id="t-stride"></table>
+        <p class="small">If the per-field min/max in the Fields tab look
+          plausible (✓), the order interpretation is correct. The byte
+          layout above corroborates that we walked the record in the
+          declared order with the right widths.</p>
       </div>
       <div class="pane" id="pane-render">
         <h3>Pipeline</h3>
@@ -333,21 +350,47 @@ function parsePlyVertices(buffer, meta, headerEnd) {
 // Field interpretation rules (3DGS PLY convention)
 // ============================================================
 const INTERP_RULES = [
-  { match: /^x$|^y$|^z$/, label: "position (world coords)" },
-  { match: /^nx$|^ny$|^nz$/, label: "stored normal (unused at render — 3DGS PLYs zero them)" },
-  { match: /^f_dc_[012]$/, label: "SH₀ DC band → RGB = clamp(0.5 + C₀·v, 0, 1), C₀ = 0.282" },
-  { match: /^f_rest_/, label: "higher-order SH coefficient (band ≥ 1) — ignored by point preview" },
-  { match: /^opacity$/, label: "logit → α = sigmoid(opacity)" },
-  { match: /^scale_[012]$/, label: "log-scale → σᵢ = exp(scaleᵢ)" },
-  { match: /^rot_[0123]$/, label: "quaternion component (normalized at render: [w,x,y,z])" },
-  { match: /^red$|^green$|^blue$/, label: "vertex color (uchar 0..255 → /255)" },
+  { match: /^x$|^y$|^z$/, label: "position (world coords)", expected: null },
+  { match: /^nx$|^ny$|^nz$/, label: "stored normal (unused at render — 3DGS PLYs zero them)", expected: [-1.001, 1.001] },
+  { match: /^f_dc_[012]$/, label: "SH₀ DC band → RGB = clamp(0.5 + C₀·v, 0, 1), C₀ = 0.282", expected: [-5, 8] },
+  { match: /^f_rest_/, label: "higher-order SH coefficient (band ≥ 1) — ignored by point preview", expected: [-5, 5] },
+  { match: /^opacity$/, label: "logit → α = sigmoid(opacity)", expected: [-15, 15] },
+  { match: /^scale_[012]$/, label: "log-scale → σᵢ = exp(scaleᵢ)", expected: [-15, 2] },
+  { match: /^rot_[0123]$/, label: "quaternion component (normalized at render: [w,x,y,z])", expected: [-1.001, 1.001] },
+  { match: /^red$|^green$|^blue$/, label: "vertex color (uchar 0..255 → /255)", expected: [0, 255] },
 ];
 
 function interpretField(name) {
   for (const rule of INTERP_RULES) {
-    if (rule.match.test(name)) return rule.label;
+    if (rule.match.test(name)) return rule;
   }
-  return "raw value (no built-in interpretation)";
+  return { match: null, label: "raw value (no built-in interpretation)", expected: null };
+}
+
+const TYPE_BYTES_TABLE = { char: 1, uchar: 1, int8: 1, uint8: 1, short: 2, ushort: 2, int16: 2, uint16: 2, int: 4, uint: 4, int32: 4, uint32: 4, float: 4, float32: 4, double: 8, float64: 8 };
+function typeByteSize(t) { return TYPE_BYTES_TABLE[t] ?? 0; }
+
+function computeFieldRanges(fields) {
+  const out = {};
+  for (const [name, arr] of Object.entries(fields)) {
+    let mn = Infinity, mx = -Infinity, sum = 0, n = 0;
+    const step = Math.max(1, Math.floor(arr.length / 200000));
+    for (let i = 0; i < arr.length; i += step) {
+      const v = arr[i];
+      if (!Number.isFinite(v)) continue;
+      if (v < mn) mn = v;
+      if (v > mx) mx = v;
+      sum += v; n++;
+    }
+    out[name] = { min: mn, max: mx, mean: n ? sum / n : NaN };
+  }
+  return out;
+}
+
+function fmt(v) {
+  if (!Number.isFinite(v)) return "—";
+  if (Math.abs(v) >= 1000 || (Math.abs(v) > 0 && Math.abs(v) < 0.001)) return v.toExponential(3);
+  return v.toFixed(4);
 }
 
 // ============================================================
@@ -368,35 +411,75 @@ function fillTable(tbl, rows) {
   }
 }
 
-function fillFieldsTable(tbl, props) {
+function fillFieldsTable(tbl, props, ranges) {
   const tbody = tbl.querySelector("tbody");
   tbody.innerHTML = "";
   for (const p of props) {
+    const rule = interpretField(p.name);
+    const r = ranges[p.name];
     const tr = document.createElement("tr");
     const tdN = document.createElement("td"); tdN.className = "k"; tdN.textContent = p.name;
     const tdT = document.createElement("td"); tdT.className = "t"; tdT.textContent = p.type;
-    const tdI = document.createElement("td"); tdI.className = "interp"; tdI.textContent = interpretField(p.name);
-    tr.appendChild(tdN); tr.appendChild(tdT); tr.appendChild(tdI);
+    const tdMn = document.createElement("td"); tdMn.className = "v"; tdMn.textContent = r ? fmt(r.min) : "—";
+    const tdMx = document.createElement("td"); tdMx.className = "v"; tdMx.textContent = r ? fmt(r.max) : "—";
+    const tdI = document.createElement("td"); tdI.className = "interp"; tdI.textContent = rule.label;
+    const tdC = document.createElement("td");
+    if (rule.expected && r && Number.isFinite(r.min) && Number.isFinite(r.max)) {
+      const [lo, hi] = rule.expected;
+      const ok = r.min >= lo && r.max <= hi;
+      tdC.textContent = ok ? "✓" : "⚠";
+      tdC.style.color = ok ? "#88c878" : "#ffae42";
+      tdC.title = `expected ${fmt(lo)} … ${fmt(hi)} · observed ${fmt(r.min)} … ${fmt(r.max)}`;
+    } else {
+      tdC.textContent = "·";
+      tdC.style.color = "#555";
+      tdC.title = "no expected range for this field";
+    }
+    tr.appendChild(tdN); tr.appendChild(tdT); tr.appendChild(tdMn); tr.appendChild(tdMx); tr.appendChild(tdI); tr.appendChild(tdC);
     tbody.appendChild(tr);
   }
 }
 
-function fillStatsTable(tbl, fields, sampleCount) {
+function fillDebugTables(debugTbl, strideTbl, props, fields, format, stride) {
+  const tbody = debugTbl.querySelector("tbody");
+  tbody.innerHTML = "";
+  let off = 0;
+  for (const p of props) {
+    const arr = fields[p.name];
+    const v0 = arr ? arr[0] : NaN;
+    const v1 = arr && arr.length > 1 ? arr[1] : NaN;
+    const tr = document.createElement("tr");
+    for (const [cls, txt] of [
+      ["t", String(off)],
+      ["k", p.name],
+      ["t", `${p.type} (${typeByteSize(p.type)}B)`],
+      ["v", fmt(v0)],
+      ["v", fmt(v1)],
+    ]) {
+      const td = document.createElement("td");
+      td.className = cls;
+      td.textContent = txt;
+      tr.appendChild(td);
+    }
+    tbody.appendChild(tr);
+    off += typeByteSize(p.type);
+  }
+
+  fillTable(strideTbl, [
+    ["Format", format || "—"],
+    ["Vertex stride", `${stride} bytes`],
+    ["Property count", String(props.length)],
+    ["Endianness", format === "binary_little_endian" ? "little (correct for x86 / x64)" :
+                   format === "binary_big_endian" ? "big" : (format === "ascii" ? "n/a" : "—")],
+  ]);
+}
+
+function fillStatsTable(tbl, ranges) {
   const tbody = tbl.querySelector("tbody");
   tbody.innerHTML = "";
-  const names = Object.keys(fields);
-  for (const name of names) {
-    const arr = fields[name];
-    let mn = Infinity, mx = -Infinity, sum = 0, n = 0;
-    const step = Math.max(1, Math.floor(arr.length / sampleCount));
-    for (let i = 0; i < arr.length; i += step) {
-      const v = arr[i];
-      if (!Number.isFinite(v)) continue;
-      mn = Math.min(mn, v); mx = Math.max(mx, v); sum += v; n++;
-    }
-    const mean = n ? sum / n : NaN;
+  for (const [name, r] of Object.entries(ranges)) {
     const tr = document.createElement("tr");
-    for (const txt of [name, mn.toFixed(4), mean.toFixed(4), mx.toFixed(4)]) {
+    for (const txt of [name, fmt(r.min), fmt(r.mean), fmt(r.max)]) {
       const td = document.createElement("td");
       td.className = "v";
       td.textContent = txt;
@@ -544,12 +627,25 @@ async function loadPly(url, fileMeta) {
     ["Comments", meta.comments.length ? meta.comments.join(" / ") : "(none)"],
   ]);
 
-  // Fields pane
+  // Compute per-field ranges once and reuse across tabs
   const vertexEl = meta.elements.find(e => e.name === "vertex");
-  fillFieldsTable(document.getElementById("t-fields"), vertexEl.properties);
+  const ranges = computeFieldRanges(parsed.fields);
+
+  // Fields pane (with min/max + sanity check vs. expected 3DGS ranges)
+  fillFieldsTable(document.getElementById("t-fields"), vertexEl.properties, ranges);
 
   // Stats pane (sample)
-  fillStatsTable(document.getElementById("t-stats"), parsed.fields, 200_000);
+  fillStatsTable(document.getElementById("t-stats"), ranges);
+
+  // Debug pane: byte layout + first two vertices' actual decoded values.
+  fillDebugTables(
+    document.getElementById("t-debug"),
+    document.getElementById("t-stride"),
+    vertexEl.properties,
+    parsed.fields,
+    meta.format,
+    parsed.stride,
+  );
 
   // Render pane
   const has = (re) => vertexEl.properties.some(p => re.test(p.name));
