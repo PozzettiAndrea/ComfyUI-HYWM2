@@ -62,11 +62,30 @@ class LoadHYWM2Model(io.ComfyNode):
                     step=14,
                     tooltip="Maximum inference resolution (longest edge). Snapped to multiples of 14 internally.",
                 ),
-                io.String.Input(
-                    "disable_heads",
-                    default="",
-                    multiline=False,
-                    tooltip="Comma-separated heads to disable to save memory. Options: camera, depth, normal, points, gs.",
+                io.Boolean.Input(
+                    "predict_camera",
+                    default=True,
+                    tooltip="Predict camera extrinsics + intrinsics. Off frees ~10 M params.",
+                ),
+                io.Boolean.Input(
+                    "predict_depth",
+                    default=True,
+                    tooltip="Predict per-pixel z + confidence + valid-mask. Off frees ~25 M params.",
+                ),
+                io.Boolean.Input(
+                    "predict_normals",
+                    default=True,
+                    tooltip="Predict per-pixel surface normals + confidence. Off frees ~25 M params.",
+                ),
+                io.Boolean.Input(
+                    "predict_points",
+                    default=True,
+                    tooltip="Predict per-pixel 3D world coords + confidence. Off frees ~25 M params.",
+                ),
+                io.Boolean.Input(
+                    "predict_gaussians",
+                    default=True,
+                    tooltip="Predict 3DGS attributes + run the splat renderer. Off frees ~70 M params.",
                 ),
             ],
             outputs=[
@@ -83,7 +102,11 @@ class LoadHYWM2Model(io.ComfyNode):
         cls,
         precision: str,
         target_size: int,
-        disable_heads: str,
+        predict_camera: bool = True,
+        predict_depth: bool = True,
+        predict_normals: bool = True,
+        predict_points: bool = True,
+        predict_gaussians: bool = True,
     ):
         log.info("Loading HYWM2 / WorldMirror 2.0 model handle...")
 
@@ -93,15 +116,17 @@ class LoadHYWM2Model(io.ComfyNode):
             precision = "bf16" if mm.should_use_bf16(device) else "fp32"
         log.info("Precision: %s", precision)
 
-        # Parse disable_heads
-        heads = [h.strip() for h in disable_heads.split(",") if h.strip()]
-        valid_heads = {"camera", "depth", "normal", "points", "gs"}
-        invalid = [h for h in heads if h not in valid_heads]
-        if invalid:
-            raise ValueError(
-                f"Invalid head names in disable_heads: {invalid}. "
-                f"Valid options: {sorted(valid_heads)}"
-            )
+        # Toggle → upstream "disable_heads" list (upstream uses 'normal'/'gs')
+        head_flags = {
+            "camera": predict_camera,
+            "depth": predict_depth,
+            "normal": predict_normals,
+            "points": predict_points,
+            "gs": predict_gaussians,
+        }
+        disable_heads = [name for name, on in head_flags.items() if not on]
+        if disable_heads:
+            log.info("Disabling prediction heads: %s", disable_heads)
 
         # Ensure checkpoint files are present
         model_dir = cls._get_or_download_checkpoint()
@@ -115,7 +140,7 @@ class LoadHYWM2Model(io.ComfyNode):
             "precision": precision,
             "enable_bf16": precision == "bf16",
             "target_size": int(target_size),
-            "disable_heads": heads,
+            "disable_heads": disable_heads,
         }
         return io.NodeOutput(model)
 
