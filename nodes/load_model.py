@@ -116,6 +116,16 @@ class LoadHYWM2Model(io.ComfyNode):
             precision = "bf16" if mm.should_use_bf16(device) else "fp32"
         log.info("Precision: %s", precision)
 
+        # The 3DGS renderer rasterizes against predictions["camera_poses"],
+        # so predict_gaussians strictly requires predict_camera. Force it on
+        # rather than failing later inside _gen_all_preds.
+        if predict_gaussians and not predict_camera:
+            log.warning(
+                "predict_gaussians=True forces predict_camera=True "
+                "(the 3DGS renderer reads camera_poses)."
+            )
+            predict_camera = True
+
         # Toggle → upstream "disable_heads" list (upstream uses 'normal'/'gs')
         head_flags = {
             "camera": predict_camera,
