@@ -1,5 +1,6 @@
 from .load_model import LoadHYWM2Model
 from .reconstruct import HYWM2Reconstruct
+from .sample_panorama import HYWM2SamplePanorama
 from .decode_export import (
     HYWM2DecodeDepth,
     HYWM2DecodeNormals,
@@ -13,6 +14,7 @@ from .decode_export import (
 NODE_CLASS_MAPPINGS = {
     "LoadHYWM2Model": LoadHYWM2Model,
     "HYWM2Reconstruct": HYWM2Reconstruct,
+    "HYWM2SamplePanorama": HYWM2SamplePanorama,
     "HYWM2DecodeDepth": HYWM2DecodeDepth,
     "HYWM2DecodeNormals": HYWM2DecodeNormals,
     "HYWM2DecodePoints": HYWM2DecodePoints,
@@ -25,6 +27,7 @@ NODE_CLASS_MAPPINGS = {
 NODE_DISPLAY_NAME_MAPPINGS = {
     "LoadHYWM2Model": "(Down)Load HYWM2 Model",
     "HYWM2Reconstruct": "HYWM2 Reconstruct",
+    "HYWM2SamplePanorama": "HYWM2 Sample Panorama (Equirect → Perspective)",
     "HYWM2DecodeDepth": "HYWM2 Decode Depth",
     "HYWM2DecodeNormals": "HYWM2 Decode Normals",
     "HYWM2DecodePoints": "HYWM2 Decode Points",
