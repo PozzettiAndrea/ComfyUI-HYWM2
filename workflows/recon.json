@@ -1,0 +1,458 @@
+{
+  "id": "2218331d-9226-4855-87ee-016c11117027",
+  "revision": 0,
+  "last_node_id": 18,
+  "last_link_id": 14,
+  "nodes": [
+    {
+      "id": 3,
+      "type": "LoadImageDataSetFromFolder",
+      "pos": [
+        1229.02707376877,
+        601.2460049059466
+      ],
+      "size": [
+        312.1490234375,
+        58
+      ],
+      "flags": {},
+      "order": 0,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "images",
+          "shape": 6,
+          "type": "IMAGE",
+          "links": [
+            2,
+            4
+          ]
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.20.1",
+        "Node name for S&R": "LoadImageDataSetFromFolder"
+      },
+      "widgets_values": [
+        "kitchen"
+      ]
+    },
+    {
+      "id": 1,
+      "type": "LoadHYWM2Model",
+      "pos": [
+        1354.3723065526583,
+        384.98673022545137
+      ],
+      "size": [
+        284.894140625,
+        106
+      ],
+      "flags": {},
+      "order": 1,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "model",
+          "type": "HYWM2_MODEL",
+          "links": [
+            1
+          ]
+        }
+      ],
+      "properties": {
+        "aux_id": "PozzettiAndrea/ComfyUI-HYWM2",
+        "ver": "39d72b026677343feae8c2c14c675368712f2dcb",
+        "Node name for S&R": "LoadHYWM2Model"
+      },
+      "widgets_values": [
+        "auto",
+        952,
+        ""
+      ]
+    },
+    {
+      "id": 8,
+      "type": "HYWM2DecodeDepth",
+      "pos": [
+        2019.0150148676857,
+        404.7397844954286
+      ],
+      "size": [
+        270,
+        106
+      ],
+      "flags": {},
+      "order": 4,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "predictions",
+          "type": "HYWM2_PREDICTIONS",
+          "link": 7
+        }
+      ],
+      "outputs": [
+        {
+          "name": "depth",
+          "type": "IMAGE",
+          "links": [
+            8
+          ]
+        }
+      ],
+      "properties": {
+        "aux_id": "PozzettiAndrea/ComfyUI-HYWM2",
+        "ver": "8443318b708b8c043e7bebcf97899732ca9cd181",
+        "Node name for S&R": "HYWM2DecodeDepth"
+      },
+      "widgets_values": [
+        "viridis",
+        true,
+        -1
+      ]
+    },
+    {
+      "id": 4,
+      "type": "PreviewImage",
+      "pos": [
+        1509.7717005257587,
+        741.4911212533755
+      ],
+      "size": [
+        486.4967158831041,
+        258
+      ],
+      "flags": {},
+      "order": 2,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "link": 4
+        }
+      ],
+      "outputs": [],
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.20.1",
+        "Node name for S&R": "PreviewImage"
+      },
+      "widgets_values": []
+    },
+    {
+      "id": 9,
+      "type": "PreviewImage",
+      "pos": [
+        2309.0078220050013,
+        407.9836862032166
+      ],
+      "size": [
+        486.4967158831041,
+        258
+      ],
+      "flags": {},
+      "order": 7,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "link": 8
+        }
+      ],
+      "outputs": [],
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.20.1",
+        "Node name for S&R": "PreviewImage"
+      },
+      "widgets_values": []
+    },
+    {
+      "id": 11,
+      "type": "PreviewImage",
+      "pos": [
+        2310.7534260709353,
+        707.7481848464994
+      ],
+      "size": [
+        486.4967158831041,
+        258
+      ],
+      "flags": {},
+      "order": 8,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "link": 10
+        }
+      ],
+      "outputs": [],
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.20.1",
+        "Node name for S&R": "PreviewImage"
+      },
+      "widgets_values": []
+    },
+    {
+      "id": 10,
+      "type": "HYWM2DecodeNormals",
+      "pos": [
+        2015.9739310547068,
+        558.2651131622214
+      ],
+      "size": [
+        270,
+        82
+      ],
+      "flags": {},
+      "order": 5,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "predictions",
+          "type": "HYWM2_PREDICTIONS",
+          "link": 9
+        }
+      ],
+      "outputs": [
+        {
+          "name": "normals",
+          "type": "IMAGE",
+          "links": [
+            10
+          ]
+        }
+      ],
+      "properties": {
+        "aux_id": "PozzettiAndrea/ComfyUI-HYWM2",
+        "ver": "8443318b708b8c043e7bebcf97899732ca9cd181",
+        "Node name for S&R": "HYWM2DecodeNormals"
+      },
+      "widgets_values": [
+        true,
+        -1
+      ]
+    },
+    {
+      "id": 2,
+      "type": "HYWM2Reconstruct",
+      "pos": [
+        1730.3040590399582,
+        409.70574788956793
+      ],
+      "size": [
+        270,
+        78
+      ],
+      "flags": {},
+      "order": 3,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "model",
+          "type": "HYWM2_MODEL",
+          "link": 1
+        },
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "link": 2
+        }
+      ],
+      "outputs": [
+        {
+          "name": "predictions",
+          "type": "HYWM2_PREDICTIONS",
+          "links": [
+            7,
+            9,
+            11
+          ]
+        }
+      ],
+      "properties": {
+        "aux_id": "PozzettiAndrea/ComfyUI-HYWM2",
+        "ver": "39d72b026677343feae8c2c14c675368712f2dcb",
+        "Node name for S&R": "HYWM2Reconstruct"
+      },
+      "widgets_values": [
+        ""
+      ]
+    },
+    {
+      "id": 16,
+      "type": "HYWM2DecodePoints",
+      "pos": [
+        1982.3170744626839,
+        1036.6447968162026
+      ],
+      "size": [
+        270,
+        106
+      ],
+      "flags": {},
+      "order": 6,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "predictions",
+          "type": "HYWM2_PREDICTIONS",
+          "link": 11
+        }
+      ],
+      "outputs": [
+        {
+          "name": "points",
+          "type": "HYWM2_POINTS",
+          "links": [
+            12
+          ]
+        }
+      ],
+      "properties": {
+        "aux_id": "PozzettiAndrea/ComfyUI-HYWM2",
+        "ver": "8443318b708b8c043e7bebcf97899732ca9cd181",
+        "Node name for S&R": "HYWM2DecodePoints"
+      },
+      "widgets_values": [
+        true,
+        0,
+        2000000
+      ]
+    },
+    {
+      "id": 15,
+      "type": "HYWM2ExportPointsPLY",
+      "pos": [
+        2270.6432227523014,
+        1039.8651984472756
+      ],
+      "size": [
+        276.335546875,
+        82
+      ],
+      "flags": {},
+      "order": 9,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "points",
+          "type": "HYWM2_POINTS",
+          "link": 12
+        }
+      ],
+      "outputs": [
+        {
+          "name": "filepath",
+          "type": "STRING",
+          "links": []
+        }
+      ],
+      "properties": {
+        "aux_id": "PozzettiAndrea/ComfyUI-HYWM2",
+        "ver": "8443318b708b8c043e7bebcf97899732ca9cd181",
+        "Node name for S&R": "HYWM2ExportPointsPLY"
+      },
+      "widgets_values": [
+        "hywm2_points",
+        ""
+      ]
+    }
+  ],
+  "links": [
+    [
+      1,
+      1,
+      0,
+      2,
+      0,
+      "HYWM2_MODEL"
+    ],
+    [
+      2,
+      3,
+      0,
+      2,
+      1,
+      "IMAGE"
+    ],
+    [
+      4,
+      3,
+      0,
+      4,
+      0,
+      "IMAGE"
+    ],
+    [
+      7,
+      2,
+      0,
+      8,
+      0,
+      "HYWM2_PREDICTIONS"
+    ],
+    [
+      8,
+      8,
+      0,
+      9,
+      0,
+      "IMAGE"
+    ],
+    [
+      9,
+      2,
+      0,
+      10,
+      0,
+      "HYWM2_PREDICTIONS"
+    ],
+    [
+      10,
+      10,
+      0,
+      11,
+      0,
+      "IMAGE"
+    ],
+    [
+      11,
+      2,
+      0,
+      16,
+      0,
+      "HYWM2_PREDICTIONS"
+    ],
+    [
+      12,
+      16,
+      0,
+      15,
+      0,
+      "HYWM2_POINTS"
+    ]
+  ],
+  "groups": [],
+  "config": {},
+  "extra": {
+    "ds": {
+      "scale": 1.067413445215089,
+      "offset": [
+        -1744.0174444439826,
+        -788.8992128489225
+      ]
+    },
+    "frontendVersion": "1.42.15"
+  },
+  "version": 0.4
+}
