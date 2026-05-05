@@ -1,1 +1,5 @@
 [node_reqs]
+
+[target.osx-arm64.dependencies]
+av = "*"
+ffmpeg = "*"
