@@ -18,7 +18,7 @@ ComfyUI custom nodes wrapping [HY-World 2.0 / WorldMirror 2.0](https://github.co
 
 Three options, in order of speed → reliability:
 
-1. **ComfyUI Manager (nightly, recommended)** — search for `ComfyUI-HYWM2` in the Manager and click Install **from the nightly version**. Do **NOT** use any numbered version — they may be outdated.
+1. **ComfyUI Manager (recommended)** — search for `HYWM2` in the Manager and click Install from the highest version displayed. If that doesn't work, try nightly.
 2. **Manager via Git URL** — in ComfyUI Manager: "Install via Git URL" with `https://github.com/PozzettiAndrea/ComfyUI-HYWM2.git`.
 3. **Manual (most reliable)**:
    ```bash
