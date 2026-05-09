@@ -1,0 +1,42 @@
+{
+  "timestamp": "2026-05-09T16:20:47.438531+00:00",
+  "platform": "linux",
+  "hardware": {
+    "os": "Linux-6.17.0-1010-azure-x86_64-with-glibc2.39",
+    "cpu": "AMD EPYC 9V74 80-Core Processor"
+  },
+  "commit_hash": "0fe90613a3291e5a47754fed50161f4287955b2d",
+  "success": true,
+  "summary": {
+    "total": 2,
+    "passed": 1,
+    "failed": 0
+  },
+  "workflows": [
+    {
+      "name": "depth_normal",
+      "status": "pass",
+      "duration_seconds": 304.29,
+      "error": null,
+      "hardware": {
+        "os": "Linux-6.17.0-1010-azure-x86_64-with-glibc2.39",
+        "cpu": "AMD EPYC 9V74 80-Core Processor"
+      },
+      "resources": {
+        "ram": {
+          "peak": 7.38,
+          "avg": 5.9
+        },
+        "total_ram_gb": 15.6,
+        "samples": 305
+      }
+    },
+    {
+      "name": "recon",
+      "status": "skipped",
+      "duration_seconds": 0,
+      "error": "Not configured for CPU runner",
+      "hardware": null
+    }
+  ]
+}

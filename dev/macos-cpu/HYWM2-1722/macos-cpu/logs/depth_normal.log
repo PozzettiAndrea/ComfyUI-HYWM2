@@ -1,0 +1,21 @@
+Capturing execution frames: depth_normal.json
+  Frame 1 saved (frame_000.jpg, t=0.0s)
+  Validating workflow...
+  Queuing workflow for execution...
+  Node executed (1 total), capturing...
+  Frame 2 saved (frame_001.jpg, t=0.8s)
+  [capture-node] freeze=8ms shot=256ms unfreeze=17ms saved=True
+  Frame 3 saved (frame_002.jpg, t=3.2s)
+  [capture-periodic] freeze=6ms shot=258ms unfreeze=29ms saved=True
+  Frame 4 saved (frame_003.jpg, t=5.6s)
+  [capture-periodic] freeze=1ms shot=231ms unfreeze=2ms saved=True
+  [capture-loop] iter=50 t=6.8s state={'complete': False, 'error': None, 'executedCount': 1, 'wsState': 1} eval_ms=2 ram=3.8/7.0GB (60%) swap=0.0/0.0GB (0%) cpu=57% browser_rss=0.65GB
+  Frame 5 saved (frame_004.jpg, t=10.2s)
+  [capture-periodic] freeze=11ms shot=578ms unfreeze=41ms saved=True
+  Frame 6 saved (frame_005.jpg, t=13.1s)
+  [capture-periodic] freeze=8ms shot=652ms unfreeze=88ms saved=True
+  [capture-loop] iter=100 t=14.6s state={'complete': False, 'error': None, 'executedCount': 1, 'wsState': 1} eval_ms=15 ram=3.7/7.0GB (61%) swap=0.0/0.0GB (0%) cpu=72% browser_rss=0.58GB
+  Frame 7 saved (frame_006.jpg, t=15.9s)
+  [capture-periodic] freeze=8ms shot=908ms unfreeze=99ms saved=True
+    Status: FAILED (unexpected error)
+    Error: Connection closed while reading from the driver

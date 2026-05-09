@@ -1,0 +1,48 @@
+{
+  "timestamp": "2026-05-08T07:00:34.872657+00:00",
+  "platform": "windows",
+  "hardware": {
+    "os": "Windows-10-10.0.26200-SP0",
+    "cpu": "Intel64 Family 6 Model 79 Stepping 1, GenuineIntel",
+    "gpu": "NVIDIA GeForce RTX 3060"
+  },
+  "commit_hash": "c137b18f9c9c3a54f5428f205122b93046ea2edf",
+  "success": true,
+  "summary": {
+    "total": 2,
+    "passed": 1,
+    "failed": 0
+  },
+  "workflows": [
+    {
+      "name": "depth_normal",
+      "status": "skipped",
+      "duration_seconds": 0,
+      "error": "Not configured for GPU runner",
+      "hardware": null
+    },
+    {
+      "name": "recon",
+      "status": "pass",
+      "duration_seconds": 115.93,
+      "error": null,
+      "hardware": {
+        "os": "Windows-10-10.0.26200-SP0",
+        "cpu": "Intel64 Family 6 Model 79 Stepping 1, GenuineIntel",
+        "gpu": "NVIDIA GeForce RTX 3060"
+      },
+      "resources": {
+        "ram": {
+          "peak": 6.3,
+          "avg": 2.25
+        },
+        "total_ram_gb": 31.9,
+        "samples": 101,
+        "vram": {
+          "peak": 5.27,
+          "avg": 1.24
+        }
+      }
+    }
+  ]
+}

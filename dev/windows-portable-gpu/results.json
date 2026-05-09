@@ -1,0 +1,48 @@
+{
+  "timestamp": "2026-05-08T07:01:56.894121+00:00",
+  "platform": "windows_portable",
+  "hardware": {
+    "os": "Windows-10-10.0.26200-SP0",
+    "cpu": "Intel64 Family 6 Model 79 Stepping 1, GenuineIntel",
+    "gpu": "NVIDIA GeForce RTX 3090"
+  },
+  "commit_hash": "c137b18f9c9c3a54f5428f205122b93046ea2edf",
+  "success": true,
+  "summary": {
+    "total": 2,
+    "passed": 1,
+    "failed": 0
+  },
+  "workflows": [
+    {
+      "name": "depth_normal",
+      "status": "skipped",
+      "duration_seconds": 0,
+      "error": "Not configured for GPU runner",
+      "hardware": null
+    },
+    {
+      "name": "recon",
+      "status": "pass",
+      "duration_seconds": 111.94,
+      "error": null,
+      "hardware": {
+        "os": "Windows-10-10.0.26200-SP0",
+        "cpu": "Intel64 Family 6 Model 79 Stepping 1, GenuineIntel",
+        "gpu": "NVIDIA GeForce RTX 3090"
+      },
+      "resources": {
+        "ram": {
+          "peak": 6.53,
+          "avg": 2.07
+        },
+        "total_ram_gb": 31.9,
+        "samples": 88,
+        "vram": {
+          "peak": 5.62,
+          "avg": 1.18
+        }
+      }
+    }
+  ]
+}

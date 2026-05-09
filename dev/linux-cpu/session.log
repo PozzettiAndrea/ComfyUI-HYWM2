@@ -1,0 +1,121 @@
+[00:00] Crash dump logging enabled: /home/runner/work/comfy-gpu-ci/comfy-gpu-ci/comfy-test-logs/HYWM2-1615/linux-cpu/crash_dump.log
+[00:00] 
+[00:00] [1/3] REGISTRATION
+[00:00] ----------------------------------------
+[00:00] 
+[DEBUG] server=None, server_url=http://127.0.0.1:8188, api=None
+[00:00] 
+Connecting to existing server at http://127.0.0.1:8188...
+[00:00] Connecting to existing server at http://127.0.0.1:8188...
+[00:00] Connected to server! (attempt 1, 0.0s)
+[00:00] Checking for import errors in server logs...
+[00:00] No import errors detected
+[00:00] Found 710 registered nodes
+[00:00] [REGISTRATION] PASSED
+[00:00] 
+[00:00] [2/3] INSTANTIATION
+[00:00] ----------------------------------------
+[00:00] 
+[DEBUG] server=<comfy_test.comfyui.server.ExternalComfyUIServer object at 0x7fbc93d33e90>, server_url=http://127.0.0.1:8188, api=<comfy_test.comfyui.api.ComfyUIAPI object at 0x7fbc9412f3d0>
+[00:00] Testing node constructors...
+[00:01] All 9 node(s) instantiated successfully!
+[00:01] [INSTANTIATION] PASSED
+[00:01] 
+[00:01] [3/3] EXECUTION
+[00:01] ----------------------------------------
+[00:01] 
+[DEBUG] server=<comfy_test.comfyui.server.ExternalComfyUIServer object at 0x7fbc93d33e90>, server_url=http://127.0.0.1:8188, api=<comfy_test.comfyui.api.ComfyUIAPI object at 0x7fbc9412f3d0>
+[00:01] CPU runner - will execute 1 workflow(s)
+[00:01] Running 2 workflow(s) (all with videos)...
+[00:01] Starting headless browser...
+[00:02]   Installing Mesa llvmpipe (apt)...
+[00:13]   Mesa install failed: E: Unable to locate package libegl1-mesa
+
+[00:13]   No GPU, no Mesa — using SwiftShader software rendering
+[00:13] Capturing execution frames: depth_normal.json
+[00:20]   Frame 1 saved (frame_000.jpg, t=0.0s)
+[00:20]   Validating workflow...
+[00:20]   Queuing workflow for execution...
+[00:20]   Node executed (1 total), capturing...
+[00:20]   Frame 2 saved (frame_001.jpg, t=0.5s)
+[00:20]   [capture-node] freeze=4ms shot=135ms unfreeze=5ms saved=True
+[00:25]   Frame 3 saved (frame_002.jpg, t=4.9s)
+[00:25]   [capture-periodic] freeze=2ms shot=118ms unfreeze=3ms saved=True
+[00:26]   [capture-loop] iter=50 t=6.2s state={'complete': False, 'error': None, 'executedCount': 1, 'wsState': 1} eval_ms=9 ram=2.4/15.6GB (16%) swap=0.0/3.0GB (0%) cpu=28% browser_rss=0.87GB
+[00:27]   Frame 4 saved (frame_003.jpg, t=7.1s)
+[00:27]   [capture-periodic] freeze=18ms shot=453ms unfreeze=51ms saved=True
+[00:30]   Frame 5 saved (frame_004.jpg, t=9.9s)
+[00:30]   [capture-periodic] freeze=31ms shot=501ms unfreeze=88ms saved=True
+[00:33]   Frame 6 saved (frame_005.jpg, t=13.3s)
+[00:33]   [capture-periodic] freeze=2ms shot=121ms unfreeze=5ms saved=True
+[00:35]   [capture-loop] iter=100 t=15.2s state={'complete': False, 'error': None, 'executedCount': 1, 'wsState': 1} eval_ms=3 ram=2.3/15.6GB (15%) swap=0.0/3.0GB (0%) cpu=57% browser_rss=0.88GB
+[00:38]   Frame 7 saved (frame_006.jpg, t=18.2s)
+[00:38]   [capture-periodic] freeze=3ms shot=130ms unfreeze=4ms saved=True
+[00:41]   [capture-loop] iter=150 t=21.1s state={'complete': False, 'error': None, 'executedCount': 1, 'wsState': 1} eval_ms=4 ram=3.6/15.6GB (23%) swap=0.0/3.0GB (0%) cpu=28% browser_rss=0.88GB
+[00:46]   [capture-loop] iter=200 t=26.8s state={'complete': False, 'error': None, 'executedCount': 1, 'wsState': 1} eval_ms=4 ram=6.5/15.6GB (42%) swap=0.0/3.0GB (0%) cpu=39% browser_rss=0.81GB
+[00:52]   [capture-loop] iter=250 t=32.5s state={'complete': False, 'error': None, 'executedCount': 1, 'wsState': 1} eval_ms=4 ram=6.3/15.6GB (40%) swap=0.0/3.0GB (0%) cpu=35% browser_rss=0.81GB
+[00:58]   [capture-loop] iter=300 t=38.3s state={'complete': False, 'error': None, 'executedCount': 1, 'wsState': 1} eval_ms=3 ram=6.3/15.6GB (40%) swap=0.0/3.0GB (0%) cpu=35% browser_rss=0.81GB
+[01:04]   [capture-loop] iter=350 t=43.9s state={'complete': False, 'error': None, 'executedCount': 1, 'wsState': 1} eval_ms=3 ram=6.2/15.6GB (40%) swap=0.0/3.0GB (0%) cpu=34% browser_rss=0.81GB
+[01:09]   [capture-loop] iter=400 t=49.7s state={'complete': False, 'error': None, 'executedCount': 1, 'wsState': 1} eval_ms=4 ram=6.2/15.6GB (40%) swap=0.0/3.0GB (0%) cpu=34% browser_rss=0.81GB
+[01:15]   [capture-loop] iter=450 t=55.4s state={'complete': False, 'error': None, 'executedCount': 1, 'wsState': 1} eval_ms=3 ram=6.2/15.6GB (40%) swap=0.0/3.0GB (0%) cpu=35% browser_rss=0.81GB
+[01:21]   [capture-loop] iter=500 t=61.1s state={'complete': False, 'error': None, 'executedCount': 1, 'wsState': 1} eval_ms=4 ram=6.2/15.6GB (40%) swap=0.0/3.0GB (0%) cpu=34% browser_rss=0.80GB
+[01:26]   [capture-loop] iter=550 t=66.8s state={'complete': False, 'error': None, 'executedCount': 1, 'wsState': 1} eval_ms=3 ram=6.2/15.6GB (40%) swap=0.0/3.0GB (0%) cpu=34% browser_rss=0.81GB
+[01:32]   [capture-loop] iter=600 t=72.4s state={'complete': False, 'error': None, 'executedCount': 1, 'wsState': 1} eval_ms=3 ram=6.2/15.6GB (40%) swap=0.0/3.0GB (0%) cpu=34% browser_rss=0.81GB
+[01:38]   [capture-loop] iter=650 t=78.2s state={'complete': False, 'error': None, 'executedCount': 1, 'wsState': 1} eval_ms=4 ram=6.2/15.6GB (40%) swap=0.0/3.0GB (0%) cpu=34% browser_rss=0.80GB
+[01:44]   [capture-loop] iter=700 t=84.0s state={'complete': False, 'error': None, 'executedCount': 1, 'wsState': 1} eval_ms=6 ram=6.3/15.6GB (40%) swap=0.0/3.0GB (0%) cpu=34% browser_rss=0.81GB
+[01:49]   [capture-loop] iter=750 t=89.6s state={'complete': False, 'error': None, 'executedCount': 1, 'wsState': 1} eval_ms=4 ram=6.2/15.6GB (40%) swap=0.0/3.0GB (0%) cpu=36% browser_rss=0.81GB
+[01:55]   [capture-loop] iter=800 t=95.3s state={'complete': False, 'error': None, 'executedCount': 1, 'wsState': 1} eval_ms=3 ram=6.2/15.6GB (40%) swap=0.0/3.0GB (0%) cpu=35% browser_rss=0.81GB
+[02:01]   [capture-loop] iter=850 t=101.0s state={'complete': False, 'error': None, 'executedCount': 1, 'wsState': 1} eval_ms=3 ram=6.2/15.6GB (40%) swap=0.0/3.0GB (0%) cpu=35% browser_rss=0.81GB
+[02:06]   [capture-loop] iter=900 t=106.7s state={'complete': False, 'error': None, 'executedCount': 1, 'wsState': 1} eval_ms=4 ram=6.2/15.6GB (40%) swap=0.0/3.0GB (0%) cpu=34% browser_rss=0.81GB
+[02:12]   [capture-loop] iter=950 t=112.4s state={'complete': False, 'error': None, 'executedCount': 1, 'wsState': 1} eval_ms=3 ram=6.2/15.6GB (40%) swap=0.0/3.0GB (0%) cpu=35% browser_rss=0.81GB
+[02:18]   [capture-loop] iter=1000 t=118.0s state={'complete': False, 'error': None, 'executedCount': 1, 'wsState': 1} eval_ms=3 ram=6.2/15.6GB (40%) swap=0.0/3.0GB (0%) cpu=34% browser_rss=0.81GB
+[02:23]   [capture-loop] iter=1050 t=123.8s state={'complete': False, 'error': None, 'executedCount': 1, 'wsState': 1} eval_ms=3 ram=6.2/15.6GB (40%) swap=0.0/3.0GB (0%) cpu=35% browser_rss=0.81GB
+[02:29]   [capture-loop] iter=1100 t=129.6s state={'complete': False, 'error': None, 'executedCount': 1, 'wsState': 1} eval_ms=4 ram=6.2/15.6GB (40%) swap=0.0/3.0GB (0%) cpu=36% browser_rss=0.81GB
+[02:35]   [capture-loop] iter=1150 t=135.2s state={'complete': False, 'error': None, 'executedCount': 1, 'wsState': 1} eval_ms=3 ram=6.2/15.6GB (40%) swap=0.0/3.0GB (0%) cpu=35% browser_rss=0.81GB
+[02:41]   [capture-loop] iter=1200 t=140.9s state={'complete': False, 'error': None, 'executedCount': 1, 'wsState': 1} eval_ms=3 ram=6.3/15.6GB (40%) swap=0.0/3.0GB (0%) cpu=35% browser_rss=0.81GB
+[02:46]   [capture-loop] iter=1250 t=146.7s state={'complete': False, 'error': None, 'executedCount': 1, 'wsState': 1} eval_ms=3 ram=6.3/15.6GB (40%) swap=0.0/3.0GB (0%) cpu=35% browser_rss=0.81GB
+[02:52]   [capture-loop] iter=1300 t=152.3s state={'complete': False, 'error': None, 'executedCount': 1, 'wsState': 1} eval_ms=4 ram=6.3/15.6GB (40%) swap=0.0/3.0GB (0%) cpu=33% browser_rss=0.81GB
+[02:58]   [capture-loop] iter=1350 t=158.0s state={'complete': False, 'error': None, 'executedCount': 1, 'wsState': 1} eval_ms=3 ram=6.3/15.6GB (41%) swap=0.0/3.0GB (0%) cpu=35% browser_rss=0.81GB
+[03:03]   [capture-loop] iter=1400 t=163.8s state={'complete': False, 'error': None, 'executedCount': 1, 'wsState': 1} eval_ms=3 ram=6.2/15.6GB (40%) swap=0.0/3.0GB (0%) cpu=35% browser_rss=0.81GB
+[03:09]   [capture-loop] iter=1450 t=169.4s state={'complete': False, 'error': None, 'executedCount': 1, 'wsState': 1} eval_ms=4 ram=6.2/15.6GB (40%) swap=0.0/3.0GB (0%) cpu=33% browser_rss=0.81GB
+[03:15]   [capture-loop] iter=1500 t=175.1s state={'complete': False, 'error': None, 'executedCount': 1, 'wsState': 1} eval_ms=3 ram=6.2/15.6GB (40%) swap=0.0/3.0GB (0%) cpu=35% browser_rss=0.81GB
+[03:20]   [capture-loop] iter=1550 t=180.8s state={'complete': False, 'error': None, 'executedCount': 1, 'wsState': 1} eval_ms=4 ram=6.2/15.6GB (40%) swap=0.0/3.0GB (0%) cpu=34% browser_rss=0.80GB
+[03:26]   [capture-loop] iter=1600 t=186.5s state={'complete': False, 'error': None, 'executedCount': 1, 'wsState': 1} eval_ms=3 ram=6.2/15.6GB (40%) swap=0.0/3.0GB (0%) cpu=34% browser_rss=0.81GB
+[03:32]   [capture-loop] iter=1650 t=192.3s state={'complete': False, 'error': None, 'executedCount': 1, 'wsState': 1} eval_ms=3 ram=6.3/15.6GB (40%) swap=0.0/3.0GB (0%) cpu=34% browser_rss=0.81GB
+[03:38]   [capture-loop] iter=1700 t=197.9s state={'complete': False, 'error': None, 'executedCount': 1, 'wsState': 1} eval_ms=3 ram=6.3/15.6GB (40%) swap=0.0/3.0GB (0%) cpu=34% browser_rss=0.81GB
+[03:43]   [capture-loop] iter=1750 t=203.6s state={'complete': False, 'error': None, 'executedCount': 1, 'wsState': 1} eval_ms=4 ram=6.3/15.6GB (40%) swap=0.0/3.0GB (0%) cpu=34% browser_rss=0.80GB
+[03:49]   [capture-loop] iter=1800 t=209.4s state={'complete': False, 'error': None, 'executedCount': 1, 'wsState': 1} eval_ms=3 ram=6.3/15.6GB (40%) swap=0.0/3.0GB (0%) cpu=34% browser_rss=0.81GB
+[03:55]   [capture-loop] iter=1850 t=215.0s state={'complete': False, 'error': None, 'executedCount': 1, 'wsState': 1} eval_ms=4 ram=6.3/15.6GB (40%) swap=0.0/3.0GB (0%) cpu=34% browser_rss=0.81GB
+[04:00]   [capture-loop] iter=1900 t=220.7s state={'complete': False, 'error': None, 'executedCount': 1, 'wsState': 1} eval_ms=4 ram=6.6/15.6GB (42%) swap=0.0/3.0GB (0%) cpu=34% browser_rss=0.81GB
+[04:06]   [capture-loop] iter=1950 t=226.3s state={'complete': False, 'error': None, 'executedCount': 1, 'wsState': 1} eval_ms=3 ram=6.6/15.6GB (42%) swap=0.0/3.0GB (0%) cpu=34% browser_rss=0.81GB
+[04:12]   [capture-loop] iter=2000 t=232.1s state={'complete': False, 'error': None, 'executedCount': 1, 'wsState': 1} eval_ms=4 ram=6.3/15.6GB (40%) swap=0.0/3.0GB (0%) cpu=34% browser_rss=0.81GB
+[04:17]   [capture-loop] iter=2050 t=237.8s state={'complete': False, 'error': None, 'executedCount': 1, 'wsState': 1} eval_ms=4 ram=6.2/15.6GB (40%) swap=0.0/3.0GB (0%) cpu=34% browser_rss=0.81GB
+[04:23]   [capture-loop] iter=2100 t=243.4s state={'complete': False, 'error': None, 'executedCount': 1, 'wsState': 1} eval_ms=3 ram=6.2/15.6GB (40%) swap=0.0/3.0GB (0%) cpu=34% browser_rss=0.80GB
+[04:29]   [capture-loop] iter=2150 t=249.1s state={'complete': False, 'error': None, 'executedCount': 1, 'wsState': 1} eval_ms=4 ram=6.2/15.6GB (40%) swap=0.0/3.0GB (0%) cpu=34% browser_rss=0.81GB
+[04:35]   [capture-loop] iter=2200 t=254.9s state={'complete': False, 'error': None, 'executedCount': 1, 'wsState': 1} eval_ms=3 ram=6.3/15.6GB (40%) swap=0.0/3.0GB (0%) cpu=34% browser_rss=0.81GB
+[04:40]   [capture-loop] iter=2250 t=260.5s state={'complete': False, 'error': None, 'executedCount': 1, 'wsState': 1} eval_ms=3 ram=6.2/15.6GB (40%) swap=0.0/3.0GB (0%) cpu=34% browser_rss=0.81GB
+[04:46]   [capture-loop] iter=2300 t=266.3s state={'complete': False, 'error': None, 'executedCount': 1, 'wsState': 1} eval_ms=4 ram=6.2/15.6GB (40%) swap=0.0/3.0GB (0%) cpu=34% browser_rss=0.81GB
+[04:52]   [capture-loop] iter=2350 t=272.0s state={'complete': False, 'error': None, 'executedCount': 1, 'wsState': 1} eval_ms=4 ram=6.3/15.6GB (40%) swap=0.0/3.0GB (0%) cpu=34% browser_rss=0.81GB
+[04:57]   [capture-loop] iter=2400 t=277.7s state={'complete': False, 'error': None, 'executedCount': 1, 'wsState': 1} eval_ms=3 ram=6.3/15.6GB (40%) swap=0.0/3.0GB (0%) cpu=33% browser_rss=0.81GB
+[05:03]   [capture-loop] iter=2450 t=283.4s state={'complete': False, 'error': None, 'executedCount': 1, 'wsState': 1} eval_ms=3 ram=6.3/15.6GB (40%) swap=0.0/3.0GB (0%) cpu=34% browser_rss=0.81GB
+[05:09]   [capture-loop] iter=2500 t=288.9s state={'complete': False, 'error': None, 'executedCount': 1, 'wsState': 1} eval_ms=3 ram=6.6/15.6GB (42%) swap=0.0/3.0GB (0%) cpu=33% browser_rss=0.81GB
+[05:14]   [capture-loop] iter=2550 t=294.7s state={'complete': False, 'error': None, 'executedCount': 1, 'wsState': 1} eval_ms=3 ram=6.3/15.6GB (40%) swap=0.0/3.0GB (0%) cpu=34% browser_rss=0.81GB
+[05:14]   Node executed (2 total), capturing...
+[05:15]   Frame 8 saved (frame_007.jpg, t=295.0s)
+[05:15]   [capture-node] freeze=5ms shot=164ms unfreeze=3ms saved=True
+[05:15]   Node executed (3 total), capturing...
+[05:15]   Frame 9 saved (frame_008.jpg, t=295.4s)
+[05:15]   [capture-node] freeze=3ms shot=180ms unfreeze=0ms saved=True
+[05:15]   Execution complete (t=295.4s)
+[05:15]   Captured 9 unique frames over 295.69s
+[05:15]   [debug] iframes: 0
+[05:15]   [timing] trigger_3d_previews: 0.0s
+[05:18]   Saved high-quality screenshot: depth_normal_executed.png
+[05:18]   [timing] final_screenshot: 0.4s
+[05:18]   [2/2] SKIPPED (not in cpu list) recon.json
+[05:18] Results saved to /home/runner/work/comfy-gpu-ci/comfy-gpu-ci/comfy-test-logs/HYWM2-1615/linux-cpu/results.json
+[05:18] Model report: 6 files, 3.0 GB -> /home/runner/work/comfy-gpu-ci/comfy-gpu-ci/comfy-test-logs/HYWM2-1615/linux-cpu/models.json
+[05:18] Saved: /home/runner/work/comfy-gpu-ci/comfy-gpu-ci/comfy-test-logs/HYWM2-1615/linux-cpu/index.html
+[05:18] [EXECUTION] PASSED
+[05:18] 
+linux: PASSED

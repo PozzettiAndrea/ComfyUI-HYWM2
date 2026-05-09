@@ -1,0 +1,49 @@
+{
+  "models_dir": "/workspaces/HYWM2-1731/ComfyUI/models",
+  "summary": {
+    "total_files": 6,
+    "total_size_bytes": 3273942234,
+    "total_size_human": "3.0 GB"
+  },
+  "folders": {
+    "hywm2": {
+      "total_size_bytes": 3273942234,
+      "total_size_human": "3.0 GB",
+      "source": {
+        "type": "unknown"
+      },
+      "files": [
+        {
+          "path": "model.safetensors",
+          "size_bytes": 3273940974,
+          "size_human": "3.0 GB"
+        },
+        {
+          "path": "config.json",
+          "size_bytes": 842,
+          "size_human": "842.0 B"
+        },
+        {
+          "path": ".cache/huggingface/CACHEDIR.TAG",
+          "size_bytes": 191,
+          "size_human": "191.0 B"
+        },
+        {
+          "path": ".cache/huggingface/download/model.safetensors.metadata",
+          "size_bytes": 125,
+          "size_human": "125.0 B"
+        },
+        {
+          "path": ".cache/huggingface/download/config.json.metadata",
+          "size_bytes": 101,
+          "size_human": "101.0 B"
+        },
+        {
+          "path": ".cache/huggingface/.gitignore",
+          "size_bytes": 1,
+          "size_human": "1.0 B"
+        }
+      ]
+    }
+  }
+}

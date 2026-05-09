@@ -1,0 +1,51 @@
+[00:00] Crash dump logging enabled: /Users/runner/work/comfy-gpu-ci/comfy-gpu-ci/comfy-test-logs/HYWM2-1722/macos-cpu/crash_dump.log
+[00:00] 
+[00:00] [1/3] REGISTRATION
+[00:00] ----------------------------------------
+[00:00] 
+[DEBUG] server=None, server_url=http://127.0.0.1:8188, api=None
+[00:00] 
+Connecting to existing server at http://127.0.0.1:8188...
+[00:00] Connecting to existing server at http://127.0.0.1:8188...
+[00:00] Connected to server! (attempt 1, 0.0s)
+[00:00] Checking for import errors in server logs...
+[00:00] No import errors detected
+[00:00] Found 710 registered nodes
+[00:00] [REGISTRATION] PASSED
+[00:00] 
+[00:00] [2/3] INSTANTIATION
+[00:00] ----------------------------------------
+[00:00] 
+[DEBUG] server=<comfy_test.comfyui.server.ExternalComfyUIServer object at 0x104695210>, server_url=http://127.0.0.1:8188, api=<comfy_test.comfyui.api.ComfyUIAPI object at 0x1046951b0>
+[00:00] Testing node constructors...
+[00:01] All 9 node(s) instantiated successfully!
+[00:01] [INSTANTIATION] PASSED
+[00:01] 
+[00:01] [3/3] EXECUTION
+[00:01] ----------------------------------------
+[00:01] 
+[DEBUG] server=<comfy_test.comfyui.server.ExternalComfyUIServer object at 0x104695210>, server_url=http://127.0.0.1:8188, api=<comfy_test.comfyui.api.ComfyUIAPI object at 0x1046951b0>
+[00:01] CPU runner - will execute 1 workflow(s)
+[00:01] Running 2 workflow(s) (all with videos)...
+[00:01] Starting headless browser...
+[00:01]   macOS — using Apple Metal GPU via ANGLE
+[00:04] Capturing execution frames: depth_normal.json
+[00:11]   Frame 1 saved (frame_000.jpg, t=0.0s)
+[00:11]   Validating workflow...
+[00:11]   Queuing workflow for execution...
+[00:11]   Node executed (1 total), capturing...
+[00:11]   Frame 2 saved (frame_001.jpg, t=0.8s)
+[00:11]   [capture-node] freeze=8ms shot=256ms unfreeze=17ms saved=True
+[00:14]   Frame 3 saved (frame_002.jpg, t=3.2s)
+[00:14]   [capture-periodic] freeze=6ms shot=258ms unfreeze=29ms saved=True
+[00:16]   Frame 4 saved (frame_003.jpg, t=5.6s)
+[00:16]   [capture-periodic] freeze=1ms shot=231ms unfreeze=2ms saved=True
+[00:17]   [capture-loop] iter=50 t=6.8s state={'complete': False, 'error': None, 'executedCount': 1, 'wsState': 1} eval_ms=2 ram=3.8/7.0GB (60%) swap=0.0/0.0GB (0%) cpu=57% browser_rss=0.65GB
+[00:21]   Frame 5 saved (frame_004.jpg, t=10.2s)
+[00:21]   [capture-periodic] freeze=11ms shot=578ms unfreeze=41ms saved=True
+[00:24]   Frame 6 saved (frame_005.jpg, t=13.1s)
+[00:24]   [capture-periodic] freeze=8ms shot=652ms unfreeze=88ms saved=True
+[00:25]   [capture-loop] iter=100 t=14.6s state={'complete': False, 'error': None, 'executedCount': 1, 'wsState': 1} eval_ms=15 ram=3.7/7.0GB (61%) swap=0.0/0.0GB (0%) cpu=72% browser_rss=0.58GB
+[00:27]   Frame 7 saved (frame_006.jpg, t=15.9s)
+[00:27]   [capture-periodic] freeze=8ms shot=908ms unfreeze=99ms saved=True
+[00:31]   [2/2] SKIPPED (not in cpu list) recon.json
