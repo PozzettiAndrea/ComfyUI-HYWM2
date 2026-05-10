@@ -1,11 +1,16 @@
 {
-  "workflows": [
-    {
-      "name": "system",
-      "status": "pass",
-      "duration_seconds": 0,
-      "error": null,
-      "hardware": null
-    }
-  ]
+  "timestamp": "2026-05-10T03:31:54.912427+00:00",
+  "platform": "macos_desktop",
+  "hardware": {
+    "os": "macOS-15.7.4-arm64-arm-64bit",
+    "cpu": "arm"
+  },
+  "commit_hash": "3fd18c3c890811f3d9d6885a4e0acbce67c701d9",
+  "success": false,
+  "summary": {
+    "total": 0,
+    "passed": 0,
+    "failed": 0
+  },
+  "workflows": []
 }

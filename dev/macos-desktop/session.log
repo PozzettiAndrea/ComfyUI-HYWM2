@@ -1,0 +1,81 @@
+[   0s] CDP targets: 1
+[   0s]   page: file:///Users/runner/.comfy-test-cache/desktop/ComfyUI.app/Contents/Resources/desktop-ui/index.html#/welcome | ComfyUI
+[   1s] Main page: file:///Users/runner/.comfy-test-cache/desktop/ComfyUI.app/Contents/Resources/desktop-ui/index.html#/welcome | ComfyUI
+[   2s] Buttons: ['Get Started']
+[   2s]   wizard: COMFY_TEST_GPU=0 platform=darwin preferred=['Apple Silicon', 'MPS', 'M4', 'M3', 'M2', 'M1']
+[   3s]   clicked [BTN|Get Started]
+[   4s]   url: file:///Users/runner/.comfy-test-cache/desktop/ComfyUI.app/Contents/Resources/desktop-ui/index.html#/welcome -> file:///Users/runner/.comfy-test-cache/desktop/ComfyUI.app/Contents/Resources/desktop-ui/index.html#/install
+[   5s]   clicked [BTN|Next]
+[  11s]   clicked [BTN|Next]
+[  13s]   clicked [BTN|Install]
+[  14s]   url: file:///Users/runner/.comfy-test-cache/desktop/ComfyUI.app/Contents/Resources/desktop-ui/index.html#/install -> file:///Users/runner/.comfy-test-cache/desktop/ComfyUI.app/Contents/Resources/desktop-ui/index.html#/server-start
+[ 101s]   /system_stats up after 98s
+[ 101s]   app: waiting for backend stability (continuous /system_stats up for 30s)
+[ 101s]   app: /system_stats up; awaiting 30s of stability
+[ 131s]   app: backend stable for 30s; proceeding
+[ 131s]   capturing canvas load...
+[ 139s]   post: waiting for Cloud upsell
+[ 140s]   post: clicked Cloud upsell via [button:has-text("Continue Locally"):visible]
+[ 142s]   post: waiting for Close Templates
+[ 150s]   post: Close Templates not found, skipping
+[ 150s]   post: pressed Escape (Close Templates fallback)
+[ 152s]   post: waiting for Extensions
+[ 153s]   post: clicked Extensions via [button[aria-label="Extensions"]:visible]
+[ 155s]   ext: node meta = display='HYWM2' publisher='pznodes' version='0.0.7'
+[ 159s]   ext: searching "HYWM2"
+[ 162s]   ext: clicking HYWM2 by pznodes tile
+[ 170s]   ext: tile not found, ending capture
+[ 170s] Captured 149 frames
+[ 171s] Wrote /Users/runner/work/comfy-gpu-ci/comfy-gpu-ci/comfy-test-logs/HYWM2-0328/dev/macos-desktop/results.json (0 workflow(s), sha=3fd18c3c8908)
+ffmpeg version 7.1 Copyright (c) 2000-2024 the FFmpeg developers
+  built with Apple clang version 13.1.6 (clang-1316.0.21.2.5)
+  configuration: --prefix=/Volumes/tempdisk/sw --extra-cflags=-fno-stack-check --arch=arm64 --cc=/usr/bin/clang --enable-gpl --enable-libvmaf --enable-libopenjpeg --enable-libopus --enable-libmp3lame --enable-libx264 --enable-libx265 --enable-libvpx --enable-libwebp --enable-libass --enable-libfreetype --enable-fontconfig --enable-libtheora --enable-libvorbis --enable-libsnappy --enable-libaom --enable-libvidstab --enable-libzimg --enable-libsvtav1 --enable-libharfbuzz --enable-libkvazaar --pkg-config-flags=--static --enable-ffplay --enable-postproc --enable-neon --enable-runtime-cpudetect --disable-indev=qtkit --disable-indev=x11grab_xcb
+  libavutil      59. 39.100 / 59. 39.100
+  libavcodec     61. 19.100 / 61. 19.100
+  libavformat    61.  7.100 / 61.  7.100
+  libavdevice    61.  3.100 / 61.  3.100
+  libavfilter    10.  4.100 / 10.  4.100
+  libswscale      8.  3.100 /  8.  3.100
+  libswresample   5.  3.100 /  5.  3.100
+  libpostproc    58.  3.100 / 58.  3.100
+Input #0, image2, from '/Users/runner/work/comfy-gpu-ci/comfy-gpu-ci/comfy-test-logs/HYWM2-0328/dev/macos-desktop/debug/electron_inspect/frames/frame_%06d.png':
+  Duration: 00:00:29.80, start: 0.000000, bitrate: N/A
+  Stream #0:0: Video: png, rgb24(pc, gbr/bt709/iec61966-2-1), 1024x656, 5 fps, 5 tbr, 5 tbn
+Stream mapping:
+  Stream #0:0 -> #0:0 (png (native) -> h264 (libx264))
+Press [q] to stop, [?] for help
+[libx264 @ 0x12ee07af0] using cpu capabilities: ARMv8 NEON
+[libx264 @ 0x12ee07af0] profile High, level 3.1, 4:2:0, 8-bit
+[libx264 @ 0x12ee07af0] 264 - core 164 r3190 7ed753b - H.264/MPEG-4 AVC codec - Copyleft 2003-2024 - http://www.videolan.org/x264.html - options: cabac=1 ref=3 deblock=1:0:0 analyse=0x3:0x113 me=hex subme=7 psy=1 psy_rd=1.00:0.00 mixed_ref=1 me_range=16 chroma_me=1 trellis=1 8x8dct=1 cqm=0 deadzone=21,11 fast_pskip=1 chroma_qp_offset=-2 threads=4 lookahead_threads=1 sliced_threads=0 nr=0 decimate=1 interlaced=0 bluray_compat=0 constrained_intra=0 bframes=3 b_pyramid=2 b_adapt=1 b_bias=0 direct=1 weightb=1 open_gop=0 weightp=2 keyint=250 keyint_min=5 scenecut=40 intra_refresh=0 rc_lookahead=40 rc=crf mbtree=1 crf=23.0 qcomp=0.60 qpmin=0 qpmax=69 qpstep=4 ip_ratio=1.40 aq=1:1.00
+Output #0, mp4, to '/Users/runner/work/comfy-gpu-ci/comfy-gpu-ci/comfy-test-logs/HYWM2-0328/dev/macos-desktop/debug/electron_inspect/driver.mp4':
+  Metadata:
+    encoder         : Lavf61.7.100
+  Stream #0:0: Video: h264 (avc1 / 0x31637661), yuv420p(tv, unknown/bt709/iec61966-2-1, progressive), 1024x656, q=2-31, 5 fps, 10240 tbn
+      Metadata:
+        encoder         : Lavc61.19.100 libx264
+      Side data:
+        cpb: bitrate max/min/avg: 0/0/0 buffer size: 0 vbv_delay: N/A
+frame=   52 fps=0.0 q=20.0 size=       0KiB time=00:00:10.00 bitrate=   0.0kbits/s speed=18.8x    
+[out#0/mp4 @ 0x600003414300] video:593KiB audio:0KiB subtitle:0KiB other streams:0KiB global headers:0KiB muxing overhead: 0.427446%
+frame=  149 fps=0.0 q=-1.0 Lsize=     596KiB time=00:00:29.40 bitrate= 166.0kbits/s speed=34.1x    
+[libx264 @ 0x12ee07af0] frame I:6     Avg QP: 9.45  size: 42388
+[libx264 @ 0x12ee07af0] frame P:43    Avg QP:17.34  size:  6472
+[libx264 @ 0x12ee07af0] frame B:100   Avg QP:20.83  size:   742
+[libx264 @ 0x12ee07af0] consecutive B-frames:  6.7%  6.7% 14.1% 72.5%
+[libx264 @ 0x12ee07af0] mb I  I16..4: 50.5% 23.1% 26.4%
+[libx264 @ 0x12ee07af0] mb P  I16..4:  3.4%  4.7%  4.6%  P16..4:  3.8%  1.3%  1.0%  0.0%  0.0%    skip:81.3%
+[libx264 @ 0x12ee07af0] mb B  I16..4:  0.1%  0.1%  0.2%  B16..8:  5.0%  0.7%  0.2%  direct: 0.2%  skip:93.5%  L0:49.3% L1:48.1% BI: 2.6%
+[libx264 @ 0x12ee07af0] 8x8 transform intra:29.8% inter:49.2%
+[libx264 @ 0x12ee07af0] coded y,uvDC,uvAC intra: 34.5% 10.9% 8.9% inter: 1.3% 0.5% 0.2%
+[libx264 @ 0x12ee07af0] i16 v,h,dc,p: 66% 33%  1%  0%
+[libx264 @ 0x12ee07af0] i8 v,h,dc,ddl,ddr,vr,hd,vl,hu: 44% 22% 28%  1%  1%  1%  1%  1%  2%
+[libx264 @ 0x12ee07af0] i4 v,h,dc,ddl,ddr,vr,hd,vl,hu: 33% 30% 18%  2%  3%  3%  4%  3%  4%
+[libx264 @ 0x12ee07af0] i8c dc,h,v,p: 85% 10%  4%  1%
+[libx264 @ 0x12ee07af0] Weighted P-Frames: Y:0.0% UV:0.0%
+[libx264 @ 0x12ee07af0] ref P L0: 53.0%  2.4% 16.1% 28.5%
+[libx264 @ 0x12ee07af0] ref B L0: 66.9% 24.6%  8.5%
+[libx264 @ 0x12ee07af0] ref B L1: 91.1%  8.9%
+[libx264 @ 0x12ee07af0] kb/s:162.92
+[ 172s] Wrote /Users/runner/work/comfy-gpu-ci/comfy-gpu-ci/comfy-test-logs/HYWM2-0328/dev/macos-desktop/debug/electron_inspect/driver.mp4
+[ 172s]   videos/system/driver.mp4 placed (no workflows ran)
+[ 172s]   removed /Users/runner/work/comfy-gpu-ci/comfy-gpu-ci/comfy-test-logs/HYWM2-0328/dev/macos-desktop/debug/electron_inspect/frames after successful encode
