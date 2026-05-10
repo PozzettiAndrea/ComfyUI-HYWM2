@@ -1,0 +1,42 @@
+{
+  "timestamp": "2026-05-10T03:34:53.029591+00:00",
+  "platform": "macos",
+  "hardware": {
+    "os": "macOS-15.7.4-arm64-arm-64bit",
+    "cpu": "arm"
+  },
+  "commit_hash": "98e5fe664ece987c904df71a546ef086dfbcb6e1",
+  "success": true,
+  "summary": {
+    "total": 2,
+    "passed": 1,
+    "failed": 0
+  },
+  "workflows": [
+    {
+      "name": "depth_normal",
+      "status": "pass",
+      "duration_seconds": 481.25,
+      "error": null,
+      "hardware": {
+        "os": "macOS-15.7.4-arm64-arm-64bit",
+        "cpu": "arm"
+      },
+      "resources": {
+        "ram": {
+          "peak": 4.78,
+          "avg": 2.0
+        },
+        "total_ram_gb": 7.0,
+        "samples": 437
+      }
+    },
+    {
+      "name": "recon",
+      "status": "skipped",
+      "duration_seconds": 0,
+      "error": "Not configured for CPU runner",
+      "hardware": null
+    }
+  ]
+}
