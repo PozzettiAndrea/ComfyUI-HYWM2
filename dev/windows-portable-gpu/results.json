@@ -1,12 +1,12 @@
 {
-  "timestamp": "2026-05-08T07:01:56.894121+00:00",
+  "timestamp": "2026-05-10T15:36:04.680878+00:00",
   "platform": "windows_portable",
   "hardware": {
-    "os": "Windows-10-10.0.26200-SP0",
-    "cpu": "Intel64 Family 6 Model 79 Stepping 1, GenuineIntel",
-    "gpu": "NVIDIA GeForce RTX 3090"
+    "os": "Windows-11-10.0.26200-SP0",
+    "cpu": "Intel64 Family 6 Model 79 Stepping 1, GenuineIntel"
   },
-  "commit_hash": "c137b18f9c9c3a54f5428f205122b93046ea2edf",
+  "commit_hash": "41ead61a1894173fa59f9084cb44d1a1636c3844",
+  "run_url": "https://github.com/PozzettiAndrea/comfy-gpu-ci/actions/runs/25629703905",
   "success": true,
   "summary": {
     "total": 2,
@@ -24,24 +24,19 @@
     {
       "name": "recon",
       "status": "pass",
-      "duration_seconds": 111.94,
+      "duration_seconds": 107.92,
       "error": null,
       "hardware": {
-        "os": "Windows-10-10.0.26200-SP0",
-        "cpu": "Intel64 Family 6 Model 79 Stepping 1, GenuineIntel",
-        "gpu": "NVIDIA GeForce RTX 3090"
+        "os": "Windows-11-10.0.26200-SP0",
+        "cpu": "Intel64 Family 6 Model 79 Stepping 1, GenuineIntel"
       },
       "resources": {
         "ram": {
-          "peak": 6.53,
-          "avg": 2.07
+          "peak": 6.3,
+          "avg": 2.18
         },
         "total_ram_gb": 31.9,
-        "samples": 88,
-        "vram": {
-          "peak": 5.62,
-          "avg": 1.18
-        }
+        "samples": 92
       }
     }
   ]
