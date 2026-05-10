@@ -1,11 +1,3 @@
 {
-  "workflows": [
-    {
-      "name": "system",
-      "status": "pass",
-      "duration_seconds": 0,
-      "error": null,
-      "hardware": null
-    }
-  ]
+  "workflows": []
 }
