@@ -1,12 +1,12 @@
 {
-  "timestamp": "2026-05-08T07:00:34.872657+00:00",
+  "timestamp": "2026-05-10T13:09:27.980157+00:00",
   "platform": "windows",
   "hardware": {
-    "os": "Windows-10-10.0.26200-SP0",
-    "cpu": "Intel64 Family 6 Model 79 Stepping 1, GenuineIntel",
-    "gpu": "NVIDIA GeForce RTX 3060"
+    "os": "Windows-11-10.0.26200-SP0",
+    "cpu": "Intel64 Family 6 Model 79 Stepping 1, GenuineIntel"
   },
-  "commit_hash": "c137b18f9c9c3a54f5428f205122b93046ea2edf",
+  "commit_hash": "98e5fe664ece987c904df71a546ef086dfbcb6e1",
+  "run_url": null,
   "success": true,
   "summary": {
     "total": 2,
@@ -24,24 +24,19 @@
     {
       "name": "recon",
       "status": "pass",
-      "duration_seconds": 115.93,
+      "duration_seconds": 131.26,
       "error": null,
       "hardware": {
-        "os": "Windows-10-10.0.26200-SP0",
-        "cpu": "Intel64 Family 6 Model 79 Stepping 1, GenuineIntel",
-        "gpu": "NVIDIA GeForce RTX 3060"
+        "os": "Windows-11-10.0.26200-SP0",
+        "cpu": "Intel64 Family 6 Model 79 Stepping 1, GenuineIntel"
       },
       "resources": {
         "ram": {
-          "peak": 6.3,
+          "peak": 6.24,
           "avg": 2.25
         },
         "total_ram_gb": 31.9,
-        "samples": 101,
-        "vram": {
-          "peak": 5.27,
-          "avg": 1.24
-        }
+        "samples": 130
       }
     }
   ]
