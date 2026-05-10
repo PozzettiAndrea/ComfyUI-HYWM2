@@ -1,9 +1,9 @@
 {
-  "timestamp": "2026-05-09T16:20:47.438531+00:00",
+  "timestamp": "2026-05-10T01:25:12.846329+00:00",
   "platform": "linux",
   "hardware": {
     "os": "Linux-6.17.0-1010-azure-x86_64-with-glibc2.39",
-    "cpu": "AMD EPYC 9V74 80-Core Processor"
+    "cpu": "AMD EPYC 7763 64-Core Processor"
   },
   "commit_hash": "0fe90613a3291e5a47754fed50161f4287955b2d",
   "success": true,
@@ -16,19 +16,19 @@
     {
       "name": "depth_normal",
       "status": "pass",
-      "duration_seconds": 304.29,
+      "duration_seconds": 270.39,
       "error": null,
       "hardware": {
         "os": "Linux-6.17.0-1010-azure-x86_64-with-glibc2.39",
-        "cpu": "AMD EPYC 9V74 80-Core Processor"
+        "cpu": "AMD EPYC 7763 64-Core Processor"
       },
       "resources": {
         "ram": {
-          "peak": 7.38,
-          "avg": 5.9
+          "peak": 6.19,
+          "avg": 5.03
         },
         "total_ram_gb": 15.6,
-        "samples": 305
+        "samples": 270
       }
     },
     {
