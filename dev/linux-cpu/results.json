@@ -1,11 +1,11 @@
 {
-  "timestamp": "2026-05-10T01:25:12.846329+00:00",
+  "timestamp": "2026-05-10T03:11:28.178504+00:00",
   "platform": "linux",
   "hardware": {
     "os": "Linux-6.17.0-1010-azure-x86_64-with-glibc2.39",
     "cpu": "AMD EPYC 7763 64-Core Processor"
   },
-  "commit_hash": "0fe90613a3291e5a47754fed50161f4287955b2d",
+  "commit_hash": "98e5fe664ece987c904df71a546ef086dfbcb6e1",
   "success": true,
   "summary": {
     "total": 2,
@@ -16,7 +16,7 @@
     {
       "name": "depth_normal",
       "status": "pass",
-      "duration_seconds": 270.39,
+      "duration_seconds": 266.27,
       "error": null,
       "hardware": {
         "os": "Linux-6.17.0-1010-azure-x86_64-with-glibc2.39",
@@ -24,11 +24,11 @@
       },
       "resources": {
         "ram": {
-          "peak": 6.19,
-          "avg": 5.03
+          "peak": 8.66,
+          "avg": 5.11
         },
         "total_ram_gb": 15.6,
-        "samples": 270
+        "samples": 266
       }
     },
     {
