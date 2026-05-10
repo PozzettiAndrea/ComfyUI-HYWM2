@@ -1,11 +1,12 @@
 {
-  "timestamp": "2026-05-10T03:11:45.353061+00:00",
+  "timestamp": "2026-05-10T22:18:35.921548+00:00",
   "platform": "windows_desktop",
   "hardware": {
     "os": "Windows-2025Server-10.0.26100-SP0",
-    "cpu": "Intel64 Family 6 Model 106 Stepping 6, GenuineIntel"
+    "cpu": "AMD64 Family 25 Model 17 Stepping 1, AuthenticAMD"
   },
-  "commit_hash": "3fd18c3c890811f3d9d6885a4e0acbce67c701d9",
+  "commit_hash": "05be3cae4d40f1a5a38a704fed1eb373908ed4d5",
+  "run_url": "https://github.com/PozzettiAndrea/comfy-gpu-ci/actions/runs/25641168904",
   "success": false,
   "summary": {
     "total": 0,
