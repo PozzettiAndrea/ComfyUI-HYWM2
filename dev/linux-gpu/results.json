@@ -1,13 +1,13 @@
 {
-  "timestamp": "2026-05-11T06:29:05.928930+00:00",
+  "timestamp": "2026-05-11T11:19:16.471042+00:00",
   "platform": "linux",
   "hardware": {
     "os": "Linux-6.8.0-107-generic-x86_64-with-glibc2.35",
     "cpu": "AMD Ryzen 5 3600 6-Core Processor",
     "gpu": "NVIDIA GeForce RTX 5060"
   },
-  "commit_hash": "5a978721eaeac012d19d1e8b7047fb48501bb9f3",
-  "run_url": "https://github.com/PozzettiAndrea/comfy-gpu-ci/actions/runs/25653248097",
+  "commit_hash": "2cfc45236c7c5f5fa4999d8e9a7f63e518b148eb",
+  "run_url": "https://github.com/PozzettiAndrea/comfy-gpu-ci/actions/runs/25663936685",
   "success": true,
   "summary": {
     "total": 2,
@@ -25,7 +25,7 @@
     {
       "name": "recon",
       "status": "pass",
-      "duration_seconds": 92.27,
+      "duration_seconds": 83.12,
       "error": null,
       "hardware": {
         "os": "Linux-6.8.0-107-generic-x86_64-with-glibc2.35",
@@ -34,14 +34,14 @@
       },
       "resources": {
         "ram": {
-          "peak": 8.92,
-          "avg": 4.3
+          "peak": 9.0,
+          "avg": 4.15
         },
         "total_ram_gb": 31.3,
-        "samples": 90,
+        "samples": 81,
         "vram": {
-          "peak": 5.01,
-          "avg": 1.8
+          "peak": 5.02,
+          "avg": 1.68
         }
       }
     }
