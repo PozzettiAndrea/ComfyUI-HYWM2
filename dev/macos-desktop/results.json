@@ -1,24 +1,24 @@
 {
-  "timestamp": "2026-05-11T09:48:06.256621+00:00",
+  "timestamp": "2026-05-11T10:52:18.631235+00:00",
   "platform": "macos_desktop",
   "hardware": {
     "os": "macOS-15.7.4-arm64-arm-64bit",
     "cpu": "arm"
   },
-  "commit_hash": "71b382152cd7b3458b96bb2adc4842145f3f928a",
-  "run_url": "https://github.com/PozzettiAndrea/comfy-gpu-ci/actions/runs/25661553470",
-  "success": true,
+  "commit_hash": "b3c699e8fd23c680a8adef22c16f15ab4641e2ca",
+  "run_url": "https://github.com/PozzettiAndrea/comfy-gpu-ci/actions/runs/25663945978",
+  "success": false,
   "summary": {
     "total": 1,
-    "passed": 1,
+    "passed": 0,
     "failed": 0
   },
   "workflows": [
     {
       "name": "depth_normal",
-      "status": "pass",
-      "duration_seconds": 140,
-      "error": null
+      "status": "timeout",
+      "duration_seconds": 600,
+      "error": "no execution_success/error in 10min"
     }
   ]
 }
