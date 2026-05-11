@@ -9,9 +9,9 @@
 [Console-error] Failed to load resource: the server responded with a status of 404 (Not Found)
 [Console-log] [VTK Bundle] GLTFImporter included in bundle
 [Console-warning] [MaskEditor] ComfyApp.open_maskeditor is deprecated. Plugins should migrate to using the command system or direct node context menu integration.
-[Console-warning] [.WebGL-0x1d5405d87000]GL Driver Message (OpenGL, Performance, GL_CLOSE_PATH_NV, High): GPU stall due to ReadPixels
+[Console-warning] [.WebGL-0x15540a0c8000]GL Driver Message (OpenGL, Performance, GL_CLOSE_PATH_NV, High): GPU stall due to ReadPixels
 [Console-log] [comfy-test] graphToPrompt: 8 nodes, missing class_type: [], sample: {"inputs":{"precision":"auto","target_size":2002,"predict_camera":"","predict_depth":true,"predict_normals":true,"predict_points":true,"predict_gaussians":true},"class_type":"LoadHYWM2Model","_meta":{"title":"(Down)Load HYWM2 Model"}}
-[Console-log] %c[HYWM2 Splat Viewer]%c Loaded successfully: hywm2_gaussians.splat · 9.93 MB · 325,464 gaussians color:#6cc;font-weight:bold color:inherit
-[Console-warning] [.WebGL-0x1d5405d87000]GL Driver Message (OpenGL, Performance, GL_CLOSE_PATH_NV, High): GPU stall due to ReadPixels
-[Console-warning] [.WebGL-0x1d5405d87000]GL Driver Message (OpenGL, Performance, GL_CLOSE_PATH_NV, High): GPU stall due to ReadPixels
-[Console-warning] [.WebGL-0x1d5405d87000]GL Driver Message (OpenGL, Performance, GL_CLOSE_PATH_NV, High): GPU stall due to ReadPixels (this message will no longer repeat)
+[Console-log] %c[HYWM2 Splat Viewer]%c Loaded successfully: hywm2_gaussians.splat · 9.93 MB · 325,465 gaussians color:#6cc;font-weight:bold color:inherit
+[Console-warning] [.WebGL-0x15540a0c8000]GL Driver Message (OpenGL, Performance, GL_CLOSE_PATH_NV, High): GPU stall due to ReadPixels
+[Console-warning] [.WebGL-0x15540a0c8000]GL Driver Message (OpenGL, Performance, GL_CLOSE_PATH_NV, High): GPU stall due to ReadPixels
+[Console-warning] [.WebGL-0x15540a0c8000]GL Driver Message (OpenGL, Performance, GL_CLOSE_PATH_NV, High): GPU stall due to ReadPixels (this message will no longer repeat)
