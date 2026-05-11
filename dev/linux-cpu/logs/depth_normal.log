@@ -10,31 +10,31 @@ Capturing execution frames: depth_normal.json
   [ComfyUI]     Inputs: {"prior_camera_json": "", "depth_colormap": "viridis", "apply_mask": true, "view_index": -1, "points_conf_percentile": 0, "points_max": 2000000, "gaussians_weight_threshold": 0.3, "gaussians_downsampl
   [ComfyUI]   Node 3: LoadImageDataSetFromFolder
   [ComfyUI]     Inputs: {"folder": "workspace"}
-  Queuing workflow for execution...
   [ComfyUI]   Node 4: PreviewImage
   [ComfyUI]     Inputs: {"images": ["3", 0]}
   [ComfyUI]   Node 9: PreviewImage
+  Queuing workflow for execution...
   [ComfyUI]     Inputs: {"images": ["2", 0]}
   [ComfyUI]   Node 11: PreviewImage
   [ComfyUI]     Inputs: {"images": ["2", 1]}
-  [ComfyUI] Generated prompt_id: 43cb6db4-fa15-4f89-9847-7bc2a48b884c
+  [ComfyUI] Generated prompt_id: 398c5efe-dca6-47a9-90fd-dbbcd6bbfeac
   [ComfyUI] Calling execution.validate_prompt()...
   [ComfyUI] Validation result: valid=True
   [ComfyUI] === Validation PASSED ===
   [ComfyUI] got prompt
-  [ComfyUI] [comfy-env] SubprocessWorker: /home/runner/.ce/.pixi/envs/hywm2-nodes/bin/python
   [ComfyUI] [comfy-env] Running LoadHYWM2Model: precision: 'auto', target_size: 952, predict_camera: False, predict_depth: True, predict_normals: True, predict_points: False, predict_gaussians: False
-  [ComfyUI] [comfy-env] env_vars: {'COMFYUI_BASE': '/home/runner/work/comfy-gpu-ci/comfy-gpu-ci/test_workspaces/HYWM2-2137/ComfyUI'}
-  [ComfyUI] [SubprocessWorker] call_method: nodes.load_model.LoadHYWM2Model.EXECUTE_NORMALIZED
-  [ComfyUI] [SubprocessWorker] acquired lock, ensuring started...
+  [ComfyUI] [comfy-env] SubprocessWorker: /home/runner/.ce/.pixi/envs/hywm2-nodes/bin/python
+  [ComfyUI] [comfy-env] env_vars: {'COMFYUI_BASE': '/home/runner/work/comfy-gpu-ci/comfy-gpu-ci/test_workspaces/HYWM2-0031/ComfyUI'}
   [ComfyUI] [ComfyUI-HYWM2] python: /home/runner/.ce/.pixi/envs/hywm2-nodes/bin/python
-  [ComfyUI] [ComfyUI-HYWM2] sys_path sent to worker: ['/home/runner/work/comfy-gpu-ci/comfy-gpu-ci/test_workspaces/HYWM2-2137/ComfyUI', '/home/runner/work/comfy-gpu-ci/comfy-gpu-ci/test_workspaces/HYWM2-2137/ComfyUI/custom_nodes/ComfyUI-HYWM2', '/home/runner/.ce/.pixi/envs/hywm2-nodes/lib/python3.13/site-packages', '/home/runner/work/comfy-gpu-ci/comfy-gpu-ci/test_workspaces/HYWM2-2137/ComfyUI/custom_nodes/ComfyUI-HYWM2']
+  [ComfyUI] [SubprocessWorker] call_method: nodes.load_model.LoadHYWM2Model.EXECUTE_NORMALIZED
+  [ComfyUI] [ComfyUI-HYWM2] sys_path sent to worker: ['/home/runner/work/comfy-gpu-ci/comfy-gpu-ci/test_workspaces/HYWM2-0031/ComfyUI', '/home/runner/work/comfy-gpu-ci/comfy-gpu-ci/test_workspaces/HYWM2-0031/ComfyUI/custom_nodes/ComfyUI-HYWM2', '/home/runner/.ce/.pixi/envs/hywm2-nodes/lib/python3.10/site-packages', '/home/runner/work/comfy-gpu-ci/comfy-gpu-ci/test_workspaces/HYWM2-0031/ComfyUI/custom_nodes/ComfyUI-HYWM2']
   [ComfyUI] [SubprocessWorker] is_pixi=True, python=/home/runner/.ce/.pixi/envs/hywm2-nodes/bin/python
-  [ComfyUI] [SubprocessWorker] launching cmd=['/home/runner/.pixi/bin/pixi', 'run', '--as-is', '--manifest-path', '/home/runner/.ce/pixi.toml', '-e', 'hywm2-nodes', 'python', '/tmp/comfyui_pvenv_tsmht6me/persistent_worker.py', 'abstract://comfy_worker_b6988290aa2f']...
-  [ComfyUI] [SubprocessWorker] socket_addr=abstract://comfy_worker_b6988290aa2f (abstract, no filesystem path)
+  [ComfyUI] [SubprocessWorker] acquired lock, ensuring started...
+  [ComfyUI] [SubprocessWorker] launching cmd=['/home/runner/.pixi/bin/pixi', 'run', '--as-is', '--manifest-path', '/home/runner/.ce/pixi.toml', '-e', 'hywm2-nodes', 'python', '/tmp/comfyui_pvenv_9bo1jkb4/persistent_worker.py', 'abstract://comfy_worker_3a8a42b7fe54']...
+  [ComfyUI] [SubprocessWorker] socket_addr=abstract://comfy_worker_3a8a42b7fe54 (abstract, no filesystem path)
   Node executed (1 total), capturing...
   Frame 2 saved (frame_001.jpg, t=0.6s)
-  [capture-node] freeze=3ms shot=156ms unfreeze=5ms saved=True
+  [capture-node] freeze=4ms shot=132ms unfreeze=3ms saved=True
   [ComfyUI] [worker:ComfyUI-HYWM2] ERROR: Failed to import comfy_kitchen, Error: No module named 'comfy_kitchen', fp8 and fp4 support will not be available.
   [ComfyUI] [SubprocessWorker] worker started/confirmed
   [ComfyUI] [SubprocessWorker] serializing kwargs to shm...
@@ -45,44 +45,43 @@ Capturing execution frames: depth_normal.json
   [ComfyUI] [worker:ComfyUI-HYWM2] WARNING: Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
   [ComfyUI] 
   [ComfyUI] model.safetensors:   0%|          | 0.00/3.27G [00:00<?, ?B/s]
-  [ComfyUI] model.safetensors:   3%|▎         | 104M/3.27G [00:01<00:40, 79.1MB/s][SubprocessWorker] callback 'report_progress' from call_id=1
+  [ComfyUI] model.safetensors:   8%|▊         | 269M/3.27G [00:01<00:20, 147MB/s][SubprocessWorker] callback 'report_progress' from call_id=1
   [ComfyUI] 
-  [ComfyUI] model.safetensors:  11%|█         | 353M/3.27G [00:02<00:17, 168MB/s] [SubprocessWorker] callback 'report_progress' from call_id=1
+  [ComfyUI] model.safetensors:  15%|█▍        | 488M/3.27G [00:02<00:10, 267MB/s][SubprocessWorker] callback 'report_progress' from call_id=1
+  [ComfyUI] 
+  [ComfyUI] model.safetensors:  21%|██        | 672M/3.27G [00:02<00:07, 354MB/s][SubprocessWorker] callback 'report_progress' from call_id=1
+  [ComfyUI] 
+  [ComfyUI] model.safetensors:  26%|██▌       | 857M/3.27G [00:02<00:05, 439MB/s][SubprocessWorker] callback 'report_progress' from call_id=1
   Frame 3 saved (frame_002.jpg, t=5.0s)
   [ComfyUI] 
-  [capture-periodic] freeze=24ms shot=264ms unfreeze=34ms saved=True
-  [ComfyUI] model.safetensors:  25%|██▍       | 806M/3.27G [00:02<00:06, 367MB/s][SubprocessWorker] callback 'report_progress' from call_id=1
-  [ComfyUI] [SubprocessWorker] callback 'report_progress' from call_id=1
+  [capture-periodic] freeze=12ms shot=489ms unfreeze=36ms saved=True
+  [ComfyUI] model.safetensors:  38%|███▊      | 1.24G/3.27G [00:03<00:03, 564MB/s][SubprocessWorker] callback 'report_progress' from call_id=1
   [ComfyUI] 
-  [ComfyUI] model.safetensors:  34%|███▍      | 1.11G/3.27G [00:03<00:04, 434MB/s][SubprocessWorker] callback 'report_progress' from call_id=1
+  [ComfyUI] model.safetensors:  41%|████      | 1.35G/3.27G [00:03<00:04, 441MB/s][SubprocessWorker] callback 'report_progress' from call_id=1
   [ComfyUI] 
-  [ComfyUI] model.safetensors:  37%|███▋      | 1.23G/3.27G [00:03<00:05, 377MB/s][SubprocessWorker] callback 'report_progress' from call_id=1
+  [ComfyUI] model.safetensors:  46%|████▌     | 1.50G/3.27G [00:03<00:03, 475MB/s][SubprocessWorker] callback 'report_progress' from call_id=1
   [ComfyUI] 
-  [ComfyUI] model.safetensors:  41%|████      | 1.35G/3.27G [00:04<00:04, 396MB/s][SubprocessWorker] callback 'report_progress' from call_id=1
-  [capture-loop] iter=50 t=7.3s state={'complete': False, 'error': None, 'executedCount': 1, 'wsState': 1} eval_ms=10 ram=3.2/15.6GB (20%) swap=0.0/3.0GB (0%) cpu=36% browser_rss=0.85GB
+  [ComfyUI] model.safetensors:  52%|█████▏    | 1.70G/3.27G [00:04<00:02, 546MB/s][SubprocessWorker] callback 'report_progress' from call_id=1
+  [capture-loop] iter=50 t=8.1s state={'complete': False, 'error': None, 'executedCount': 1, 'wsState': 1} eval_ms=3 ram=3.6/15.6GB (23%) swap=0.0/3.0GB (0%) cpu=36% browser_rss=0.84GB
   [ComfyUI] 
-  [ComfyUI] model.safetensors:  43%|████▎     | 1.41G/3.27G [00:05<00:08, 232MB/s][SubprocessWorker] callback 'report_progress' from call_id=1
+  [ComfyUI] model.safetensors:  58%|█████▊    | 1.90G/3.27G [00:04<00:02, 491MB/s][SubprocessWorker] callback 'report_progress' from call_id=1
   [ComfyUI] 
-  [ComfyUI] model.safetensors:  46%|████▌     | 1.50G/3.27G [00:05<00:07, 252MB/s][SubprocessWorker] callback 'report_progress' from call_id=1
+  Frame 4 saved (frame_003.jpg, t=8.1s)
+  [capture-periodic] freeze=141ms shot=219ms unfreeze=18ms saved=True
+  [ComfyUI] model.safetensors:  72%|███████▏  | 2.37G/3.27G [00:06<00:02, 380MB/s][SubprocessWorker] callback 'report_progress' from call_id=1
   [ComfyUI] 
-  Frame 4 saved (frame_003.jpg, t=7.7s)
-  [capture-periodic] freeze=25ms shot=1516ms unfreeze=242ms saved=True
-  [ComfyUI] model.safetensors:  62%|██████▏   | 2.04G/3.27G [00:05<00:02, 584MB/s][SubprocessWorker] callback 'report_progress' from call_id=1
+  [ComfyUI] model.safetensors: 100%|██████████| 3.27G/3.27G [00:08<00:00, 418MB/s][SubprocessWorker] callback 'report_progress' from call_id=1
+  Frame 5 saved (frame_004.jpg, t=11.6s)
+  [capture-periodic] freeze=2ms shot=117ms unfreeze=235ms saved=True
   [ComfyUI] 
-  [ComfyUI] model.safetensors:  72%|███████▏  | 2.37G/3.27G [00:06<00:01, 460MB/s][SubprocessWorker] callback 'report_progress' from call_id=1
-  [ComfyUI] 
-  [ComfyUI] model.safetensors: 100%|██████████| 3.27G/3.27G [00:08<00:00, 455MB/s][SubprocessWorker] callback 'report_progress' from call_id=1
-  Frame 5 saved (frame_004.jpg, t=12.2s)
-  [capture-periodic] freeze=15ms shot=127ms unfreeze=2ms saved=True
-  [ComfyUI] 
-  [ComfyUI] model.safetensors: 100%|██████████| 3.27G/3.27G [00:12<00:00, 254MB/s]
+  [ComfyUI] model.safetensors: 100%|██████████| 3.27G/3.27G [00:12<00:00, 265MB/s]
   [ComfyUI] 
   [ComfyUI] config.json:   0%|          | 0.00/842 [00:00<?, ?B/s][SubprocessWorker] callback 'report_progress' from call_id=1
   [ComfyUI] 
-  [ComfyUI] config.json: 100%|██████████| 842/842 [00:00<00:00, 1.44MB/s]
+  [ComfyUI] config.json: 100%|██████████| 842/842 [00:00<00:00, 1.16MB/s]
   [ComfyUI] [SubprocessWorker] callback 'report_progress' from call_id=1
   [ComfyUI] [SubprocessWorker] got response: ok
-  [ComfyUI] [comfy-env] LoadHYWM2Model done (15.30s): result: NodeOutput
+  [ComfyUI] [comfy-env] LoadHYWM2Model done (14.82s): result: NodeOutput
   [ComfyUI] [comfy-env] Running HYWM2Reconstruct: prior_camera_json: '', depth_colormap: 'viridis', apply_mask: True, view_index: -1, points_conf_percentile: 0.0, points_max: 2000000, gaussians_weight_threshold: 0.3, gaussians_downsample: 1.0, model: dict, images: torch.float32 [1,436,768,3] cpu
   [ComfyUI] [SubprocessWorker] call_method: nodes.reconstruct.HYWM2Reconstruct.EXECUTE_NORMALIZED
   [ComfyUI] [SubprocessWorker] acquired lock, ensuring started...
@@ -92,90 +91,82 @@ Capturing execution frames: depth_normal.json
   [ComfyUI] [comfy-env] PRE-SERIALIZE 'images' shape: torch.Size([1, 436, 768, 3])
   [ComfyUI] [SubprocessWorker] serializing kwargs to shm...
   [ComfyUI] [SubprocessWorker] created 0 shm blocks
-  [capture-loop] iter=100 t=15.9s state={'complete': False, 'error': None, 'executedCount': 1, 'wsState': 1} eval_ms=3 ram=2.3/15.6GB (14%) swap=0.0/3.0GB (0%) cpu=29% browser_rss=0.86GB
   [ComfyUI] [SubprocessWorker] sending request via socket...
   [ComfyUI] [SubprocessWorker] call_id=2 sending call_method
   [ComfyUI] [worker:ComfyUI-HYWM2] [comfy-env] _from_shm got dict with keys: ['__type__', 'strategy', 'parent_pid', 'fd', 'storage_size']
   [ComfyUI] [worker:ComfyUI-HYWM2] [comfy-env] DESERIALIZE TensorRef: tensor_size=[1, 436, 768, 3]
   [ComfyUI] [worker:ComfyUI-HYWM2] [comfy-env] DESERIALIZED tensor shape: torch.Size([1, 436, 768, 3])
-  Frame 6 saved (frame_005.jpg, t=16.6s)
-  [capture-periodic] freeze=3ms shot=133ms unfreeze=3ms saved=True
-  [capture-loop] iter=150 t=21.7s state={'complete': False, 'error': None, 'executedCount': 1, 'wsState': 1} eval_ms=3 ram=2.4/15.6GB (16%) swap=0.0/3.0GB (0%) cpu=32% browser_rss=0.86GB
+  [capture-loop] iter=100 t=15.6s state={'complete': False, 'error': None, 'executedCount': 1, 'wsState': 1} eval_ms=3 ram=2.4/15.6GB (15%) swap=0.0/3.0GB (0%) cpu=12% browser_rss=0.85GB
+  Frame 6 saved (frame_005.jpg, t=16.5s)
+  [capture-periodic] freeze=3ms shot=119ms unfreeze=6ms saved=True
   [ComfyUI] [worker:ComfyUI-HYWM2] [Pipeline] Single-GPU mode
-  [ComfyUI] [worker:ComfyUI-HYWM2] [Init] Found local model at /home/runner/work/comfy-gpu-ci/comfy-gpu-ci/test_workspaces/HYWM2-2137/ComfyUI/models/hywm2/
+  [ComfyUI] [worker:ComfyUI-HYWM2] [Init] Found local model at /home/runner/work/comfy-gpu-ci/comfy-gpu-ci/test_workspaces/HYWM2-0031/ComfyUI/models/hywm2/
   [ComfyUI] [worker:ComfyUI-HYWM2] [WorldMirror] model_size: large, embed_dim: 1024, depth: 24, num_heads: 16, mlp_ratio: 4.0, gs_dim: 256, num_register_tokens: 4
+  [capture-loop] iter=150 t=21.3s state={'complete': False, 'error': None, 'executedCount': 1, 'wsState': 1} eval_ms=3 ram=3.5/15.6GB (22%) swap=0.0/3.0GB (0%) cpu=32% browser_rss=0.84GB
   [ComfyUI] [worker:ComfyUI-HYWM2] [INFO] Using normalized RoPE!
-  [capture-loop] iter=200 t=27.3s state={'complete': False, 'error': None, 'executedCount': 1, 'wsState': 1} eval_ms=3 ram=4.4/15.6GB (28%) swap=0.0/3.0GB (0%) cpu=34% browser_rss=0.80GB
-  [ComfyUI] [worker:ComfyUI-HYWM2]   Loaded 1545/1593 keys from /home/runner/work/comfy-gpu-ci/comfy-gpu-ci/test_workspaces/HYWM2-2137/ComfyUI/models/hywm2/
+  [capture-loop] iter=200 t=26.9s state={'complete': False, 'error': None, 'executedCount': 1, 'wsState': 1} eval_ms=3 ram=6.3/15.6GB (40%) swap=0.0/3.0GB (0%) cpu=33% browser_rss=0.78GB
+  [ComfyUI] [worker:ComfyUI-HYWM2]   Loaded 1545/1593 keys from /home/runner/work/comfy-gpu-ci/comfy-gpu-ci/test_workspaces/HYWM2-0031/ComfyUI/models/hywm2/
   [ComfyUI] [worker:ComfyUI-HYWM2] [Init] Disabled heads: ['camera', 'points', 'gs'], freed ~281.8M params
-  [ComfyUI] [worker:ComfyUI-HYWM2] [Init] Model ready in 11.1s
+  [ComfyUI] [worker:ComfyUI-HYWM2] [Init] Model ready in 8.9s
   [ComfyUI] [worker:ComfyUI-HYWM2] WARNING: No comfy kitchen, using old apply_rope functions.
-  [capture-loop] iter=250 t=33.0s state={'complete': False, 'error': None, 'executedCount': 1, 'wsState': 1} eval_ms=3 ram=6.3/15.6GB (40%) swap=0.0/3.0GB (0%) cpu=33% browser_rss=0.80GB
   [ComfyUI] [SubprocessWorker] callback 'request_vram_budget' from call_id=2
-  [ComfyUI] [comfy-env] VRAM request: 3.93GB, free before eviction: 10.00GB
-  [ComfyUI] [comfy-env] VRAM after eviction: 10.00GB
+  [ComfyUI] [comfy-env] VRAM request: 3.93GB, free before eviction: 9.96GB
+  [ComfyUI] [comfy-env] VRAM after eviction: 9.96GB
   [ComfyUI] [worker:ComfyUI-HYWM2] [Inference] 1 images, shape=torch.Size([1, 1, 3, 434, 756]), sp_size=1
-  [ComfyUI] /home/runner/work/comfy-gpu-ci/comfy-gpu-ci/test_workspaces/HYWM2-2137/ComfyUI/custom_nodes/ComfyUI-HYWM2/nodes/hyworld2/worldrecon/hyworldmirror/models/models/visual_transformer.py:303: UserWarning: CUDA is not available or torch_xla is imported. Disabling autocast.
+  [ComfyUI] /home/runner/work/comfy-gpu-ci/comfy-gpu-ci/test_workspaces/HYWM2-0031/ComfyUI/custom_nodes/ComfyUI-HYWM2/nodes/hyworld2/worldrecon/hyworldmirror/models/models/visual_transformer.py:303: UserWarning: CUDA is not available or torch_xla is imported. Disabling autocast.
   [ComfyUI]   with torch.amp.autocast('cuda', enabled=(not enable_bf16), dtype=torch.bfloat16):
-  [capture-loop] iter=300 t=38.6s state={'complete': False, 'error': None, 'executedCount': 1, 'wsState': 1} eval_ms=3 ram=6.3/15.6GB (40%) swap=0.0/3.0GB (0%) cpu=33% browser_rss=0.80GB
-  [capture-loop] iter=350 t=44.1s state={'complete': False, 'error': None, 'executedCount': 1, 'wsState': 1} eval_ms=2 ram=6.2/15.6GB (40%) swap=0.0/3.0GB (0%) cpu=32% browser_rss=0.80GB
-  [ComfyUI] /home/runner/work/comfy-gpu-ci/comfy-gpu-ci/test_workspaces/HYWM2-2137/ComfyUI/custom_nodes/ComfyUI-HYWM2/nodes/hyworld2/worldrecon/hyworldmirror/models/models/visual_transformer.py:344: UserWarning: CUDA is not available or torch_xla is imported. Disabling autocast.
+  [capture-loop] iter=250 t=32.5s state={'complete': False, 'error': None, 'executedCount': 1, 'wsState': 1} eval_ms=5 ram=6.4/15.6GB (41%) swap=0.0/3.0GB (0%) cpu=33% browser_rss=0.78GB
+  [capture-loop] iter=300 t=38.1s state={'complete': False, 'error': None, 'executedCount': 1, 'wsState': 1} eval_ms=4 ram=6.4/15.6GB (41%) swap=0.0/3.0GB (0%) cpu=33% browser_rss=0.78GB
+  [ComfyUI] /home/runner/work/comfy-gpu-ci/comfy-gpu-ci/test_workspaces/HYWM2-0031/ComfyUI/custom_nodes/ComfyUI-HYWM2/nodes/hyworld2/worldrecon/hyworldmirror/models/models/visual_transformer.py:344: UserWarning: CUDA is not available or torch_xla is imported. Disabling autocast.
   [ComfyUI]   with torch.amp.autocast('cuda', enabled=(not enable_bf16), dtype=torch.bfloat16):
-  [capture-loop] iter=400 t=49.8s state={'complete': False, 'error': None, 'executedCount': 1, 'wsState': 1} eval_ms=2 ram=6.2/15.6GB (40%) swap=0.0/3.0GB (0%) cpu=33% browser_rss=0.80GB
-  [capture-loop] iter=450 t=55.4s state={'complete': False, 'error': None, 'executedCount': 1, 'wsState': 1} eval_ms=3 ram=6.2/15.6GB (40%) swap=0.0/3.0GB (0%) cpu=32% browser_rss=0.80GB
+  [capture-loop] iter=350 t=43.8s state={'complete': False, 'error': None, 'executedCount': 1, 'wsState': 1} eval_ms=3 ram=6.3/15.6GB (41%) swap=0.0/3.0GB (0%) cpu=33% browser_rss=0.78GB
+  [capture-loop] iter=400 t=49.5s state={'complete': False, 'error': None, 'executedCount': 1, 'wsState': 1} eval_ms=3 ram=6.3/15.6GB (41%) swap=0.0/3.0GB (0%) cpu=33% browser_rss=0.78GB
+  [capture-loop] iter=450 t=55.0s state={'complete': False, 'error': None, 'executedCount': 1, 'wsState': 1} eval_ms=4 ram=6.3/15.6GB (41%) swap=0.0/3.0GB (0%) cpu=32% browser_rss=0.78GB
+  [ComfyUI] /home/runner/work/comfy-gpu-ci/comfy-gpu-ci/test_workspaces/HYWM2-0031/ComfyUI/custom_nodes/ComfyUI-HYWM2/nodes/hyworld2/worldrecon/hyworldmirror/models/models/worldmirror.py:292: UserWarning: CUDA is not available or torch_xla is imported. Disabling autocast.
+  [ComfyUI]   with torch.amp.autocast('cuda', enabled=(not self.enable_bf16), dtype=torch.float32):
   [ComfyUI] [worker:ComfyUI-HYWM2]
   [ComfyUI] === WATCHDOG TICK 1 ===
-  [ComfyUI] [worker:ComfyUI-HYWM2] Thread 0x00007f11fac156c0 (most recent call first):
-  [ComfyUI]   File "/home/runner/.ce/.pixi/envs/hywm2-nodes/lib/python3.13/threading.py", line 363 in wait
-  [ComfyUI]   File "/home/runner/.ce/.pixi/envs/hywm2-nodes/lib/python3.13/threading.py", line 660 in wait
-  [ComfyUI]   File "/home/runner/.ce/.pixi/envs/hywm2-nodes/lib/python3.13/site-packages/tqdm/_monitor.py", line 60 in run
-  [ComfyUI]   File "/home/runner/.ce/.pixi/envs/hywm2-nodes/lib/python3.13/threading.py", line 1044 in _bootstrap_inner
-  [ComfyUI]   File "/home/runner/.ce/.pixi/envs/hywm2-nodes/lib/python3.13/threading.py", line 1015 in _bootstrap
+  [ComfyUI] [worker:ComfyUI-HYWM2] Thread 0x00007f9791f3c6c0 (most recent call first):
+  [ComfyUI]   File "/home/runner/.ce/.pixi/envs/hywm2-nodes/lib/python3.10/threading.py", line 324 in wait
+  [ComfyUI]   File "/home/runner/.ce/.pixi/envs/hywm2-nodes/lib/python3.10/threading.py", line 607 in wait
+  [ComfyUI]   File "/home/runner/.ce/.pixi/envs/hywm2-nodes/lib/python3.10/site-packages/tqdm/_monitor.py", line 60 in run
+  [ComfyUI]   File "/home/runner/.ce/.pixi/envs/hywm2-nodes/lib/python3.10/threading.py", line 1016 in _bootstrap_inner
+  [ComfyUI]   File "/home/runner/.ce/.pixi/envs/hywm2-nodes/lib/python3.10/threading.py", line 973 in _bootstrap
   [ComfyUI] 
-  [ComfyUI] Current thread 0x00007f12417206c0 (most recent call first):
-  [ComfyUI]   File "/tmp/comfyui_pvenv_tsmht6me/persistent_worker.py", line 52 in _watchdog
-  [ComfyUI]   File "/home/runner/.ce/.pixi/envs/hywm2-nodes/lib/python3.13/threading.py", line 995 in run
-  [ComfyUI]   File "/home/runner/.ce/.pixi/envs/hywm2-nodes/lib/python3.13/threading.py", line 1044 in _bootstrap_inner
-  [ComfyUI]   File "/home/runner/.ce/.pixi/envs/hywm2-nodes/lib/python3.13/threading.py", line 1015 in _bootstrap
+  [ComfyUI] Current thread 0x00007f9792f3d6c0 (most recent call first):
+  [ComfyUI]   File "/tmp/comfyui_pvenv_9bo1jkb4/persistent_worker.py", line 52 in _watchdog
+  [ComfyUI]   File "/home/runner/.ce/.pixi/envs/hywm2-nodes/lib/python3.10/threading.py", line 953 in run
+  [ComfyUI]   File "/home/runner/.ce/.pixi/envs/hywm2-nodes/lib/python3.10/threading.py", line 1016 in _bootstrap_inner
+  [ComfyUI]   File "/home/runner/.ce/.pixi/envs/hywm2-nodes/lib/python3.10/threading.py", line 973 in _bootstrap
   [ComfyUI] 
-  [ComfyUI] Thread 0x00007f124223f740 (most recent call first):
-  [ComfyUI]   File "/home/runner/.ce/.pixi/envs/hywm2-nodes/lib/python3.13/site-packages/torch/nn/modules/linear.py", line 134 in forward
-  [ComfyUI]   File "/home/runner/.ce/.pixi/envs/hywm2-nodes/lib/python3.13/site-packages/torch/nn/modules/module.py", line 1790 in _call_impl
-  [ComfyUI]   File "/home/runner/.ce/.pixi/envs/hywm2-nodes/lib/python3.13/site-packages/torch/nn/modules/module.py", line 1779 in _wrapped_call_impl
-  [ComfyUI]   File "/home/runner/work/comfy-gpu-ci/comfy-gpu-ci/test_workspaces/HYWM2-2137/ComfyUI/custom_nodes/ComfyUI-HYWM2/nodes/hyworld2/worldrecon/hyworldmirror/models/layers/mlp.py", line 33 in forward
-  [ComfyUI]   File "/home/runner/.ce/.pixi/envs/hywm2-nodes/lib/python3.13/site-packages/torch/nn/modules/module.py", line 1790 in _call_impl
-  [ComfyUI]   File "/home/runner/.ce/.pixi/envs/hywm2-nodes/lib/python3.13/site-packages/torch/nn/modules/module.py", line 1779 in _wrapped_call_impl
-  [ComfyUI]   File "/home/runner/work/comfy-gpu-ci/comfy-gpu-ci/test_workspaces/HYWM2-2137/ComfyUI/custom_nodes/ComfyUI-HYWM2/nodes/hyworld2/worldrecon/hyworldmirror/models/layers/block.py", line 77 in ffn_residual_func
-  [ComfyUI]   File "/home/runner/work/comfy-gpu-ci/comfy-gpu-ci/test_workspaces/HYWM2-2137/ComfyUI/custom_nodes/ComfyUI-HYWM2/nodes/hyworld2/worldrecon/hyworldmirror/models/layers/block.py", line 92 in forward
-  [ComfyUI]   File "/home/runner/.ce/.pixi/envs/hywm2-nodes/lib/python3.13/site-packages/torch/nn/modules/module.py", line 1790 in _call_impl
-  [ComfyUI]   File "/home/runner/.ce/.pixi/envs/hywm2-nodes/lib/python3.13/site-packages/torch/nn/modules/module.py", line 1779 in _wrapped_call_impl
-  [ComfyUI]   File "/home/runner/work/comfy-gpu-ci/comfy-gpu-ci/test_workspaces/HYWM2-2137/ComfyUI/custom_nodes/ComfyUI-HYWM2/nodes/hyworld2/worldrecon/hyworldmirror/models/models/visual_transformer.py", line 480 in _process_attention_blocks
-  [ComfyUI]   File "/home/runner/work/comfy-gpu-ci/comfy-gpu-ci/test_workspaces/HYWM2-2137/ComfyUI/custom_nodes/ComfyUI-HYWM2/nodes/hyworld2/worldrecon/hyworldmirror/models/models/visual_transformer.py", line 407 in forward
-  [ComfyUI]   File "/home/runner/.ce/.pixi/envs/hywm2-nodes/lib/python3.13/site-packages/torch/nn/modules/module.py", line 1790 in _call_impl
-  [ComfyUI]   File "/home/runner/.ce/.pixi/envs/hywm2-nodes/lib/python3.13/site-packages/torch/nn/modules/module.py", line 1779 in _wrapped_call_impl
-  [ComfyUI]   File "/home/runner/work/comfy-gpu-ci/comfy-gpu-ci/test_workspaces/HYWM2-2137/ComfyUI/custom_nodes/ComfyUI-HYWM2/nodes/hyworld2/worldrecon/hyworldmirror/models/models/worldmirror.py", line 288 in forward
-  [ComfyUI]   File "/home/runner/.ce/.pixi/envs/hywm2-nodes/lib/python3.13/site-packages/torch/nn/modules/module.py", line 1790 in _call_impl
-  [ComfyUI]   File "/home/runner/.ce/.pixi/envs/hywm2-nodes/lib/python3.13/site-packages/torch/nn/modules/module.py", line 1779 in _wrapped_call_impl
-  [ComfyUI]   File "/home/runner/work/comfy-gpu-ci/comfy-gpu-ci/test_workspaces/HYWM2-2137/ComfyUI/custom_nodes/ComfyUI-HYWM2/nodes/hyworld2/worldrecon/pipeline.py", line 636 in _run_inference
-  [ComfyUI]   File "/home/runner/work/comfy-gpu-ci/comfy-gpu-ci/test_workspaces/HYWM2-2137/ComfyUI/custom_nodes/ComfyUI-HYWM2/nodes/reconstruct.py", line 279 in execute
-  [ComfyUI]   File "/home/runner/.ce/.pixi/envs/hywm2-nodes/lib/python3.13/site-packages/torch/utils/_contextlib.py", line 124 in decorate_context
-  [ComfyUI]   File "/home/runner/work/comfy-gpu-ci/comfy-gpu-ci/test_workspaces/HYWM2-2137/ComfyUI/comfy_api/latest/_io.py", line 1833 in EXECUTE_NORMALIZED
-  [ComfyUI]   File "/tmp/comfyui_pvenv_tsmht6me/persistent_worker.py", line 1762 in main
-  [ComfyUI]   File "/tmp/comfyui_pvenv_tsmht6me/persistent_worker.py", line 1807 in <module>
+  [ComfyUI] Thread 0x00007f9793a14740 (most recent call first):
+  [ComfyUI]   File "/home/runner/.ce/.pixi/envs/hywm2-nodes/lib/python3.10/site-packages/torch/nn/modules/conv.py", line 548 in _conv_forward
+  [ComfyUI]   File "/home/runner/.ce/.pixi/envs/hywm2-nodes/lib/python3.10/site-packages/torch/nn/modules/conv.py", line 553 in forward
+  [ComfyUI]   File "/home/runner/.ce/.pixi/envs/hywm2-nodes/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1790 in _call_impl
+  [ComfyUI]   File "/home/runner/.ce/.pixi/envs/hywm2-nodes/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1779 in _wrapped_call_impl
+  [ComfyUI]   File "/home/runner/work/comfy-gpu-ci/comfy-gpu-ci/test_workspaces/HYWM2-0031/ComfyUI/custom_nodes/ComfyUI-HYWM2/nodes/hyworld2/worldrecon/hyworldmirror/models/heads/dense_head.py", line 126 in _extract_fused_features
+  [ComfyUI]   File "/home/runner/work/comfy-gpu-ci/comfy-gpu-ci/test_workspaces/HYWM2-0031/ComfyUI/custom_nodes/ComfyUI-HYWM2/nodes/hyworld2/worldrecon/hyworldmirror/models/heads/dense_head.py", line 338 in _forward_impl
+  [ComfyUI]   File "/home/runner/work/comfy-gpu-ci/comfy-gpu-ci/test_workspaces/HYWM2-0031/ComfyUI/custom_nodes/ComfyUI-HYWM2/nodes/hyworld2/worldrecon/hyworldmirror/models/heads/dense_head.py", line 251 in forward
+  [ComfyUI]   File "/home/runner/.ce/.pixi/envs/hywm2-nodes/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1790 in _call_impl
+  [ComfyUI]   File "/home/runner/.ce/.pixi/envs/hywm2-nodes/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1779 in _wrapped_call_impl
+  [ComfyUI]   File "/home/runner/work/comfy-gpu-ci/comfy-gpu-ci/test_workspaces/HYWM2-0031/ComfyUI/custom_nodes/ComfyUI-HYWM2/nodes/hyworld2/worldrecon/hyworldmirror/models/models/worldmirror.py", line 593 in _gen_all_preds
+  [ComfyUI]   File "/home/runner/work/comfy-gpu-ci/comfy-gpu-ci/test_workspaces/HYWM2-0031/ComfyUI/custom_nodes/ComfyUI-HYWM2/nodes/hyworld2/worldrecon/hyworldmirror/models/models/worldmirror.py", line 299 in forward
+  [ComfyUI]   File "/home/runner/.ce/.pixi/envs/hywm2-nodes/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1790 in _call_impl
+  [ComfyUI]   File "/home/runner/.ce/.pixi/envs/hywm2-nodes/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1779 in _wrapped_call_impl
+  [ComfyUI]   File "/home/runner/work/comfy-gpu-ci/comfy-gpu-ci/test_workspaces/HYWM2-0031/ComfyUI/custom_nodes/ComfyUI-HYWM2/nodes/hyworld2/worldrecon/pipeline.py", line 636 in _run_inference
+  [ComfyUI]   File "/home/runner/work/comfy-gpu-ci/comfy-gpu-ci/test_workspaces/HYWM2-0031/ComfyUI/custom_nodes/ComfyUI-HYWM2/nodes/reconstruct.py", line 279 in execute
+  [ComfyUI]   File "/home/runner/.ce/.pixi/envs/hywm2-nodes/lib/python3.10/site-packages/torch/utils/_contextlib.py", line 124 in decorate_context
+  [ComfyUI]   File "/home/runner/work/comfy-gpu-ci/comfy-gpu-ci/test_workspaces/HYWM2-0031/ComfyUI/comfy_api/latest/_io.py", line 1833 in EXECUTE_NORMALIZED
+  [ComfyUI]   File "/tmp/comfyui_pvenv_9bo1jkb4/persistent_worker.py", line 1762 in main
+  [ComfyUI]   File "/tmp/comfyui_pvenv_9bo1jkb4/persistent_worker.py", line 1807 in <module>
   [ComfyUI] 
   [ComfyUI] [worker:ComfyUI-HYWM2] === END ===
   [ComfyUI] 
-  [capture-loop] iter=500 t=61.0s state={'complete': False, 'error': None, 'executedCount': 1, 'wsState': 1} eval_ms=2 ram=6.2/15.6GB (40%) swap=0.0/3.0GB (0%) cpu=32% browser_rss=0.80GB
-  [capture-loop] iter=550 t=66.6s state={'complete': False, 'error': None, 'executedCount': 1, 'wsState': 1} eval_ms=3 ram=6.2/15.6GB (40%) swap=0.0/3.0GB (0%) cpu=32% browser_rss=0.79GB
-  [capture-loop] iter=600 t=72.3s state={'complete': False, 'error': None, 'executedCount': 1, 'wsState': 1} eval_ms=2 ram=6.2/15.6GB (40%) swap=0.0/3.0GB (0%) cpu=32% browser_rss=0.79GB
-  [capture-loop] iter=650 t=77.9s state={'complete': False, 'error': None, 'executedCount': 1, 'wsState': 1} eval_ms=3 ram=6.2/15.6GB (40%) swap=0.0/3.0GB (0%) cpu=32% browser_rss=0.79GB
-  [ComfyUI] /home/runner/work/comfy-gpu-ci/comfy-gpu-ci/test_workspaces/HYWM2-2137/ComfyUI/custom_nodes/ComfyUI-HYWM2/nodes/hyworld2/worldrecon/hyworldmirror/models/models/worldmirror.py:292: UserWarning: CUDA is not available or torch_xla is imported. Disabling autocast.
-  [ComfyUI]   with torch.amp.autocast('cuda', enabled=(not self.enable_bf16), dtype=torch.float32):
-  [capture-loop] iter=700 t=83.5s state={'complete': False, 'error': None, 'executedCount': 1, 'wsState': 1} eval_ms=3 ram=6.6/15.6GB (42%) swap=0.0/3.0GB (0%) cpu=33% browser_rss=0.80GB
-  [capture-loop] iter=750 t=89.1s state={'complete': False, 'error': None, 'executedCount': 1, 'wsState': 1} eval_ms=2 ram=6.5/15.6GB (42%) swap=0.0/3.0GB (0%) cpu=33% browser_rss=0.80GB
-  [ComfyUI] [worker:ComfyUI-HYWM2] [Inference] Done in 57.97s
+  [capture-loop] iter=500 t=60.7s state={'complete': False, 'error': None, 'executedCount': 1, 'wsState': 1} eval_ms=3 ram=6.4/15.6GB (41%) swap=0.0/3.0GB (0%) cpu=33% browser_rss=0.78GB
+  [capture-loop] iter=550 t=66.2s state={'complete': False, 'error': None, 'executedCount': 1, 'wsState': 1} eval_ms=3 ram=6.5/15.6GB (42%) swap=0.0/3.0GB (0%) cpu=33% browser_rss=0.78GB
+  [ComfyUI] [worker:ComfyUI-HYWM2] [Inference] Done in 39.15s
   [ComfyUI] [SubprocessWorker] got response: ok
-  [ComfyUI] [comfy-env] HYWM2Reconstruct done (75.43s): result: NodeOutput
+  [ComfyUI] [comfy-env] HYWM2Reconstruct done (53.29s): result: NodeOutput
   [ComfyUI] [comfy-env] Running HYWM2Reconstruct: prior_camera_json: '', depth_colormap: 'viridis', apply_mask: True, view_index: -1, points_conf_percentile: 0.0, points_max: 2000000, gaussians_weight_threshold: 0.3, gaussians_downsample: 1.0, model: dict, images: torch.float32 [1,436,768,3] cpu
   [ComfyUI] [SubprocessWorker] call_method: nodes.reconstruct.HYWM2Reconstruct.EXECUTE_NORMALIZED
   [ComfyUI] [SubprocessWorker] acquired lock, ensuring started...
@@ -191,73 +182,19 @@ Capturing execution frames: depth_normal.json
   [ComfyUI] [worker:ComfyUI-HYWM2] [comfy-env] DESERIALIZE TensorRef: tensor_size=[1, 436, 768, 3]
   [ComfyUI] [worker:ComfyUI-HYWM2] [comfy-env] DESERIALIZED tensor shape: torch.Size([1, 436, 768, 3])
   [ComfyUI] [SubprocessWorker] callback 'request_vram_budget' from call_id=3
-  [ComfyUI] [comfy-env] VRAM request: 3.93GB, free before eviction: 10.00GB
-  [ComfyUI] [comfy-env] VRAM after eviction: 10.00GB
+  [ComfyUI] [comfy-env] VRAM request: 3.93GB, free before eviction: 9.89GB
+  [ComfyUI] [comfy-env] VRAM after eviction: 9.89GB
   [ComfyUI] [worker:ComfyUI-HYWM2] [Inference] 1 images, shape=torch.Size([1, 1, 3, 434, 756]), sp_size=1
-  [capture-loop] iter=800 t=94.7s state={'complete': False, 'error': None, 'executedCount': 1, 'wsState': 1} eval_ms=3 ram=6.3/15.6GB (40%) swap=0.0/3.0GB (0%) cpu=32% browser_rss=0.80GB
-  [capture-loop] iter=850 t=100.3s state={'complete': False, 'error': None, 'executedCount': 1, 'wsState': 1} eval_ms=2 ram=6.3/15.6GB (40%) swap=0.0/3.0GB (0%) cpu=32% browser_rss=0.80GB
-  [capture-loop] iter=900 t=105.9s state={'complete': False, 'error': None, 'executedCount': 1, 'wsState': 1} eval_ms=2 ram=6.3/15.6GB (40%) swap=0.0/3.0GB (0%) cpu=32% browser_rss=0.80GB
-  [capture-loop] iter=950 t=111.6s state={'complete': False, 'error': None, 'executedCount': 1, 'wsState': 1} eval_ms=4 ram=6.3/15.6GB (40%) swap=0.0/3.0GB (0%) cpu=32% browser_rss=0.80GB
-  [capture-loop] iter=1000 t=117.2s state={'complete': False, 'error': None, 'executedCount': 1, 'wsState': 1} eval_ms=2 ram=6.3/15.6GB (40%) swap=0.0/3.0GB (0%) cpu=33% browser_rss=0.80GB
-  [ComfyUI] [worker:ComfyUI-HYWM2]
-  [ComfyUI] === WATCHDOG TICK 2 ===
-  [ComfyUI] [worker:ComfyUI-HYWM2] Thread 0x00007f11afe756c0 (most recent call first):
-  [ComfyUI]   File "/home/runner/.ce/.pixi/envs/hywm2-nodes/lib/python3.13/socket.py", line 295 in accept
-  [ComfyUI]   File "/home/runner/.ce/.pixi/envs/hywm2-nodes/lib/python3.13/multiprocessing/connection.py", line 648 in accept
-  [ComfyUI]   File "/home/runner/.ce/.pixi/envs/hywm2-nodes/lib/python3.13/multiprocessing/connection.py", line 493 in accept
-  [ComfyUI]   File "/home/runner/.ce/.pixi/envs/hywm2-nodes/lib/python3.13/multiprocessing/resource_sharer.py", line 138 in _serve
-  [ComfyUI]   File "/home/runner/.ce/.pixi/envs/hywm2-nodes/lib/python3.13/threading.py", line 995 in run
-  [ComfyUI]   File "/home/runner/.ce/.pixi/envs/hywm2-nodes/lib/python3.13/threading.py", line 1044 in _bootstrap_inner
-  [ComfyUI]   File "/home/runner/.ce/.pixi/envs/hywm2-nodes/lib/python3.13/threading.py", line 1015 in _bootstrap
-  [ComfyUI] 
-  [ComfyUI] Thread 0x00007f11fac156c0 (most recent call first):
-  [ComfyUI]   File "/home/runner/.ce/.pixi/envs/hywm2-nodes/lib/python3.13/threading.py", line 363 in wait
-  [ComfyUI]   File "/home/runner/.ce/.pixi/envs/hywm2-nodes/lib/python3.13/threading.py", line 660 in wait
-  [ComfyUI]   File "/home/runner/.ce/.pixi/envs/hywm2-nodes/lib/python3.13/site-packages/tqdm/_monitor.py", line 60 in run
-  [ComfyUI]   File "/home/runner/.ce/.pixi/envs/hywm2-nodes/lib/python3.13/threading.py", line 1044 in _bootstrap_inner
-  [ComfyUI]   File "/home/runner/.ce/.pixi/envs/hywm2-nodes/lib/python3.13/threading.py", line 1015 in _bootstrap
-  [ComfyUI] 
-  [ComfyUI] Current thread 0x00007f12417206c0 (most recent call first):
-  [ComfyUI]   File "/tmp/comfyui_pvenv_tsmht6me/persistent_worker.py", line 52 in _watchdog
-  [ComfyUI]   File "/home/runner/.ce/.pixi/envs/hywm2-nodes/lib/python3.13/threading.py", line 995 in run
-  [ComfyUI]   File "/home/runner/.ce/.pixi/envs/hywm2-nodes/lib/python3.13/threading.py", line 1044 in _bootstrap_inner
-  [ComfyUI]   File "/home/runner/.ce/.pixi/envs/hywm2-nodes/lib/python3.13/threading.py", line 1015 in _bootstrap
-  [ComfyUI] 
-  [ComfyUI] Thread 0x00007f124223f740 (most recent call first):
-  [ComfyUI]   File "/home/runner/.ce/.pixi/envs/hywm2-nodes/lib/python3.13/site-packages/torch/nn/modules/linear.py", line 134 in forward
-  [ComfyUI]   File "/home/runner/.ce/.pixi/envs/hywm2-nodes/lib/python3.13/site-packages/torch/nn/modules/module.py", line 1790 in _call_impl
-  [ComfyUI]   File "/home/runner/.ce/.pixi/envs/hywm2-nodes/lib/python3.13/site-packages/torch/nn/modules/module.py", line 1779 in _wrapped_call_impl
-  [ComfyUI]   File "/home/runner/work/comfy-gpu-ci/comfy-gpu-ci/test_workspaces/HYWM2-2137/ComfyUI/custom_nodes/ComfyUI-HYWM2/nodes/hyworld2/worldrecon/hyworldmirror/models/layers/mlp.py", line 33 in forward
-  [ComfyUI]   File "/home/runner/.ce/.pixi/envs/hywm2-nodes/lib/python3.13/site-packages/torch/nn/modules/module.py", line 1790 in _call_impl
-  [ComfyUI]   File "/home/runner/.ce/.pixi/envs/hywm2-nodes/lib/python3.13/site-packages/torch/nn/modules/module.py", line 1779 in _wrapped_call_impl
-  [ComfyUI]   File "/home/runner/work/comfy-gpu-ci/comfy-gpu-ci/test_workspaces/HYWM2-2137/ComfyUI/custom_nodes/ComfyUI-HYWM2/nodes/hyworld2/worldrecon/hyworldmirror/models/layers/block.py", line 77 in ffn_residual_func
-  [ComfyUI]   File "/home/runner/work/comfy-gpu-ci/comfy-gpu-ci/test_workspaces/HYWM2-2137/ComfyUI/custom_nodes/ComfyUI-HYWM2/nodes/hyworld2/worldrecon/hyworldmirror/models/layers/block.py", line 92 in forward
-  [ComfyUI]   File "/home/runner/.ce/.pixi/envs/hywm2-nodes/lib/python3.13/site-packages/torch/nn/modules/module.py", line 1790 in _call_impl
-  [ComfyUI]   File "/home/runner/.ce/.pixi/envs/hywm2-nodes/lib/python3.13/site-packages/torch/nn/modules/module.py", line 1779 in _wrapped_call_impl
-  [ComfyUI]   File "/home/runner/work/comfy-gpu-ci/comfy-gpu-ci/test_workspaces/HYWM2-2137/ComfyUI/custom_nodes/ComfyUI-HYWM2/nodes/hyworld2/worldrecon/hyworldmirror/models/models/visual_transformer.py", line 480 in _process_attention_blocks
-  [ComfyUI]   File "/home/runner/work/comfy-gpu-ci/comfy-gpu-ci/test_workspaces/HYWM2-2137/ComfyUI/custom_nodes/ComfyUI-HYWM2/nodes/hyworld2/worldrecon/hyworldmirror/models/models/visual_transformer.py", line 396 in forward
-  [ComfyUI]   File "/home/runner/.ce/.pixi/envs/hywm2-nodes/lib/python3.13/site-packages/torch/nn/modules/module.py", line 1790 in _call_impl
-  [ComfyUI]   File "/home/runner/.ce/.pixi/envs/hywm2-nodes/lib/python3.13/site-packages/torch/nn/modules/module.py", line 1779 in _wrapped_call_impl
-  [ComfyUI]   File "/home/runner/work/comfy-gpu-ci/comfy-gpu-ci/test_workspaces/HYWM2-2137/ComfyUI/custom_nodes/ComfyUI-HYWM2/nodes/hyworld2/worldrecon/hyworldmirror/models/models/worldmirror.py", line 288 in forward
-  [ComfyUI]   File "/home/runner/.ce/.pixi/envs/hywm2-nodes/lib/python3.13/site-packages/torch/nn/modules/module.py", line 1790 in _call_impl
-  [ComfyUI]   File "/home/runner/.ce/.pixi/envs/hywm2-nodes/lib/python3.13/site-packages/torch/nn/modules/module.py", line 1779 in _wrapped_call_impl
-  [ComfyUI]   File "/home/runner/work/comfy-gpu-ci/comfy-gpu-ci/test_workspaces/HYWM2-2137/ComfyUI/custom_nodes/ComfyUI-HYWM2/nodes/hyworld2/worldrecon/pipeline.py", line 636 in _run_inference
-  [ComfyUI]   File "/home/runner/work/comfy-gpu-ci/comfy-gpu-ci/test_workspaces/HYWM2-2137/ComfyUI/custom_nodes/ComfyUI-HYWM2/nodes/reconstruct.py", line 279 in execute
-  [ComfyUI]   File "/home/runner/.ce/.pixi/envs/hywm2-nodes/lib/python3.13/site-packages/torch/utils/_contextlib.py", line 124 in decorate_context
-  [ComfyUI]   File "/home/runner/work/comfy-gpu-ci/comfy-gpu-ci/test_workspaces/HYWM2-2137/ComfyUI/comfy_api/latest/_io.py", line 1833 in EXECUTE_NORMALIZED
-  [ComfyUI]   File "/tmp/comfyui_pvenv_tsmht6me/persistent_worker.py", line 1762 in main
-  [ComfyUI]   File "/tmp/comfyui_pvenv_tsmht6me/persistent_worker.py", line 1807 in <module>
-  [ComfyUI] 
-  [ComfyUI] [worker:ComfyUI-HYWM2] === END ===
-  [ComfyUI] 
-  [capture-loop] iter=1050 t=122.8s state={'complete': False, 'error': None, 'executedCount': 1, 'wsState': 1} eval_ms=2 ram=6.3/15.6GB (40%) swap=0.0/3.0GB (0%) cpu=32% browser_rss=0.80GB
-  [capture-loop] iter=1100 t=128.4s state={'complete': False, 'error': None, 'executedCount': 1, 'wsState': 1} eval_ms=2 ram=6.2/15.6GB (40%) swap=0.0/3.0GB (0%) cpu=32% browser_rss=0.80GB
-  [capture-loop] iter=1150 t=133.9s state={'complete': False, 'error': None, 'executedCount': 1, 'wsState': 1} eval_ms=2 ram=6.2/15.6GB (40%) swap=0.0/3.0GB (0%) cpu=32% browser_rss=0.80GB
-  [capture-loop] iter=1200 t=139.6s state={'complete': False, 'error': None, 'executedCount': 1, 'wsState': 1} eval_ms=2 ram=6.3/15.6GB (40%) swap=0.0/3.0GB (0%) cpu=32% browser_rss=0.80GB
-  [capture-loop] iter=1250 t=145.1s state={'complete': False, 'error': None, 'executedCount': 1, 'wsState': 1} eval_ms=3 ram=6.2/15.6GB (40%) swap=0.0/3.0GB (0%) cpu=32% browser_rss=0.80GB
-  [ComfyUI] [worker:ComfyUI-HYWM2] [Inference] Done in 57.61s
+  [capture-loop] iter=600 t=71.9s state={'complete': False, 'error': None, 'executedCount': 1, 'wsState': 1} eval_ms=3 ram=6.4/15.6GB (41%) swap=0.0/3.0GB (0%) cpu=32% browser_rss=0.78GB
+  [capture-loop] iter=650 t=77.4s state={'complete': False, 'error': None, 'executedCount': 1, 'wsState': 1} eval_ms=3 ram=6.4/15.6GB (41%) swap=0.0/3.0GB (0%) cpu=32% browser_rss=0.78GB
+  [capture-loop] iter=700 t=83.1s state={'complete': False, 'error': None, 'executedCount': 1, 'wsState': 1} eval_ms=3 ram=6.4/15.6GB (41%) swap=0.0/3.0GB (0%) cpu=33% browser_rss=0.78GB
+  [capture-loop] iter=750 t=88.8s state={'complete': False, 'error': None, 'executedCount': 1, 'wsState': 1} eval_ms=3 ram=6.4/15.6GB (41%) swap=0.0/3.0GB (0%) cpu=32% browser_rss=0.78GB
+  [capture-loop] iter=800 t=94.3s state={'complete': False, 'error': None, 'executedCount': 1, 'wsState': 1} eval_ms=2 ram=6.5/15.6GB (41%) swap=0.0/3.0GB (0%) cpu=33% browser_rss=0.78GB
+  [capture-loop] iter=850 t=100.0s state={'complete': False, 'error': None, 'executedCount': 1, 'wsState': 1} eval_ms=2 ram=6.4/15.6GB (41%) swap=0.0/3.0GB (0%) cpu=33% browser_rss=0.78GB
+  [capture-loop] iter=900 t=105.5s state={'complete': False, 'error': None, 'executedCount': 1, 'wsState': 1} eval_ms=3 ram=6.7/15.6GB (43%) swap=0.0/3.0GB (0%) cpu=33% browser_rss=0.78GB
+  [ComfyUI] [worker:ComfyUI-HYWM2] [Inference] Done in 39.06s
   [ComfyUI] [SubprocessWorker] got response: ok
-  [ComfyUI] [comfy-env] HYWM2Reconstruct done (57.70s): result: NodeOutput
+  [ComfyUI] [comfy-env] HYWM2Reconstruct done (39.15s): result: NodeOutput
   [ComfyUI] [comfy-env] Running HYWM2Reconstruct: prior_camera_json: '', depth_colormap: 'viridis', apply_mask: True, view_index: -1, points_conf_percentile: 0.0, points_max: 2000000, gaussians_weight_threshold: 0.3, gaussians_downsample: 1.0, model: dict, images: torch.float32 [1,436,768,3] cpu
   [ComfyUI] [SubprocessWorker] call_method: nodes.reconstruct.HYWM2Reconstruct.EXECUTE_NORMALIZED
   [ComfyUI] [SubprocessWorker] acquired lock, ensuring started...
@@ -273,73 +210,70 @@ Capturing execution frames: depth_normal.json
   [ComfyUI] [worker:ComfyUI-HYWM2] [comfy-env] DESERIALIZE TensorRef: tensor_size=[1, 436, 768, 3]
   [ComfyUI] [worker:ComfyUI-HYWM2] [comfy-env] DESERIALIZED tensor shape: torch.Size([1, 436, 768, 3])
   [ComfyUI] [SubprocessWorker] callback 'request_vram_budget' from call_id=4
-  [ComfyUI] [comfy-env] VRAM request: 3.93GB, free before eviction: 10.08GB
-  [ComfyUI] [comfy-env] VRAM after eviction: 10.08GB
+  [ComfyUI] [comfy-env] VRAM request: 3.93GB, free before eviction: 9.85GB
+  [ComfyUI] [comfy-env] VRAM after eviction: 9.85GB
   [ComfyUI] [worker:ComfyUI-HYWM2] [Inference] 1 images, shape=torch.Size([1, 1, 3, 434, 756]), sp_size=1
-  [capture-loop] iter=1300 t=150.8s state={'complete': False, 'error': None, 'executedCount': 1, 'wsState': 1} eval_ms=3 ram=6.2/15.6GB (40%) swap=0.0/3.0GB (0%) cpu=33% browser_rss=0.80GB
-  [capture-loop] iter=1350 t=156.3s state={'complete': False, 'error': None, 'executedCount': 1, 'wsState': 1} eval_ms=2 ram=6.2/15.6GB (40%) swap=0.0/3.0GB (0%) cpu=32% browser_rss=0.80GB
-  [capture-loop] iter=1400 t=162.0s state={'complete': False, 'error': None, 'executedCount': 1, 'wsState': 1} eval_ms=3 ram=6.2/15.6GB (40%) swap=0.0/3.0GB (0%) cpu=32% browser_rss=0.80GB
-  [capture-loop] iter=1450 t=167.6s state={'complete': False, 'error': None, 'executedCount': 1, 'wsState': 1} eval_ms=2 ram=6.2/15.6GB (40%) swap=0.0/3.0GB (0%) cpu=33% browser_rss=0.80GB
-  [capture-loop] iter=1500 t=173.2s state={'complete': False, 'error': None, 'executedCount': 1, 'wsState': 1} eval_ms=3 ram=6.2/15.6GB (40%) swap=0.0/3.0GB (0%) cpu=32% browser_rss=0.80GB
-  [capture-loop] iter=1550 t=178.8s state={'complete': False, 'error': None, 'executedCount': 1, 'wsState': 1} eval_ms=2 ram=6.2/15.6GB (40%) swap=0.0/3.0GB (0%) cpu=32% browser_rss=0.80GB
+  [capture-loop] iter=950 t=111.3s state={'complete': False, 'error': None, 'executedCount': 1, 'wsState': 1} eval_ms=3 ram=6.4/15.6GB (41%) swap=0.0/3.0GB (0%) cpu=34% browser_rss=0.78GB
+  [capture-loop] iter=1000 t=117.0s state={'complete': False, 'error': None, 'executedCount': 1, 'wsState': 1} eval_ms=2 ram=6.4/15.6GB (41%) swap=0.0/3.0GB (0%) cpu=33% browser_rss=0.78GB
   [ComfyUI] [worker:ComfyUI-HYWM2]
-  [ComfyUI] === WATCHDOG TICK 3 ===
-  [ComfyUI] [worker:ComfyUI-HYWM2] Thread 0x00007f11afe756c0 (most recent call first):
-  [ComfyUI]   File "/home/runner/.ce/.pixi/envs/hywm2-nodes/lib/python3.13/socket.py", line 295 in accept
-  [ComfyUI]   File "/home/runner/.ce/.pixi/envs/hywm2-nodes/lib/python3.13/multiprocessing/connection.py", line 648 in accept
-  [ComfyUI]   File "/home/runner/.ce/.pixi/envs/hywm2-nodes/lib/python3.13/multiprocessing/connection.py", line 493 in accept
-  [ComfyUI]   File "/home/runner/.ce/.pixi/envs/hywm2-nodes/lib/python3.13/multiprocessing/resource_sharer.py", line 138 in _serve
-  [ComfyUI]   File "/home/runner/.ce/.pixi/envs/hywm2-nodes/lib/python3.13/threading.py", line 995 in run
-  [ComfyUI]   File "/home/runner/.ce/.pixi/envs/hywm2-nodes/lib/python3.13/threading.py", line 1044 in _bootstrap_inner
-  [ComfyUI]   File "/home/runner/.ce/.pixi/envs/hywm2-nodes/lib/python3.13/threading.py", line 1015 in _bootstrap
+  [ComfyUI] === WATCHDOG TICK 2 ===
+  [ComfyUI] [worker:ComfyUI-HYWM2] Thread 0x00007f970aed76c0 (most recent call first):
+  [ComfyUI]   File "/home/runner/.ce/.pixi/envs/hywm2-nodes/lib/python3.10/socket.py", line 293 in accept
+  [ComfyUI]   File "/home/runner/.ce/.pixi/envs/hywm2-nodes/lib/python3.10/multiprocessing/connection.py", line 609 in accept
+  [ComfyUI]   File "/home/runner/.ce/.pixi/envs/hywm2-nodes/lib/python3.10/multiprocessing/connection.py", line 463 in accept
+  [ComfyUI]   File "/home/runner/.ce/.pixi/envs/hywm2-nodes/lib/python3.10/multiprocessing/resource_sharer.py", line 138 in _serve
+  [ComfyUI]   File "/home/runner/.ce/.pixi/envs/hywm2-nodes/lib/python3.10/threading.py", line 953 in run
+  [ComfyUI]   File "/home/runner/.ce/.pixi/envs/hywm2-nodes/lib/python3.10/threading.py", line 1016 in _bootstrap_inner
+  [ComfyUI]   File "/home/runner/.ce/.pixi/envs/hywm2-nodes/lib/python3.10/threading.py", line 973 in _bootstrap
   [ComfyUI] 
-  [ComfyUI] Thread 0x00007f11fac156c0 (most recent call first):
-  [ComfyUI]   File "/home/runner/.ce/.pixi/envs/hywm2-nodes/lib/python3.13/threading.py", line 363 in wait
-  [ComfyUI]   File "/home/runner/.ce/.pixi/envs/hywm2-nodes/lib/python3.13/threading.py", line 660 in wait
-  [ComfyUI]   File "/home/runner/.ce/.pixi/envs/hywm2-nodes/lib/python3.13/site-packages/tqdm/_monitor.py", line 60 in run
-  [ComfyUI]   File "/home/runner/.ce/.pixi/envs/hywm2-nodes/lib/python3.13/threading.py", line 1044 in _bootstrap_inner
-  [ComfyUI]   File "/home/runner/.ce/.pixi/envs/hywm2-nodes/lib/python3.13/threading.py", line 1015 in _bootstrap
+  [ComfyUI] Thread 0x00007f9791f3c6c0 (most recent call first):
+  [ComfyUI]   File "/home/runner/.ce/.pixi/envs/hywm2-nodes/lib/python3.10/threading.py", line 324 in wait
+  [ComfyUI]   File "/home/runner/.ce/.pixi/envs/hywm2-nodes/lib/python3.10/threading.py", line 607 in wait
+  [ComfyUI]   File "/home/runner/.ce/.pixi/envs/hywm2-nodes/lib/python3.10/site-packages/tqdm/_monitor.py", line 60 in run
+  [ComfyUI]   File "/home/runner/.ce/.pixi/envs/hywm2-nodes/lib/python3.10/threading.py", line 1016 in _bootstrap_inner
+  [ComfyUI]   File "/home/runner/.ce/.pixi/envs/hywm2-nodes/lib/python3.10/threading.py", line 973 in _bootstrap
   [ComfyUI] 
-  [ComfyUI] Current thread 0x00007f12417206c0 (most recent call first):
-  [ComfyUI]   File "/tmp/comfyui_pvenv_tsmht6me/persistent_worker.py", line 52 in _watchdog
-  [ComfyUI]   File "/home/runner/.ce/.pixi/envs/hywm2-nodes/lib/python3.13/threading.py", line 995 in run
-  [ComfyUI]   File "/home/runner/.ce/.pixi/envs/hywm2-nodes/lib/python3.13/threading.py", line 1044 in _bootstrap_inner
-  [ComfyUI]   File "/home/runner/.ce/.pixi/envs/hywm2-nodes/lib/python3.13/threading.py", line 1015 in _bootstrap
+  [ComfyUI] Current thread 0x00007f9792f3d6c0 (most recent call first):
+  [ComfyUI]   File "/tmp/comfyui_pvenv_9bo1jkb4/persistent_worker.py", line 52 in _watchdog
+  [ComfyUI]   File "/home/runner/.ce/.pixi/envs/hywm2-nodes/lib/python3.10/threading.py", line 953 in run
+  [ComfyUI]   File "/home/runner/.ce/.pixi/envs/hywm2-nodes/lib/python3.10/threading.py", line 1016 in _bootstrap_inner
+  [ComfyUI]   File "/home/runner/.ce/.pixi/envs/hywm2-nodes/lib/python3.10/threading.py", line 973 in _bootstrap
   [ComfyUI] 
-  [ComfyUI] Thread 0x00007f124223f740 (most recent call first):
-  [ComfyUI]   File "/home/runner/.ce/.pixi/envs/hywm2-nodes/lib/python3.13/site-packages/torch/nn/modules/linear.py", line 134 in forward
-  [ComfyUI]   File "/home/runner/.ce/.pixi/envs/hywm2-nodes/lib/python3.13/site-packages/torch/nn/modules/module.py", line 1790 in _call_impl
-  [ComfyUI]   File "/home/runner/.ce/.pixi/envs/hywm2-nodes/lib/python3.13/site-packages/torch/nn/modules/module.py", line 1779 in _wrapped_call_impl
-  [ComfyUI]   File "/home/runner/work/comfy-gpu-ci/comfy-gpu-ci/test_workspaces/HYWM2-2137/ComfyUI/custom_nodes/ComfyUI-HYWM2/nodes/hyworld2/worldrecon/hyworldmirror/models/layers/mlp.py", line 33 in forward
-  [ComfyUI]   File "/home/runner/.ce/.pixi/envs/hywm2-nodes/lib/python3.13/site-packages/torch/nn/modules/module.py", line 1790 in _call_impl
-  [ComfyUI]   File "/home/runner/.ce/.pixi/envs/hywm2-nodes/lib/python3.13/site-packages/torch/nn/modules/module.py", line 1779 in _wrapped_call_impl
-  [ComfyUI]   File "/home/runner/work/comfy-gpu-ci/comfy-gpu-ci/test_workspaces/HYWM2-2137/ComfyUI/custom_nodes/ComfyUI-HYWM2/nodes/hyworld2/worldrecon/hyworldmirror/models/layers/block.py", line 77 in ffn_residual_func
-  [ComfyUI]   File "/home/runner/work/comfy-gpu-ci/comfy-gpu-ci/test_workspaces/HYWM2-2137/ComfyUI/custom_nodes/ComfyUI-HYWM2/nodes/hyworld2/worldrecon/hyworldmirror/models/layers/block.py", line 92 in forward
-  [ComfyUI]   File "/home/runner/.ce/.pixi/envs/hywm2-nodes/lib/python3.13/site-packages/torch/nn/modules/module.py", line 1790 in _call_impl
-  [ComfyUI]   File "/home/runner/.ce/.pixi/envs/hywm2-nodes/lib/python3.13/site-packages/torch/nn/modules/module.py", line 1779 in _wrapped_call_impl
-  [ComfyUI]   File "/home/runner/work/comfy-gpu-ci/comfy-gpu-ci/test_workspaces/HYWM2-2137/ComfyUI/custom_nodes/ComfyUI-HYWM2/nodes/hyworld2/worldrecon/hyworldmirror/models/models/visual_transformer.py", line 480 in _process_attention_blocks
-  [ComfyUI]   File "/home/runner/work/comfy-gpu-ci/comfy-gpu-ci/test_workspaces/HYWM2-2137/ComfyUI/custom_nodes/ComfyUI-HYWM2/nodes/hyworld2/worldrecon/hyworldmirror/models/models/visual_transformer.py", line 396 in forward
-  [ComfyUI]   File "/home/runner/.ce/.pixi/envs/hywm2-nodes/lib/python3.13/site-packages/torch/nn/modules/module.py", line 1790 in _call_impl
-  [ComfyUI]   File "/home/runner/.ce/.pixi/envs/hywm2-nodes/lib/python3.13/site-packages/torch/nn/modules/module.py", line 1779 in _wrapped_call_impl
-  [ComfyUI]   File "/home/runner/work/comfy-gpu-ci/comfy-gpu-ci/test_workspaces/HYWM2-2137/ComfyUI/custom_nodes/ComfyUI-HYWM2/nodes/hyworld2/worldrecon/hyworldmirror/models/models/worldmirror.py", line 288 in forward
-  [ComfyUI]   File "/home/runner/.ce/.pixi/envs/hywm2-nodes/lib/python3.13/site-packages/torch/nn/modules/module.py", line 1790 in _call_impl
-  [ComfyUI]   File "/home/runner/.ce/.pixi/envs/hywm2-nodes/lib/python3.13/site-packages/torch/nn/modules/module.py", line 1779 in _wrapped_call_impl
-  [ComfyUI]   File "/home/runner/work/comfy-gpu-ci/comfy-gpu-ci/test_workspaces/HYWM2-2137/ComfyUI/custom_nodes/ComfyUI-HYWM2/nodes/hyworld2/worldrecon/pipeline.py", line 636 in _run_inference
-  [ComfyUI]   File "/home/runner/work/comfy-gpu-ci/comfy-gpu-ci/test_workspaces/HYWM2-2137/ComfyUI/custom_nodes/ComfyUI-HYWM2/nodes/reconstruct.py", line 279 in execute
-  [ComfyUI]   File "/home/runner/.ce/.pixi/envs/hywm2-nodes/lib/python3.13/site-packages/torch/utils/_contextlib.py", line 124 in decorate_context
-  [ComfyUI]   File "/home/runner/work/comfy-gpu-ci/comfy-gpu-ci/test_workspaces/HYWM2-2137/ComfyUI/comfy_api/latest/_io.py", line 1833 in EXECUTE_NORMALIZED
-  [ComfyUI]   File "/tmp/comfyui_pvenv_tsmht6me/persistent_worker.py", line 1762 in main
-  [ComfyUI]   File "/tmp/comfyui_pvenv_tsmht6me/persistent_worker.py", line 1807 in <module>
+  [ComfyUI] Thread 0x00007f9793a14740 (most recent call first):
+  [ComfyUI]   File "/home/runner/.ce/.pixi/envs/hywm2-nodes/lib/python3.10/site-packages/torch/nn/modules/linear.py", line 134 in forward
+  [ComfyUI]   File "/home/runner/.ce/.pixi/envs/hywm2-nodes/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1790 in _call_impl
+  [ComfyUI]   File "/home/runner/.ce/.pixi/envs/hywm2-nodes/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1779 in _wrapped_call_impl
+  [ComfyUI]   File "/home/runner/work/comfy-gpu-ci/comfy-gpu-ci/test_workspaces/HYWM2-0031/ComfyUI/custom_nodes/ComfyUI-HYWM2/nodes/hyworld2/worldrecon/hyworldmirror/models/layers/mlp.py", line 33 in forward
+  [ComfyUI]   File "/home/runner/.ce/.pixi/envs/hywm2-nodes/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1790 in _call_impl
+  [ComfyUI]   File "/home/runner/.ce/.pixi/envs/hywm2-nodes/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1779 in _wrapped_call_impl
+  [ComfyUI]   File "/home/runner/work/comfy-gpu-ci/comfy-gpu-ci/test_workspaces/HYWM2-0031/ComfyUI/custom_nodes/ComfyUI-HYWM2/nodes/hyworld2/worldrecon/hyworldmirror/models/layers/block.py", line 77 in ffn_residual_func
+  [ComfyUI]   File "/home/runner/work/comfy-gpu-ci/comfy-gpu-ci/test_workspaces/HYWM2-0031/ComfyUI/custom_nodes/ComfyUI-HYWM2/nodes/hyworld2/worldrecon/hyworldmirror/models/layers/block.py", line 92 in forward
+  [ComfyUI]   File "/home/runner/.ce/.pixi/envs/hywm2-nodes/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1790 in _call_impl
+  [ComfyUI]   File "/home/runner/.ce/.pixi/envs/hywm2-nodes/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1779 in _wrapped_call_impl
+  [ComfyUI]   File "/home/runner/work/comfy-gpu-ci/comfy-gpu-ci/test_workspaces/HYWM2-0031/ComfyUI/custom_nodes/ComfyUI-HYWM2/nodes/hyworld2/worldrecon/hyworldmirror/models/models/visual_transformer.py", line 480 in _process_attention_blocks
+  [ComfyUI]   File "/home/runner/work/comfy-gpu-ci/comfy-gpu-ci/test_workspaces/HYWM2-0031/ComfyUI/custom_nodes/ComfyUI-HYWM2/nodes/hyworld2/worldrecon/hyworldmirror/models/models/visual_transformer.py", line 396 in forward
+  [ComfyUI]   File "/home/runner/.ce/.pixi/envs/hywm2-nodes/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1790 in _call_impl
+  [ComfyUI]   File "/home/runner/.ce/.pixi/envs/hywm2-nodes/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1779 in _wrapped_call_impl
+  [ComfyUI]   File "/home/runner/work/comfy-gpu-ci/comfy-gpu-ci/test_workspaces/HYWM2-0031/ComfyUI/custom_nodes/ComfyUI-HYWM2/nodes/hyworld2/worldrecon/hyworldmirror/models/models/worldmirror.py", line 288 in forward
+  [ComfyUI]   File "/home/runner/.ce/.pixi/envs/hywm2-nodes/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1790 in _call_impl
+  [ComfyUI]   File "/home/runner/.ce/.pixi/envs/hywm2-nodes/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1779 in _wrapped_call_impl
+  [ComfyUI]   File "/home/runner/work/comfy-gpu-ci/comfy-gpu-ci/test_workspaces/HYWM2-0031/ComfyUI/custom_nodes/ComfyUI-HYWM2/nodes/hyworld2/worldrecon/pipeline.py", line 636 in _run_inference
+  [ComfyUI]   File "/home/runner/work/comfy-gpu-ci/comfy-gpu-ci/test_workspaces/HYWM2-0031/ComfyUI/custom_nodes/ComfyUI-HYWM2/nodes/reconstruct.py", line 279 in execute
+  [ComfyUI]   File "/home/runner/.ce/.pixi/envs/hywm2-nodes/lib/python3.10/site-packages/torch/utils/_contextlib.py", line 124 in decorate_context
+  [ComfyUI]   File "/home/runner/work/comfy-gpu-ci/comfy-gpu-ci/test_workspaces/HYWM2-0031/ComfyUI/comfy_api/latest/_io.py", line 1833 in EXECUTE_NORMALIZED
+  [ComfyUI]   File "/tmp/comfyui_pvenv_9bo1jkb4/persistent_worker.py", line 1762 in main
+  [ComfyUI]   File "/tmp/comfyui_pvenv_9bo1jkb4/persistent_worker.py", line 1807 in <module>
   [ComfyUI] 
   [ComfyUI] [worker:ComfyUI-HYWM2] === END ===
   [ComfyUI] 
-  [capture-loop] iter=1600 t=184.4s state={'complete': False, 'error': None, 'executedCount': 1, 'wsState': 1} eval_ms=3 ram=6.2/15.6GB (40%) swap=0.0/3.0GB (0%) cpu=32% browser_rss=0.80GB
-  [capture-loop] iter=1650 t=190.0s state={'complete': False, 'error': None, 'executedCount': 1, 'wsState': 1} eval_ms=2 ram=6.2/15.6GB (40%) swap=0.0/3.0GB (0%) cpu=32% browser_rss=0.80GB
-  [capture-loop] iter=1700 t=195.5s state={'complete': False, 'error': None, 'executedCount': 1, 'wsState': 1} eval_ms=2 ram=6.2/15.6GB (40%) swap=0.0/3.0GB (0%) cpu=33% browser_rss=0.80GB
-  [capture-loop] iter=1750 t=201.2s state={'complete': False, 'error': None, 'executedCount': 1, 'wsState': 1} eval_ms=2 ram=6.2/15.6GB (40%) swap=0.0/3.0GB (0%) cpu=33% browser_rss=0.80GB
-  [ComfyUI] [worker:ComfyUI-HYWM2] [Inference] Done in 57.27s
+  [capture-loop] iter=1050 t=122.5s state={'complete': False, 'error': None, 'executedCount': 1, 'wsState': 1} eval_ms=4 ram=6.4/15.6GB (41%) swap=0.0/3.0GB (0%) cpu=32% browser_rss=0.78GB
+  [capture-loop] iter=1100 t=128.2s state={'complete': False, 'error': None, 'executedCount': 1, 'wsState': 1} eval_ms=4 ram=6.4/15.6GB (41%) swap=0.0/3.0GB (0%) cpu=33% browser_rss=0.78GB
+  [capture-loop] iter=1150 t=133.7s state={'complete': False, 'error': None, 'executedCount': 1, 'wsState': 1} eval_ms=3 ram=6.4/15.6GB (41%) swap=0.0/3.0GB (0%) cpu=32% browser_rss=0.78GB
+  [capture-loop] iter=1200 t=139.4s state={'complete': False, 'error': None, 'executedCount': 1, 'wsState': 1} eval_ms=2 ram=6.4/15.6GB (41%) swap=0.0/3.0GB (0%) cpu=33% browser_rss=0.78GB
+  [capture-loop] iter=1250 t=145.1s state={'complete': False, 'error': None, 'executedCount': 1, 'wsState': 1} eval_ms=4 ram=6.6/15.6GB (42%) swap=0.0/3.0GB (0%) cpu=33% browser_rss=0.78GB
+  [ComfyUI] [worker:ComfyUI-HYWM2] [Inference] Done in 39.07s
   [ComfyUI] [SubprocessWorker] got response: ok
-  [ComfyUI] [comfy-env] HYWM2Reconstruct done (57.36s): result: NodeOutput
+  [ComfyUI] [comfy-env] HYWM2Reconstruct done (39.15s): result: NodeOutput
   [ComfyUI] [comfy-env] Running HYWM2Reconstruct: prior_camera_json: '', depth_colormap: 'viridis', apply_mask: True, view_index: -1, points_conf_percentile: 0.0, points_max: 2000000, gaussians_weight_threshold: 0.3, gaussians_downsample: 1.0, model: dict, images: torch.float32 [1,436,768,3] cpu
   [ComfyUI] [SubprocessWorker] call_method: nodes.reconstruct.HYWM2Reconstruct.EXECUTE_NORMALIZED
   [ComfyUI] [SubprocessWorker] acquired lock, ensuring started...
@@ -355,81 +289,73 @@ Capturing execution frames: depth_normal.json
   [ComfyUI] [worker:ComfyUI-HYWM2] [comfy-env] DESERIALIZE TensorRef: tensor_size=[1, 436, 768, 3]
   [ComfyUI] [worker:ComfyUI-HYWM2] [comfy-env] DESERIALIZED tensor shape: torch.Size([1, 436, 768, 3])
   [ComfyUI] [SubprocessWorker] callback 'request_vram_budget' from call_id=5
-  [ComfyUI] [comfy-env] VRAM request: 3.93GB, free before eviction: 10.08GB
-  [ComfyUI] [comfy-env] VRAM after eviction: 10.08GB
+  [ComfyUI] [comfy-env] VRAM request: 3.93GB, free before eviction: 9.90GB
+  [ComfyUI] [comfy-env] VRAM after eviction: 9.90GB
   [ComfyUI] [worker:ComfyUI-HYWM2] [Inference] 1 images, shape=torch.Size([1, 1, 3, 434, 756]), sp_size=1
-  [capture-loop] iter=1800 t=206.7s state={'complete': False, 'error': None, 'executedCount': 1, 'wsState': 1} eval_ms=3 ram=6.2/15.6GB (40%) swap=0.0/3.0GB (0%) cpu=34% browser_rss=0.80GB
-  [capture-loop] iter=1850 t=212.4s state={'complete': False, 'error': None, 'executedCount': 1, 'wsState': 1} eval_ms=3 ram=6.2/15.6GB (40%) swap=0.0/3.0GB (0%) cpu=32% browser_rss=0.80GB
-  [capture-loop] iter=1900 t=218.0s state={'complete': False, 'error': None, 'executedCount': 1, 'wsState': 1} eval_ms=3 ram=6.2/15.6GB (40%) swap=0.0/3.0GB (0%) cpu=32% browser_rss=0.80GB
-  [capture-loop] iter=1950 t=223.7s state={'complete': False, 'error': None, 'executedCount': 1, 'wsState': 1} eval_ms=3 ram=6.2/15.6GB (40%) swap=0.0/3.0GB (0%) cpu=32% browser_rss=0.80GB
-  [capture-loop] iter=2000 t=229.3s state={'complete': False, 'error': None, 'executedCount': 1, 'wsState': 1} eval_ms=3 ram=6.2/15.6GB (40%) swap=0.0/3.0GB (0%) cpu=32% browser_rss=0.80GB
-  [capture-loop] iter=2050 t=234.8s state={'complete': False, 'error': None, 'executedCount': 1, 'wsState': 1} eval_ms=3 ram=6.2/15.6GB (40%) swap=0.0/3.0GB (0%) cpu=32% browser_rss=0.80GB
+  [capture-loop] iter=1300 t=150.7s state={'complete': False, 'error': None, 'executedCount': 1, 'wsState': 1} eval_ms=4 ram=6.4/15.6GB (41%) swap=0.0/3.0GB (0%) cpu=32% browser_rss=0.78GB
+  [capture-loop] iter=1350 t=156.4s state={'complete': False, 'error': None, 'executedCount': 1, 'wsState': 1} eval_ms=3 ram=6.4/15.6GB (41%) swap=0.0/3.0GB (0%) cpu=32% browser_rss=0.78GB
+  [capture-loop] iter=1400 t=161.9s state={'complete': False, 'error': None, 'executedCount': 1, 'wsState': 1} eval_ms=3 ram=6.4/15.6GB (41%) swap=0.0/3.0GB (0%) cpu=32% browser_rss=0.78GB
+  [capture-loop] iter=1450 t=167.6s state={'complete': False, 'error': None, 'executedCount': 1, 'wsState': 1} eval_ms=3 ram=6.4/15.6GB (41%) swap=0.0/3.0GB (0%) cpu=34% browser_rss=0.78GB
+  [capture-loop] iter=1500 t=173.1s state={'complete': False, 'error': None, 'executedCount': 1, 'wsState': 1} eval_ms=3 ram=6.4/15.6GB (41%) swap=0.0/3.0GB (0%) cpu=32% browser_rss=0.78GB
+  [capture-loop] iter=1550 t=178.8s state={'complete': False, 'error': None, 'executedCount': 1, 'wsState': 1} eval_ms=2 ram=6.5/15.6GB (42%) swap=0.0/3.0GB (0%) cpu=33% browser_rss=0.78GB
   [ComfyUI] [worker:ComfyUI-HYWM2]
-  [ComfyUI] === WATCHDOG TICK 4 ===
-  [ComfyUI] [worker:ComfyUI-HYWM2] Thread 0x00007f11afe756c0 (most recent call first):
-  [ComfyUI]   File "/home/runner/.ce/.pixi/envs/hywm2-nodes/lib/python3.13/socket.py", line 295 in accept
-  [ComfyUI]   File "/home/runner/.ce/.pixi/envs/hywm2-nodes/lib/python3.13/multiprocessing/connection.py", line 648 in accept
-  [ComfyUI]   File "/home/runner/.ce/.pixi/envs/hywm2-nodes/lib/python3.13/multiprocessing/connection.py", line 493 in accept
-  [ComfyUI]   File "/home/runner/.ce/.pixi/envs/hywm2-nodes/lib/python3.13/multiprocessing/resource_sharer.py", line 138 in _serve
-  [ComfyUI]   File "/home/runner/.ce/.pixi/envs/hywm2-nodes/lib/python3.13/threading.py", line 995 in run
-  [ComfyUI]   File "/home/runner/.ce/.pixi/envs/hywm2-nodes/lib/python3.13/threading.py", line 1044 in _bootstrap_inner
-  [ComfyUI]   File "/home/runner/.ce/.pixi/envs/hywm2-nodes/lib/python3.13/threading.py", line 1015 in _bootstrap
+  [ComfyUI] === WATCHDOG TICK 3 ===
+  [ComfyUI] [worker:ComfyUI-HYWM2] Thread 0x00007f970aed76c0 (most recent call first):
+  [ComfyUI]   File "/home/runner/.ce/.pixi/envs/hywm2-nodes/lib/python3.10/socket.py", line 293 in accept
+  [ComfyUI]   File "/home/runner/.ce/.pixi/envs/hywm2-nodes/lib/python3.10/multiprocessing/connection.py", line 609 in accept
+  [ComfyUI]   File "/home/runner/.ce/.pixi/envs/hywm2-nodes/lib/python3.10/multiprocessing/connection.py", line 463 in accept
+  [ComfyUI]   File "/home/runner/.ce/.pixi/envs/hywm2-nodes/lib/python3.10/multiprocessing/resource_sharer.py", line 138 in _serve
+  [ComfyUI]   File "/home/runner/.ce/.pixi/envs/hywm2-nodes/lib/python3.10/threading.py", line 953 in run
+  [ComfyUI]   File "/home/runner/.ce/.pixi/envs/hywm2-nodes/lib/python3.10/threading.py", line 1016 in _bootstrap_inner
+  [ComfyUI]   File "/home/runner/.ce/.pixi/envs/hywm2-nodes/lib/python3.10/threading.py", line 973 in _bootstrap
   [ComfyUI] 
-  [ComfyUI] Thread 0x00007f11fac156c0 (most recent call first):
-  [ComfyUI]   File "/home/runner/.ce/.pixi/envs/hywm2-nodes/lib/python3.13/threading.py", line 363 in wait
-  [ComfyUI]   File "/home/runner/.ce/.pixi/envs/hywm2-nodes/lib/python3.13/threading.py", line 660 in wait
-  [ComfyUI]   File "/home/runner/.ce/.pixi/envs/hywm2-nodes/lib/python3.13/site-packages/tqdm/_monitor.py", line 60 in run
-  [ComfyUI]   File "/home/runner/.ce/.pixi/envs/hywm2-nodes/lib/python3.13/threading.py", line 1044 in _bootstrap_inner
-  [ComfyUI]   File "/home/runner/.ce/.pixi/envs/hywm2-nodes/lib/python3.13/threading.py", line 1015 in _bootstrap
+  [ComfyUI] Thread 0x00007f9791f3c6c0 (most recent call first):
+  [ComfyUI]   File "/home/runner/.ce/.pixi/envs/hywm2-nodes/lib/python3.10/threading.py", line 324 in wait
+  [ComfyUI]   File "/home/runner/.ce/.pixi/envs/hywm2-nodes/lib/python3.10/threading.py", line 607 in wait
+  [ComfyUI]   File "/home/runner/.ce/.pixi/envs/hywm2-nodes/lib/python3.10/site-packages/tqdm/_monitor.py", line 60 in run
+  [ComfyUI]   File "/home/runner/.ce/.pixi/envs/hywm2-nodes/lib/python3.10/threading.py", line 1016 in _bootstrap_inner
+  [ComfyUI]   File "/home/runner/.ce/.pixi/envs/hywm2-nodes/lib/python3.10/threading.py", line 973 in _bootstrap
   [ComfyUI] 
-  [ComfyUI] Current thread 0x00007f12417206c0 (most recent call first):
-  [ComfyUI]   File "/tmp/comfyui_pvenv_tsmht6me/persistent_worker.py", line 52 in _watchdog
-  [ComfyUI]   File "/home/runner/.ce/.pixi/envs/hywm2-nodes/lib/python3.13/threading.py", line 995 in run
-  [ComfyUI]   File "/home/runner/.ce/.pixi/envs/hywm2-nodes/lib/python3.13/threading.py", line 1044 in _bootstrap_inner
-  [ComfyUI]   File "/home/runner/.ce/.pixi/envs/hywm2-nodes/lib/python3.13/threading.py", line 1015 in _bootstrap
+  [ComfyUI] Current thread 0x00007f9792f3d6c0 (most recent call first):
+  [ComfyUI]   File "/tmp/comfyui_pvenv_9bo1jkb4/persistent_worker.py", line 52 in _watchdog
+  [ComfyUI]   File "/home/runner/.ce/.pixi/envs/hywm2-nodes/lib/python3.10/threading.py", line 953 in run
+  [ComfyUI]   File "/home/runner/.ce/.pixi/envs/hywm2-nodes/lib/python3.10/threading.py", line 1016 in _bootstrap_inner
+  [ComfyUI]   File "/home/runner/.ce/.pixi/envs/hywm2-nodes/lib/python3.10/threading.py", line 973 in _bootstrap
   [ComfyUI] 
-  [ComfyUI] Thread 0x00007f124223f740 (most recent call first):
-  [ComfyUI]   File "/home/runner/work/comfy-gpu-ci/comfy-gpu-ci/test_workspaces/HYWM2-2137/ComfyUI/custom_nodes/ComfyUI-HYWM2/nodes/hyworld2/worldrecon/hyworldmirror/models/layers/attention.py", line 94 in _apply_attention
-  [ComfyUI]   File "/home/runner/work/comfy-gpu-ci/comfy-gpu-ci/test_workspaces/HYWM2-2137/ComfyUI/custom_nodes/ComfyUI-HYWM2/nodes/hyworld2/worldrecon/hyworldmirror/models/layers/attention.py", line 110 in forward
-  [ComfyUI]   File "/home/runner/.ce/.pixi/envs/hywm2-nodes/lib/python3.13/site-packages/torch/nn/modules/module.py", line 1790 in _call_impl
-  [ComfyUI]   File "/home/runner/.ce/.pixi/envs/hywm2-nodes/lib/python3.13/site-packages/torch/nn/modules/module.py", line 1779 in _wrapped_call_impl
-  [ComfyUI]   File "/home/runner/work/comfy-gpu-ci/comfy-gpu-ci/test_workspaces/HYWM2-2137/ComfyUI/custom_nodes/ComfyUI-HYWM2/nodes/hyworld2/worldrecon/hyworldmirror/models/layers/block.py", line 74 in attn_residual_func
-  [ComfyUI]   File "/home/runner/work/comfy-gpu-ci/comfy-gpu-ci/test_workspaces/HYWM2-2137/ComfyUI/custom_nodes/ComfyUI-HYWM2/nodes/hyworld2/worldrecon/hyworldmirror/models/layers/block.py", line 91 in forward
-  [ComfyUI]   File "/home/runner/.ce/.pixi/envs/hywm2-nodes/lib/python3.13/site-packages/torch/nn/modules/module.py", line 1790 in _call_impl
-  [ComfyUI]   File "/home/runner/.ce/.pixi/envs/hywm2-nodes/lib/python3.13/site-packages/torch/nn/modules/module.py", line 1779 in _wrapped_call_impl
-  [ComfyUI]   File "/home/runner/work/comfy-gpu-ci/comfy-gpu-ci/test_workspaces/HYWM2-2137/ComfyUI/custom_nodes/ComfyUI-HYWM2/nodes/hyworld2/worldrecon/hyworldmirror/models/models/visual_transformer.py", line 480 in _process_attention_blocks
-  [ComfyUI]   File "/home/runner/work/comfy-gpu-ci/comfy-gpu-ci/test_workspaces/HYWM2-2137/ComfyUI/custom_nodes/ComfyUI-HYWM2/nodes/hyworld2/worldrecon/hyworldmirror/models/models/visual_transformer.py", line 396 in forward
-  [ComfyUI]   File "/home/runner/.ce/.pixi/envs/hywm2-nodes/lib/python3.13/site-packages/torch/nn/modules/module.py", line 1790 in _call_impl
-  [ComfyUI]   File "/home/runner/.ce/.pixi/envs/hywm2-nodes/lib/python3.13/site-packages/torch/nn/modules/module.py", line 1779 in _wrapped_call_impl
-  [ComfyUI]   File "/home/runner/work/comfy-gpu-ci/comfy-gpu-ci/test_workspaces/HYWM2-2137/ComfyUI/custom_nodes/ComfyUI-HYWM2/nodes/hyworld2/worldrecon/hyworldmirror/models/models/worldmirror.py", line 288 in forward
-  [ComfyUI]   File "/home/runner/.ce/.pixi/envs/hywm2-nodes/lib/python3.13/site-packages/torch/nn/modules/module.py", line 1790 in _call_impl
-  [ComfyUI]   File "/home/runner/.ce/.pixi/envs/hywm2-nodes/lib/python3.13/site-packages/torch/nn/modules/module.py", line 1779 in _wrapped_call_impl
-  [ComfyUI]   File "/home/runner/work/comfy-gpu-ci/comfy-gpu-ci/test_workspaces/HYWM2-2137/ComfyUI/custom_nodes/ComfyUI-HYWM2/nodes/hyworld2/worldrecon/pipeline.py", line 636 in _run_inference
-  [ComfyUI]   File "/home/runner/work/comfy-gpu-ci/comfy-gpu-ci/test_workspaces/HYWM2-2137/ComfyUI/custom_nodes/ComfyUI-HYWM2/nodes/reconstruct.py", line 279 in execute
-  [ComfyUI]   File "/home/runner/.ce/.pixi/envs/hywm2-nodes/lib/python3.13/site-packages/torch/utils/_contextlib.py", line 124 in decorate_context
-  [ComfyUI]   File "/home/runner/work/comfy-gpu-ci/comfy-gpu-ci/test_workspaces/HYWM2-2137/ComfyUI/comfy_api/latest/_io.py", line 1833 in EXECUTE_NORMALIZED
-  [ComfyUI]   File "/tmp/comfyui_pvenv_tsmht6me/persistent_worker.py", line 1762 in main
-  [ComfyUI]   File "/tmp/comfyui_pvenv_tsmht6me/persistent_worker.py", line 1807 in <module>
+  [ComfyUI] Thread 0x00007f9793a14740 (most recent call first):
+  [ComfyUI]   File "/home/runner/work/comfy-gpu-ci/comfy-gpu-ci/test_workspaces/HYWM2-0031/ComfyUI/custom_nodes/ComfyUI-HYWM2/nodes/hyworld2/worldrecon/hyworldmirror/models/utils/grid.py", line 41 in position_grid_to_embed
+  [ComfyUI]   File "/home/runner/work/comfy-gpu-ci/comfy-gpu-ci/test_workspaces/HYWM2-0031/ComfyUI/custom_nodes/ComfyUI-HYWM2/nodes/hyworld2/worldrecon/hyworldmirror/models/heads/dense_head.py", line 67 in _apply_pos_embed
+  [ComfyUI]   File "/home/runner/work/comfy-gpu-ci/comfy-gpu-ci/test_workspaces/HYWM2-0031/ComfyUI/custom_nodes/ComfyUI-HYWM2/nodes/hyworld2/worldrecon/hyworldmirror/models/heads/dense_head.py", line 142 in _extract_fused_features
+  [ComfyUI]   File "/home/runner/work/comfy-gpu-ci/comfy-gpu-ci/test_workspaces/HYWM2-0031/ComfyUI/custom_nodes/ComfyUI-HYWM2/nodes/hyworld2/worldrecon/hyworldmirror/models/heads/dense_head.py", line 338 in _forward_impl
+  [ComfyUI]   File "/home/runner/work/comfy-gpu-ci/comfy-gpu-ci/test_workspaces/HYWM2-0031/ComfyUI/custom_nodes/ComfyUI-HYWM2/nodes/hyworld2/worldrecon/hyworldmirror/models/heads/dense_head.py", line 251 in forward
+  [ComfyUI]   File "/home/runner/.ce/.pixi/envs/hywm2-nodes/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1790 in _call_impl
+  [ComfyUI]   File "/home/runner/.ce/.pixi/envs/hywm2-nodes/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1779 in _wrapped_call_impl
+  [ComfyUI]   File "/home/runner/work/comfy-gpu-ci/comfy-gpu-ci/test_workspaces/HYWM2-0031/ComfyUI/custom_nodes/ComfyUI-HYWM2/nodes/hyworld2/worldrecon/hyworldmirror/models/models/worldmirror.py", line 593 in _gen_all_preds
+  [ComfyUI]   File "/home/runner/work/comfy-gpu-ci/comfy-gpu-ci/test_workspaces/HYWM2-0031/ComfyUI/custom_nodes/ComfyUI-HYWM2/nodes/hyworld2/worldrecon/hyworldmirror/models/models/worldmirror.py", line 299 in forward
+  [ComfyUI]   File "/home/runner/.ce/.pixi/envs/hywm2-nodes/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1790 in _call_impl
+  [ComfyUI]   File "/home/runner/.ce/.pixi/envs/hywm2-nodes/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1779 in _wrapped_call_impl
+  [ComfyUI]   File "/home/runner/work/comfy-gpu-ci/comfy-gpu-ci/test_workspaces/HYWM2-0031/ComfyUI/custom_nodes/ComfyUI-HYWM2/nodes/hyworld2/worldrecon/pipeline.py", line 636 in _run_inference
+  [ComfyUI]   File "/home/runner/work/comfy-gpu-ci/comfy-gpu-ci/test_workspaces/HYWM2-0031/ComfyUI/custom_nodes/ComfyUI-HYWM2/nodes/reconstruct.py", line 279 in execute
+  [ComfyUI]   File "/home/runner/.ce/.pixi/envs/hywm2-nodes/lib/python3.10/site-packages/torch/utils/_contextlib.py", line 124 in decorate_context
+  [ComfyUI]   File "/home/runner/work/comfy-gpu-ci/comfy-gpu-ci/test_workspaces/HYWM2-0031/ComfyUI/comfy_api/latest/_io.py", line 1833 in EXECUTE_NORMALIZED
+  [ComfyUI]   File "/tmp/comfyui_pvenv_9bo1jkb4/persistent_worker.py", line 1762 in main
+  [ComfyUI]   File "/tmp/comfyui_pvenv_9bo1jkb4/persistent_worker.py", line 1807 in <module>
   [ComfyUI] 
   [ComfyUI] [worker:ComfyUI-HYWM2] === END ===
   [ComfyUI] 
-  [capture-loop] iter=2100 t=240.5s state={'complete': False, 'error': None, 'executedCount': 1, 'wsState': 1} eval_ms=3 ram=6.2/15.6GB (40%) swap=0.0/3.0GB (0%) cpu=33% browser_rss=0.80GB
-  [capture-loop] iter=2150 t=246.1s state={'complete': False, 'error': None, 'executedCount': 1, 'wsState': 1} eval_ms=2 ram=6.2/15.6GB (40%) swap=0.0/3.0GB (0%) cpu=32% browser_rss=0.80GB
-  [capture-loop] iter=2200 t=251.8s state={'complete': False, 'error': None, 'executedCount': 1, 'wsState': 1} eval_ms=3 ram=6.2/15.6GB (40%) swap=0.0/3.0GB (0%) cpu=32% browser_rss=0.80GB
-  [capture-loop] iter=2250 t=257.3s state={'complete': False, 'error': None, 'executedCount': 1, 'wsState': 1} eval_ms=2 ram=6.4/15.6GB (41%) swap=0.0/3.0GB (0%) cpu=32% browser_rss=0.80GB
-  [capture-loop] iter=2300 t=263.0s state={'complete': False, 'error': None, 'executedCount': 1, 'wsState': 1} eval_ms=3 ram=7.1/15.6GB (46%) swap=0.0/3.0GB (0%) cpu=32% browser_rss=0.80GB
-  [ComfyUI] [worker:ComfyUI-HYWM2] [Inference] Done in 57.51s
+  [capture-loop] iter=1600 t=184.5s state={'complete': False, 'error': None, 'executedCount': 1, 'wsState': 1} eval_ms=3 ram=7.0/15.6GB (44%) swap=0.0/3.0GB (0%) cpu=33% browser_rss=0.78GB
+  [ComfyUI] [worker:ComfyUI-HYWM2] [Inference] Done in 38.89s
   [ComfyUI] [SubprocessWorker] got response: ok
-  [ComfyUI] [comfy-env] HYWM2Reconstruct done (57.60s): result: NodeOutput
+  [ComfyUI] [comfy-env] HYWM2Reconstruct done (38.97s): result: NodeOutput
   Node executed (2 total), capturing...
-  [ComfyUI] Prompt executed in 263.72 seconds
-  Frame 7 saved (frame_006.jpg, t=264.0s)
-  [capture-node] freeze=3ms shot=168ms unfreeze=3ms saved=True
+  [ComfyUI] Prompt executed in 185.73 seconds
+  Frame 7 saved (frame_006.jpg, t=186.1s)
+  [capture-node] freeze=3ms shot=194ms unfreeze=7ms saved=True
   Node executed (3 total), capturing...
-  Frame 8 saved (frame_007.jpg, t=264.5s)
-  [capture-node] freeze=3ms shot=172ms unfreeze=0ms saved=True
-  Execution complete (t=264.5s)
-  Captured 8 unique frames over 264.68s
+  Frame 8 saved (frame_007.jpg, t=186.6s)
+  [capture-node] freeze=3ms shot=171ms unfreeze=0ms saved=True
+  Execution complete (t=186.6s)
+  Captured 8 unique frames over 186.77s
   [debug] iframes: 0
   [timing] trigger_3d_previews: 0.0s
   Saved high-quality screenshot: depth_normal_executed.png
