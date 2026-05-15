@@ -1,12 +1,12 @@
 {
-  "timestamp": "2026-05-15T05:30:24.884547+00:00",
+  "timestamp": "2026-05-15T07:40:45.824909+00:00",
   "platform": "linux",
   "hardware": {
     "os": "Linux-6.17.0-1013-azure-x86_64-with-glibc2.39",
     "cpu": "AMD EPYC 7763 64-Core Processor"
   },
-  "commit_hash": "dc78f95d71600811975c7615ffa9349f184a84f2",
-  "run_url": "https://github.com/PozzettiAndrea/comfy-gpu-ci/actions/runs/25901873699",
+  "commit_hash": "62d1c9bafb4386e530e91fb85a2f2cd0f5d7904d",
+  "run_url": "https://github.com/PozzettiAndrea/comfy-gpu-ci/actions/runs/25906274535",
   "success": true,
   "summary": {
     "total": 2,
@@ -17,7 +17,7 @@
     {
       "name": "depth_normal",
       "status": "pass",
-      "duration_seconds": 267.48,
+      "duration_seconds": 266.35,
       "error": null,
       "hardware": {
         "os": "Linux-6.17.0-1013-azure-x86_64-with-glibc2.39",
@@ -25,11 +25,11 @@
       },
       "resources": {
         "ram": {
-          "peak": 6.62,
-          "avg": 5.09
+          "peak": 6.55,
+          "avg": 5.04
         },
         "total_ram_gb": 15.6,
-        "samples": 267
+        "samples": 265
       }
     },
     {
