@@ -1,7 +1,7 @@
 [project]
 name = "comfyui-hywm2"
 description = "ComfyUI wrapper for HY-World 2.0 / WorldMirror 2.0: 3D reconstruction (depth, normals, point clouds, 3DGS) from multi-view images."
-version = "0.0.12"
+version = "0.0.13"
 license = {file = "LICENSE"}
 
 [project.urls]
