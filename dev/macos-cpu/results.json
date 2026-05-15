@@ -1,35 +1,35 @@
 {
-  "timestamp": "2026-05-10T21:30:02.390962+00:00",
+  "timestamp": "2026-05-15T05:29:04.607724+00:00",
   "platform": "macos",
   "hardware": {
     "os": "macOS-15.7.4-arm64-arm-64bit",
     "cpu": "arm"
   },
-  "commit_hash": "9956600ddfa79b14ae7ce78938c4b8bbfd9706f8",
-  "run_url": "https://github.com/PozzettiAndrea/comfy-gpu-ci/actions/runs/25640104566",
-  "success": true,
+  "commit_hash": "dc78f95d71600811975c7615ffa9349f184a84f2",
+  "run_url": "https://github.com/PozzettiAndrea/comfy-gpu-ci/actions/runs/25901876161",
+  "success": false,
   "summary": {
     "total": 2,
-    "passed": 1,
-    "failed": 0
+    "passed": 0,
+    "failed": 1
   },
   "workflows": [
     {
       "name": "depth_normal",
-      "status": "pass",
-      "duration_seconds": 209.78,
-      "error": null,
+      "status": "fail",
+      "duration_seconds": 7.06,
+      "error": "Workflow validation failed\n\nDetails:\ngraphToPrompt produced nodes without class_type: graphToPrompt: 6 nodes, missing class_type: [1,2], sample: {\"inputs\":{\"UNKNOWN\":false},\"_meta\":{}}",
       "hardware": {
         "os": "macOS-15.7.4-arm64-arm-64bit",
         "cpu": "arm"
       },
       "resources": {
         "ram": {
-          "peak": 3.12,
-          "avg": 1.39
+          "peak": 0.58,
+          "avg": 0.58
         },
         "total_ram_gb": 7.0,
-        "samples": 190
+        "samples": 7
       }
     },
     {
