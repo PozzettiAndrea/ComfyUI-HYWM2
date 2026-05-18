@@ -5,29 +5,29 @@ setup plugin alembic.autogenerate.constraints
 setup plugin alembic.autogenerate.defaults
 setup plugin alembic.autogenerate.comments
 [comfy-env] ComfyUI-HYWM2: 1 isolation env(s):
-[comfy-env]   nodes -> C:\workspaces\HYWM2-2145\portable-comfyui\ComfyUI_windows_portable\ComfyUI\custom_nodes\ComfyUI-HYWM2\nodes
-[comfy-env] Workspace: C:\Users\ContainerAdministrator\AppData\Local\Programs\comfy-env
-[comfy-env]     env: C:\Users\ContainerAdministrator\AppData\Local\Programs\comfy-env\.pixi\envs\hywm2-nodes  [OK]
+[comfy-env]   nodes -> C:\workspaces\HYWM2-2331\portable-comfyui\ComfyUI_windows_portable\ComfyUI\custom_nodes\ComfyUI-HYWM2\nodes
+[comfy-env] Workspace: C:\Users\ContainerUser\AppData\Local\Programs\comfy-env
+[comfy-env]     env: C:\Users\ContainerUser\AppData\Local\Programs\comfy-env\.pixi\envs\hywm2-nodes  [OK]
 [comfy-env] prestartup complete
 
 Prestartup times for custom nodes:
-   0.6 seconds: C:\workspaces\HYWM2-2145\portable-comfyui\ComfyUI_windows_portable\ComfyUI\custom_nodes\ComfyUI-HYWM2
+   0.3 seconds: C:\workspaces\HYWM2-2331\portable-comfyui\ComfyUI_windows_portable\ComfyUI\custom_nodes\ComfyUI-HYWM2
 
-Found comfy_kitchen backend cuda: {'available': True, 'disabled': False, 'unavailable_reason': None, 'capabilities': ['apply_rope', 'apply_rope1', 'dequantize_nvfp4', 'dequantize_per_tensor_fp8', 'quantize_mxfp8', 'quantize_nvfp4', 'quantize_per_tensor_fp8', 'scaled_mm_nvfp4']}
-Found comfy_kitchen backend triton: {'available': False, 'disabled': True, 'unavailable_reason': "ImportError: No module named 'triton'", 'capabilities': []}
 Found comfy_kitchen backend eager: {'available': True, 'disabled': False, 'unavailable_reason': None, 'capabilities': ['apply_rope', 'apply_rope1', 'dequantize_mxfp8', 'dequantize_nvfp4', 'dequantize_per_tensor_fp8', 'quantize_mxfp8', 'quantize_nvfp4', 'quantize_per_tensor_fp8', 'scaled_mm_mxfp8', 'scaled_mm_nvfp4']}
+Found comfy_kitchen backend triton: {'available': False, 'disabled': True, 'unavailable_reason': "ImportError: No module named 'triton'", 'capabilities': []}
+Found comfy_kitchen backend cuda: {'available': True, 'disabled': False, 'unavailable_reason': None, 'capabilities': ['apply_rope', 'apply_rope1', 'dequantize_nvfp4', 'dequantize_per_tensor_fp8', 'quantize_mxfp8', 'quantize_nvfp4', 'quantize_per_tensor_fp8', 'scaled_mm_nvfp4']}
 Checkpoint files will always be loaded safely.
-Total VRAM 24576 MB, total RAM 32684 MB
+Total VRAM 8151 MB, total RAM 24466 MB
 pytorch version: 2.11.0+cu130
 Set vram state to: NORMAL_VRAM
-Device: cuda:0 NVIDIA GeForce RTX 3090 : cudaMallocAsync
+Device: cuda:0 NVIDIA GeForce RTX 5060 : cudaMallocAsync
 Using async weight offloading with 2 streams
-Enabled pinned memory 13073.0
+Enabled pinned memory 9786.0
 Using pytorch attention
 aimdo: src-win/cuda-detour.c:38:INFO:aimdo_setup_hooks: installing 6 hooks
 aimdo: src-win/cuda-detour.c:28:DEBUG:install_hook_entries: hooks successfully installed
-aimdo: src-win/shmem-detect.c:80:INFO:comfy-aimdo WDDM adapter match: NVIDIA GeForce RTX 3090 runtime_luid=00000000:0000c6e3 dxgi_luid=00000000:0000c6e3
-aimdo: src/control.c:152:INFO:comfy-aimdo inited for GPU: NVIDIA GeForce RTX 3090 (VRAM: 24575 MB)
+aimdo: src-win/shmem-detect.c:80:INFO:comfy-aimdo WDDM adapter match: NVIDIA GeForce RTX 5060 runtime_luid=00000000:00877def dxgi_luid=00000000:00877def
+aimdo: src/control.c:152:INFO:comfy-aimdo inited for GPU: NVIDIA GeForce RTX 5060 (VRAM: 8150 MB)
 DynamicVRAM support detected and enabled
 Python version: 3.13.12 (tags/v3.13.12:1cbe481, Feb  3 2026, 18:22:25) [MSC v.1944 64 bit (AMD64)]
 ComfyUI version: 0.21.1
@@ -36,35 +36,35 @@ comfy-kitchen version: 0.2.8
 ****** User settings have been changed to be stored on the server instead of browser storage. ******
 ****** For multi-user setups add the --multi-user CLI argument to enable multiple user profiles. ******
 ComfyUI frontend version: 1.43.18
-[Prompt Server] web root: C:\workspaces\HYWM2-2145\portable-comfyui\ComfyUI_windows_portable\python_embeded\Lib\site-packages\comfyui_frontend_package\static
+[Prompt Server] web root: C:\workspaces\HYWM2-2331\portable-comfyui\ComfyUI_windows_portable\python_embeded\Lib\site-packages\comfyui_frontend_package\static
 Asset seeder disabled
 [comfy-env] Version: 0.3.89
 [comfy-env] register_nodes: ComfyUI-HYWM2
-[comfy-env] ComfyUI source dir: C:\workspaces\HYWM2-2145\portable-comfyui\ComfyUI_windows_portable\ComfyUI
+[comfy-env] ComfyUI source dir: C:\workspaces\HYWM2-2331\portable-comfyui\ComfyUI_windows_portable\ComfyUI
 [comfy-env] Found 1 isolation env(s)
 [comfy-env] Scanning nodes metadata (isolation root)...
 [comfy-env] hywm2-nodes: Library/bin has 429 DLLs
-[comfy-env] Metadata scan: C:\Users\ContainerAdministrator\.pixi\bin\pixi.exe run --as-is --manifest-path C:\Users\ContainerAdministrator\AppData\Local\Programs\comfy-env\pixi.toml -e hywm2-nodes python C:\Users\ContainerAdministrator\AppData\Local\Temp\comfy_meta_0dq34nxt.py C:\workspaces\HYWM2-2145\portable-comfyui\ComfyUI_windows_portable\ComfyUI\custom_nodes\ComfyUI-HYWM2 nodes C:\Users\ContainerAdministrator\AppData\Local\Temp\comfy_meta_out_o9ph46gp.pkl
+[comfy-env] Metadata scan: C:\Users\ContainerUser\.pixi\bin\pixi.exe run --as-is --manifest-path C:\Users\ContainerUser\AppData\Local\Programs\comfy-env\pixi.toml -e hywm2-nodes python C:\Users\ContainerUser\AppData\Local\Temp\comfy_meta_hpzmeaa6.py C:\workspaces\HYWM2-2331\portable-comfyui\ComfyUI_windows_portable\ComfyUI\custom_nodes\ComfyUI-HYWM2 nodes C:\Users\ContainerUser\AppData\Local\Temp\comfy_meta_out_asl_e7_e.pkl
 [comfy-env] Scan env PATH for nodes:
-[comfy-env]   [0] C:\Users\ContainerAdministrator\AppData\Local\Programs\comfy-env\.pixi\envs\hywm2-nodes
-[comfy-env]   [1] C:\Users\ContainerAdministrator\AppData\Local\Programs\comfy-env\.pixi\envs\hywm2-nodes\Library\bin
-[comfy-env]   [2] C:\Users\ContainerAdministrator\AppData\Local\Programs\comfy-env\.pixi\envs\hywm2-nodes\Scripts
-[comfy-env]   [3] C:\Users\ContainerAdministrator\AppData\Local\Programs\comfy-env\.pixi\envs\hywm2-nodes\Lib\site-packages\bpy
+[comfy-env]   [0] C:\Users\ContainerUser\AppData\Local\Programs\comfy-env\.pixi\envs\hywm2-nodes
+[comfy-env]   [1] C:\Users\ContainerUser\AppData\Local\Programs\comfy-env\.pixi\envs\hywm2-nodes\Library\bin
+[comfy-env]   [2] C:\Users\ContainerUser\AppData\Local\Programs\comfy-env\.pixi\envs\hywm2-nodes\Scripts
+[comfy-env]   [3] C:\Users\ContainerUser\AppData\Local\Programs\comfy-env\.pixi\envs\hywm2-nodes\Lib\site-packages\bpy
 [comfy-env]   [4] C:\Windows\System32
 [comfy-env]   [5] C:\Windows
 [comfy-env]   [6] C:\Windows\System32\Wbem
 [comfy-env] Metadata scan stderr for nodes:
-[comfy-env]   [meta-scan] importing nodes from C:\workspaces\HYWM2-2145\portable-comfyui\ComfyUI_windows_portable\ComfyUI\custom_nodes\ComfyUI-HYWM2
+[comfy-env]   [meta-scan] importing nodes from C:\workspaces\HYWM2-2331\portable-comfyui\ComfyUI_windows_portable\ComfyUI\custom_nodes\ComfyUI-HYWM2
 [comfy-env]   [meta-scan] import OK
-[comfy-env] Scanned nodes: 9 nodes (43.8s)
-[comfy-env] Scanned nodes root: 9 nodes (43.8s)
+[comfy-env] Scanned nodes: 9 nodes (18.2s)
+[comfy-env] Scanned nodes root: 9 nodes (18.2s)
 [comfy-env] Imported nodes root: 9 nodes (isolation)
 [comfy-env] Registered 9 total nodes
 
 Import times for custom nodes:
-   0.0 seconds: C:\workspaces\HYWM2-2145\portable-comfyui\ComfyUI_windows_portable\ComfyUI\custom_nodes\websocket_image_save.py
-   0.0 seconds: C:\workspaces\HYWM2-2145\portable-comfyui\ComfyUI_windows_portable\ComfyUI\custom_nodes\ComfyUI-validate-endpoint
-  44.9 seconds: C:\workspaces\HYWM2-2145\portable-comfyui\ComfyUI_windows_portable\ComfyUI\custom_nodes\ComfyUI-HYWM2
+   0.0 seconds: C:\workspaces\HYWM2-2331\portable-comfyui\ComfyUI_windows_portable\ComfyUI\custom_nodes\websocket_image_save.py
+   0.0 seconds: C:\workspaces\HYWM2-2331\portable-comfyui\ComfyUI_windows_portable\ComfyUI\custom_nodes\ComfyUI-validate-endpoint
+  18.7 seconds: C:\workspaces\HYWM2-2331\portable-comfyui\ComfyUI_windows_portable\ComfyUI\custom_nodes\ComfyUI-HYWM2
 
 Context impl SQLiteImpl.
 Will assume non-transactional DDL.
@@ -80,7 +80,7 @@ Change preview_id FK from assets.id to asset_references.id.
 Database upgraded from None to 0003_add_metadata_job_id
 Starting server
 
-To see the GUI go to: http://127.0.0.1:41881
+To see the GUI go to: http://127.0.0.1:41889
 === /validate endpoint called ===
 Received JSON with keys: ['prompt']
 Prompt has 8 nodes
@@ -100,22 +100,22 @@ Prompt has 8 nodes
     Inputs: {"filename": "hywm2_gaussians", "output_dir": "", "gaussians": ["2", 3]}
   Node 22: HYWM2SplatAdvancedViewer
     Inputs: {"splat_path": ["20", 0]}
-Generated prompt_id: 8b58dcb7-dab7-4aac-97a8-aefae27a5ffd
+Generated prompt_id: b13bfcf5-e022-4f1f-93f7-576ce440248c
 Calling execution.validate_prompt()...
 Validation result: valid=True
 === Validation PASSED ===
 got prompt
 [comfy-env] Running LoadHYWM2Model: precision: 'auto', target_size: 2002, predict_camera: False, predict_depth: True, predict_normals: True, predict_points: True, predict_gaussians: True
-[VRAM] Before LoadHYWM2Model: 1239 / 24575 MB
-[comfy-env] SubprocessWorker: C:\Users\ContainerAdministrator\AppData\Local\Programs\comfy-env\.pixi\envs\hywm2-nodes\python.exe
-[comfy-env] env_vars: {'COMFYUI_BASE': 'C:\\workspaces\\HYWM2-2145\\portable-comfyui\\ComfyUI_windows_portable\\ComfyUI'}
+[VRAM] Before LoadHYWM2Model: 1130 / 8150 MB
+[comfy-env] SubprocessWorker: C:\Users\ContainerUser\AppData\Local\Programs\comfy-env\.pixi\envs\hywm2-nodes\python.exe
+[comfy-env] env_vars: {'COMFYUI_BASE': 'C:\\workspaces\\HYWM2-2331\\portable-comfyui\\ComfyUI_windows_portable\\ComfyUI'}
 [SubprocessWorker] call_method: nodes.load_model.LoadHYWM2Model.EXECUTE_NORMALIZED
 [SubprocessWorker] acquired lock, ensuring started...
 [comfy-env] hywm2-nodes: Library/bin has 429 DLLs
-[ComfyUI-HYWM2] python: C:\Users\ContainerAdministrator\AppData\Local\Programs\comfy-env\.pixi\envs\hywm2-nodes\python.exe
-[ComfyUI-HYWM2] sys_path sent to worker: ['C:\\workspaces\\HYWM2-2145\\portable-comfyui\\ComfyUI_windows_portable\\ComfyUI', 'C:\\workspaces\\HYWM2-2145\\portable-comfyui\\ComfyUI_windows_portable\\ComfyUI\\custom_nodes\\ComfyUI-HYWM2', 'C:\\Users\\ContainerAdministrator\\AppData\\Local\\Programs\\comfy-env\\.pixi\\envs\\hywm2-nodes\\Lib\\site-packages', 'C:\\workspaces\\HYWM2-2145\\portable-comfyui\\ComfyUI_windows_portable\\ComfyUI\\custom_nodes\\ComfyUI-HYWM2']
-[SubprocessWorker] is_pixi=True, python=C:\Users\ContainerAdministrator\AppData\Local\Programs\comfy-env\.pixi\envs\hywm2-nodes\python.exe
-[SubprocessWorker] launching cmd=['C:\\Users\\ContainerAdministrator\\.pixi\\bin\\pixi.exe', 'run', '--as-is', '--manifest-path', 'C:\\Users\\ContainerAdministrator\\AppData\\Local\\Programs\\comfy-env\\pixi.toml', '-e', 'hywm2-nodes', 'python', 'C:\\Users\\ContainerAdministrator\\AppData\\Local\\Temp\\comfyui_pvenv_f0kjs7vk\\persistent_worker.py', 'tcp://127.0.0.1:51649']...
+[ComfyUI-HYWM2] python: C:\Users\ContainerUser\AppData\Local\Programs\comfy-env\.pixi\envs\hywm2-nodes\python.exe
+[ComfyUI-HYWM2] sys_path sent to worker: ['C:\\workspaces\\HYWM2-2331\\portable-comfyui\\ComfyUI_windows_portable\\ComfyUI', 'C:\\workspaces\\HYWM2-2331\\portable-comfyui\\ComfyUI_windows_portable\\ComfyUI\\custom_nodes\\ComfyUI-HYWM2', 'C:\\Users\\ContainerUser\\AppData\\Local\\Programs\\comfy-env\\.pixi\\envs\\hywm2-nodes\\Lib\\site-packages', 'C:\\workspaces\\HYWM2-2331\\portable-comfyui\\ComfyUI_windows_portable\\ComfyUI\\custom_nodes\\ComfyUI-HYWM2']
+[SubprocessWorker] is_pixi=True, python=C:\Users\ContainerUser\AppData\Local\Programs\comfy-env\.pixi\envs\hywm2-nodes\python.exe
+[SubprocessWorker] launching cmd=['C:\\Users\\ContainerUser\\.pixi\\bin\\pixi.exe', 'run', '--as-is', '--manifest-path', 'C:\\Users\\ContainerUser\\AppData\\Local\\Programs\\comfy-env\\pixi.toml', '-e', 'hywm2-nodes', 'python', 'C:\\Users\\ContainerUser\\AppData\\Local\\Temp\\comfyui_pvenv_3q8o2_mr\\persistent_worker.py', 'tcp://127.0.0.1:50602']...
 [worker:ComfyUI-HYWM2] ERROR: Failed to import comfy_kitchen, Error: No module named 'comfy_kitchen', fp8 and fp4 support will not be available.
 [SubprocessWorker] worker started/confirmed
 [SubprocessWorker] serializing kwargs to shm...
@@ -123,298 +123,41 @@ got prompt
 [SubprocessWorker] sending request via socket...
 [SubprocessWorker] call_id=1 sending call_method
 [worker:ComfyUI-HYWM2] WARNING: predict_gaussians=True forces predict_camera=True (the 3DGS renderer reads camera_poses).
-Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
-[worker:ComfyUI-HYWM2] WARNING: Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
-model.safetensors:   0%|          | 0.00/3.27G [00:00<?, ?B/s][worker:ComfyUI-HYWM2] 
-=== WATCHDOG TICK 1 ===
-[worker:ComfyUI-HYWM2] Thread 0x00005294 (most recent call first):
-  File "C:\Users\ContainerAdministrator\AppData\Local\Programs\comfy-env\.pixi\envs\hywm2-nodes\Lib\threading.py", line 363 in wait
-  File "C:\Users\ContainerAdministrator\AppData\Local\Programs\comfy-env\.pixi\envs\hywm2-nodes\Lib\threading.py", line 660 in wait
-  File "C:\Users\ContainerAdministrator\AppData\Local\Programs\comfy-env\.pixi\envs\hywm2-nodes\Lib\site-packages\tqdm\_monitor.py", line 60 in run
-  File "C:\Users\ContainerAdministrator\AppData\Local\Programs\comfy-env\.pixi\envs\hywm2-nodes\Lib\threading.py", line 1044 in _bootstrap_inner
-  File "C:\Users\ContainerAdministrator\AppData\Local\Programs\comfy-env\.pixi\envs\hywm2-nodes\Lib\threading.py", line 1015 in _bootstrap
-
-Thread 0x000019f0 (most recent call first):
-  File "C:\Users\ContainerAdministrator\AppData\Local\Temp\comfyui_pvenv_f0kjs7vk\persistent_worker.py", line 106 in _vram_poller
-  File "C:\Users\ContainerAdministrator\AppData\Local\Programs\comfy-env\.pixi\envs\hywm2-nodes\Lib\threading.py", line 995 in run
-  File "C:\Users\ContainerAdministrator\AppData\Local\Programs\comfy-env\.pixi\envs\hywm2-nodes\Lib\threading.py", line 1044 in _bootstrap_inner
-  File "C:\Users\ContainerAdministrator\AppData\Local\Programs\comfy-env\.pixi\envs\hywm2-nodes\Lib\threading.py", line 1015 in _bootstrap
-
-Current thread 0x00003ecc (most recent call first):
-  File "C:\Users\ContainerAdministrator\AppData\Local\Temp\comfyui_pvenv_f0kjs7vk\persistent_worker.py", line 52 in _watchdog
-  File "C:\Users\ContainerAdministrator\AppData\Local\Programs\comfy-env\.pixi\envs\hywm2-nodes\Lib\threading.py", line 995 in run
-  File "C:\Users\ContainerAdministrator\AppData\Local\Programs\comfy-env\.pixi\envs\hywm2-nodes\Lib\threading.py", line 1044 in _bootstrap_inner
-  File "C:\Users\ContainerAdministrator\AppData\Local\Programs\comfy-env\.pixi\envs\hywm2-nodes\Lib\threading.py", line 1015 in _bootstrap
-
-Thread 0x00004bf4 (most recent call first):
-  File "C:\Users\ContainerAdministrator\AppData\Local\Programs\comfy-env\.pixi\envs\hywm2-nodes\Lib\site-packages\huggingface_hub\file_download.py", line 558 in xet_get
-  File "C:\Users\ContainerAdministrator\AppData\Local\Programs\comfy-env\.pixi\envs\hywm2-nodes\Lib\site-packages\huggingface_hub\file_download.py", line 1842 in _download_to_tmp_and_move
-  File "C:\Users\ContainerAdministrator\AppData\Local\Programs\comfy-env\.pixi\envs\hywm2-nodes\Lib\site-packages\huggingface_hub\file_download.py", line 1427 in _hf_hub_download_to_local_dir
-  File "C:\Users\ContainerAdministrator\AppData\Local\Programs\comfy-env\.pixi\envs\hywm2-nodes\Lib\site-packages\huggingface_hub\file_download.py", line 976 in hf_hub_download
-  File "C:\Users\ContainerAdministrator\AppData\Local\Programs\comfy-env\.pixi\envs\hywm2-nodes\Lib\site-packages\huggingface_hub\utils\_validators.py", line 88 in _inner_fn
-  File "C:\workspaces\HYWM2-2145\portable-comfyui\ComfyUI_windows_portable\ComfyUI\custom_nodes\ComfyUI-HYWM2\nodes\load_model.py", line 248 in _download_files
-  File "C:\workspaces\HYWM2-2145\portable-comfyui\ComfyUI_windows_portable\ComfyUI\custom_nodes\ComfyUI-HYWM2\nodes\load_model.py", line 183 in _get_or_download_checkpoint
-  File "C:\workspaces\HYWM2-2145\portable-comfyui\ComfyUI_windows_portable\ComfyUI\custom_nodes\ComfyUI-HYWM2\nodes\load_model.py", line 155 in execute
-  File "C:\Users\ContainerAdministrator\AppData\Local\Programs\comfy-env\.pixi\envs\hywm2-nodes\Lib\site-packages\torch\utils\_contextlib.py", line 124 in decorate_context
-  File "C:\workspaces\HYWM2-2145\portable-comfyui\ComfyUI_windows_portable\ComfyUI\comfy_api\latest\_io.py", line 1833 in EXECUTE_NORMALIZED
-  File "C:\Users\ContainerAdministrator\AppData\Local\Temp\comfyui_pvenv_f0kjs7vk\persistent_worker.py", line 1762 in main
-  File "C:\Users\ContainerAdministrator\AppData\Local\Temp\comfyui_pvenv_f0kjs7vk\persistent_worker.py", line 1807 in <module>
-
-[worker:ComfyUI-HYWM2] === END ===
-
-[worker:ComfyUI-HYWM2] 
-=== WATCHDOG TICK 2 ===
-[worker:ComfyUI-HYWM2] Thread 0x00005294 (most recent call first):
-  File "C:\Users\ContainerAdministrator\AppData\Local\Programs\comfy-env\.pixi\envs\hywm2-nodes\Lib\threading.py", line 363 in wait
-  File "C:\Users\ContainerAdministrator\AppData\Local\Programs\comfy-env\.pixi\envs\hywm2-nodes\Lib\threading.py", line 660 in wait
-  File "C:\Users\ContainerAdministrator\AppData\Local\Programs\comfy-env\.pixi\envs\hywm2-nodes\Lib\site-packages\tqdm\_monitor.py", line 60 in run
-  File "C:\Users\ContainerAdministrator\AppData\Local\Programs\comfy-env\.pixi\envs\hywm2-nodes\Lib\threading.py", line 1044 in _bootstrap_inner
-  File "C:\Users\ContainerAdministrator\AppData\Local\Programs\comfy-env\.pixi\envs\hywm2-nodes\Lib\threading.py", line 1015 in _bootstrap
-
-Thread 0x000019f0 (most recent call first):
-  File "C:\Users\ContainerAdministrator\AppData\Local\Temp\comfyui_pvenv_f0kjs7vk\persistent_worker.py", line 106 in _vram_poller
-  File "C:\Users\ContainerAdministrator\AppData\Local\Programs\comfy-env\.pixi\envs\hywm2-nodes\Lib\threading.py", line 995 in run
-  File "C:\Users\ContainerAdministrator\AppData\Local\Programs\comfy-env\.pixi\envs\hywm2-nodes\Lib\threading.py", line 1044 in _bootstrap_inner
-  File "C:\Users\ContainerAdministrator\AppData\Local\Programs\comfy-env\.pixi\envs\hywm2-nodes\Lib\threading.py", line 1015 in _bootstrap
-
-Current thread 0x00003ecc (most recent call first):
-  File "C:\Users\ContainerAdministrator\AppData\Local\Temp\comfyui_pvenv_f0kjs7vk\persistent_worker.py", line 52 in _watchdog
-  File "C:\Users\ContainerAdministrator\AppData\Local\Programs\comfy-env\.pixi\envs\hywm2-nodes\Lib\threading.py", line 995 in run
-  File "C:\Users\ContainerAdministrator\AppData\Local\Programs\comfy-env\.pixi\envs\hywm2-nodes\Lib\threading.py", line 1044 in _bootstrap_inner
-  File "C:\Users\ContainerAdministrator\AppData\Local\Programs\comfy-env\.pixi\envs\hywm2-nodes\Lib\threading.py", line 1015 in _bootstrap
-
-Thread 0x00004bf4 (most recent call first):
-  File "C:\Users\ContainerAdministrator\AppData\Local\Programs\comfy-env\.pixi\envs\hywm2-nodes\Lib\site-packages\huggingface_hub\file_download.py", line 558 in xet_get
-  File "C:\Users\ContainerAdministrator\AppData\Local\Programs\comfy-env\.pixi\envs\hywm2-nodes\Lib\site-packages\huggingface_hub\file_download.py", line 1842 in _download_to_tmp_and_move
-  File "C:\Users\ContainerAdministrator\AppData\Local\Programs\comfy-env\.pixi\envs\hywm2-nodes\Lib\site-packages\huggingface_hub\file_download.py", line 1427 in _hf_hub_download_to_local_dir
-  File "C:\Users\ContainerAdministrator\AppData\Local\Programs\comfy-env\.pixi\envs\hywm2-nodes\Lib\site-packages\huggingface_hub\file_download.py", line 976 in hf_hub_download
-  File "C:\Users\ContainerAdministrator\AppData\Local\Programs\comfy-env\.pixi\envs\hywm2-nodes\Lib\site-packages\huggingface_hub\utils\_validators.py", line 88 in _inner_fn
-  File "C:\workspaces\HYWM2-2145\portable-comfyui\ComfyUI_windows_portable\ComfyUI\custom_nodes\ComfyUI-HYWM2\nodes\load_model.py", line 248 in _download_files
-  File "C:\workspaces\HYWM2-2145\portable-comfyui\ComfyUI_windows_portable\ComfyUI\custom_nodes\ComfyUI-HYWM2\nodes\load_model.py", line 183 in _get_or_download_checkpoint
-  File "C:\workspaces\HYWM2-2145\portable-comfyui\ComfyUI_windows_portable\ComfyUI\custom_nodes\ComfyUI-HYWM2\nodes\load_model.py", line 155 in execute
-  File "C:\Users\ContainerAdministrator\AppData\Local\Programs\comfy-env\.pixi\envs\hywm2-nodes\Lib\site-packages\torch\utils\_contextlib.py", line 124 in decorate_context
-  File "C:\workspaces\HYWM2-2145\portable-comfyui\ComfyUI_windows_portable\ComfyUI\comfy_api\latest\_io.py", line 1833 in EXECUTE_NORMALIZED
-  File "C:\Users\ContainerAdministrator\AppData\Local\Temp\comfyui_pvenv_f0kjs7vk\persistent_worker.py", line 1762 in main
-  File "C:\Users\ContainerAdministrator\AppData\Local\Temp\comfyui_pvenv_f0kjs7vk\persistent_worker.py", line 1807 in <module>
-
-[worker:ComfyUI-HYWM2] === END ===
-
-[worker:ComfyUI-HYWM2] 
-=== WATCHDOG TICK 3 ===
-[worker:ComfyUI-HYWM2] Thread 0x00005294 (most recent call first):
-  File "C:\Users\ContainerAdministrator\AppData\Local\Programs\comfy-env\.pixi\envs\hywm2-nodes\Lib\threading.py", line 363 in wait
-  File "C:\Users\ContainerAdministrator\AppData\Local\Programs\comfy-env\.pixi\envs\hywm2-nodes\Lib\threading.py", line 660 in wait
-  File "C:\Users\ContainerAdministrator\AppData\Local\Programs\comfy-env\.pixi\envs\hywm2-nodes\Lib\site-packages\tqdm\_monitor.py", line 60 in run
-  File "C:\Users\ContainerAdministrator\AppData\Local\Programs\comfy-env\.pixi\envs\hywm2-nodes\Lib\threading.py", line 1044 in _bootstrap_inner
-  File "C:\Users\ContainerAdministrator\AppData\Local\Programs\comfy-env\.pixi\envs\hywm2-nodes\Lib\threading.py", line 1015 in _bootstrap
-
-Thread 0x000019f0 (most recent call first):
-  File "C:\Users\ContainerAdministrator\AppData\Local\Temp\comfyui_pvenv_f0kjs7vk\persistent_worker.py", line 106 in _vram_poller
-  File "C:\Users\ContainerAdministrator\AppData\Local\Programs\comfy-env\.pixi\envs\hywm2-nodes\Lib\threading.py", line 995 in run
-  File "C:\Users\ContainerAdministrator\AppData\Local\Programs\comfy-env\.pixi\envs\hywm2-nodes\Lib\threading.py", line 1044 in _bootstrap_inner
-  File "C:\Users\ContainerAdministrator\AppData\Local\Programs\comfy-env\.pixi\envs\hywm2-nodes\Lib\threading.py", line 1015 in _bootstrap
-
-Current thread 0x00003ecc (most recent call first):
-  File "C:\Users\ContainerAdministrator\AppData\Local\Temp\comfyui_pvenv_f0kjs7vk\persistent_worker.py", line 52 in _watchdog
-  File "C:\Users\ContainerAdministrator\AppData\Local\Programs\comfy-env\.pixi\envs\hywm2-nodes\Lib\threading.py", line 995 in run
-  File "C:\Users\ContainerAdministrator\AppData\Local\Programs\comfy-env\.pixi\envs\hywm2-nodes\Lib\threading.py", line 1044 in _bootstrap_inner
-  File "C:\Users\ContainerAdministrator\AppData\Local\Programs\comfy-env\.pixi\envs\hywm2-nodes\Lib\threading.py", line 1015 in _bootstrap
-
-Thread 0x00004bf4 (most recent call first):
-  File "C:\Users\ContainerAdministrator\AppData\Local\Programs\comfy-env\.pixi\envs\hywm2-nodes\Lib\site-packages\huggingface_hub\file_download.py", line 558 in xet_get
-  File "C:\Users\ContainerAdministrator\AppData\Local\Programs\comfy-env\.pixi\envs\hywm2-nodes\Lib\site-packages\huggingface_hub\file_download.py", line 1842 in _download_to_tmp_and_move
-  File "C:\Users\ContainerAdministrator\AppData\Local\Programs\comfy-env\.pixi\envs\hywm2-nodes\Lib\site-packages\huggingface_hub\file_download.py", line 1427 in _hf_hub_download_to_local_dir
-  File "C:\Users\ContainerAdministrator\AppData\Local\Programs\comfy-env\.pixi\envs\hywm2-nodes\Lib\site-packages\huggingface_hub\file_download.py", line 976 in hf_hub_download
-  File "C:\Users\ContainerAdministrator\AppData\Local\Programs\comfy-env\.pixi\envs\hywm2-nodes\Lib\site-packages\huggingface_hub\utils\_validators.py", line 88 in _inner_fn
-  File "C:\workspaces\HYWM2-2145\portable-comfyui\ComfyUI_windows_portable\ComfyUI\custom_nodes\ComfyUI-HYWM2\nodes\load_model.py", line 248 in _download_files
-  File "C:\workspaces\HYWM2-2145\portable-comfyui\ComfyUI_windows_portable\ComfyUI\custom_nodes\ComfyUI-HYWM2\nodes\load_model.py", line 183 in _get_or_download_checkpoint
-  File "C:\workspaces\HYWM2-2145\portable-comfyui\ComfyUI_windows_portable\ComfyUI\custom_nodes\ComfyUI-HYWM2\nodes\load_model.py", line 155 in execute
-  File "C:\Users\ContainerAdministrator\AppData\Local\Programs\comfy-env\.pixi\envs\hywm2-nodes\Lib\site-packages\torch\utils\_contextlib.py", line 124 in decorate_context
-  File "C:\workspaces\HYWM2-2145\portable-comfyui\ComfyUI_windows_portable\ComfyUI\comfy_api\latest\_io.py", line 1833 in EXECUTE_NORMALIZED
-  File "C:\Users\ContainerAdministrator\AppData\Local\Temp\comfyui_pvenv_f0kjs7vk\persistent_worker.py", line 1762 in main
-  File "C:\Users\ContainerAdministrator\AppData\Local\Temp\comfyui_pvenv_f0kjs7vk\persistent_worker.py", line 1807 in <module>
-
-[worker:ComfyUI-HYWM2] === END ===
-
-model.safetensors:   2%|▏         | 67.1M/3.27G [02:58<2:22:27, 375kB/s][SubprocessWorker] callback 'report_progress' from call_id=1
-model.safetensors:   8%|▊         | 269M/3.27G [02:59<25:11, 1.99MB/s]  [SubprocessWorker] callback 'report_progress' from call_id=1
-model.safetensors:  21%|██        | 686M/3.27G [02:59<06:25, 6.72MB/s][SubprocessWorker] callback 'report_progress' from call_id=1
-model.safetensors:  34%|███▍      | 1.13G/3.27G [02:59<02:35, 13.8MB/s][SubprocessWorker] callback 'report_progress' from call_id=1
-model.safetensors:  41%|████      | 1.35G/3.27G [02:59<01:42, 18.8MB/s][SubprocessWorker] callback 'report_progress' from call_id=1
+model.safetensors:   0%|          | 0.00/3.27G [00:00<?, ?B/s]model.safetensors:   4%|▍         | 142M/3.27G [00:04<01:45, 29.8MB/s][SubprocessWorker] callback 'report_progress' from call_id=1
+model.safetensors:   6%|▌         | 202M/3.27G [00:05<01:23, 36.7MB/s][SubprocessWorker] callback 'report_progress' from call_id=1
+model.safetensors:  11%|█▏        | 370M/3.27G [00:06<00:34, 85.3MB/s][SubprocessWorker] callback 'report_progress' from call_id=1
+model.safetensors:  15%|█▌        | 504M/3.27G [00:06<00:23, 118MB/s] [SubprocessWorker] callback 'report_progress' from call_id=1
+model.safetensors:  17%|█▋        | 572M/3.27G [00:06<00:19, 135MB/s][SubprocessWorker] callback 'report_progress' from call_id=1
+model.safetensors:  18%|█▊        | 605M/3.27G [00:07<00:19, 135MB/s][SubprocessWorker] callback 'report_progress' from call_id=1
 [SubprocessWorker] callback 'report_progress' from call_id=1
-[SubprocessWorker] callback 'report_progress' from call_id=1
-model.safetensors:  45%|████▍     | 1.46G/3.27G [03:10<01:36, 18.8MB/s]model.safetensors:  45%|████▌     | 1.48G/3.27G [03:12<01:49, 16.5MB/s][SubprocessWorker] callback 'report_progress' from call_id=1
-model.safetensors:  45%|████▌     | 1.49G/3.27G [03:13<01:51, 16.0MB/s][SubprocessWorker] callback 'report_progress' from call_id=1
-model.safetensors:  46%|████▌     | 1.50G/3.27G [03:30<01:51, 16.0MB/s][worker:ComfyUI-HYWM2] 
-=== WATCHDOG TICK 4 ===
-[worker:ComfyUI-HYWM2] Thread 0x00005294 (most recent call first):
-  File "C:\Users\ContainerAdministrator\AppData\Local\Programs\comfy-env\.pixi\envs\hywm2-nodes\Lib\threading.py", line 363 in wait
-  File "C:\Users\ContainerAdministrator\AppData\Local\Programs\comfy-env\.pixi\envs\hywm2-nodes\Lib\threading.py", line 660 in wait
-  File "C:\Users\ContainerAdministrator\AppData\Local\Programs\comfy-env\.pixi\envs\hywm2-nodes\Lib\site-packages\tqdm\_monitor.py", line 60 in run
-  File "C:\Users\ContainerAdministrator\AppData\Local\Programs\comfy-env\.pixi\envs\hywm2-nodes\Lib\threading.py", line 1044 in _bootstrap_inner
-  File "C:\Users\ContainerAdministrator\AppData\Local\Programs\comfy-env\.pixi\envs\hywm2-nodes\Lib\threading.py", line 1015 in _bootstrap
-
-Thread 0x000019f0 (most recent call first):
-  File "C:\Users\ContainerAdministrator\AppData\Local\Temp\comfyui_pvenv_f0kjs7vk\persistent_worker.py", line 106 in _vram_poller
-  File "C:\Users\ContainerAdministrator\AppData\Local\Programs\comfy-env\.pixi\envs\hywm2-nodes\Lib\threading.py", line 995 in run
-  File "C:\Users\ContainerAdministrator\AppData\Local\Programs\comfy-env\.pixi\envs\hywm2-nodes\Lib\threading.py", line 1044 in _bootstrap_inner
-  File "C:\Users\ContainerAdministrator\AppData\Local\Programs\comfy-env\.pixi\envs\hywm2-nodes\Lib\threading.py", line 1015 in _bootstrap
-
-Current thread 0x00003ecc (most recent call first):
-  File "C:\Users\ContainerAdministrator\AppData\Local\Temp\comfyui_pvenv_f0kjs7vk\persistent_worker.py", line 52 in _watchdog
-  File "C:\Users\ContainerAdministrator\AppData\Local\Programs\comfy-env\.pixi\envs\hywm2-nodes\Lib\threading.py", line 995 in run
-  File "C:\Users\ContainerAdministrator\AppData\Local\Programs\comfy-env\.pixi\envs\hywm2-nodes\Lib\threading.py", line 1044 in _bootstrap_inner
-  File "C:\Users\ContainerAdministrator\AppData\Local\Programs\comfy-env\.pixi\envs\hywm2-nodes\Lib\threading.py", line 1015 in _bootstrap
-
-Thread 0x00004bf4 (most recent call first):
-  File "C:\Users\ContainerAdministrator\AppData\Local\Programs\comfy-env\.pixi\envs\hywm2-nodes\Lib\site-packages\huggingface_hub\file_download.py", line 558 in xet_get
-  File "C:\Users\ContainerAdministrator\AppData\Local\Programs\comfy-env\.pixi\envs\hywm2-nodes\Lib\site-packages\huggingface_hub\file_download.py", line 1842 in _download_to_tmp_and_move
-  File "C:\Users\ContainerAdministrator\AppData\Local\Programs\comfy-env\.pixi\envs\hywm2-nodes\Lib\site-packages\huggingface_hub\file_download.py", line 1427 in _hf_hub_download_to_local_dir
-  File "C:\Users\ContainerAdministrator\AppData\Local\Programs\comfy-env\.pixi\envs\hywm2-nodes\Lib\site-packages\huggingface_hub\file_download.py", line 976 in hf_hub_download
-  File "C:\Users\ContainerAdministrator\AppData\Local\Programs\comfy-env\.pixi\envs\hywm2-nodes\Lib\site-packages\huggingface_hub\utils\_validators.py", line 88 in _inner_fn
-  File "C:\workspaces\HYWM2-2145\portable-comfyui\ComfyUI_windows_portable\ComfyUI\custom_nodes\ComfyUI-HYWM2\nodes\load_model.py", line 248 in _download_files
-  File "C:\workspaces\HYWM2-2145\portable-comfyui\ComfyUI_windows_portable\ComfyUI\custom_nodes\ComfyUI-HYWM2\nodes\load_model.py", line 183 in _get_or_download_checkpoint
-  File "C:\workspaces\HYWM2-2145\portable-comfyui\ComfyUI_windows_portable\ComfyUI\custom_nodes\ComfyUI-HYWM2\nodes\load_model.py", line 155 in execute
-  File "C:\Users\ContainerAdministrator\AppData\Local\Programs\comfy-env\.pixi\envs\hywm2-nodes\Lib\site-packages\torch\utils\_contextlib.py", line 124 in decorate_context
-  File "C:\workspaces\HYWM2-2145\portable-comfyui\ComfyUI_windows_portable\ComfyUI\comfy_api\latest\_io.py", line 1833 in EXECUTE_NORMALIZED
-  File "C:\Users\ContainerAdministrator\AppData\Local\Temp\comfyui_pvenv_f0kjs7vk\persistent_worker.py", line 1762 in main
-  File "C:\Users\ContainerAdministrator\AppData\Local\Temp\comfyui_pvenv_f0kjs7vk\persistent_worker.py", line 1807 in <module>
-
-[worker:ComfyUI-HYWM2] === END ===
-
-model.safetensors:  48%|████▊     | 1.57G/3.27G [03:50<03:50, 7.39MB/s][SubprocessWorker] callback 'report_progress' from call_id=1
-model.safetensors:  48%|████▊     | 1.57G/3.27G [04:00<03:50, 7.39MB/s][worker:ComfyUI-HYWM2] 
-=== WATCHDOG TICK 5 ===
-[worker:ComfyUI-HYWM2] Thread 0x00005294 (most recent call first):
-  File "C:\Users\ContainerAdministrator\AppData\Local\Programs\comfy-env\.pixi\envs\hywm2-nodes\Lib\threading.py", line 363 in wait
-  File "C:\Users\ContainerAdministrator\AppData\Local\Programs\comfy-env\.pixi\envs\hywm2-nodes\Lib\threading.py", line 660 in wait
-  File "C:\Users\ContainerAdministrator\AppData\Local\Programs\comfy-env\.pixi\envs\hywm2-nodes\Lib\site-packages\tqdm\_monitor.py", line 60 in run
-  File "C:\Users\ContainerAdministrator\AppData\Local\Programs\comfy-env\.pixi\envs\hywm2-nodes\Lib\threading.py", line 1044 in _bootstrap_inner
-  File "C:\Users\ContainerAdministrator\AppData\Local\Programs\comfy-env\.pixi\envs\hywm2-nodes\Lib\threading.py", line 1015 in _bootstrap
-
-Thread 0x000019f0 (most recent call first):
-  File "C:\Users\ContainerAdministrator\AppData\Local\Temp\comfyui_pvenv_f0kjs7vk\persistent_worker.py", line 106 in _vram_poller
-  File "C:\Users\ContainerAdministrator\AppData\Local\Programs\comfy-env\.pixi\envs\hywm2-nodes\Lib\threading.py", line 995 in run
-  File "C:\Users\ContainerAdministrator\AppData\Local\Programs\comfy-env\.pixi\envs\hywm2-nodes\Lib\threading.py", line 1044 in _bootstrap_inner
-  File "C:\Users\ContainerAdministrator\AppData\Local\Programs\comfy-env\.pixi\envs\hywm2-nodes\Lib\threading.py", line 1015 in _bootstrap
-
-Current thread 0x00003ecc (most recent call first):
-  File "C:\Users\ContainerAdministrator\AppData\Local\Temp\comfyui_pvenv_f0kjs7vk\persistent_worker.py", line 52 in _watchdog
-  File "C:\Users\ContainerAdministrator\AppData\Local\Programs\comfy-env\.pixi\envs\hywm2-nodes\Lib\threading.py", line 995 in run
-  File "C:\Users\ContainerAdministrator\AppData\Local\Programs\comfy-env\.pixi\envs\hywm2-nodes\Lib\threading.py", line 1044 in _bootstrap_inner
-  File "C:\Users\ContainerAdministrator\AppData\Local\Programs\comfy-env\.pixi\envs\hywm2-nodes\Lib\threading.py", line 1015 in _bootstrap
-
-Thread 0x00004bf4 (most recent call first):
-  File "C:\Users\ContainerAdministrator\AppData\Local\Programs\comfy-env\.pixi\envs\hywm2-nodes\Lib\site-packages\huggingface_hub\file_download.py", line 558 in xet_get
-  File "C:\Users\ContainerAdministrator\AppData\Local\Programs\comfy-env\.pixi\envs\hywm2-nodes\Lib\site-packages\huggingface_hub\file_download.py", line 1842 in _download_to_tmp_and_move
-  File "C:\Users\ContainerAdministrator\AppData\Local\Programs\comfy-env\.pixi\envs\hywm2-nodes\Lib\site-packages\huggingface_hub\file_download.py", line 1427 in _hf_hub_download_to_local_dir
-  File "C:\Users\ContainerAdministrator\AppData\Local\Programs\comfy-env\.pixi\envs\hywm2-nodes\Lib\site-packages\huggingface_hub\file_download.py", line 976 in hf_hub_download
-  File "C:\Users\ContainerAdministrator\AppData\Local\Programs\comfy-env\.pixi\envs\hywm2-nodes\Lib\site-packages\huggingface_hub\utils\_validators.py", line 88 in _inner_fn
-  File "C:\workspaces\HYWM2-2145\portable-comfyui\ComfyUI_windows_portable\ComfyUI\custom_nodes\ComfyUI-HYWM2\nodes\load_model.py", line 248 in _download_files
-  File "C:\workspaces\HYWM2-2145\portable-comfyui\ComfyUI_windows_portable\ComfyUI\custom_nodes\ComfyUI-HYWM2\nodes\load_model.py", line 183 in _get_or_download_checkpoint
-  File "C:\workspaces\HYWM2-2145\portable-comfyui\ComfyUI_windows_portable\ComfyUI\custom_nodes\ComfyUI-HYWM2\nodes\load_model.py", line 155 in execute
-  File "C:\Users\ContainerAdministrator\AppData\Local\Programs\comfy-env\.pixi\envs\hywm2-nodes\Lib\site-packages\torch\utils\_contextlib.py", line 124 in decorate_context
-  File "C:\workspaces\HYWM2-2145\portable-comfyui\ComfyUI_windows_portable\ComfyUI\comfy_api\latest\_io.py", line 1833 in EXECUTE_NORMALIZED
-  File "C:\Users\ContainerAdministrator\AppData\Local\Temp\comfyui_pvenv_f0kjs7vk\persistent_worker.py", line 1762 in main
-  File "C:\Users\ContainerAdministrator\AppData\Local\Temp\comfyui_pvenv_f0kjs7vk\persistent_worker.py", line 1807 in <module>
-
-[worker:ComfyUI-HYWM2] === END ===
-
-[worker:ComfyUI-HYWM2] 
-=== WATCHDOG TICK 6 ===
-[worker:ComfyUI-HYWM2] Thread 0x00005294 (most recent call first):
-  File "C:\Users\ContainerAdministrator\AppData\Local\Programs\comfy-env\.pixi\envs\hywm2-nodes\Lib\threading.py", line 363 in wait
-  File "C:\Users\ContainerAdministrator\AppData\Local\Programs\comfy-env\.pixi\envs\hywm2-nodes\Lib\threading.py", line 660 in wait
-  File "C:\Users\ContainerAdministrator\AppData\Local\Programs\comfy-env\.pixi\envs\hywm2-nodes\Lib\site-packages\tqdm\_monitor.py", line 60 in run
-  File "C:\Users\ContainerAdministrator\AppData\Local\Programs\comfy-env\.pixi\envs\hywm2-nodes\Lib\threading.py", line 1044 in _bootstrap_inner
-  File "C:\Users\ContainerAdministrator\AppData\Local\Programs\comfy-env\.pixi\envs\hywm2-nodes\Lib\threading.py", line 1015 in _bootstrap
-
-Thread 0x000019f0 (most recent call first):
-  File "C:\Users\ContainerAdministrator\AppData\Local\Temp\comfyui_pvenv_f0kjs7vk\persistent_worker.py", line 106 in _vram_poller
-  File "C:\Users\ContainerAdministrator\AppData\Local\Programs\comfy-env\.pixi\envs\hywm2-nodes\Lib\threading.py", line 995 in run
-  File "C:\Users\ContainerAdministrator\AppData\Local\Programs\comfy-env\.pixi\envs\hywm2-nodes\Lib\threading.py", line 1044 in _bootstrap_inner
-  File "C:\Users\ContainerAdministrator\AppData\Local\Programs\comfy-env\.pixi\envs\hywm2-nodes\Lib\threading.py", line 1015 in _bootstrap
-
-Current thread 0x00003ecc (most recent call first):
-  File "C:\Users\ContainerAdministrator\AppData\Local\Temp\comfyui_pvenv_f0kjs7vk\persistent_worker.py", line 52 in _watchdog
-  File "C:\Users\ContainerAdministrator\AppData\Local\Programs\comfy-env\.pixi\envs\hywm2-nodes\Lib\threading.py", line 995 in run
-  File "C:\Users\ContainerAdministrator\AppData\Local\Programs\comfy-env\.pixi\envs\hywm2-nodes\Lib\threading.py", line 1044 in _bootstrap_inner
-  File "C:\Users\ContainerAdministrator\AppData\Local\Programs\comfy-env\.pixi\envs\hywm2-nodes\Lib\threading.py", line 1015 in _bootstrap
-
-Thread 0x00004bf4 (most recent call first):
-  File "C:\Users\ContainerAdministrator\AppData\Local\Programs\comfy-env\.pixi\envs\hywm2-nodes\Lib\site-packages\huggingface_hub\file_download.py", line 558 in xet_get
-  File "C:\Users\ContainerAdministrator\AppData\Local\Programs\comfy-env\.pixi\envs\hywm2-nodes\Lib\site-packages\huggingface_hub\file_download.py", line 1842 in _download_to_tmp_and_move
-  File "C:\Users\ContainerAdministrator\AppData\Local\Programs\comfy-env\.pixi\envs\hywm2-nodes\Lib\site-packages\huggingface_hub\file_download.py", line 1427 in _hf_hub_download_to_local_dir
-  File "C:\Users\ContainerAdministrator\AppData\Local\Programs\comfy-env\.pixi\envs\hywm2-nodes\Lib\site-packages\huggingface_hub\file_download.py", line 976 in hf_hub_download
-  File "C:\Users\ContainerAdministrator\AppData\Local\Programs\comfy-env\.pixi\envs\hywm2-nodes\Lib\site-packages\huggingface_hub\utils\_validators.py", line 88 in _inner_fn
-  File "C:\workspaces\HYWM2-2145\portable-comfyui\ComfyUI_windows_portable\ComfyUI\custom_nodes\ComfyUI-HYWM2\nodes\load_model.py", line 248 in _download_files
-  File "C:\workspaces\HYWM2-2145\portable-comfyui\ComfyUI_windows_portable\ComfyUI\custom_nodes\ComfyUI-HYWM2\nodes\load_model.py", line 183 in _get_or_download_checkpoint
-  File "C:\workspaces\HYWM2-2145\portable-comfyui\ComfyUI_windows_portable\ComfyUI\custom_nodes\ComfyUI-HYWM2\nodes\load_model.py", line 155 in execute
-  File "C:\Users\ContainerAdministrator\AppData\Local\Programs\comfy-env\.pixi\envs\hywm2-nodes\Lib\site-packages\torch\utils\_contextlib.py", line 124 in decorate_context
-  File "C:\workspaces\HYWM2-2145\portable-comfyui\ComfyUI_windows_portable\ComfyUI\comfy_api\latest\_io.py", line 1833 in EXECUTE_NORMALIZED
-  File "C:\Users\ContainerAdministrator\AppData\Local\Temp\comfyui_pvenv_f0kjs7vk\persistent_worker.py", line 1762 in main
-  File "C:\Users\ContainerAdministrator\AppData\Local\Temp\comfyui_pvenv_f0kjs7vk\persistent_worker.py", line 1807 in <module>
-
-[worker:ComfyUI-HYWM2] === END ===
-
-model.safetensors:  50%|████▉     | 1.64G/3.27G [06:07<13:11, 2.07MB/s][SubprocessWorker] callback 'report_progress' from call_id=1
-model.safetensors:  50%|████▉     | 1.64G/3.27G [06:20<13:11, 2.07MB/s][worker:ComfyUI-HYWM2] 
-=== WATCHDOG TICK 7 ===
-[worker:ComfyUI-HYWM2] Thread 0x00005294 (most recent call first):
-  File "C:\Users\ContainerAdministrator\AppData\Local\Programs\comfy-env\.pixi\envs\hywm2-nodes\Lib\threading.py", line 363 in wait
-  File "C:\Users\ContainerAdministrator\AppData\Local\Programs\comfy-env\.pixi\envs\hywm2-nodes\Lib\threading.py", line 660 in wait
-  File "C:\Users\ContainerAdministrator\AppData\Local\Programs\comfy-env\.pixi\envs\hywm2-nodes\Lib\site-packages\tqdm\_monitor.py", line 60 in run
-  File "C:\Users\ContainerAdministrator\AppData\Local\Programs\comfy-env\.pixi\envs\hywm2-nodes\Lib\threading.py", line 1044 in _bootstrap_inner
-  File "C:\Users\ContainerAdministrator\AppData\Local\Programs\comfy-env\.pixi\envs\hywm2-nodes\Lib\threading.py", line 1015 in _bootstrap
-
-Thread 0x000019f0 (most recent call first):
-  File "C:\Users\ContainerAdministrator\AppData\Local\Temp\comfyui_pvenv_f0kjs7vk\persistent_worker.py", line 106 in _vram_poller
-  File "C:\Users\ContainerAdministrator\AppData\Local\Programs\comfy-env\.pixi\envs\hywm2-nodes\Lib\threading.py", line 995 in run
-  File "C:\Users\ContainerAdministrator\AppData\Local\Programs\comfy-env\.pixi\envs\hywm2-nodes\Lib\threading.py", line 1044 in _bootstrap_inner
-  File "C:\Users\ContainerAdministrator\AppData\Local\Programs\comfy-env\.pixi\envs\hywm2-nodes\Lib\threading.py", line 1015 in _bootstrap
-
-Current thread 0x00003ecc (most recent call first):
-  File "C:\Users\ContainerAdministrator\AppData\Local\Temp\comfyui_pvenv_f0kjs7vk\persistent_worker.py", line 52 in _watchdog
-  File "C:\Users\ContainerAdministrator\AppData\Local\Programs\comfy-env\.pixi\envs\hywm2-nodes\Lib\threading.py", line 995 in run
-  File "C:\Users\ContainerAdministrator\AppData\Local\Programs\comfy-env\.pixi\envs\hywm2-nodes\Lib\threading.py", line 1044 in _bootstrap_inner
-  File "C:\Users\ContainerAdministrator\AppData\Local\Programs\comfy-env\.pixi\envs\hywm2-nodes\Lib\threading.py", line 1015 in _bootstrap
-
-Thread 0x00004bf4 (most recent call first):
-  File "C:\Users\ContainerAdministrator\AppData\Local\Programs\comfy-env\.pixi\envs\hywm2-nodes\Lib\site-packages\huggingface_hub\file_download.py", line 558 in xet_get
-  File "C:\Users\ContainerAdministrator\AppData\Local\Programs\comfy-env\.pixi\envs\hywm2-nodes\Lib\site-packages\huggingface_hub\file_download.py", line 1842 in _download_to_tmp_and_move
-  File "C:\Users\ContainerAdministrator\AppData\Local\Programs\comfy-env\.pixi\envs\hywm2-nodes\Lib\site-packages\huggingface_hub\file_download.py", line 1427 in _hf_hub_download_to_local_dir
-  File "C:\Users\ContainerAdministrator\AppData\Local\Programs\comfy-env\.pixi\envs\hywm2-nodes\Lib\site-packages\huggingface_hub\file_download.py", line 976 in hf_hub_download
-  File "C:\Users\ContainerAdministrator\AppData\Local\Programs\comfy-env\.pixi\envs\hywm2-nodes\Lib\site-packages\huggingface_hub\utils\_validators.py", line 88 in _inner_fn
-  File "C:\workspaces\HYWM2-2145\portable-comfyui\ComfyUI_windows_portable\ComfyUI\custom_nodes\ComfyUI-HYWM2\nodes\load_model.py", line 248 in _download_files
-  File "C:\workspaces\HYWM2-2145\portable-comfyui\ComfyUI_windows_portable\ComfyUI\custom_nodes\ComfyUI-HYWM2\nodes\load_model.py", line 183 in _get_or_download_checkpoint
-  File "C:\workspaces\HYWM2-2145\portable-comfyui\ComfyUI_windows_portable\ComfyUI\custom_nodes\ComfyUI-HYWM2\nodes\load_model.py", line 155 in execute
-  File "C:\Users\ContainerAdministrator\AppData\Local\Programs\comfy-env\.pixi\envs\hywm2-nodes\Lib\site-packages\torch\utils\_contextlib.py", line 124 in decorate_context
-  File "C:\workspaces\HYWM2-2145\portable-comfyui\ComfyUI_windows_portable\ComfyUI\comfy_api\latest\_io.py", line 1833 in EXECUTE_NORMALIZED
-  File "C:\Users\ContainerAdministrator\AppData\Local\Temp\comfyui_pvenv_f0kjs7vk\persistent_worker.py", line 1762 in main
-  File "C:\Users\ContainerAdministrator\AppData\Local\Temp\comfyui_pvenv_f0kjs7vk\persistent_worker.py", line 1807 in <module>
-
-[worker:ComfyUI-HYWM2] === END ===
-
-model.safetensors:  54%|█████▍    | 1.77G/3.27G [06:33<09:38, 2.60MB/s][SubprocessWorker] callback 'report_progress' from call_id=1
-model.safetensors:  56%|█████▌    | 1.84G/3.27G [06:34<07:25, 3.23MB/s][SubprocessWorker] callback 'report_progress' from call_id=1
-model.safetensors:  62%|██████▏   | 2.04G/3.27G [06:49<04:10, 4.94MB/s][SubprocessWorker] callback 'report_progress' from call_id=1
-model.safetensors:  66%|██████▋   | 2.17G/3.27G [06:49<02:36, 7.06MB/s][SubprocessWorker] callback 'report_progress' from call_id=1
-model.safetensors:  72%|███████▏  | 2.37G/3.27G [06:50<01:19, 11.3MB/s][SubprocessWorker] callback 'report_progress' from call_id=1
-model.safetensors:  77%|███████▋  | 2.51G/3.27G [06:50<00:49, 15.4MB/s][SubprocessWorker] callback 'report_progress' from call_id=1
-model.safetensors:  79%|███████▊  | 2.57G/3.27G [06:54<00:43, 16.1MB/s][SubprocessWorker] callback 'report_progress' from call_id=1
-model.safetensors:  83%|████████▎ | 2.71G/3.27G [06:54<00:24, 23.3MB/s][SubprocessWorker] callback 'report_progress' from call_id=1
-model.safetensors:  89%|████████▉ | 2.91G/3.27G [06:54<00:09, 38.4MB/s][SubprocessWorker] callback 'report_progress' from call_id=1
-model.safetensors:  93%|█████████▎| 3.04G/3.27G [06:54<00:04, 51.8MB/s][SubprocessWorker] callback 'report_progress' from call_id=1
-model.safetensors:  99%|█████████▉| 3.24G/3.27G [06:55<00:00, 79.6MB/s][SubprocessWorker] callback 'report_progress' from call_id=1
-model.safetensors: 100%|██████████| 3.27G/3.27G [06:55<00:00, 7.89MB/s]
+model.safetensors:  20%|██        | 655M/3.27G [00:08<00:26, 97.5MB/s][SubprocessWorker] callback 'report_progress' from call_id=1
+model.safetensors:  23%|██▎       | 739M/3.27G [00:10<00:40, 62.1MB/s][SubprocessWorker] callback 'report_progress' from call_id=1
+model.safetensors:  28%|██▊       | 924M/3.27G [00:10<00:19, 120MB/s] [SubprocessWorker] callback 'report_progress' from call_id=1
+model.safetensors:  31%|███▏      | 1.02G/3.27G [00:11<00:18, 124MB/s][SubprocessWorker] callback 'report_progress' from call_id=1
+model.safetensors:  34%|███▍      | 1.13G/3.27G [00:11<00:15, 139MB/s][SubprocessWorker] callback 'report_progress' from call_id=1
+model.safetensors:  36%|███▌      | 1.18G/3.27G [00:13<00:25, 83.7MB/s][SubprocessWorker] callback 'report_progress' from call_id=1
+model.safetensors:  38%|███▊      | 1.24G/3.27G [00:13<00:20, 101MB/s] [SubprocessWorker] callback 'report_progress' from call_id=1
+model.safetensors:  39%|███▉      | 1.29G/3.27G [00:14<00:17, 113MB/s][SubprocessWorker] callback 'report_progress' from call_id=1
+model.safetensors:  41%|████      | 1.35G/3.27G [00:14<00:19, 99.7MB/s][SubprocessWorker] callback 'report_progress' from call_id=1
+model.safetensors:  46%|████▌     | 1.50G/3.27G [00:23<00:56, 31.5MB/s][SubprocessWorker] callback 'report_progress' from call_id=1
+model.safetensors:  52%|█████▏    | 1.70G/3.27G [00:25<00:35, 44.5MB/s][SubprocessWorker] callback 'report_progress' from call_id=1
+model.safetensors:  56%|█████▌    | 1.84G/3.27G [00:25<00:22, 62.6MB/s][SubprocessWorker] callback 'report_progress' from call_id=1
+model.safetensors:  58%|█████▊    | 1.90G/3.27G [00:26<00:18, 72.8MB/s][SubprocessWorker] callback 'report_progress' from call_id=1
+model.safetensors:  66%|██████▋   | 2.17G/3.27G [00:26<00:08, 130MB/s] [SubprocessWorker] callback 'report_progress' from call_id=1
+model.safetensors:  72%|███████▏  | 2.37G/3.27G [00:26<00:04, 186MB/s][SubprocessWorker] callback 'report_progress' from call_id=1
+model.safetensors:  79%|███████▊  | 2.57G/3.27G [00:27<00:02, 250MB/s][SubprocessWorker] callback 'report_progress' from call_id=1
+model.safetensors:  85%|████████▍ | 2.78G/3.27G [00:27<00:01, 323MB/s][SubprocessWorker] callback 'report_progress' from call_id=1
+model.safetensors:  91%|█████████ | 2.98G/3.27G [00:27<00:00, 397MB/s][SubprocessWorker] callback 'report_progress' from call_id=1
+model.safetensors:  97%|█████████▋| 3.18G/3.27G [00:27<00:00, 474MB/s][SubprocessWorker] callback 'report_progress' from call_id=1
+model.safetensors: 100%|██████████| 3.27G/3.27G [00:27<00:00, 118MB/s]
 config.json:   0%|          | 0.00/842 [00:00<?, ?B/s][SubprocessWorker] callback 'report_progress' from call_id=1
-config.json: 100%|██████████| 842/842 [00:00<00:00, 735kB/s]
+config.json: 100%|██████████| 842/842 [00:00<00:00, 1.28MB/s]
 [SubprocessWorker] callback 'report_progress' from call_id=1
 [SubprocessWorker] got response: ok
-[comfy-env] LoadHYWM2Model done (444.99s): result: NodeOutput
-[VRAM] After LoadHYWM2Model: 1239 / 24575 MB
+[comfy-env] LoadHYWM2Model done (42.81s): result: NodeOutput
+[VRAM] After LoadHYWM2Model: 1130 / 8150 MB
 [comfy-env] Running HYWM2Reconstruct: prior_camera_json: '', depth_colormap: 'viridis', apply_mask: True, view_index: -1, points_conf_percentile: 0.0, points_max: 2000000, gaussians_weight_threshold: 0.3, gaussians_downsample: 1.0, model: dict, images: torch.float32 [1,436,768,3] cpu
-[VRAM] Before HYWM2Reconstruct: 1239 / 24575 MB
+[VRAM] Before HYWM2Reconstruct: 1130 / 8150 MB
 [SubprocessWorker] call_method: nodes.reconstruct.HYWM2Reconstruct.EXECUTE_NORMALIZED
 [SubprocessWorker] acquired lock, ensuring started...
 [ComfyUI-HYWM2] Health check: ping (timeout=5.0s)...
@@ -429,76 +172,72 @@ Thread 0x00004bf4 (most recent call first):
 [worker:ComfyUI-HYWM2] [comfy-env] DESERIALIZE TensorRef: tensor_size=[1, 436, 768, 3]
 [worker:ComfyUI-HYWM2] [comfy-env] DESERIALIZED tensor shape: torch.Size([1, 436, 768, 3])
 [worker:ComfyUI-HYWM2] [Pipeline] Single-GPU mode
-[worker:ComfyUI-HYWM2] [Init] Found local model at C:\workspaces\HYWM2-2145\portable-comfyui\ComfyUI_windows_portable\ComfyUI\models\hywm2\
+[worker:ComfyUI-HYWM2] [Init] Found local model at C:\workspaces\HYWM2-2331\portable-comfyui\ComfyUI_windows_portable\ComfyUI\models\hywm2\
 [worker:ComfyUI-HYWM2] [WorldMirror] model_size: large, embed_dim: 1024, depth: 24, num_heads: 16, mlp_ratio: 4.0, gs_dim: 256, num_register_tokens: 4
 [worker:ComfyUI-HYWM2] [INFO] Using normalized RoPE!
 [worker:ComfyUI-HYWM2] 
-=== WATCHDOG TICK 8 ===
-[worker:ComfyUI-HYWM2] Thread 0x00005294 (most recent call first):
-  File "C:\Users\ContainerAdministrator\AppData\Local\Programs\comfy-env\.pixi\envs\hywm2-nodes\Lib\threading.py", line 363 in wait
-  File "C:\Users\ContainerAdministrator\AppData\Local\Programs\comfy-env\.pixi\envs\hywm2-nodes\Lib\threading.py", line 660 in wait
-  File "C:\Users\ContainerAdministrator\AppData\Local\Programs\comfy-env\.pixi\envs\hywm2-nodes\Lib\site-packages\tqdm\_monitor.py", line 60 in run
-  File "C:\Users\ContainerAdministrator\AppData\Local\Programs\comfy-env\.pixi\envs\hywm2-nodes\Lib\threading.py", line 1044 in _bootstrap_inner
-  File "C:\Users\ContainerAdministrator\AppData\Local\Programs\comfy-env\.pixi\envs\hywm2-nodes\Lib\threading.py", line 1015 in _bootstrap
+=== WATCHDOG TICK 1 ===
+[worker:ComfyUI-HYWM2] Thread 0x000033ec (most recent call first):
+  File "C:\Users\ContainerUser\AppData\Local\Programs\comfy-env\.pixi\envs\hywm2-nodes\Lib\threading.py", line 363 in wait
+  File "C:\Users\ContainerUser\AppData\Local\Programs\comfy-env\.pixi\envs\hywm2-nodes\Lib\threading.py", line 660 in wait
+  File "C:\Users\ContainerUser\AppData\Local\Programs\comfy-env\.pixi\envs\hywm2-nodes\Lib\site-packages\tqdm\_monitor.py", line 60 in run
+  File "C:\Users\ContainerUser\AppData\Local\Programs\comfy-env\.pixi\envs\hywm2-nodes\Lib\threading.py", line 1044 in _bootstrap_inner
+  File "C:\Users\ContainerUser\AppData\Local\Programs\comfy-env\.pixi\envs\hywm2-nodes\Lib\threading.py", line 1015 in _bootstrap
 
-Thread 0x000019f0 (most recent call first):
-  File "C:\Users\ContainerAdministrator\AppData\Local\Temp\comfyui_pvenv_f0kjs7vk\persistent_worker.py", line 106 in _vram_poller
-  File "C:\Users\ContainerAdministrator\AppData\Local\Programs\comfy-env\.pixi\envs\hywm2-nodes\Lib\threading.py", line 995 in run
-  File "C:\Users\ContainerAdministrator\AppData\Local\Programs\comfy-env\.pixi\envs\hywm2-nodes\Lib\threading.py", line 1044 in _bootstrap_inner
-  File "C:\Users\ContainerAdministrator\AppData\Local\Programs\comfy-env\.pixi\envs\hywm2-nodes\Lib\threading.py", line 1015 in _bootstrap
+Thread 0x00002f4c (most recent call first):
+  File "C:\Users\ContainerUser\AppData\Local\Temp\comfyui_pvenv_3q8o2_mr\persistent_worker.py", line 106 in _vram_poller
+  File "C:\Users\ContainerUser\AppData\Local\Programs\comfy-env\.pixi\envs\hywm2-nodes\Lib\threading.py", line 995 in run
+  File "C:\Users\ContainerUser\AppData\Local\Programs\comfy-env\.pixi\envs\hywm2-nodes\Lib\threading.py", line 1044 in _bootstrap_inner
+  File "C:\Users\ContainerUser\AppData\Local\Programs\comfy-env\.pixi\envs\hywm2-nodes\Lib\threading.py", line 1015 in _bootstrap
 
-Current thread 0x00003ecc (most recent call first):
-  File "C:\Users\ContainerAdministrator\AppData\Local\Temp\comfyui_pvenv_f0kjs7vk\persistent_worker.py", line 52 in _watchdog
-  File "C:\Users\ContainerAdministrator\AppData\Local\Programs\comfy-env\.pixi\envs\hywm2-nodes\Lib\threading.py", line 995 in run
-  File "C:\Users\ContainerAdministrator\AppData\Local\Programs\comfy-env\.pixi\envs\hywm2-nodes\Lib\threading.py", line 1044 in _bootstrap_inner
-  File "C:\Users\ContainerAdministrator\AppData\Local\Programs\comfy-env\.pixi\envs\hywm2-nodes\Lib\threading.py", line 1015 in _bootstrap
+Current thread 0x00003740 (most recent call first):
+  File "C:\Users\ContainerUser\AppData\Local\Temp\comfyui_pvenv_3q8o2_mr\persistent_worker.py", line 52 in _watchdog
+  File "C:\Users\ContainerUser\AppData\Local\Programs\comfy-env\.pixi\envs\hywm2-nodes\Lib\threading.py", line 995 in run
+  File "C:\Users\ContainerUser\AppData\Local\Programs\comfy-env\.pixi\envs\hywm2-nodes\Lib\threading.py", line 1044 in _bootstrap_inner
+  File "C:\Users\ContainerUser\AppData\Local\Programs\comfy-env\.pixi\envs\hywm2-nodes\Lib\threading.py", line 1015 in _bootstrap
 
-Thread 0x00004bf4 (most recent call first):
-  File "C:\Users\ContainerAdministrator\AppData\Local\Programs\comfy-env\.pixi\envs\hywm2-nodes\Lib\site-packages\torch\nn\init.py", line 575 in kaiming_uniform_
-  File "C:\Users\ContainerAdministrator\AppData\Local\Programs\comfy-env\.pixi\envs\hywm2-nodes\Lib\site-packages\torch\nn\modules\linear.py", line 124 in reset_parameters
-  File "C:\Users\ContainerAdministrator\AppData\Local\Programs\comfy-env\.pixi\envs\hywm2-nodes\Lib\site-packages\torch\nn\modules\linear.py", line 115 in __init__
-  File "C:\workspaces\HYWM2-2145\portable-comfyui\ComfyUI_windows_portable\ComfyUI\custom_nodes\ComfyUI-HYWM2\nodes\hyworld2\worldrecon\hyworldmirror\models\layers\attention.py", line 58 in __init__
-  File "C:\workspaces\HYWM2-2145\portable-comfyui\ComfyUI_windows_portable\ComfyUI\custom_nodes\ComfyUI-HYWM2\nodes\hyworld2\worldrecon\hyworldmirror\models\layers\block.py", line 46 in __init__
-  File "C:\workspaces\HYWM2-2145\portable-comfyui\ComfyUI_windows_portable\ComfyUI\custom_nodes\ComfyUI-HYWM2\nodes\hyworld2\worldrecon\hyworldmirror\models\heads\camera_head.py", line 39 in __init__
-  File "C:\workspaces\HYWM2-2145\portable-comfyui\ComfyUI_windows_portable\ComfyUI\custom_nodes\ComfyUI-HYWM2\nodes\hyworld2\worldrecon\hyworldmirror\models\models\worldmirror.py", line 188 in _init_heads
-  File "C:\workspaces\HYWM2-2145\portable-comfyui\ComfyUI_windows_portable\ComfyUI\custom_nodes\ComfyUI-HYWM2\nodes\hyworld2\worldrecon\hyworldmirror\models\models\worldmirror.py", line 150 in __init__
-  File "C:\workspaces\HYWM2-2145\portable-comfyui\ComfyUI_windows_portable\ComfyUI\custom_nodes\ComfyUI-HYWM2\nodes\hyworld2\worldrecon\pipeline.py", line 322 in from_pretrained
-  File "C:\workspaces\HYWM2-2145\portable-comfyui\ComfyUI_windows_portable\ComfyUI\custom_nodes\ComfyUI-HYWM2\nodes\reconstruct.py", line 383 in _get_pipeline
-  File "C:\workspaces\HYWM2-2145\portable-comfyui\ComfyUI_windows_portable\ComfyUI\custom_nodes\ComfyUI-HYWM2\nodes\reconstruct.py", line 240 in execute
-  File "C:\Users\ContainerAdministrator\AppData\Local\Programs\comfy-env\.pixi\envs\hywm2-nodes\Lib\site-packages\torch\utils\_contextlib.py", line 124 in decorate_context
-  File "C:\workspaces\HYWM2-2145\portable-comfyui\ComfyUI_windows_portable\ComfyUI\comfy_api\latest\_io.py", line 1833 in EXECUTE_NORMALIZED
-  File "C:\Users\ContainerAdministrator\AppData\Local\Temp\comfyui_pvenv_f0kjs7vk\persistent_worker.py", line 1762 in main
-  File "C:\Users\ContainerAdministrator\AppData\Local\Temp\comfyui_pvenv_f0kjs7vk\persistent_worker.py", line 1807 in <module>
+Thread 0x000030c8 (most recent call first):
+  File "C:\Users\ContainerUser\AppData\Local\Programs\comfy-env\.pixi\envs\hywm2-nodes\Lib\site-packages\torch\nn\init.py", line 575 in kaiming_uniform_
+  File "C:\Users\ContainerUser\AppData\Local\Programs\comfy-env\.pixi\envs\hywm2-nodes\Lib\site-packages\torch\nn\modules\linear.py", line 124 in reset_parameters
+  File "C:\Users\ContainerUser\AppData\Local\Programs\comfy-env\.pixi\envs\hywm2-nodes\Lib\site-packages\torch\nn\modules\linear.py", line 115 in __init__
+  File "C:\workspaces\HYWM2-2331\portable-comfyui\ComfyUI_windows_portable\ComfyUI\custom_nodes\ComfyUI-HYWM2\nodes\hyworld2\worldrecon\hyworldmirror\models\layers\mlp.py", line 24 in __init__
+  File "C:\workspaces\HYWM2-2331\portable-comfyui\ComfyUI_windows_portable\ComfyUI\custom_nodes\ComfyUI-HYWM2\nodes\hyworld2\worldrecon\hyworldmirror\models\layers\block.py", line 63 in __init__
+  File "C:\workspaces\HYWM2-2331\portable-comfyui\ComfyUI_windows_portable\ComfyUI\custom_nodes\ComfyUI-HYWM2\nodes\hyworld2\worldrecon\hyworldmirror\models\models\visual_transformer.py", line 257 in _init_transformer_blocks
+  File "C:\workspaces\HYWM2-2331\portable-comfyui\ComfyUI_windows_portable\ComfyUI\custom_nodes\ComfyUI-HYWM2\nodes\hyworld2\worldrecon\hyworldmirror\models\models\visual_transformer.py", line 105 in __init__
+  File "C:\workspaces\HYWM2-2331\portable-comfyui\ComfyUI_windows_portable\ComfyUI\custom_nodes\ComfyUI-HYWM2\nodes\hyworld2\worldrecon\hyworldmirror\models\models\worldmirror.py", line 128 in __init__
+  File "C:\workspaces\HYWM2-2331\portable-comfyui\ComfyUI_windows_portable\ComfyUI\custom_nodes\ComfyUI-HYWM2\nodes\hyworld2\worldrecon\pipeline.py", line 322 in from_pretrained
+  File "C:\workspaces\HYWM2-2331\portable-comfyui\ComfyUI_windows_portable\ComfyUI\custom_nodes\ComfyUI-HYWM2\nodes\reconstruct.py", line 383 in _get_pipeline
+  File "C:\workspaces\HYWM2-2331\portable-comfyui\ComfyUI_windows_portable\ComfyUI\custom_nodes\ComfyUI-HYWM2\nodes\reconstruct.py", line 240 in execute
+  File "C:\Users\ContainerUser\AppData\Local\Programs\comfy-env\.pixi\envs\hywm2-nodes\Lib\site-packages\torch\utils\_contextlib.py", line 124 in decorate_context
+  File "C:\workspaces\HYWM2-2331\portable-comfyui\ComfyUI_windows_portable\ComfyUI\comfy_api\latest\_io.py", line 1833 in EXECUTE_NORMALIZED
+  File "C:\Users\ContainerUser\AppData\Local\Temp\comfyui_pvenv_3q8o2_mr\persistent_worker.py", line 1762 in main
+  File "C:\Users\ContainerUser\AppData\Local\Temp\comfyui_pvenv_3q8o2_mr\persistent_worker.py", line 1807 in <module>
 
 [worker:ComfyUI-HYWM2] === END ===
 
-[worker:ComfyUI-HYWM2] [VRAM] +338MB (now 338MB) reserved=352MB peak=338MB
-[worker:ComfyUI-HYWM2] [VRAM] +1582MB (now 1921MB) reserved=1952MB peak=1921MB
-[worker:ComfyUI-HYWM2] [VRAM] +1702MB (now 3623MB) reserved=3648MB peak=3623MB
-[worker:ComfyUI-HYWM2] [VRAM] +1196MB (now 4819MB) reserved=4832MB peak=4819MB
-[worker:ComfyUI-HYWM2]   Loaded 1545/1593 keys from C:\workspaces\HYWM2-2145\portable-comfyui\ComfyUI_windows_portable\ComfyUI\models\hywm2\
-[worker:ComfyUI-HYWM2] [VRAM] -1009MB (now 3810MB) reserved=4832MB peak=4819MB
-[worker:ComfyUI-HYWM2] [Init] Model ready in 22.5s
+[worker:ComfyUI-HYWM2] [VRAM] +274MB (now 274MB) reserved=288MB peak=274MB
+[worker:ComfyUI-HYWM2] [VRAM] +2655MB (now 2930MB) reserved=2944MB peak=2930MB
+[worker:ComfyUI-HYWM2] [VRAM] +1888MB (now 4819MB) reserved=4832MB peak=4819MB
+[worker:ComfyUI-HYWM2]   Loaded 1545/1593 keys from C:\workspaces\HYWM2-2331\portable-comfyui\ComfyUI_windows_portable\ComfyUI\models\hywm2\
+[worker:ComfyUI-HYWM2] [Init] Model ready in 12.3s
 [worker:ComfyUI-HYWM2] [Memory] allocated=2.35GB
+[worker:ComfyUI-HYWM2] [VRAM] -2410MB (now 2409MB) reserved=4832MB peak=4819MB
 [worker:ComfyUI-HYWM2] WARNING: No comfy kitchen, using old apply_rope functions.
-[worker:ComfyUI-HYWM2] [VRAM] -1401MB (now 2409MB) reserved=4832MB peak=4819MB
-[worker:ComfyUI-HYWM2] [VRAM] -320MB (now 2090MB) reserved=4832MB peak=4819MB
+[worker:ComfyUI-HYWM2] [VRAM] -522MB (now 1888MB) reserved=4832MB peak=4819MB
 [SubprocessWorker] callback 'request_vram_budget' from call_id=2
-[comfy-env] VRAM request: 2.53GB, free before eviction: 24.47GB
-[comfy-env] VRAM after eviction: 24.47GB
-[worker:ComfyUI-HYWM2] [VRAM] -2091MB (now 0MB) reserved=0MB peak=4819MB
-[worker:ComfyUI-HYWM2] [VRAM] +1694MB (now 1694MB) reserved=1696MB peak=4819MB
+[comfy-env] VRAM request: 2.53GB, free before eviction: 7.36GB
+[comfy-env] VRAM after eviction: 7.36GB
+[worker:ComfyUI-HYWM2] [VRAM] -1264MB (now 624MB) reserved=640MB peak=4819MB
 [worker:ComfyUI-HYWM2] [Inference] 1 images, shape=torch.Size([1, 1, 3, 434, 756]), sp_size=1
-[worker:ComfyUI-HYWM2] [VRAM] +725MB (now 2420MB) reserved=2432MB peak=4819MB
-[worker:ComfyUI-HYWM2] [VRAM] +317MB (now 2738MB) reserved=3616MB peak=4819MB
-[worker:ComfyUI-HYWM2] [Inference] Done in 2.42s
+[worker:ComfyUI-HYWM2] [VRAM] +1809MB (now 2433MB) reserved=2464MB peak=4819MB
+[worker:ComfyUI-HYWM2] [Inference] Done in 1.12s
 [SubprocessWorker] got response: ok
 [comfy-env] Created 63 model patchers: ['VisualGeometryTransformer_1', 'Sequential_2', 'LayerNorm_3', 'LayerNorm_4', 'Sequential_5', 'Linear_6', 'Linear_7', 'Linear_8', 'LayerNorm_9', 'ModuleList_10', 'ModuleList_11', 'Conv2d_12', 'Conv2d_13', 'Conv2d_14', 'Conv2d_15', 'FeatureFusionBlock_16', 'FeatureFusionBlock_17', 'FeatureFusionBlock_18', 'FeatureFusionBlock_19', 'Conv2d_20', 'Sequential_21', 'LayerNorm_22', 'ModuleList_23', 'ModuleList_24', 'Conv2d_25', 'Conv2d_26', 'Conv2d_27', 'Conv2d_28', 'FeatureFusionBlock_29', 'FeatureFusionBlock_30', 'FeatureFusionBlock_31', 'FeatureFusionBlock_32', 'Conv2d_33', 'Sequential_34', 'LayerNorm_35', 'ModuleList_36', 'ModuleList_37', 'Conv2d_38', 'Conv2d_39', 'Conv2d_40', 'Conv2d_41', 'FeatureFusionBlock_42', 'FeatureFusionBlock_43', 'FeatureFusionBlock_44', 'FeatureFusionBlock_45', 'Conv2d_46', 'Sequential_47', 'LayerNorm_48', 'ModuleList_49', 'ModuleList_50', 'Sequential_51', 'Conv2d_52', 'Conv2d_53', 'Conv2d_54', 'Conv2d_55', 'FeatureFusionBlock_56', 'FeatureFusionBlock_57', 'FeatureFusionBlock_58', 'FeatureFusionBlock_59', 'Conv2d_60', 'Sequential_61', 'GaussianSplatRenderer_62', 'WorldMirror_63']
-[comfy-env] HYWM2Reconstruct done (55.39s): result: NodeOutput
-[VRAM] After HYWM2Reconstruct: 1239 / 24575 MB
+[comfy-env] HYWM2Reconstruct done (29.83s): result: NodeOutput
+[VRAM] After HYWM2Reconstruct: 1130 / 8150 MB
 [VRAM] Loaded: SubprocessModel (2409 MB), SubprocessModel (1 MB), SubprocessModel (0 MB), SubprocessModel (1 MB), SubprocessModel (4 MB), SubprocessModel (9 MB), SubprocessModel (9 MB), SubprocessModel (9 MB), SubprocessModel (9 MB), SubprocessModel (9 MB), SubprocessModel (4 MB), SubprocessModel (2 MB), SubprocessModel (0 MB), SubprocessModel (44 MB), SubprocessModel (22 MB), SubprocessModel (0 MB), SubprocessModel (0 MB), SubprocessModel (1 MB), SubprocessModel (4 MB), SubprocessModel (9 MB), SubprocessModel (9 MB), SubprocessModel (9 MB), SubprocessModel (9 MB), SubprocessModel (9 MB), SubprocessModel (4 MB), SubprocessModel (2 MB), SubprocessModel (44 MB), SubprocessModel (22 MB), SubprocessModel (0 MB), SubprocessModel (0 MB), SubprocessModel (1 MB), SubprocessModel (4 MB), SubprocessModel (9 MB), SubprocessModel (9 MB), SubprocessModel (9 MB), SubprocessModel (9 MB), SubprocessModel (9 MB), SubprocessModel (4 MB), SubprocessModel (2 MB), SubprocessModel (44 MB), SubprocessModel (22 MB), SubprocessModel (0 MB), SubprocessModel (0 MB), SubprocessModel (1 MB), SubprocessModel (4 MB), SubprocessModel (9 MB), SubprocessModel (9 MB), SubprocessModel (9 MB), SubprocessModel (9 MB), SubprocessModel (9 MB), SubprocessModel (4 MB), SubprocessModel (2 MB), SubprocessModel (44 MB), SubprocessModel (22 MB), SubprocessModel (0 MB), SubprocessModel (0 MB), SubprocessModel (0 MB), SubprocessModel (8 MB), SubprocessModel (48 MB), SubprocessModel (0 MB), SubprocessModel (0 MB), SubprocessModel (768 MB), SubprocessModel (3495 MB)
 [comfy-env] Running HYWM2Reconstruct: prior_camera_json: '', depth_colormap: 'viridis', apply_mask: True, view_index: -1, points_conf_percentile: 0.0, points_max: 2000000, gaussians_weight_threshold: 0.3, gaussians_downsample: 1.0, model: dict, images: torch.float32 [1,436,768,3] cpu
-[VRAM] Before HYWM2Reconstruct: 1239 / 24575 MB
+[VRAM] Before HYWM2Reconstruct: 1130 / 8150 MB
 [VRAM] Loaded: SubprocessModel (2409 MB), SubprocessModel (1 MB), SubprocessModel (0 MB), SubprocessModel (1 MB), SubprocessModel (4 MB), SubprocessModel (9 MB), SubprocessModel (9 MB), SubprocessModel (9 MB), SubprocessModel (9 MB), SubprocessModel (9 MB), SubprocessModel (4 MB), SubprocessModel (2 MB), SubprocessModel (0 MB), SubprocessModel (44 MB), SubprocessModel (22 MB), SubprocessModel (0 MB), SubprocessModel (0 MB), SubprocessModel (1 MB), SubprocessModel (4 MB), SubprocessModel (9 MB), SubprocessModel (9 MB), SubprocessModel (9 MB), SubprocessModel (9 MB), SubprocessModel (9 MB), SubprocessModel (4 MB), SubprocessModel (2 MB), SubprocessModel (44 MB), SubprocessModel (22 MB), SubprocessModel (0 MB), SubprocessModel (0 MB), SubprocessModel (1 MB), SubprocessModel (4 MB), SubprocessModel (9 MB), SubprocessModel (9 MB), SubprocessModel (9 MB), SubprocessModel (9 MB), SubprocessModel (9 MB), SubprocessModel (4 MB), SubprocessModel (2 MB), SubprocessModel (44 MB), SubprocessModel (22 MB), SubprocessModel (0 MB), SubprocessModel (0 MB), SubprocessModel (1 MB), SubprocessModel (4 MB), SubprocessModel (9 MB), SubprocessModel (9 MB), SubprocessModel (9 MB), SubprocessModel (9 MB), SubprocessModel (9 MB), SubprocessModel (4 MB), SubprocessModel (2 MB), SubprocessModel (44 MB), SubprocessModel (22 MB), SubprocessModel (0 MB), SubprocessModel (0 MB), SubprocessModel (0 MB), SubprocessModel (8 MB), SubprocessModel (48 MB), SubprocessModel (0 MB), SubprocessModel (0 MB), SubprocessModel (768 MB), SubprocessModel (3495 MB)
 [SubprocessWorker] call_method: nodes.reconstruct.HYWM2Reconstruct.EXECUTE_NORMALIZED
 [SubprocessWorker] acquired lock, ensuring started...
@@ -514,17 +253,16 @@ Thread 0x00004bf4 (most recent call first):
 [worker:ComfyUI-HYWM2] [comfy-env] DESERIALIZE TensorRef: tensor_size=[1, 436, 768, 3]
 [worker:ComfyUI-HYWM2] [comfy-env] DESERIALIZED tensor shape: torch.Size([1, 436, 768, 3])
 [SubprocessWorker] callback 'request_vram_budget' from call_id=3
-[comfy-env] VRAM request: 2.53GB, free before eviction: 24.47GB
-[comfy-env] VRAM after eviction: 24.47GB
+[comfy-env] VRAM request: 2.53GB, free before eviction: 7.36GB
+[comfy-env] VRAM after eviction: 7.36GB
 [worker:ComfyUI-HYWM2] [Inference] 1 images, shape=torch.Size([1, 1, 3, 434, 756]), sp_size=1
-[worker:ComfyUI-HYWM2] [VRAM] -264MB (now 2475MB) reserved=2528MB peak=4819MB
-[worker:ComfyUI-HYWM2] [Inference] Done in 0.98s
+[worker:ComfyUI-HYWM2] [Inference] Done in 0.42s
 [SubprocessWorker] got response: ok
-[comfy-env] HYWM2Reconstruct done (1.33s): result: NodeOutput
-[VRAM] After HYWM2Reconstruct: 1239 / 24575 MB
+[comfy-env] HYWM2Reconstruct done (0.62s): result: NodeOutput
+[VRAM] After HYWM2Reconstruct: 1130 / 8150 MB
 [VRAM] Loaded: SubprocessModel (2409 MB), SubprocessModel (1 MB), SubprocessModel (0 MB), SubprocessModel (1 MB), SubprocessModel (4 MB), SubprocessModel (9 MB), SubprocessModel (9 MB), SubprocessModel (9 MB), SubprocessModel (9 MB), SubprocessModel (9 MB), SubprocessModel (4 MB), SubprocessModel (2 MB), SubprocessModel (0 MB), SubprocessModel (44 MB), SubprocessModel (22 MB), SubprocessModel (0 MB), SubprocessModel (0 MB), SubprocessModel (1 MB), SubprocessModel (4 MB), SubprocessModel (9 MB), SubprocessModel (9 MB), SubprocessModel (9 MB), SubprocessModel (9 MB), SubprocessModel (9 MB), SubprocessModel (4 MB), SubprocessModel (2 MB), SubprocessModel (44 MB), SubprocessModel (22 MB), SubprocessModel (0 MB), SubprocessModel (0 MB), SubprocessModel (1 MB), SubprocessModel (4 MB), SubprocessModel (9 MB), SubprocessModel (9 MB), SubprocessModel (9 MB), SubprocessModel (9 MB), SubprocessModel (9 MB), SubprocessModel (4 MB), SubprocessModel (2 MB), SubprocessModel (44 MB), SubprocessModel (22 MB), SubprocessModel (0 MB), SubprocessModel (0 MB), SubprocessModel (1 MB), SubprocessModel (4 MB), SubprocessModel (9 MB), SubprocessModel (9 MB), SubprocessModel (9 MB), SubprocessModel (9 MB), SubprocessModel (9 MB), SubprocessModel (4 MB), SubprocessModel (2 MB), SubprocessModel (44 MB), SubprocessModel (22 MB), SubprocessModel (0 MB), SubprocessModel (0 MB), SubprocessModel (0 MB), SubprocessModel (8 MB), SubprocessModel (48 MB), SubprocessModel (0 MB), SubprocessModel (0 MB), SubprocessModel (768 MB), SubprocessModel (3495 MB)
 [comfy-env] Running HYWM2Reconstruct: prior_camera_json: '', depth_colormap: 'viridis', apply_mask: True, view_index: -1, points_conf_percentile: 0.0, points_max: 2000000, gaussians_weight_threshold: 0.3, gaussians_downsample: 1.0, model: dict, images: torch.float32 [1,436,768,3] cpu
-[VRAM] Before HYWM2Reconstruct: 1239 / 24575 MB
+[VRAM] Before HYWM2Reconstruct: 1130 / 8150 MB
 [VRAM] Loaded: SubprocessModel (2409 MB), SubprocessModel (1 MB), SubprocessModel (0 MB), SubprocessModel (1 MB), SubprocessModel (4 MB), SubprocessModel (9 MB), SubprocessModel (9 MB), SubprocessModel (9 MB), SubprocessModel (9 MB), SubprocessModel (9 MB), SubprocessModel (4 MB), SubprocessModel (2 MB), SubprocessModel (0 MB), SubprocessModel (44 MB), SubprocessModel (22 MB), SubprocessModel (0 MB), SubprocessModel (0 MB), SubprocessModel (1 MB), SubprocessModel (4 MB), SubprocessModel (9 MB), SubprocessModel (9 MB), SubprocessModel (9 MB), SubprocessModel (9 MB), SubprocessModel (9 MB), SubprocessModel (4 MB), SubprocessModel (2 MB), SubprocessModel (44 MB), SubprocessModel (22 MB), SubprocessModel (0 MB), SubprocessModel (0 MB), SubprocessModel (1 MB), SubprocessModel (4 MB), SubprocessModel (9 MB), SubprocessModel (9 MB), SubprocessModel (9 MB), SubprocessModel (9 MB), SubprocessModel (9 MB), SubprocessModel (4 MB), SubprocessModel (2 MB), SubprocessModel (44 MB), SubprocessModel (22 MB), SubprocessModel (0 MB), SubprocessModel (0 MB), SubprocessModel (1 MB), SubprocessModel (4 MB), SubprocessModel (9 MB), SubprocessModel (9 MB), SubprocessModel (9 MB), SubprocessModel (9 MB), SubprocessModel (9 MB), SubprocessModel (4 MB), SubprocessModel (2 MB), SubprocessModel (44 MB), SubprocessModel (22 MB), SubprocessModel (0 MB), SubprocessModel (0 MB), SubprocessModel (0 MB), SubprocessModel (8 MB), SubprocessModel (48 MB), SubprocessModel (0 MB), SubprocessModel (0 MB), SubprocessModel (768 MB), SubprocessModel (3495 MB)
 [SubprocessWorker] call_method: nodes.reconstruct.HYWM2Reconstruct.EXECUTE_NORMALIZED
 [SubprocessWorker] acquired lock, ensuring started...
@@ -540,16 +278,16 @@ Thread 0x00004bf4 (most recent call first):
 [worker:ComfyUI-HYWM2] [comfy-env] DESERIALIZE TensorRef: tensor_size=[1, 436, 768, 3]
 [worker:ComfyUI-HYWM2] [comfy-env] DESERIALIZED tensor shape: torch.Size([1, 436, 768, 3])
 [SubprocessWorker] callback 'request_vram_budget' from call_id=4
-[comfy-env] VRAM request: 2.53GB, free before eviction: 24.47GB
-[comfy-env] VRAM after eviction: 24.47GB
+[comfy-env] VRAM request: 2.53GB, free before eviction: 7.36GB
+[comfy-env] VRAM after eviction: 7.36GB
 [worker:ComfyUI-HYWM2] [Inference] 1 images, shape=torch.Size([1, 1, 3, 434, 756]), sp_size=1
-[worker:ComfyUI-HYWM2] [Inference] Done in 0.87s
+[worker:ComfyUI-HYWM2] [Inference] Done in 0.40s
 [SubprocessWorker] got response: ok
-[comfy-env] HYWM2Reconstruct done (1.23s): result: NodeOutput
-[VRAM] After HYWM2Reconstruct: 1239 / 24575 MB
+[comfy-env] HYWM2Reconstruct done (0.58s): result: NodeOutput
+[VRAM] After HYWM2Reconstruct: 1130 / 8150 MB
 [VRAM] Loaded: SubprocessModel (2409 MB), SubprocessModel (1 MB), SubprocessModel (0 MB), SubprocessModel (1 MB), SubprocessModel (4 MB), SubprocessModel (9 MB), SubprocessModel (9 MB), SubprocessModel (9 MB), SubprocessModel (9 MB), SubprocessModel (9 MB), SubprocessModel (4 MB), SubprocessModel (2 MB), SubprocessModel (0 MB), SubprocessModel (44 MB), SubprocessModel (22 MB), SubprocessModel (0 MB), SubprocessModel (0 MB), SubprocessModel (1 MB), SubprocessModel (4 MB), SubprocessModel (9 MB), SubprocessModel (9 MB), SubprocessModel (9 MB), SubprocessModel (9 MB), SubprocessModel (9 MB), SubprocessModel (4 MB), SubprocessModel (2 MB), SubprocessModel (44 MB), SubprocessModel (22 MB), SubprocessModel (0 MB), SubprocessModel (0 MB), SubprocessModel (1 MB), SubprocessModel (4 MB), SubprocessModel (9 MB), SubprocessModel (9 MB), SubprocessModel (9 MB), SubprocessModel (9 MB), SubprocessModel (9 MB), SubprocessModel (4 MB), SubprocessModel (2 MB), SubprocessModel (44 MB), SubprocessModel (22 MB), SubprocessModel (0 MB), SubprocessModel (0 MB), SubprocessModel (1 MB), SubprocessModel (4 MB), SubprocessModel (9 MB), SubprocessModel (9 MB), SubprocessModel (9 MB), SubprocessModel (9 MB), SubprocessModel (9 MB), SubprocessModel (4 MB), SubprocessModel (2 MB), SubprocessModel (44 MB), SubprocessModel (22 MB), SubprocessModel (0 MB), SubprocessModel (0 MB), SubprocessModel (0 MB), SubprocessModel (8 MB), SubprocessModel (48 MB), SubprocessModel (0 MB), SubprocessModel (0 MB), SubprocessModel (768 MB), SubprocessModel (3495 MB)
 [comfy-env] Running HYWM2Reconstruct: prior_camera_json: '', depth_colormap: 'viridis', apply_mask: True, view_index: -1, points_conf_percentile: 0.0, points_max: 2000000, gaussians_weight_threshold: 0.3, gaussians_downsample: 1.0, model: dict, images: torch.float32 [1,436,768,3] cpu
-[VRAM] Before HYWM2Reconstruct: 1239 / 24575 MB
+[VRAM] Before HYWM2Reconstruct: 1130 / 8150 MB
 [VRAM] Loaded: SubprocessModel (2409 MB), SubprocessModel (1 MB), SubprocessModel (0 MB), SubprocessModel (1 MB), SubprocessModel (4 MB), SubprocessModel (9 MB), SubprocessModel (9 MB), SubprocessModel (9 MB), SubprocessModel (9 MB), SubprocessModel (9 MB), SubprocessModel (4 MB), SubprocessModel (2 MB), SubprocessModel (0 MB), SubprocessModel (44 MB), SubprocessModel (22 MB), SubprocessModel (0 MB), SubprocessModel (0 MB), SubprocessModel (1 MB), SubprocessModel (4 MB), SubprocessModel (9 MB), SubprocessModel (9 MB), SubprocessModel (9 MB), SubprocessModel (9 MB), SubprocessModel (9 MB), SubprocessModel (4 MB), SubprocessModel (2 MB), SubprocessModel (44 MB), SubprocessModel (22 MB), SubprocessModel (0 MB), SubprocessModel (0 MB), SubprocessModel (1 MB), SubprocessModel (4 MB), SubprocessModel (9 MB), SubprocessModel (9 MB), SubprocessModel (9 MB), SubprocessModel (9 MB), SubprocessModel (9 MB), SubprocessModel (4 MB), SubprocessModel (2 MB), SubprocessModel (44 MB), SubprocessModel (22 MB), SubprocessModel (0 MB), SubprocessModel (0 MB), SubprocessModel (1 MB), SubprocessModel (4 MB), SubprocessModel (9 MB), SubprocessModel (9 MB), SubprocessModel (9 MB), SubprocessModel (9 MB), SubprocessModel (9 MB), SubprocessModel (4 MB), SubprocessModel (2 MB), SubprocessModel (44 MB), SubprocessModel (22 MB), SubprocessModel (0 MB), SubprocessModel (0 MB), SubprocessModel (0 MB), SubprocessModel (8 MB), SubprocessModel (48 MB), SubprocessModel (0 MB), SubprocessModel (0 MB), SubprocessModel (768 MB), SubprocessModel (3495 MB)
 [SubprocessWorker] call_method: nodes.reconstruct.HYWM2Reconstruct.EXECUTE_NORMALIZED
 [SubprocessWorker] acquired lock, ensuring started...
@@ -565,16 +303,16 @@ Thread 0x00004bf4 (most recent call first):
 [worker:ComfyUI-HYWM2] [comfy-env] DESERIALIZE TensorRef: tensor_size=[1, 436, 768, 3]
 [worker:ComfyUI-HYWM2] [comfy-env] DESERIALIZED tensor shape: torch.Size([1, 436, 768, 3])
 [SubprocessWorker] callback 'request_vram_budget' from call_id=5
-[comfy-env] VRAM request: 2.53GB, free before eviction: 24.47GB
-[comfy-env] VRAM after eviction: 24.47GB
+[comfy-env] VRAM request: 2.53GB, free before eviction: 7.36GB
+[comfy-env] VRAM after eviction: 7.36GB
 [worker:ComfyUI-HYWM2] [Inference] 1 images, shape=torch.Size([1, 1, 3, 434, 756]), sp_size=1
-[worker:ComfyUI-HYWM2] [Inference] Done in 0.83s
+[worker:ComfyUI-HYWM2] [Inference] Done in 0.41s
 [SubprocessWorker] got response: ok
-[comfy-env] HYWM2Reconstruct done (1.16s): result: NodeOutput
-[VRAM] After HYWM2Reconstruct: 1239 / 24575 MB
+[comfy-env] HYWM2Reconstruct done (0.59s): result: NodeOutput
+[VRAM] After HYWM2Reconstruct: 1130 / 8150 MB
 [VRAM] Loaded: SubprocessModel (2409 MB), SubprocessModel (1 MB), SubprocessModel (0 MB), SubprocessModel (1 MB), SubprocessModel (4 MB), SubprocessModel (9 MB), SubprocessModel (9 MB), SubprocessModel (9 MB), SubprocessModel (9 MB), SubprocessModel (9 MB), SubprocessModel (4 MB), SubprocessModel (2 MB), SubprocessModel (0 MB), SubprocessModel (44 MB), SubprocessModel (22 MB), SubprocessModel (0 MB), SubprocessModel (0 MB), SubprocessModel (1 MB), SubprocessModel (4 MB), SubprocessModel (9 MB), SubprocessModel (9 MB), SubprocessModel (9 MB), SubprocessModel (9 MB), SubprocessModel (9 MB), SubprocessModel (4 MB), SubprocessModel (2 MB), SubprocessModel (44 MB), SubprocessModel (22 MB), SubprocessModel (0 MB), SubprocessModel (0 MB), SubprocessModel (1 MB), SubprocessModel (4 MB), SubprocessModel (9 MB), SubprocessModel (9 MB), SubprocessModel (9 MB), SubprocessModel (9 MB), SubprocessModel (9 MB), SubprocessModel (4 MB), SubprocessModel (2 MB), SubprocessModel (44 MB), SubprocessModel (22 MB), SubprocessModel (0 MB), SubprocessModel (0 MB), SubprocessModel (1 MB), SubprocessModel (4 MB), SubprocessModel (9 MB), SubprocessModel (9 MB), SubprocessModel (9 MB), SubprocessModel (9 MB), SubprocessModel (9 MB), SubprocessModel (4 MB), SubprocessModel (2 MB), SubprocessModel (44 MB), SubprocessModel (22 MB), SubprocessModel (0 MB), SubprocessModel (0 MB), SubprocessModel (0 MB), SubprocessModel (8 MB), SubprocessModel (48 MB), SubprocessModel (0 MB), SubprocessModel (0 MB), SubprocessModel (768 MB), SubprocessModel (3495 MB)
 [comfy-env] Running HYWM2ExportGaussiansSplat: filename: 'hywm2_gaussians', output_dir: '', gaussians: dict
-[VRAM] Before HYWM2ExportGaussiansSplat: 1239 / 24575 MB
+[VRAM] Before HYWM2ExportGaussiansSplat: 1130 / 8150 MB
 [VRAM] Loaded: SubprocessModel (2409 MB), SubprocessModel (1 MB), SubprocessModel (0 MB), SubprocessModel (1 MB), SubprocessModel (4 MB), SubprocessModel (9 MB), SubprocessModel (9 MB), SubprocessModel (9 MB), SubprocessModel (9 MB), SubprocessModel (9 MB), SubprocessModel (4 MB), SubprocessModel (2 MB), SubprocessModel (0 MB), SubprocessModel (44 MB), SubprocessModel (22 MB), SubprocessModel (0 MB), SubprocessModel (0 MB), SubprocessModel (1 MB), SubprocessModel (4 MB), SubprocessModel (9 MB), SubprocessModel (9 MB), SubprocessModel (9 MB), SubprocessModel (9 MB), SubprocessModel (9 MB), SubprocessModel (4 MB), SubprocessModel (2 MB), SubprocessModel (44 MB), SubprocessModel (22 MB), SubprocessModel (0 MB), SubprocessModel (0 MB), SubprocessModel (1 MB), SubprocessModel (4 MB), SubprocessModel (9 MB), SubprocessModel (9 MB), SubprocessModel (9 MB), SubprocessModel (9 MB), SubprocessModel (9 MB), SubprocessModel (4 MB), SubprocessModel (2 MB), SubprocessModel (44 MB), SubprocessModel (22 MB), SubprocessModel (0 MB), SubprocessModel (0 MB), SubprocessModel (1 MB), SubprocessModel (4 MB), SubprocessModel (9 MB), SubprocessModel (9 MB), SubprocessModel (9 MB), SubprocessModel (9 MB), SubprocessModel (9 MB), SubprocessModel (4 MB), SubprocessModel (2 MB), SubprocessModel (44 MB), SubprocessModel (22 MB), SubprocessModel (0 MB), SubprocessModel (0 MB), SubprocessModel (0 MB), SubprocessModel (8 MB), SubprocessModel (48 MB), SubprocessModel (0 MB), SubprocessModel (0 MB), SubprocessModel (768 MB), SubprocessModel (3495 MB)
 [SubprocessWorker] call_method: nodes.decode_export.HYWM2ExportGaussiansSplat.EXECUTE_NORMALIZED
 [SubprocessWorker] acquired lock, ensuring started...
@@ -586,26 +324,26 @@ Thread 0x00004bf4 (most recent call first):
 [SubprocessWorker] sending request via socket...
 [SubprocessWorker] call_id=6 sending call_method
 [worker:ComfyUI-HYWM2] [comfy-env] _from_shm got dict with keys: ['__type__', 'strategy', 'manager_path', 'storage_key', 'storage_size']
-[worker:ComfyUI-HYWM2] [comfy-env] DESERIALIZE TensorRef: tensor_size=[324740, 3]
-[worker:ComfyUI-HYWM2] [comfy-env] DESERIALIZED tensor shape: torch.Size([324740, 3])
+[worker:ComfyUI-HYWM2] [comfy-env] DESERIALIZE TensorRef: tensor_size=[324742, 3]
+[worker:ComfyUI-HYWM2] [comfy-env] DESERIALIZED tensor shape: torch.Size([324742, 3])
 [worker:ComfyUI-HYWM2] [comfy-env] _from_shm got dict with keys: ['__type__', 'strategy', 'manager_path', 'storage_key', 'storage_size']
-[worker:ComfyUI-HYWM2] [comfy-env] DESERIALIZE TensorRef: tensor_size=[324740, 4]
-[worker:ComfyUI-HYWM2] [comfy-env] DESERIALIZED tensor shape: torch.Size([324740, 4])
+[worker:ComfyUI-HYWM2] [comfy-env] DESERIALIZE TensorRef: tensor_size=[324742, 4]
+[worker:ComfyUI-HYWM2] [comfy-env] DESERIALIZED tensor shape: torch.Size([324742, 4])
 [worker:ComfyUI-HYWM2] [comfy-env] _from_shm got dict with keys: ['__type__', 'strategy', 'manager_path', 'storage_key', 'storage_size']
-[worker:ComfyUI-HYWM2] [comfy-env] DESERIALIZE TensorRef: tensor_size=[324740, 3]
-[worker:ComfyUI-HYWM2] [comfy-env] DESERIALIZED tensor shape: torch.Size([324740, 3])
+[worker:ComfyUI-HYWM2] [comfy-env] DESERIALIZE TensorRef: tensor_size=[324742, 3]
+[worker:ComfyUI-HYWM2] [comfy-env] DESERIALIZED tensor shape: torch.Size([324742, 3])
 [worker:ComfyUI-HYWM2] [comfy-env] _from_shm got dict with keys: ['__type__', 'strategy', 'manager_path', 'storage_key', 'storage_size']
-[worker:ComfyUI-HYWM2] [comfy-env] DESERIALIZE TensorRef: tensor_size=[324740]
-[worker:ComfyUI-HYWM2] [comfy-env] DESERIALIZED tensor shape: torch.Size([324740])
+[worker:ComfyUI-HYWM2] [comfy-env] DESERIALIZE TensorRef: tensor_size=[324742]
+[worker:ComfyUI-HYWM2] [comfy-env] DESERIALIZED tensor shape: torch.Size([324742])
 [worker:ComfyUI-HYWM2] [comfy-env] _from_shm got dict with keys: ['__type__', 'strategy', 'manager_path', 'storage_key', 'storage_size']
-[worker:ComfyUI-HYWM2] [comfy-env] DESERIALIZE TensorRef: tensor_size=[324740, 3]
-[worker:ComfyUI-HYWM2] [comfy-env] DESERIALIZED tensor shape: torch.Size([324740, 3])
+[worker:ComfyUI-HYWM2] [comfy-env] DESERIALIZE TensorRef: tensor_size=[324742, 3]
+[worker:ComfyUI-HYWM2] [comfy-env] DESERIALIZED tensor shape: torch.Size([324742, 3])
 [SubprocessWorker] got response: ok
-[comfy-env] HYWM2ExportGaussiansSplat done (0.24s): result: NodeOutput
-[VRAM] After HYWM2ExportGaussiansSplat: 1239 / 24575 MB
+[comfy-env] HYWM2ExportGaussiansSplat done (0.15s): result: NodeOutput
+[VRAM] After HYWM2ExportGaussiansSplat: 1130 / 8150 MB
 [VRAM] Loaded: SubprocessModel (2409 MB), SubprocessModel (1 MB), SubprocessModel (0 MB), SubprocessModel (1 MB), SubprocessModel (4 MB), SubprocessModel (9 MB), SubprocessModel (9 MB), SubprocessModel (9 MB), SubprocessModel (9 MB), SubprocessModel (9 MB), SubprocessModel (4 MB), SubprocessModel (2 MB), SubprocessModel (0 MB), SubprocessModel (44 MB), SubprocessModel (22 MB), SubprocessModel (0 MB), SubprocessModel (0 MB), SubprocessModel (1 MB), SubprocessModel (4 MB), SubprocessModel (9 MB), SubprocessModel (9 MB), SubprocessModel (9 MB), SubprocessModel (9 MB), SubprocessModel (9 MB), SubprocessModel (4 MB), SubprocessModel (2 MB), SubprocessModel (44 MB), SubprocessModel (22 MB), SubprocessModel (0 MB), SubprocessModel (0 MB), SubprocessModel (1 MB), SubprocessModel (4 MB), SubprocessModel (9 MB), SubprocessModel (9 MB), SubprocessModel (9 MB), SubprocessModel (9 MB), SubprocessModel (9 MB), SubprocessModel (4 MB), SubprocessModel (2 MB), SubprocessModel (44 MB), SubprocessModel (22 MB), SubprocessModel (0 MB), SubprocessModel (0 MB), SubprocessModel (1 MB), SubprocessModel (4 MB), SubprocessModel (9 MB), SubprocessModel (9 MB), SubprocessModel (9 MB), SubprocessModel (9 MB), SubprocessModel (9 MB), SubprocessModel (4 MB), SubprocessModel (2 MB), SubprocessModel (44 MB), SubprocessModel (22 MB), SubprocessModel (0 MB), SubprocessModel (0 MB), SubprocessModel (0 MB), SubprocessModel (8 MB), SubprocessModel (48 MB), SubprocessModel (0 MB), SubprocessModel (0 MB), SubprocessModel (768 MB), SubprocessModel (3495 MB)
 [comfy-env] Running HYWM2ExportGaussiansSplat: filename: 'hywm2_gaussians', output_dir: '', gaussians: dict
-[VRAM] Before HYWM2ExportGaussiansSplat: 1239 / 24575 MB
+[VRAM] Before HYWM2ExportGaussiansSplat: 1130 / 8150 MB
 [VRAM] Loaded: SubprocessModel (2409 MB), SubprocessModel (1 MB), SubprocessModel (0 MB), SubprocessModel (1 MB), SubprocessModel (4 MB), SubprocessModel (9 MB), SubprocessModel (9 MB), SubprocessModel (9 MB), SubprocessModel (9 MB), SubprocessModel (9 MB), SubprocessModel (4 MB), SubprocessModel (2 MB), SubprocessModel (0 MB), SubprocessModel (44 MB), SubprocessModel (22 MB), SubprocessModel (0 MB), SubprocessModel (0 MB), SubprocessModel (1 MB), SubprocessModel (4 MB), SubprocessModel (9 MB), SubprocessModel (9 MB), SubprocessModel (9 MB), SubprocessModel (9 MB), SubprocessModel (9 MB), SubprocessModel (4 MB), SubprocessModel (2 MB), SubprocessModel (44 MB), SubprocessModel (22 MB), SubprocessModel (0 MB), SubprocessModel (0 MB), SubprocessModel (1 MB), SubprocessModel (4 MB), SubprocessModel (9 MB), SubprocessModel (9 MB), SubprocessModel (9 MB), SubprocessModel (9 MB), SubprocessModel (9 MB), SubprocessModel (4 MB), SubprocessModel (2 MB), SubprocessModel (44 MB), SubprocessModel (22 MB), SubprocessModel (0 MB), SubprocessModel (0 MB), SubprocessModel (1 MB), SubprocessModel (4 MB), SubprocessModel (9 MB), SubprocessModel (9 MB), SubprocessModel (9 MB), SubprocessModel (9 MB), SubprocessModel (9 MB), SubprocessModel (4 MB), SubprocessModel (2 MB), SubprocessModel (44 MB), SubprocessModel (22 MB), SubprocessModel (0 MB), SubprocessModel (0 MB), SubprocessModel (0 MB), SubprocessModel (8 MB), SubprocessModel (48 MB), SubprocessModel (0 MB), SubprocessModel (0 MB), SubprocessModel (768 MB), SubprocessModel (3495 MB)
 [SubprocessWorker] call_method: nodes.decode_export.HYWM2ExportGaussiansSplat.EXECUTE_NORMALIZED
 [SubprocessWorker] acquired lock, ensuring started...
@@ -617,26 +355,26 @@ Thread 0x00004bf4 (most recent call first):
 [SubprocessWorker] sending request via socket...
 [SubprocessWorker] call_id=7 sending call_method
 [worker:ComfyUI-HYWM2] [comfy-env] _from_shm got dict with keys: ['__type__', 'strategy', 'manager_path', 'storage_key', 'storage_size']
-[worker:ComfyUI-HYWM2] [comfy-env] DESERIALIZE TensorRef: tensor_size=[325465, 3]
-[worker:ComfyUI-HYWM2] [comfy-env] DESERIALIZED tensor shape: torch.Size([325465, 3])
+[worker:ComfyUI-HYWM2] [comfy-env] DESERIALIZE TensorRef: tensor_size=[325498, 3]
+[worker:ComfyUI-HYWM2] [comfy-env] DESERIALIZED tensor shape: torch.Size([325498, 3])
 [worker:ComfyUI-HYWM2] [comfy-env] _from_shm got dict with keys: ['__type__', 'strategy', 'manager_path', 'storage_key', 'storage_size']
-[worker:ComfyUI-HYWM2] [comfy-env] DESERIALIZE TensorRef: tensor_size=[325465, 4]
-[worker:ComfyUI-HYWM2] [comfy-env] DESERIALIZED tensor shape: torch.Size([325465, 4])
+[worker:ComfyUI-HYWM2] [comfy-env] DESERIALIZE TensorRef: tensor_size=[325498, 4]
+[worker:ComfyUI-HYWM2] [comfy-env] DESERIALIZED tensor shape: torch.Size([325498, 4])
 [worker:ComfyUI-HYWM2] [comfy-env] _from_shm got dict with keys: ['__type__', 'strategy', 'manager_path', 'storage_key', 'storage_size']
-[worker:ComfyUI-HYWM2] [comfy-env] DESERIALIZE TensorRef: tensor_size=[325465, 3]
-[worker:ComfyUI-HYWM2] [comfy-env] DESERIALIZED tensor shape: torch.Size([325465, 3])
+[worker:ComfyUI-HYWM2] [comfy-env] DESERIALIZE TensorRef: tensor_size=[325498, 3]
+[worker:ComfyUI-HYWM2] [comfy-env] DESERIALIZED tensor shape: torch.Size([325498, 3])
 [worker:ComfyUI-HYWM2] [comfy-env] _from_shm got dict with keys: ['__type__', 'strategy', 'manager_path', 'storage_key', 'storage_size']
-[worker:ComfyUI-HYWM2] [comfy-env] DESERIALIZE TensorRef: tensor_size=[325465]
-[worker:ComfyUI-HYWM2] [comfy-env] DESERIALIZED tensor shape: torch.Size([325465])
+[worker:ComfyUI-HYWM2] [comfy-env] DESERIALIZE TensorRef: tensor_size=[325498]
+[worker:ComfyUI-HYWM2] [comfy-env] DESERIALIZED tensor shape: torch.Size([325498])
 [worker:ComfyUI-HYWM2] [comfy-env] _from_shm got dict with keys: ['__type__', 'strategy', 'manager_path', 'storage_key', 'storage_size']
-[worker:ComfyUI-HYWM2] [comfy-env] DESERIALIZE TensorRef: tensor_size=[325465, 3]
-[worker:ComfyUI-HYWM2] [comfy-env] DESERIALIZED tensor shape: torch.Size([325465, 3])
+[worker:ComfyUI-HYWM2] [comfy-env] DESERIALIZE TensorRef: tensor_size=[325498, 3]
+[worker:ComfyUI-HYWM2] [comfy-env] DESERIALIZED tensor shape: torch.Size([325498, 3])
 [SubprocessWorker] got response: ok
-[comfy-env] HYWM2ExportGaussiansSplat done (0.24s): result: NodeOutput
-[VRAM] After HYWM2ExportGaussiansSplat: 1239 / 24575 MB
+[comfy-env] HYWM2ExportGaussiansSplat done (0.15s): result: NodeOutput
+[VRAM] After HYWM2ExportGaussiansSplat: 1130 / 8150 MB
 [VRAM] Loaded: SubprocessModel (2409 MB), SubprocessModel (1 MB), SubprocessModel (0 MB), SubprocessModel (1 MB), SubprocessModel (4 MB), SubprocessModel (9 MB), SubprocessModel (9 MB), SubprocessModel (9 MB), SubprocessModel (9 MB), SubprocessModel (9 MB), SubprocessModel (4 MB), SubprocessModel (2 MB), SubprocessModel (0 MB), SubprocessModel (44 MB), SubprocessModel (22 MB), SubprocessModel (0 MB), SubprocessModel (0 MB), SubprocessModel (1 MB), SubprocessModel (4 MB), SubprocessModel (9 MB), SubprocessModel (9 MB), SubprocessModel (9 MB), SubprocessModel (9 MB), SubprocessModel (9 MB), SubprocessModel (4 MB), SubprocessModel (2 MB), SubprocessModel (44 MB), SubprocessModel (22 MB), SubprocessModel (0 MB), SubprocessModel (0 MB), SubprocessModel (1 MB), SubprocessModel (4 MB), SubprocessModel (9 MB), SubprocessModel (9 MB), SubprocessModel (9 MB), SubprocessModel (9 MB), SubprocessModel (9 MB), SubprocessModel (4 MB), SubprocessModel (2 MB), SubprocessModel (44 MB), SubprocessModel (22 MB), SubprocessModel (0 MB), SubprocessModel (0 MB), SubprocessModel (1 MB), SubprocessModel (4 MB), SubprocessModel (9 MB), SubprocessModel (9 MB), SubprocessModel (9 MB), SubprocessModel (9 MB), SubprocessModel (9 MB), SubprocessModel (4 MB), SubprocessModel (2 MB), SubprocessModel (44 MB), SubprocessModel (22 MB), SubprocessModel (0 MB), SubprocessModel (0 MB), SubprocessModel (0 MB), SubprocessModel (8 MB), SubprocessModel (48 MB), SubprocessModel (0 MB), SubprocessModel (0 MB), SubprocessModel (768 MB), SubprocessModel (3495 MB)
 [comfy-env] Running HYWM2ExportGaussiansSplat: filename: 'hywm2_gaussians', output_dir: '', gaussians: dict
-[VRAM] Before HYWM2ExportGaussiansSplat: 1239 / 24575 MB
+[VRAM] Before HYWM2ExportGaussiansSplat: 1130 / 8150 MB
 [VRAM] Loaded: SubprocessModel (2409 MB), SubprocessModel (1 MB), SubprocessModel (0 MB), SubprocessModel (1 MB), SubprocessModel (4 MB), SubprocessModel (9 MB), SubprocessModel (9 MB), SubprocessModel (9 MB), SubprocessModel (9 MB), SubprocessModel (9 MB), SubprocessModel (4 MB), SubprocessModel (2 MB), SubprocessModel (0 MB), SubprocessModel (44 MB), SubprocessModel (22 MB), SubprocessModel (0 MB), SubprocessModel (0 MB), SubprocessModel (1 MB), SubprocessModel (4 MB), SubprocessModel (9 MB), SubprocessModel (9 MB), SubprocessModel (9 MB), SubprocessModel (9 MB), SubprocessModel (9 MB), SubprocessModel (4 MB), SubprocessModel (2 MB), SubprocessModel (44 MB), SubprocessModel (22 MB), SubprocessModel (0 MB), SubprocessModel (0 MB), SubprocessModel (1 MB), SubprocessModel (4 MB), SubprocessModel (9 MB), SubprocessModel (9 MB), SubprocessModel (9 MB), SubprocessModel (9 MB), SubprocessModel (9 MB), SubprocessModel (4 MB), SubprocessModel (2 MB), SubprocessModel (44 MB), SubprocessModel (22 MB), SubprocessModel (0 MB), SubprocessModel (0 MB), SubprocessModel (1 MB), SubprocessModel (4 MB), SubprocessModel (9 MB), SubprocessModel (9 MB), SubprocessModel (9 MB), SubprocessModel (9 MB), SubprocessModel (9 MB), SubprocessModel (4 MB), SubprocessModel (2 MB), SubprocessModel (44 MB), SubprocessModel (22 MB), SubprocessModel (0 MB), SubprocessModel (0 MB), SubprocessModel (0 MB), SubprocessModel (8 MB), SubprocessModel (48 MB), SubprocessModel (0 MB), SubprocessModel (0 MB), SubprocessModel (768 MB), SubprocessModel (3495 MB)
 [SubprocessWorker] call_method: nodes.decode_export.HYWM2ExportGaussiansSplat.EXECUTE_NORMALIZED
 [SubprocessWorker] acquired lock, ensuring started...
@@ -648,26 +386,26 @@ Thread 0x00004bf4 (most recent call first):
 [SubprocessWorker] sending request via socket...
 [SubprocessWorker] call_id=8 sending call_method
 [worker:ComfyUI-HYWM2] [comfy-env] _from_shm got dict with keys: ['__type__', 'strategy', 'manager_path', 'storage_key', 'storage_size']
-[worker:ComfyUI-HYWM2] [comfy-env] DESERIALIZE TensorRef: tensor_size=[324639, 3]
-[worker:ComfyUI-HYWM2] [comfy-env] DESERIALIZED tensor shape: torch.Size([324639, 3])
+[worker:ComfyUI-HYWM2] [comfy-env] DESERIALIZE TensorRef: tensor_size=[324590, 3]
+[worker:ComfyUI-HYWM2] [comfy-env] DESERIALIZED tensor shape: torch.Size([324590, 3])
 [worker:ComfyUI-HYWM2] [comfy-env] _from_shm got dict with keys: ['__type__', 'strategy', 'manager_path', 'storage_key', 'storage_size']
-[worker:ComfyUI-HYWM2] [comfy-env] DESERIALIZE TensorRef: tensor_size=[324639, 4]
-[worker:ComfyUI-HYWM2] [comfy-env] DESERIALIZED tensor shape: torch.Size([324639, 4])
+[worker:ComfyUI-HYWM2] [comfy-env] DESERIALIZE TensorRef: tensor_size=[324590, 4]
+[worker:ComfyUI-HYWM2] [comfy-env] DESERIALIZED tensor shape: torch.Size([324590, 4])
 [worker:ComfyUI-HYWM2] [comfy-env] _from_shm got dict with keys: ['__type__', 'strategy', 'manager_path', 'storage_key', 'storage_size']
-[worker:ComfyUI-HYWM2] [comfy-env] DESERIALIZE TensorRef: tensor_size=[324639, 3]
-[worker:ComfyUI-HYWM2] [comfy-env] DESERIALIZED tensor shape: torch.Size([324639, 3])
+[worker:ComfyUI-HYWM2] [comfy-env] DESERIALIZE TensorRef: tensor_size=[324590, 3]
+[worker:ComfyUI-HYWM2] [comfy-env] DESERIALIZED tensor shape: torch.Size([324590, 3])
 [worker:ComfyUI-HYWM2] [comfy-env] _from_shm got dict with keys: ['__type__', 'strategy', 'manager_path', 'storage_key', 'storage_size']
-[worker:ComfyUI-HYWM2] [comfy-env] DESERIALIZE TensorRef: tensor_size=[324639]
-[worker:ComfyUI-HYWM2] [comfy-env] DESERIALIZED tensor shape: torch.Size([324639])
+[worker:ComfyUI-HYWM2] [comfy-env] DESERIALIZE TensorRef: tensor_size=[324590]
+[worker:ComfyUI-HYWM2] [comfy-env] DESERIALIZED tensor shape: torch.Size([324590])
 [worker:ComfyUI-HYWM2] [comfy-env] _from_shm got dict with keys: ['__type__', 'strategy', 'manager_path', 'storage_key', 'storage_size']
-[worker:ComfyUI-HYWM2] [comfy-env] DESERIALIZE TensorRef: tensor_size=[324639, 3]
-[worker:ComfyUI-HYWM2] [comfy-env] DESERIALIZED tensor shape: torch.Size([324639, 3])
+[worker:ComfyUI-HYWM2] [comfy-env] DESERIALIZE TensorRef: tensor_size=[324590, 3]
+[worker:ComfyUI-HYWM2] [comfy-env] DESERIALIZED tensor shape: torch.Size([324590, 3])
 [SubprocessWorker] got response: ok
-[comfy-env] HYWM2ExportGaussiansSplat done (0.25s): result: NodeOutput
-[VRAM] After HYWM2ExportGaussiansSplat: 1239 / 24575 MB
+[comfy-env] HYWM2ExportGaussiansSplat done (0.13s): result: NodeOutput
+[VRAM] After HYWM2ExportGaussiansSplat: 1130 / 8150 MB
 [VRAM] Loaded: SubprocessModel (2409 MB), SubprocessModel (1 MB), SubprocessModel (0 MB), SubprocessModel (1 MB), SubprocessModel (4 MB), SubprocessModel (9 MB), SubprocessModel (9 MB), SubprocessModel (9 MB), SubprocessModel (9 MB), SubprocessModel (9 MB), SubprocessModel (4 MB), SubprocessModel (2 MB), SubprocessModel (0 MB), SubprocessModel (44 MB), SubprocessModel (22 MB), SubprocessModel (0 MB), SubprocessModel (0 MB), SubprocessModel (1 MB), SubprocessModel (4 MB), SubprocessModel (9 MB), SubprocessModel (9 MB), SubprocessModel (9 MB), SubprocessModel (9 MB), SubprocessModel (9 MB), SubprocessModel (4 MB), SubprocessModel (2 MB), SubprocessModel (44 MB), SubprocessModel (22 MB), SubprocessModel (0 MB), SubprocessModel (0 MB), SubprocessModel (1 MB), SubprocessModel (4 MB), SubprocessModel (9 MB), SubprocessModel (9 MB), SubprocessModel (9 MB), SubprocessModel (9 MB), SubprocessModel (9 MB), SubprocessModel (4 MB), SubprocessModel (2 MB), SubprocessModel (44 MB), SubprocessModel (22 MB), SubprocessModel (0 MB), SubprocessModel (0 MB), SubprocessModel (1 MB), SubprocessModel (4 MB), SubprocessModel (9 MB), SubprocessModel (9 MB), SubprocessModel (9 MB), SubprocessModel (9 MB), SubprocessModel (9 MB), SubprocessModel (4 MB), SubprocessModel (2 MB), SubprocessModel (44 MB), SubprocessModel (22 MB), SubprocessModel (0 MB), SubprocessModel (0 MB), SubprocessModel (0 MB), SubprocessModel (8 MB), SubprocessModel (48 MB), SubprocessModel (0 MB), SubprocessModel (0 MB), SubprocessModel (768 MB), SubprocessModel (3495 MB)
 [comfy-env] Running HYWM2ExportGaussiansSplat: filename: 'hywm2_gaussians', output_dir: '', gaussians: dict
-[VRAM] Before HYWM2ExportGaussiansSplat: 1239 / 24575 MB
+[VRAM] Before HYWM2ExportGaussiansSplat: 1130 / 8150 MB
 [VRAM] Loaded: SubprocessModel (2409 MB), SubprocessModel (1 MB), SubprocessModel (0 MB), SubprocessModel (1 MB), SubprocessModel (4 MB), SubprocessModel (9 MB), SubprocessModel (9 MB), SubprocessModel (9 MB), SubprocessModel (9 MB), SubprocessModel (9 MB), SubprocessModel (4 MB), SubprocessModel (2 MB), SubprocessModel (0 MB), SubprocessModel (44 MB), SubprocessModel (22 MB), SubprocessModel (0 MB), SubprocessModel (0 MB), SubprocessModel (1 MB), SubprocessModel (4 MB), SubprocessModel (9 MB), SubprocessModel (9 MB), SubprocessModel (9 MB), SubprocessModel (9 MB), SubprocessModel (9 MB), SubprocessModel (4 MB), SubprocessModel (2 MB), SubprocessModel (44 MB), SubprocessModel (22 MB), SubprocessModel (0 MB), SubprocessModel (0 MB), SubprocessModel (1 MB), SubprocessModel (4 MB), SubprocessModel (9 MB), SubprocessModel (9 MB), SubprocessModel (9 MB), SubprocessModel (9 MB), SubprocessModel (9 MB), SubprocessModel (4 MB), SubprocessModel (2 MB), SubprocessModel (44 MB), SubprocessModel (22 MB), SubprocessModel (0 MB), SubprocessModel (0 MB), SubprocessModel (1 MB), SubprocessModel (4 MB), SubprocessModel (9 MB), SubprocessModel (9 MB), SubprocessModel (9 MB), SubprocessModel (9 MB), SubprocessModel (9 MB), SubprocessModel (4 MB), SubprocessModel (2 MB), SubprocessModel (44 MB), SubprocessModel (22 MB), SubprocessModel (0 MB), SubprocessModel (0 MB), SubprocessModel (0 MB), SubprocessModel (8 MB), SubprocessModel (48 MB), SubprocessModel (0 MB), SubprocessModel (0 MB), SubprocessModel (768 MB), SubprocessModel (3495 MB)
 [SubprocessWorker] call_method: nodes.decode_export.HYWM2ExportGaussiansSplat.EXECUTE_NORMALIZED
 [SubprocessWorker] acquired lock, ensuring started...
@@ -679,26 +417,26 @@ Thread 0x00004bf4 (most recent call first):
 [SubprocessWorker] sending request via socket...
 [SubprocessWorker] call_id=9 sending call_method
 [worker:ComfyUI-HYWM2] [comfy-env] _from_shm got dict with keys: ['__type__', 'strategy', 'manager_path', 'storage_key', 'storage_size']
-[worker:ComfyUI-HYWM2] [comfy-env] DESERIALIZE TensorRef: tensor_size=[323953, 3]
-[worker:ComfyUI-HYWM2] [comfy-env] DESERIALIZED tensor shape: torch.Size([323953, 3])
+[worker:ComfyUI-HYWM2] [comfy-env] DESERIALIZE TensorRef: tensor_size=[323862, 3]
+[worker:ComfyUI-HYWM2] [comfy-env] DESERIALIZED tensor shape: torch.Size([323862, 3])
 [worker:ComfyUI-HYWM2] [comfy-env] _from_shm got dict with keys: ['__type__', 'strategy', 'manager_path', 'storage_key', 'storage_size']
-[worker:ComfyUI-HYWM2] [comfy-env] DESERIALIZE TensorRef: tensor_size=[323953, 4]
-[worker:ComfyUI-HYWM2] [comfy-env] DESERIALIZED tensor shape: torch.Size([323953, 4])
+[worker:ComfyUI-HYWM2] [comfy-env] DESERIALIZE TensorRef: tensor_size=[323862, 4]
+[worker:ComfyUI-HYWM2] [comfy-env] DESERIALIZED tensor shape: torch.Size([323862, 4])
 [worker:ComfyUI-HYWM2] [comfy-env] _from_shm got dict with keys: ['__type__', 'strategy', 'manager_path', 'storage_key', 'storage_size']
-[worker:ComfyUI-HYWM2] [comfy-env] DESERIALIZE TensorRef: tensor_size=[323953, 3]
-[worker:ComfyUI-HYWM2] [comfy-env] DESERIALIZED tensor shape: torch.Size([323953, 3])
+[worker:ComfyUI-HYWM2] [comfy-env] DESERIALIZE TensorRef: tensor_size=[323862, 3]
+[worker:ComfyUI-HYWM2] [comfy-env] DESERIALIZED tensor shape: torch.Size([323862, 3])
 [worker:ComfyUI-HYWM2] [comfy-env] _from_shm got dict with keys: ['__type__', 'strategy', 'manager_path', 'storage_key', 'storage_size']
-[worker:ComfyUI-HYWM2] [comfy-env] DESERIALIZE TensorRef: tensor_size=[323953]
-[worker:ComfyUI-HYWM2] [comfy-env] DESERIALIZED tensor shape: torch.Size([323953])
+[worker:ComfyUI-HYWM2] [comfy-env] DESERIALIZE TensorRef: tensor_size=[323862]
+[worker:ComfyUI-HYWM2] [comfy-env] DESERIALIZED tensor shape: torch.Size([323862])
 [worker:ComfyUI-HYWM2] [comfy-env] _from_shm got dict with keys: ['__type__', 'strategy', 'manager_path', 'storage_key', 'storage_size']
-[worker:ComfyUI-HYWM2] [comfy-env] DESERIALIZE TensorRef: tensor_size=[323953, 3]
-[worker:ComfyUI-HYWM2] [comfy-env] DESERIALIZED tensor shape: torch.Size([323953, 3])
+[worker:ComfyUI-HYWM2] [comfy-env] DESERIALIZE TensorRef: tensor_size=[323862, 3]
+[worker:ComfyUI-HYWM2] [comfy-env] DESERIALIZED tensor shape: torch.Size([323862, 3])
 [SubprocessWorker] got response: ok
-[comfy-env] HYWM2ExportGaussiansSplat done (0.25s): result: NodeOutput
-[VRAM] After HYWM2ExportGaussiansSplat: 1239 / 24575 MB
+[comfy-env] HYWM2ExportGaussiansSplat done (0.13s): result: NodeOutput
+[VRAM] After HYWM2ExportGaussiansSplat: 1130 / 8150 MB
 [VRAM] Loaded: SubprocessModel (2409 MB), SubprocessModel (1 MB), SubprocessModel (0 MB), SubprocessModel (1 MB), SubprocessModel (4 MB), SubprocessModel (9 MB), SubprocessModel (9 MB), SubprocessModel (9 MB), SubprocessModel (9 MB), SubprocessModel (9 MB), SubprocessModel (4 MB), SubprocessModel (2 MB), SubprocessModel (0 MB), SubprocessModel (44 MB), SubprocessModel (22 MB), SubprocessModel (0 MB), SubprocessModel (0 MB), SubprocessModel (1 MB), SubprocessModel (4 MB), SubprocessModel (9 MB), SubprocessModel (9 MB), SubprocessModel (9 MB), SubprocessModel (9 MB), SubprocessModel (9 MB), SubprocessModel (4 MB), SubprocessModel (2 MB), SubprocessModel (44 MB), SubprocessModel (22 MB), SubprocessModel (0 MB), SubprocessModel (0 MB), SubprocessModel (1 MB), SubprocessModel (4 MB), SubprocessModel (9 MB), SubprocessModel (9 MB), SubprocessModel (9 MB), SubprocessModel (9 MB), SubprocessModel (9 MB), SubprocessModel (4 MB), SubprocessModel (2 MB), SubprocessModel (44 MB), SubprocessModel (22 MB), SubprocessModel (0 MB), SubprocessModel (0 MB), SubprocessModel (1 MB), SubprocessModel (4 MB), SubprocessModel (9 MB), SubprocessModel (9 MB), SubprocessModel (9 MB), SubprocessModel (9 MB), SubprocessModel (9 MB), SubprocessModel (4 MB), SubprocessModel (2 MB), SubprocessModel (44 MB), SubprocessModel (22 MB), SubprocessModel (0 MB), SubprocessModel (0 MB), SubprocessModel (0 MB), SubprocessModel (8 MB), SubprocessModel (48 MB), SubprocessModel (0 MB), SubprocessModel (0 MB), SubprocessModel (768 MB), SubprocessModel (3495 MB)
-[comfy-env] Running HYWM2SplatAdvancedViewer: splat_path: 'C:\\workspaces\\HYWM2-2145\\portable-comfyui\\ComfyUI_wi...
-[VRAM] Before HYWM2SplatAdvancedViewer: 1239 / 24575 MB
+[comfy-env] Running HYWM2SplatAdvancedViewer: splat_path: 'C:\\workspaces\\HYWM2-2331\\portable-comfyui\\ComfyUI_wi...
+[VRAM] Before HYWM2SplatAdvancedViewer: 1130 / 8150 MB
 [VRAM] Loaded: SubprocessModel (2409 MB), SubprocessModel (1 MB), SubprocessModel (0 MB), SubprocessModel (1 MB), SubprocessModel (4 MB), SubprocessModel (9 MB), SubprocessModel (9 MB), SubprocessModel (9 MB), SubprocessModel (9 MB), SubprocessModel (9 MB), SubprocessModel (4 MB), SubprocessModel (2 MB), SubprocessModel (0 MB), SubprocessModel (44 MB), SubprocessModel (22 MB), SubprocessModel (0 MB), SubprocessModel (0 MB), SubprocessModel (1 MB), SubprocessModel (4 MB), SubprocessModel (9 MB), SubprocessModel (9 MB), SubprocessModel (9 MB), SubprocessModel (9 MB), SubprocessModel (9 MB), SubprocessModel (4 MB), SubprocessModel (2 MB), SubprocessModel (44 MB), SubprocessModel (22 MB), SubprocessModel (0 MB), SubprocessModel (0 MB), SubprocessModel (1 MB), SubprocessModel (4 MB), SubprocessModel (9 MB), SubprocessModel (9 MB), SubprocessModel (9 MB), SubprocessModel (9 MB), SubprocessModel (9 MB), SubprocessModel (4 MB), SubprocessModel (2 MB), SubprocessModel (44 MB), SubprocessModel (22 MB), SubprocessModel (0 MB), SubprocessModel (0 MB), SubprocessModel (1 MB), SubprocessModel (4 MB), SubprocessModel (9 MB), SubprocessModel (9 MB), SubprocessModel (9 MB), SubprocessModel (9 MB), SubprocessModel (9 MB), SubprocessModel (4 MB), SubprocessModel (2 MB), SubprocessModel (44 MB), SubprocessModel (22 MB), SubprocessModel (0 MB), SubprocessModel (0 MB), SubprocessModel (0 MB), SubprocessModel (8 MB), SubprocessModel (48 MB), SubprocessModel (0 MB), SubprocessModel (0 MB), SubprocessModel (768 MB), SubprocessModel (3495 MB)
 [SubprocessWorker] call_method: nodes.splat_viewer.HYWM2SplatAdvancedViewer.EXECUTE_NORMALIZED
 [SubprocessWorker] acquired lock, ensuring started...
@@ -711,10 +449,10 @@ Thread 0x00004bf4 (most recent call first):
 [SubprocessWorker] call_id=10 sending call_method
 [SubprocessWorker] got response: ok
 [comfy-env] HYWM2SplatAdvancedViewer done (0.02s): result: NodeOutput
-[VRAM] After HYWM2SplatAdvancedViewer: 1239 / 24575 MB
+[VRAM] After HYWM2SplatAdvancedViewer: 1130 / 8150 MB
 [VRAM] Loaded: SubprocessModel (2409 MB), SubprocessModel (1 MB), SubprocessModel (0 MB), SubprocessModel (1 MB), SubprocessModel (4 MB), SubprocessModel (9 MB), SubprocessModel (9 MB), SubprocessModel (9 MB), SubprocessModel (9 MB), SubprocessModel (9 MB), SubprocessModel (4 MB), SubprocessModel (2 MB), SubprocessModel (0 MB), SubprocessModel (44 MB), SubprocessModel (22 MB), SubprocessModel (0 MB), SubprocessModel (0 MB), SubprocessModel (1 MB), SubprocessModel (4 MB), SubprocessModel (9 MB), SubprocessModel (9 MB), SubprocessModel (9 MB), SubprocessModel (9 MB), SubprocessModel (9 MB), SubprocessModel (4 MB), SubprocessModel (2 MB), SubprocessModel (44 MB), SubprocessModel (22 MB), SubprocessModel (0 MB), SubprocessModel (0 MB), SubprocessModel (1 MB), SubprocessModel (4 MB), SubprocessModel (9 MB), SubprocessModel (9 MB), SubprocessModel (9 MB), SubprocessModel (9 MB), SubprocessModel (9 MB), SubprocessModel (4 MB), SubprocessModel (2 MB), SubprocessModel (44 MB), SubprocessModel (22 MB), SubprocessModel (0 MB), SubprocessModel (0 MB), SubprocessModel (1 MB), SubprocessModel (4 MB), SubprocessModel (9 MB), SubprocessModel (9 MB), SubprocessModel (9 MB), SubprocessModel (9 MB), SubprocessModel (9 MB), SubprocessModel (4 MB), SubprocessModel (2 MB), SubprocessModel (44 MB), SubprocessModel (22 MB), SubprocessModel (0 MB), SubprocessModel (0 MB), SubprocessModel (0 MB), SubprocessModel (8 MB), SubprocessModel (48 MB), SubprocessModel (0 MB), SubprocessModel (0 MB), SubprocessModel (768 MB), SubprocessModel (3495 MB)
-[comfy-env] Running HYWM2SplatAdvancedViewer: splat_path: 'C:\\workspaces\\HYWM2-2145\\portable-comfyui\\ComfyUI_wi...
-[VRAM] Before HYWM2SplatAdvancedViewer: 1239 / 24575 MB
+[comfy-env] Running HYWM2SplatAdvancedViewer: splat_path: 'C:\\workspaces\\HYWM2-2331\\portable-comfyui\\ComfyUI_wi...
+[VRAM] Before HYWM2SplatAdvancedViewer: 1130 / 8150 MB
 [VRAM] Loaded: SubprocessModel (2409 MB), SubprocessModel (1 MB), SubprocessModel (0 MB), SubprocessModel (1 MB), SubprocessModel (4 MB), SubprocessModel (9 MB), SubprocessModel (9 MB), SubprocessModel (9 MB), SubprocessModel (9 MB), SubprocessModel (9 MB), SubprocessModel (4 MB), SubprocessModel (2 MB), SubprocessModel (0 MB), SubprocessModel (44 MB), SubprocessModel (22 MB), SubprocessModel (0 MB), SubprocessModel (0 MB), SubprocessModel (1 MB), SubprocessModel (4 MB), SubprocessModel (9 MB), SubprocessModel (9 MB), SubprocessModel (9 MB), SubprocessModel (9 MB), SubprocessModel (9 MB), SubprocessModel (4 MB), SubprocessModel (2 MB), SubprocessModel (44 MB), SubprocessModel (22 MB), SubprocessModel (0 MB), SubprocessModel (0 MB), SubprocessModel (1 MB), SubprocessModel (4 MB), SubprocessModel (9 MB), SubprocessModel (9 MB), SubprocessModel (9 MB), SubprocessModel (9 MB), SubprocessModel (9 MB), SubprocessModel (4 MB), SubprocessModel (2 MB), SubprocessModel (44 MB), SubprocessModel (22 MB), SubprocessModel (0 MB), SubprocessModel (0 MB), SubprocessModel (1 MB), SubprocessModel (4 MB), SubprocessModel (9 MB), SubprocessModel (9 MB), SubprocessModel (9 MB), SubprocessModel (9 MB), SubprocessModel (9 MB), SubprocessModel (4 MB), SubprocessModel (2 MB), SubprocessModel (44 MB), SubprocessModel (22 MB), SubprocessModel (0 MB), SubprocessModel (0 MB), SubprocessModel (0 MB), SubprocessModel (8 MB), SubprocessModel (48 MB), SubprocessModel (0 MB), SubprocessModel (0 MB), SubprocessModel (768 MB), SubprocessModel (3495 MB)
 [SubprocessWorker] call_method: nodes.splat_viewer.HYWM2SplatAdvancedViewer.EXECUTE_NORMALIZED
 [SubprocessWorker] acquired lock, ensuring started...
@@ -726,11 +464,11 @@ Thread 0x00004bf4 (most recent call first):
 [SubprocessWorker] sending request via socket...
 [SubprocessWorker] call_id=11 sending call_method
 [SubprocessWorker] got response: ok
-[comfy-env] HYWM2SplatAdvancedViewer done (0.02s): result: NodeOutput
-[VRAM] After HYWM2SplatAdvancedViewer: 1239 / 24575 MB
+[comfy-env] HYWM2SplatAdvancedViewer done (0.01s): result: NodeOutput
+[VRAM] After HYWM2SplatAdvancedViewer: 1130 / 8150 MB
 [VRAM] Loaded: SubprocessModel (2409 MB), SubprocessModel (1 MB), SubprocessModel (0 MB), SubprocessModel (1 MB), SubprocessModel (4 MB), SubprocessModel (9 MB), SubprocessModel (9 MB), SubprocessModel (9 MB), SubprocessModel (9 MB), SubprocessModel (9 MB), SubprocessModel (4 MB), SubprocessModel (2 MB), SubprocessModel (0 MB), SubprocessModel (44 MB), SubprocessModel (22 MB), SubprocessModel (0 MB), SubprocessModel (0 MB), SubprocessModel (1 MB), SubprocessModel (4 MB), SubprocessModel (9 MB), SubprocessModel (9 MB), SubprocessModel (9 MB), SubprocessModel (9 MB), SubprocessModel (9 MB), SubprocessModel (4 MB), SubprocessModel (2 MB), SubprocessModel (44 MB), SubprocessModel (22 MB), SubprocessModel (0 MB), SubprocessModel (0 MB), SubprocessModel (1 MB), SubprocessModel (4 MB), SubprocessModel (9 MB), SubprocessModel (9 MB), SubprocessModel (9 MB), SubprocessModel (9 MB), SubprocessModel (9 MB), SubprocessModel (4 MB), SubprocessModel (2 MB), SubprocessModel (44 MB), SubprocessModel (22 MB), SubprocessModel (0 MB), SubprocessModel (0 MB), SubprocessModel (1 MB), SubprocessModel (4 MB), SubprocessModel (9 MB), SubprocessModel (9 MB), SubprocessModel (9 MB), SubprocessModel (9 MB), SubprocessModel (9 MB), SubprocessModel (4 MB), SubprocessModel (2 MB), SubprocessModel (44 MB), SubprocessModel (22 MB), SubprocessModel (0 MB), SubprocessModel (0 MB), SubprocessModel (0 MB), SubprocessModel (8 MB), SubprocessModel (48 MB), SubprocessModel (0 MB), SubprocessModel (0 MB), SubprocessModel (768 MB), SubprocessModel (3495 MB)
-[comfy-env] Running HYWM2SplatAdvancedViewer: splat_path: 'C:\\workspaces\\HYWM2-2145\\portable-comfyui\\ComfyUI_wi...
-[VRAM] Before HYWM2SplatAdvancedViewer: 1239 / 24575 MB
+[comfy-env] Running HYWM2SplatAdvancedViewer: splat_path: 'C:\\workspaces\\HYWM2-2331\\portable-comfyui\\ComfyUI_wi...
+[VRAM] Before HYWM2SplatAdvancedViewer: 1130 / 8150 MB
 [VRAM] Loaded: SubprocessModel (2409 MB), SubprocessModel (1 MB), SubprocessModel (0 MB), SubprocessModel (1 MB), SubprocessModel (4 MB), SubprocessModel (9 MB), SubprocessModel (9 MB), SubprocessModel (9 MB), SubprocessModel (9 MB), SubprocessModel (9 MB), SubprocessModel (4 MB), SubprocessModel (2 MB), SubprocessModel (0 MB), SubprocessModel (44 MB), SubprocessModel (22 MB), SubprocessModel (0 MB), SubprocessModel (0 MB), SubprocessModel (1 MB), SubprocessModel (4 MB), SubprocessModel (9 MB), SubprocessModel (9 MB), SubprocessModel (9 MB), SubprocessModel (9 MB), SubprocessModel (9 MB), SubprocessModel (4 MB), SubprocessModel (2 MB), SubprocessModel (44 MB), SubprocessModel (22 MB), SubprocessModel (0 MB), SubprocessModel (0 MB), SubprocessModel (1 MB), SubprocessModel (4 MB), SubprocessModel (9 MB), SubprocessModel (9 MB), SubprocessModel (9 MB), SubprocessModel (9 MB), SubprocessModel (9 MB), SubprocessModel (4 MB), SubprocessModel (2 MB), SubprocessModel (44 MB), SubprocessModel (22 MB), SubprocessModel (0 MB), SubprocessModel (0 MB), SubprocessModel (1 MB), SubprocessModel (4 MB), SubprocessModel (9 MB), SubprocessModel (9 MB), SubprocessModel (9 MB), SubprocessModel (9 MB), SubprocessModel (9 MB), SubprocessModel (4 MB), SubprocessModel (2 MB), SubprocessModel (44 MB), SubprocessModel (22 MB), SubprocessModel (0 MB), SubprocessModel (0 MB), SubprocessModel (0 MB), SubprocessModel (8 MB), SubprocessModel (48 MB), SubprocessModel (0 MB), SubprocessModel (0 MB), SubprocessModel (768 MB), SubprocessModel (3495 MB)
 [SubprocessWorker] call_method: nodes.splat_viewer.HYWM2SplatAdvancedViewer.EXECUTE_NORMALIZED
 [SubprocessWorker] acquired lock, ensuring started...
@@ -742,11 +480,11 @@ Thread 0x00004bf4 (most recent call first):
 [SubprocessWorker] sending request via socket...
 [SubprocessWorker] call_id=12 sending call_method
 [SubprocessWorker] got response: ok
-[comfy-env] HYWM2SplatAdvancedViewer done (0.02s): result: NodeOutput
-[VRAM] After HYWM2SplatAdvancedViewer: 1239 / 24575 MB
+[comfy-env] HYWM2SplatAdvancedViewer done (0.01s): result: NodeOutput
+[VRAM] After HYWM2SplatAdvancedViewer: 1130 / 8150 MB
 [VRAM] Loaded: SubprocessModel (2409 MB), SubprocessModel (1 MB), SubprocessModel (0 MB), SubprocessModel (1 MB), SubprocessModel (4 MB), SubprocessModel (9 MB), SubprocessModel (9 MB), SubprocessModel (9 MB), SubprocessModel (9 MB), SubprocessModel (9 MB), SubprocessModel (4 MB), SubprocessModel (2 MB), SubprocessModel (0 MB), SubprocessModel (44 MB), SubprocessModel (22 MB), SubprocessModel (0 MB), SubprocessModel (0 MB), SubprocessModel (1 MB), SubprocessModel (4 MB), SubprocessModel (9 MB), SubprocessModel (9 MB), SubprocessModel (9 MB), SubprocessModel (9 MB), SubprocessModel (9 MB), SubprocessModel (4 MB), SubprocessModel (2 MB), SubprocessModel (44 MB), SubprocessModel (22 MB), SubprocessModel (0 MB), SubprocessModel (0 MB), SubprocessModel (1 MB), SubprocessModel (4 MB), SubprocessModel (9 MB), SubprocessModel (9 MB), SubprocessModel (9 MB), SubprocessModel (9 MB), SubprocessModel (9 MB), SubprocessModel (4 MB), SubprocessModel (2 MB), SubprocessModel (44 MB), SubprocessModel (22 MB), SubprocessModel (0 MB), SubprocessModel (0 MB), SubprocessModel (1 MB), SubprocessModel (4 MB), SubprocessModel (9 MB), SubprocessModel (9 MB), SubprocessModel (9 MB), SubprocessModel (9 MB), SubprocessModel (9 MB), SubprocessModel (4 MB), SubprocessModel (2 MB), SubprocessModel (44 MB), SubprocessModel (22 MB), SubprocessModel (0 MB), SubprocessModel (0 MB), SubprocessModel (0 MB), SubprocessModel (8 MB), SubprocessModel (48 MB), SubprocessModel (0 MB), SubprocessModel (0 MB), SubprocessModel (768 MB), SubprocessModel (3495 MB)
-[comfy-env] Running HYWM2SplatAdvancedViewer: splat_path: 'C:\\workspaces\\HYWM2-2145\\portable-comfyui\\ComfyUI_wi...
-[VRAM] Before HYWM2SplatAdvancedViewer: 1239 / 24575 MB
+[comfy-env] Running HYWM2SplatAdvancedViewer: splat_path: 'C:\\workspaces\\HYWM2-2331\\portable-comfyui\\ComfyUI_wi...
+[VRAM] Before HYWM2SplatAdvancedViewer: 1130 / 8150 MB
 [VRAM] Loaded: SubprocessModel (2409 MB), SubprocessModel (1 MB), SubprocessModel (0 MB), SubprocessModel (1 MB), SubprocessModel (4 MB), SubprocessModel (9 MB), SubprocessModel (9 MB), SubprocessModel (9 MB), SubprocessModel (9 MB), SubprocessModel (9 MB), SubprocessModel (4 MB), SubprocessModel (2 MB), SubprocessModel (0 MB), SubprocessModel (44 MB), SubprocessModel (22 MB), SubprocessModel (0 MB), SubprocessModel (0 MB), SubprocessModel (1 MB), SubprocessModel (4 MB), SubprocessModel (9 MB), SubprocessModel (9 MB), SubprocessModel (9 MB), SubprocessModel (9 MB), SubprocessModel (9 MB), SubprocessModel (4 MB), SubprocessModel (2 MB), SubprocessModel (44 MB), SubprocessModel (22 MB), SubprocessModel (0 MB), SubprocessModel (0 MB), SubprocessModel (1 MB), SubprocessModel (4 MB), SubprocessModel (9 MB), SubprocessModel (9 MB), SubprocessModel (9 MB), SubprocessModel (9 MB), SubprocessModel (9 MB), SubprocessModel (4 MB), SubprocessModel (2 MB), SubprocessModel (44 MB), SubprocessModel (22 MB), SubprocessModel (0 MB), SubprocessModel (0 MB), SubprocessModel (1 MB), SubprocessModel (4 MB), SubprocessModel (9 MB), SubprocessModel (9 MB), SubprocessModel (9 MB), SubprocessModel (9 MB), SubprocessModel (9 MB), SubprocessModel (4 MB), SubprocessModel (2 MB), SubprocessModel (44 MB), SubprocessModel (22 MB), SubprocessModel (0 MB), SubprocessModel (0 MB), SubprocessModel (0 MB), SubprocessModel (8 MB), SubprocessModel (48 MB), SubprocessModel (0 MB), SubprocessModel (0 MB), SubprocessModel (768 MB), SubprocessModel (3495 MB)
 [SubprocessWorker] call_method: nodes.splat_viewer.HYWM2SplatAdvancedViewer.EXECUTE_NORMALIZED
 [SubprocessWorker] acquired lock, ensuring started...
@@ -758,276 +496,246 @@ Thread 0x00004bf4 (most recent call first):
 [SubprocessWorker] sending request via socket...
 [SubprocessWorker] call_id=13 sending call_method
 [SubprocessWorker] got response: ok
-[comfy-env] HYWM2SplatAdvancedViewer done (0.02s): result: NodeOutput
-[VRAM] After HYWM2SplatAdvancedViewer: 1239 / 24575 MB
+[comfy-env] HYWM2SplatAdvancedViewer done (0.01s): result: NodeOutput
+[VRAM] After HYWM2SplatAdvancedViewer: 1130 / 8150 MB
 [VRAM] Loaded: SubprocessModel (2409 MB), SubprocessModel (1 MB), SubprocessModel (0 MB), SubprocessModel (1 MB), SubprocessModel (4 MB), SubprocessModel (9 MB), SubprocessModel (9 MB), SubprocessModel (9 MB), SubprocessModel (9 MB), SubprocessModel (9 MB), SubprocessModel (4 MB), SubprocessModel (2 MB), SubprocessModel (0 MB), SubprocessModel (44 MB), SubprocessModel (22 MB), SubprocessModel (0 MB), SubprocessModel (0 MB), SubprocessModel (1 MB), SubprocessModel (4 MB), SubprocessModel (9 MB), SubprocessModel (9 MB), SubprocessModel (9 MB), SubprocessModel (9 MB), SubprocessModel (9 MB), SubprocessModel (4 MB), SubprocessModel (2 MB), SubprocessModel (44 MB), SubprocessModel (22 MB), SubprocessModel (0 MB), SubprocessModel (0 MB), SubprocessModel (1 MB), SubprocessModel (4 MB), SubprocessModel (9 MB), SubprocessModel (9 MB), SubprocessModel (9 MB), SubprocessModel (9 MB), SubprocessModel (9 MB), SubprocessModel (4 MB), SubprocessModel (2 MB), SubprocessModel (44 MB), SubprocessModel (22 MB), SubprocessModel (0 MB), SubprocessModel (0 MB), SubprocessModel (1 MB), SubprocessModel (4 MB), SubprocessModel (9 MB), SubprocessModel (9 MB), SubprocessModel (9 MB), SubprocessModel (9 MB), SubprocessModel (9 MB), SubprocessModel (4 MB), SubprocessModel (2 MB), SubprocessModel (44 MB), SubprocessModel (22 MB), SubprocessModel (0 MB), SubprocessModel (0 MB), SubprocessModel (0 MB), SubprocessModel (8 MB), SubprocessModel (48 MB), SubprocessModel (0 MB), SubprocessModel (0 MB), SubprocessModel (768 MB), SubprocessModel (3495 MB)
-Prompt executed in 505.60 seconds
-[comfy-env] [VRAM] Before offload 'LayerNorm_48' (0 MB) -> cpu: 1239 / 24575 MB
+Prompt executed in 75.29 seconds
+[comfy-env] [VRAM] Before offload 'LayerNorm_48' (0 MB) -> cpu: 1130 / 8150 MB
 [ComfyUI-HYWM2] Health check: ping (timeout=5.0s)...
 [ComfyUI-HYWM2] Health check: ok
 [SubprocessWorker] call_id=14 sending model_to_device
-[comfy-env] [VRAM] After offload 'LayerNorm_48' (0 MB): 1239 / 24575 MB
-[comfy-env] [VRAM] Before offload 'LayerNorm_35' (0 MB) -> cpu: 1239 / 24575 MB
+[comfy-env] [VRAM] After offload 'LayerNorm_48' (0 MB): 1130 / 8150 MB
+[comfy-env] [VRAM] Before offload 'LayerNorm_35' (0 MB) -> cpu: 1130 / 8150 MB
 [ComfyUI-HYWM2] Health check: ping (timeout=5.0s)...
 [ComfyUI-HYWM2] Health check: ok
 [SubprocessWorker] call_id=15 sending model_to_device
-[comfy-env] [VRAM] After offload 'LayerNorm_35' (0 MB): 1239 / 24575 MB
-[comfy-env] [VRAM] Before offload 'LayerNorm_22' (0 MB) -> cpu: 1239 / 24575 MB
+[comfy-env] [VRAM] After offload 'LayerNorm_35' (0 MB): 1130 / 8150 MB
+[comfy-env] [VRAM] Before offload 'LayerNorm_22' (0 MB) -> cpu: 1130 / 8150 MB
 [ComfyUI-HYWM2] Health check: ping (timeout=5.0s)...
 [ComfyUI-HYWM2] Health check: ok
 [SubprocessWorker] call_id=16 sending model_to_device
-[comfy-env] [VRAM] After offload 'LayerNorm_22' (0 MB): 1239 / 24575 MB
-[comfy-env] [VRAM] Before offload 'LayerNorm_9' (0 MB) -> cpu: 1239 / 24575 MB
+[comfy-env] [VRAM] After offload 'LayerNorm_22' (0 MB): 1130 / 8150 MB
+[comfy-env] [VRAM] Before offload 'LayerNorm_9' (0 MB) -> cpu: 1130 / 8150 MB
 [ComfyUI-HYWM2] Health check: ping (timeout=5.0s)...
 [ComfyUI-HYWM2] Health check: ok
 [SubprocessWorker] call_id=17 sending model_to_device
-[comfy-env] [VRAM] After offload 'LayerNorm_9' (0 MB): 1239 / 24575 MB
-[comfy-env] [VRAM] Before offload 'LayerNorm_4' (0 MB) -> cpu: 1239 / 24575 MB
+[comfy-env] [VRAM] After offload 'LayerNorm_9' (0 MB): 1130 / 8150 MB
+[comfy-env] [VRAM] Before offload 'LayerNorm_4' (0 MB) -> cpu: 1130 / 8150 MB
 [ComfyUI-HYWM2] Health check: ping (timeout=5.0s)...
 [ComfyUI-HYWM2] Health check: ok
 [SubprocessWorker] call_id=18 sending model_to_device
-[comfy-env] [VRAM] After offload 'LayerNorm_4' (0 MB): 1239 / 24575 MB
-[comfy-env] [VRAM] Before offload 'LayerNorm_3' (0 MB) -> cpu: 1239 / 24575 MB
+[comfy-env] [VRAM] After offload 'LayerNorm_4' (0 MB): 1130 / 8150 MB
+[comfy-env] [VRAM] Before offload 'LayerNorm_3' (0 MB) -> cpu: 1130 / 8150 MB
 [ComfyUI-HYWM2] Health check: ping (timeout=5.0s)...
 [ComfyUI-HYWM2] Health check: ok
 [SubprocessWorker] call_id=19 sending model_to_device
-[comfy-env] [VRAM] After offload 'LayerNorm_3' (0 MB): 1239 / 24575 MB
-[comfy-env] [VRAM] Before offload 'Linear_7' (0 MB) -> cpu: 1239 / 24575 MB
+[comfy-env] [VRAM] After offload 'LayerNorm_3' (0 MB): 1130 / 8150 MB
+[comfy-env] [VRAM] Before offload 'Linear_7' (0 MB) -> cpu: 1130 / 8150 MB
 [ComfyUI-HYWM2] Health check: ping (timeout=5.0s)...
 [ComfyUI-HYWM2] Health check: ok
 [SubprocessWorker] call_id=20 sending model_to_device
-[comfy-env] [VRAM] After offload 'Linear_7' (0 MB): 1239 / 24575 MB
-[comfy-env] [VRAM] Before offload 'Sequential_51' (0 MB) -> cpu: 1239 / 24575 MB
+[comfy-env] [VRAM] After offload 'Linear_7' (0 MB): 1130 / 8150 MB
+[comfy-env] [VRAM] Before offload 'Sequential_51' (0 MB) -> cpu: 1130 / 8150 MB
 [ComfyUI-HYWM2] Health check: ping (timeout=5.0s)...
 [ComfyUI-HYWM2] Health check: ok
 [SubprocessWorker] call_id=21 sending model_to_device
-[comfy-env] [VRAM] After offload 'Sequential_51' (0 MB): 1239 / 24575 MB
-[comfy-env] [VRAM] Before offload 'Linear_8' (0 MB) -> cpu: 1239 / 24575 MB
+[comfy-env] [VRAM] After offload 'Sequential_51' (0 MB): 1130 / 8150 MB
+[comfy-env] [VRAM] Before offload 'Linear_8' (0 MB) -> cpu: 1130 / 8150 MB
 [ComfyUI-HYWM2] Health check: ping (timeout=5.0s)...
 [ComfyUI-HYWM2] Health check: ok
 [SubprocessWorker] call_id=22 sending model_to_device
-[comfy-env] [VRAM] After offload 'Linear_8' (0 MB): 1239 / 24575 MB
-[comfy-env] [VRAM] Before offload 'Sequential_61' (0 MB) -> cpu: 1239 / 24575 MB
+[comfy-env] [VRAM] After offload 'Linear_8' (0 MB): 1130 / 8150 MB
+[comfy-env] [VRAM] Before offload 'Sequential_61' (0 MB) -> cpu: 1130 / 8150 MB
 [ComfyUI-HYWM2] Health check: ping (timeout=5.0s)...
 [ComfyUI-HYWM2] Health check: ok
 [SubprocessWorker] call_id=23 sending model_to_device
-[comfy-env] [VRAM] After offload 'Sequential_61' (0 MB): 1239 / 24575 MB
-[comfy-env] [VRAM] Before offload 'Sequential_34' (0 MB) -> cpu: 1239 / 24575 MB
+[comfy-env] [VRAM] After offload 'Sequential_61' (0 MB): 1130 / 8150 MB
+[comfy-env] [VRAM] Before offload 'Sequential_34' (0 MB) -> cpu: 1130 / 8150 MB
 [ComfyUI-HYWM2] Health check: ping (timeout=5.0s)...
 [ComfyUI-HYWM2] Health check: ok
 [SubprocessWorker] call_id=24 sending model_to_device
-[comfy-env] [VRAM] After offload 'Sequential_34' (0 MB): 1239 / 24575 MB
-[comfy-env] [VRAM] Before offload 'Sequential_47' (0 MB) -> cpu: 1239 / 24575 MB
+[comfy-env] [VRAM] After offload 'Sequential_34' (0 MB): 1130 / 8150 MB
+[comfy-env] [VRAM] Before offload 'Sequential_47' (0 MB) -> cpu: 1130 / 8150 MB
 [ComfyUI-HYWM2] Health check: ping (timeout=5.0s)...
 [ComfyUI-HYWM2] Health check: ok
 [SubprocessWorker] call_id=25 sending model_to_device
-[comfy-env] [VRAM] After offload 'Sequential_47' (0 MB): 1239 / 24575 MB
-[comfy-env] [VRAM] Before offload 'Sequential_21' (0 MB) -> cpu: 1239 / 24575 MB
+[comfy-env] [VRAM] After offload 'Sequential_47' (0 MB): 1130 / 8150 MB
+[comfy-env] [VRAM] Before offload 'Sequential_21' (0 MB) -> cpu: 1130 / 8150 MB
 [ComfyUI-HYWM2] Health check: ping (timeout=5.0s)...
 [ComfyUI-HYWM2] Health check: ok
 [SubprocessWorker] call_id=26 sending model_to_device
-[comfy-env] [VRAM] After offload 'Sequential_21' (0 MB): 1239 / 24575 MB
-[comfy-env] [VRAM] Before offload 'Conv2d_60' (1 MB) -> cpu: 1239 / 24575 MB
+[comfy-env] [VRAM] After offload 'Sequential_21' (0 MB): 1130 / 8150 MB
+[comfy-env] [VRAM] Before offload 'Conv2d_60' (1 MB) -> cpu: 1130 / 8150 MB
 [ComfyUI-HYWM2] Health check: ping (timeout=5.0s)...
 [ComfyUI-HYWM2] Health check: ok
 [SubprocessWorker] call_id=27 sending model_to_device
-[comfy-env] [VRAM] After offload 'Conv2d_60' (1 MB): 1239 / 24575 MB
-[comfy-env] [VRAM] Before offload 'Conv2d_46' (1 MB) -> cpu: 1239 / 24575 MB
+[comfy-env] [VRAM] After offload 'Conv2d_60' (1 MB): 1130 / 8150 MB
+[comfy-env] [VRAM] Before offload 'Conv2d_46' (1 MB) -> cpu: 1130 / 8150 MB
 [ComfyUI-HYWM2] Health check: ping (timeout=5.0s)...
 [ComfyUI-HYWM2] Health check: ok
 [SubprocessWorker] call_id=28 sending model_to_device
-[comfy-env] [VRAM] After offload 'Conv2d_46' (1 MB): 1239 / 24575 MB
-[comfy-env] [VRAM] Before offload 'Conv2d_33' (1 MB) -> cpu: 1239 / 24575 MB
+[comfy-env] [VRAM] After offload 'Conv2d_46' (1 MB): 1130 / 8150 MB
+[comfy-env] [VRAM] Before offload 'Conv2d_33' (1 MB) -> cpu: 1130 / 8150 MB
 [ComfyUI-HYWM2] Health check: ping (timeout=5.0s)...
 [ComfyUI-HYWM2] Health check: ok
 [SubprocessWorker] call_id=29 sending model_to_device
-[comfy-env] [VRAM] After offload 'Conv2d_33' (1 MB): 1239 / 24575 MB
-[comfy-env] [VRAM] Before offload 'Conv2d_20' (1 MB) -> cpu: 1239 / 24575 MB
+[comfy-env] [VRAM] After offload 'Conv2d_33' (1 MB): 1130 / 8150 MB
+[comfy-env] [VRAM] Before offload 'Conv2d_20' (1 MB) -> cpu: 1130 / 8150 MB
 [ComfyUI-HYWM2] Health check: ping (timeout=5.0s)...
 [ComfyUI-HYWM2] Health check: ok
 [SubprocessWorker] call_id=30 sending model_to_device
-[comfy-env] [VRAM] After offload 'Conv2d_20' (1 MB): 1239 / 24575 MB
-[comfy-env] [VRAM] Before offload 'GaussianSplatRenderer_62' (1 MB) -> cpu: 1239 / 24575 MB
+[comfy-env] [VRAM] After offload 'Conv2d_20' (1 MB): 1130 / 8150 MB
+[comfy-env] [VRAM] Before offload 'GaussianSplatRenderer_62' (1 MB) -> cpu: 1130 / 8150 MB
 [ComfyUI-HYWM2] Health check: ping (timeout=5.0s)...
 [ComfyUI-HYWM2] Health check: ok
 [SubprocessWorker] call_id=31 sending model_to_device
-[comfy-env] [VRAM] After offload 'GaussianSplatRenderer_62' (1 MB): 1239 / 24575 MB
-[comfy-env] [VRAM] Before offload 'Conv2d_52' (2 MB) -> cpu: 1239 / 24575 MB
+[comfy-env] [VRAM] After offload 'GaussianSplatRenderer_62' (1 MB): 1130 / 8150 MB
+[comfy-env] [VRAM] Before offload 'Conv2d_52' (2 MB) -> cpu: 1130 / 8150 MB
 [ComfyUI-HYWM2] Health check: ping (timeout=5.0s)...
 [ComfyUI-HYWM2] Health check: ok
 [SubprocessWorker] call_id=32 sending model_to_device
-[comfy-env] [VRAM] After offload 'Conv2d_52' (2 MB): 1239 / 24575 MB
-[comfy-env] [VRAM] Before offload 'Conv2d_38' (2 MB) -> cpu: 1239 / 24575 MB
+[comfy-env] [VRAM] After offload 'Conv2d_52' (2 MB): 1130 / 8150 MB
+[comfy-env] [VRAM] Before offload 'Conv2d_38' (2 MB) -> cpu: 1130 / 8150 MB
 [ComfyUI-HYWM2] Health check: ping (timeout=5.0s)...
 [ComfyUI-HYWM2] Health check: ok
 [SubprocessWorker] call_id=33 sending model_to_device
-[comfy-env] [VRAM] After offload 'Conv2d_38' (2 MB): 1239 / 24575 MB
-[comfy-env] [VRAM] Before offload 'Conv2d_25' (2 MB) -> cpu: 1239 / 24575 MB
+[comfy-env] [VRAM] After offload 'Conv2d_38' (2 MB): 1130 / 8150 MB
+[comfy-env] [VRAM] Before offload 'Conv2d_25' (2 MB) -> cpu: 1130 / 8150 MB
 [ComfyUI-HYWM2] Health check: ping (timeout=5.0s)...
 [ComfyUI-HYWM2] Health check: ok
 [SubprocessWorker] call_id=34 sending model_to_device
-[comfy-env] [VRAM] After offload 'Conv2d_25' (2 MB): 1239 / 24575 MB
-[comfy-env] [VRAM] Before offload 'Conv2d_12' (2 MB) -> cpu: 1239 / 24575 MB
+[comfy-env] [VRAM] After offload 'Conv2d_25' (2 MB): 1130 / 8150 MB
+[comfy-env] [VRAM] Before offload 'Conv2d_12' (2 MB) -> cpu: 1130 / 8150 MB
 [ComfyUI-HYWM2] Health check: ping (timeout=5.0s)...
 [ComfyUI-HYWM2] Health check: ok
 [SubprocessWorker] call_id=35 sending model_to_device
-[comfy-env] [VRAM] After offload 'Conv2d_12' (2 MB): 1239 / 24575 MB
-[comfy-env] [VRAM] Before offload 'Conv2d_53' (4 MB) -> cpu: 1239 / 24575 MB
+[comfy-env] [VRAM] After offload 'Conv2d_12' (2 MB): 1130 / 8150 MB
+[comfy-env] [VRAM] Before offload 'Conv2d_53' (4 MB) -> cpu: 1130 / 8150 MB
 [ComfyUI-HYWM2] Health check: ping (timeout=5.0s)...
 [ComfyUI-HYWM2] Health check: ok
 [SubprocessWorker] call_id=36 sending model_to_device
-[comfy-env] [VRAM] After offload 'Conv2d_53' (4 MB): 1239 / 24575 MB
-[comfy-env] [VRAM] Before offload 'Conv2d_39' (4 MB) -> cpu: 1239 / 24575 MB
+[comfy-env] [VRAM] After offload 'Conv2d_53' (4 MB): 1130 / 8150 MB
+[comfy-env] [VRAM] Before offload 'Conv2d_39' (4 MB) -> cpu: 1130 / 8150 MB
 [ComfyUI-HYWM2] Health check: ping (timeout=5.0s)...
 [ComfyUI-HYWM2] Health check: ok
 [SubprocessWorker] call_id=37 sending model_to_device
-[comfy-env] [VRAM] After offload 'Conv2d_39' (4 MB): 1239 / 24575 MB
-[comfy-env] [VRAM] Before offload 'Conv2d_26' (4 MB) -> cpu: 1239 / 24575 MB
+[comfy-env] [VRAM] After offload 'Conv2d_39' (4 MB): 1130 / 8150 MB
+[comfy-env] [VRAM] Before offload 'Conv2d_26' (4 MB) -> cpu: 1130 / 8150 MB
 [ComfyUI-HYWM2] Health check: ping (timeout=5.0s)...
 [ComfyUI-HYWM2] Health check: ok
 [SubprocessWorker] call_id=38 sending model_to_device
-[comfy-env] [VRAM] After offload 'Conv2d_26' (4 MB): 1239 / 24575 MB
-[comfy-env] [VRAM] Before offload 'Conv2d_13' (4 MB) -> cpu: 1239 / 24575 MB
+[comfy-env] [VRAM] After offload 'Conv2d_26' (4 MB): 1130 / 8150 MB
+[comfy-env] [VRAM] Before offload 'Conv2d_13' (4 MB) -> cpu: 1130 / 8150 MB
 [ComfyUI-HYWM2] Health check: ping (timeout=5.0s)...
 [ComfyUI-HYWM2] Health check: ok
 [SubprocessWorker] call_id=39 sending model_to_device
-[comfy-env] [VRAM] After offload 'Conv2d_13' (4 MB): 1239 / 24575 MB
-[comfy-env] [VRAM] Before offload 'FeatureFusionBlock_59' (4 MB) -> cpu: 1239 / 24575 MB
+[comfy-env] [VRAM] After offload 'Conv2d_13' (4 MB): 1130 / 8150 MB
+[comfy-env] [VRAM] Before offload 'FeatureFusionBlock_59' (4 MB) -> cpu: 1130 / 8150 MB
 [ComfyUI-HYWM2] Health check: ping (timeout=5.0s)...
 [ComfyUI-HYWM2] Health check: ok
 [SubprocessWorker] call_id=40 sending model_to_device
-[comfy-env] [VRAM] After offload 'FeatureFusionBlock_59' (4 MB): 1239 / 24575 MB
-[comfy-env] [VRAM] Before offload 'FeatureFusionBlock_45' (4 MB) -> cpu: 1239 / 24575 MB
+[comfy-env] [VRAM] After offload 'FeatureFusionBlock_59' (4 MB): 1130 / 8150 MB
+[comfy-env] [VRAM] Before offload 'FeatureFusionBlock_45' (4 MB) -> cpu: 1130 / 8150 MB
 [ComfyUI-HYWM2] Health check: ping (timeout=5.0s)...
 [ComfyUI-HYWM2] Health check: ok
 [SubprocessWorker] call_id=41 sending model_to_device
-[comfy-env] [VRAM] After offload 'FeatureFusionBlock_45' (4 MB): 1239 / 24575 MB
-[comfy-env] [VRAM] Before offload 'FeatureFusionBlock_32' (4 MB) -> cpu: 1239 / 24575 MB
+[comfy-env] [VRAM] After offload 'FeatureFusionBlock_45' (4 MB): 1130 / 8150 MB
+[comfy-env] [VRAM] Before offload 'FeatureFusionBlock_32' (4 MB) -> cpu: 1130 / 8150 MB
 [ComfyUI-HYWM2] Health check: ping (timeout=5.0s)...
 [ComfyUI-HYWM2] Health check: ok
 [SubprocessWorker] call_id=42 sending model_to_device
-[comfy-env] [VRAM] After offload 'FeatureFusionBlock_32' (4 MB): 1239 / 24575 MB
-[comfy-env] [VRAM] Before offload 'FeatureFusionBlock_19' (4 MB) -> cpu: 1239 / 24575 MB
+[comfy-env] [VRAM] After offload 'FeatureFusionBlock_32' (4 MB): 1130 / 8150 MB
+[comfy-env] [VRAM] Before offload 'FeatureFusionBlock_19' (4 MB) -> cpu: 1130 / 8150 MB
 [ComfyUI-HYWM2] Health check: ping (timeout=5.0s)...
 [ComfyUI-HYWM2] Health check: ok
 [SubprocessWorker] call_id=43 sending model_to_device
-[comfy-env] [VRAM] After offload 'FeatureFusionBlock_19' (4 MB): 1239 / 24575 MB
-[comfy-env] [VRAM] Before offload 'Linear_6' (8 MB) -> cpu: 1239 / 24575 MB
+[comfy-env] [VRAM] After offload 'FeatureFusionBlock_19' (4 MB): 1130 / 8150 MB
+[comfy-env] [VRAM] Before offload 'Linear_6' (8 MB) -> cpu: 1130 / 8150 MB
 [ComfyUI-HYWM2] Health check: ping (timeout=5.0s)...
 [ComfyUI-HYWM2] Health check: ok
 [SubprocessWorker] call_id=44 sending model_to_device
-[comfy-env] [VRAM] After offload 'Linear_6' (8 MB): 1239 / 24575 MB
-[comfy-env] [VRAM] Before offload 'Conv2d_55' (9 MB) -> cpu: 1239 / 24575 MB
+[comfy-env] [VRAM] After offload 'Linear_6' (8 MB): 1130 / 8150 MB
+[comfy-env] [VRAM] Before offload 'Conv2d_55' (9 MB) -> cpu: 1130 / 8150 MB
 [ComfyUI-HYWM2] Health check: ping (timeout=5.0s)...
 [ComfyUI-HYWM2] Health check: ok
 [SubprocessWorker] call_id=45 sending model_to_device
-[comfy-env] [VRAM] After offload 'Conv2d_55' (9 MB): 1239 / 24575 MB
-[comfy-env] [VRAM] Before offload 'Conv2d_54' (9 MB) -> cpu: 1239 / 24575 MB
+[comfy-env] [VRAM] After offload 'Conv2d_55' (9 MB): 1130 / 8150 MB
+[comfy-env] [VRAM] Before offload 'Conv2d_54' (9 MB) -> cpu: 1130 / 8150 MB
 [ComfyUI-HYWM2] Health check: ping (timeout=5.0s)...
 [ComfyUI-HYWM2] Health check: ok
 [SubprocessWorker] call_id=46 sending model_to_device
-[comfy-env] [VRAM] After offload 'Conv2d_54' (9 MB): 1239 / 24575 MB
-[comfy-env] [VRAM] Before offload 'Conv2d_41' (9 MB) -> cpu: 1239 / 24575 MB
+[comfy-env] [VRAM] After offload 'Conv2d_54' (9 MB): 1130 / 8150 MB
+[comfy-env] [VRAM] Before offload 'Conv2d_41' (9 MB) -> cpu: 1130 / 8150 MB
 [ComfyUI-HYWM2] Health check: ping (timeout=5.0s)...
 [ComfyUI-HYWM2] Health check: ok
 [SubprocessWorker] call_id=47 sending model_to_device
-[comfy-env] [VRAM] After offload 'Conv2d_41' (9 MB): 1239 / 24575 MB
-[comfy-env] [VRAM] Before offload 'Conv2d_40' (9 MB) -> cpu: 1239 / 24575 MB
+[comfy-env] [VRAM] After offload 'Conv2d_41' (9 MB): 1130 / 8150 MB
+[comfy-env] [VRAM] Before offload 'Conv2d_40' (9 MB) -> cpu: 1130 / 8150 MB
 [ComfyUI-HYWM2] Health check: ping (timeout=5.0s)...
 [ComfyUI-HYWM2] Health check: ok
 [SubprocessWorker] call_id=48 sending model_to_device
-[comfy-env] [VRAM] After offload 'Conv2d_40' (9 MB): 1239 / 24575 MB
-[comfy-env] [VRAM] Before offload 'Conv2d_28' (9 MB) -> cpu: 1239 / 24575 MB
+[comfy-env] [VRAM] After offload 'Conv2d_40' (9 MB): 1130 / 8150 MB
+[comfy-env] [VRAM] Before offload 'Conv2d_28' (9 MB) -> cpu: 1130 / 8150 MB
 [ComfyUI-HYWM2] Health check: ping (timeout=5.0s)...
 [ComfyUI-HYWM2] Health check: ok
 [SubprocessWorker] call_id=49 sending model_to_device
-[comfy-env] [VRAM] After offload 'Conv2d_28' (9 MB): 1239 / 24575 MB
-[comfy-env] [VRAM] Before offload 'Conv2d_27' (9 MB) -> cpu: 1239 / 24575 MB
+[comfy-env] [VRAM] After offload 'Conv2d_28' (9 MB): 1130 / 8150 MB
+[comfy-env] [VRAM] Before offload 'Conv2d_27' (9 MB) -> cpu: 1130 / 8150 MB
 [ComfyUI-HYWM2] Health check: ping (timeout=5.0s)...
 [ComfyUI-HYWM2] Health check: ok
 [SubprocessWorker] call_id=50 sending model_to_device
-[comfy-env] [VRAM] After offload 'Conv2d_27' (9 MB): 1239 / 24575 MB
-[comfy-env] [VRAM] Before offload 'Conv2d_15' (9 MB) -> cpu: 1239 / 24575 MB
+[comfy-env] [VRAM] After offload 'Conv2d_27' (9 MB): 1130 / 8150 MB
+[comfy-env] [VRAM] Before offload 'Conv2d_15' (9 MB) -> cpu: 1130 / 8150 MB
 [ComfyUI-HYWM2] Health check: ping (timeout=5.0s)...
 [ComfyUI-HYWM2] Health check: ok
 [SubprocessWorker] call_id=51 sending model_to_device
-[comfy-env] [VRAM] After offload 'Conv2d_15' (9 MB): 1239 / 24575 MB
-[comfy-env] [VRAM] Before offload 'Conv2d_14' (9 MB) -> cpu: 1239 / 24575 MB
+[comfy-env] [VRAM] After offload 'Conv2d_15' (9 MB): 1130 / 8150 MB
+[comfy-env] [VRAM] Before offload 'Conv2d_14' (9 MB) -> cpu: 1130 / 8150 MB
 [ComfyUI-HYWM2] Health check: ping (timeout=5.0s)...
 [ComfyUI-HYWM2] Health check: ok
 [SubprocessWorker] call_id=52 sending model_to_device
-[comfy-env] [VRAM] After offload 'Conv2d_14' (9 MB): 1239 / 24575 MB
-[comfy-env] [VRAM] Before offload 'FeatureFusionBlock_58' (9 MB) -> cpu: 1239 / 24575 MB
+[comfy-env] [VRAM] After offload 'Conv2d_14' (9 MB): 1130 / 8150 MB
+[comfy-env] [VRAM] Before offload 'FeatureFusionBlock_58' (9 MB) -> cpu: 1130 / 8150 MB
 [ComfyUI-HYWM2] Health check: ping (timeout=5.0s)...
 [ComfyUI-HYWM2] Health check: ok
 [SubprocessWorker] call_id=53 sending model_to_device
-[comfy-env] [VRAM] After offload 'FeatureFusionBlock_58' (9 MB): 1239 / 24575 MB
-[comfy-env] [VRAM] Before offload 'FeatureFusionBlock_57' (9 MB) -> cpu: 1239 / 24575 MB
+[comfy-env] [VRAM] After offload 'FeatureFusionBlock_58' (9 MB): 1130 / 8150 MB
+[comfy-env] [VRAM] Before offload 'FeatureFusionBlock_57' (9 MB) -> cpu: 1130 / 8150 MB
 [ComfyUI-HYWM2] Health check: ping (timeout=5.0s)...
 [ComfyUI-HYWM2] Health check: ok
 [SubprocessWorker] call_id=54 sending model_to_device
-[comfy-env] [VRAM] After offload 'FeatureFusionBlock_57' (9 MB): 1239 / 24575 MB
-[comfy-env] [VRAM] Before offload 'FeatureFusionBlock_56' (9 MB) -> cpu: 1239 / 24575 MB
+[comfy-env] [VRAM] After offload 'FeatureFusionBlock_57' (9 MB): 1130 / 8150 MB
+[comfy-env] [VRAM] Before offload 'FeatureFusionBlock_56' (9 MB) -> cpu: 1130 / 8150 MB
 [ComfyUI-HYWM2] Health check: ping (timeout=5.0s)...
 [ComfyUI-HYWM2] Health check: ok
 [SubprocessWorker] call_id=55 sending model_to_device
-[comfy-env] [VRAM] After offload 'FeatureFusionBlock_56' (9 MB): 1239 / 24575 MB
-[comfy-env] [VRAM] Before offload 'FeatureFusionBlock_44' (9 MB) -> cpu: 1239 / 24575 MB
+[comfy-env] [VRAM] After offload 'FeatureFusionBlock_56' (9 MB): 1130 / 8150 MB
+[comfy-env] [VRAM] Before offload 'FeatureFusionBlock_44' (9 MB) -> cpu: 1130 / 8150 MB
 [ComfyUI-HYWM2] Health check: ping (timeout=5.0s)...
 [ComfyUI-HYWM2] Health check: ok
 [SubprocessWorker] call_id=56 sending model_to_device
-[comfy-env] [VRAM] After offload 'FeatureFusionBlock_44' (9 MB): 1239 / 24575 MB
-[comfy-env] [VRAM] Before offload 'FeatureFusionBlock_43' (9 MB) -> cpu: 1239 / 24575 MB
+[comfy-env] [VRAM] After offload 'FeatureFusionBlock_44' (9 MB): 1130 / 8150 MB
+[comfy-env] [VRAM] Before offload 'FeatureFusionBlock_43' (9 MB) -> cpu: 1130 / 8150 MB
 [ComfyUI-HYWM2] Health check: ping (timeout=5.0s)...
 [ComfyUI-HYWM2] Health check: ok
 [SubprocessWorker] call_id=57 sending model_to_device
-[comfy-env] [VRAM] After offload 'FeatureFusionBlock_43' (9 MB): 1239 / 24575 MB
-[comfy-env] [VRAM] Before offload 'FeatureFusionBlock_42' (9 MB) -> cpu: 1239 / 24575 MB
+[comfy-env] [VRAM] After offload 'FeatureFusionBlock_43' (9 MB): 1130 / 8150 MB
+[comfy-env] [VRAM] Before offload 'FeatureFusionBlock_42' (9 MB) -> cpu: 1130 / 8150 MB
 [ComfyUI-HYWM2] Health check: ping (timeout=5.0s)...
 [ComfyUI-HYWM2] Health check: ok
 [SubprocessWorker] call_id=58 sending model_to_device
-[comfy-env] [VRAM] After offload 'FeatureFusionBlock_42' (9 MB): 1239 / 24575 MB
-[comfy-env] [VRAM] Before offload 'FeatureFusionBlock_31' (9 MB) -> cpu: 1239 / 24575 MB
+[comfy-env] [VRAM] After offload 'FeatureFusionBlock_42' (9 MB): 1130 / 8150 MB
+[comfy-env] [VRAM] Before offload 'FeatureFusionBlock_31' (9 MB) -> cpu: 1130 / 8150 MB
 [ComfyUI-HYWM2] Health check: ping (timeout=5.0s)...
 [ComfyUI-HYWM2] Health check: ok
 [SubprocessWorker] call_id=59 sending model_to_device
-[comfy-env] [VRAM] After offload 'FeatureFusionBlock_31' (9 MB): 1239 / 24575 MB
-[comfy-env] [VRAM] Before offload 'FeatureFusionBlock_30' (9 MB) -> cpu: 1239 / 24575 MB
+[comfy-env] [VRAM] After offload 'FeatureFusionBlock_31' (9 MB): 1130 / 8150 MB
+[comfy-env] [VRAM] Before offload 'FeatureFusionBlock_30' (9 MB) -> cpu: 1130 / 8150 MB
 [ComfyUI-HYWM2] Health check: ping (timeout=5.0s)...
 [ComfyUI-HYWM2] Health check: ok
 [SubprocessWorker] call_id=60 sending model_to_device
-[comfy-env] [VRAM] After offload 'FeatureFusionBlock_30' (9 MB): 1239 / 24575 MB
-[comfy-env] [VRAM] Before offload 'FeatureFusionBlock_29' (9 MB) -> cpu: 1239 / 24575 MB
+[comfy-env] [VRAM] After offload 'FeatureFusionBlock_30' (9 MB): 1130 / 8150 MB
+[comfy-env] [VRAM] Before offload 'FeatureFusionBlock_29' (9 MB) -> cpu: 1130 / 8150 MB
 [ComfyUI-HYWM2] Health check: ping (timeout=5.0s)...
 [ComfyUI-HYWM2] Health check: ok
 [SubprocessWorker] call_id=61 sending model_to_device
-[comfy-env] [VRAM] After offload 'FeatureFusionBlock_29' (9 MB): 1239 / 24575 MB
-[comfy-env] [VRAM] Before offload 'FeatureFusionBlock_18' (9 MB) -> cpu: 1239 / 24575 MB
-[ComfyUI-HYWM2] Health check: ping (timeout=5.0s)...
-[ComfyUI-HYWM2] Health check: ok
-[SubprocessWorker] call_id=62 sending model_to_device
-[comfy-env] [VRAM] After offload 'FeatureFusionBlock_18' (9 MB): 1239 / 24575 MB
-[comfy-env] [VRAM] Before offload 'FeatureFusionBlock_17' (9 MB) -> cpu: 1239 / 24575 MB
-[ComfyUI-HYWM2] Health check: ping (timeout=5.0s)...
-[ComfyUI-HYWM2] Health check: ok
-[SubprocessWorker] call_id=63 sending model_to_device
-[comfy-env] [VRAM] After offload 'FeatureFusionBlock_17' (9 MB): 1239 / 24575 MB
-[comfy-env] [VRAM] Before offload 'FeatureFusionBlock_16' (9 MB) -> cpu: 1239 / 24575 MB
-[ComfyUI-HYWM2] Health check: ping (timeout=5.0s)...
-[ComfyUI-HYWM2] Health check: ok
-[SubprocessWorker] call_id=64 sending model_to_device
-[comfy-env] [VRAM] After offload 'FeatureFusionBlock_16' (9 MB): 1239 / 24575 MB
-[comfy-env] [VRAM] Before offload 'ModuleList_49' (22 MB) -> cpu: 1239 / 24575 MB
-[ComfyUI-HYWM2] Health check: ping (timeout=5.0s)...
-[ComfyUI-HYWM2] Health check: ok
-[SubprocessWorker] call_id=65 sending model_to_device
-[comfy-env] [VRAM] After offload 'ModuleList_49' (22 MB): 1239 / 24575 MB
-[comfy-env] [VRAM] Before offload 'ModuleList_36' (22 MB) -> cpu: 1239 / 24575 MB
-[ComfyUI-HYWM2] Health check: ping (timeout=5.0s)...
-[ComfyUI-HYWM2] Health check: ok
-[SubprocessWorker] call_id=66 sending model_to_device
-[comfy-env] [VRAM] After offload 'ModuleList_36' (22 MB): 1239 / 24575 MB
-[comfy-env] [VRAM] Before offload 'ModuleList_23' (22 MB) -> cpu: 1239 / 24575 MB
-[ComfyUI-HYWM2] Health check: ping (timeout=5.0s)...
-[ComfyUI-HYWM2] Health check: ok
-[SubprocessWorker] call_id=67 sending model_to_device

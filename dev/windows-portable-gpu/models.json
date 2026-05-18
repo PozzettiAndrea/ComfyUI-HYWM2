@@ -1,13 +1,13 @@
 {
-  "models_dir": "C:\\workspaces\\HYWM2-2145\\portable-comfyui\\ComfyUI_windows_portable\\ComfyUI\\models",
+  "models_dir": "C:\\workspaces\\HYWM2-2331\\portable-comfyui\\ComfyUI_windows_portable\\ComfyUI\\models",
   "summary": {
     "total_files": 14,
-    "total_size_bytes": 3293602235,
+    "total_size_bytes": 3293602234,
     "total_size_human": "3.1 GB"
   },
   "folders": {
     "hywm2": {
-      "total_size_bytes": 3273942243,
+      "total_size_bytes": 3273942242,
       "total_size_human": "3.0 GB",
       "source": {
         "type": "unknown"
@@ -30,13 +30,13 @@
         },
         {
           "path": ".cache\\huggingface\\download\\model.safetensors.metadata",
-          "size_bytes": 128,
-          "size_human": "128.0 B"
+          "size_bytes": 126,
+          "size_human": "126.0 B"
         },
         {
           "path": ".cache\\huggingface\\download\\config.json.metadata",
-          "size_bytes": 103,
-          "size_human": "103.0 B"
+          "size_bytes": 104,
+          "size_human": "104.0 B"
         },
         {
           "path": ".cache\\huggingface\\.gitignore",
