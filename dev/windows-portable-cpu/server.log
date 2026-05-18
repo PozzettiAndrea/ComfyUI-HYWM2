@@ -5,19 +5,19 @@ setup plugin alembic.autogenerate.constraints
 setup plugin alembic.autogenerate.defaults
 setup plugin alembic.autogenerate.comments
 [comfy-env] ComfyUI-HYWM2: 1 isolation env(s):
-[comfy-env]   nodes -> D:\a\comfy-gpu-ci\comfy-gpu-ci\test_workspaces\HYWM2-1944\portable-comfyui\ComfyUI_windows_portable\ComfyUI\custom_nodes\ComfyUI-HYWM2\nodes
+[comfy-env]   nodes -> D:\a\comfy-gpu-ci\comfy-gpu-ci\test_workspaces\HYWM2-1608\portable-comfyui\ComfyUI_windows_portable\ComfyUI\custom_nodes\ComfyUI-HYWM2\nodes
 [comfy-env] Workspace: C:\Users\stduser\AppData\Local\Programs\comfy-env
 [comfy-env]     env: C:\Users\stduser\AppData\Local\Programs\comfy-env\.pixi\envs\hywm2-nodes  [OK]
 [comfy-env] prestartup complete
 
 Prestartup times for custom nodes:
-   0.3 seconds: D:\a\comfy-gpu-ci\comfy-gpu-ci\test_workspaces\HYWM2-1944\portable-comfyui\ComfyUI_windows_portable\ComfyUI\custom_nodes\ComfyUI-HYWM2
+   0.2 seconds: D:\a\comfy-gpu-ci\comfy-gpu-ci\test_workspaces\HYWM2-1608\portable-comfyui\ComfyUI_windows_portable\ComfyUI\custom_nodes\ComfyUI-HYWM2
 
-D:\a\comfy-gpu-ci\comfy-gpu-ci\test_workspaces\HYWM2-1944\portable-comfyui\ComfyUI_windows_portable\python_embeded\Lib\site-packages\torch\cuda\__init__.py:180: UserWarning: cudaGetDeviceCount() returned cudaErrorNotSupported, likely using older driver or on CPU machine (Triggered internally at C:\actions-runner\_work\pytorch\pytorch\pytorch\c10\cuda\CUDAFunctions.cpp:88.)
+D:\a\comfy-gpu-ci\comfy-gpu-ci\test_workspaces\HYWM2-1608\portable-comfyui\ComfyUI_windows_portable\python_embeded\Lib\site-packages\torch\cuda\__init__.py:180: UserWarning: cudaGetDeviceCount() returned cudaErrorNotSupported, likely using older driver or on CPU machine (Triggered internally at C:\actions-runner\_work\pytorch\pytorch\pytorch\c10\cuda\CUDAFunctions.cpp:88.)
   return torch._C._cuda_getDeviceCount() > 0
 Found comfy_kitchen backend eager: {'available': True, 'disabled': False, 'unavailable_reason': None, 'capabilities': ['apply_rope', 'apply_rope1', 'dequantize_mxfp8', 'dequantize_nvfp4', 'dequantize_per_tensor_fp8', 'quantize_mxfp8', 'quantize_nvfp4', 'quantize_per_tensor_fp8', 'scaled_mm_mxfp8', 'scaled_mm_nvfp4']}
-Found comfy_kitchen backend triton: {'available': False, 'disabled': True, 'unavailable_reason': "ImportError: No module named 'triton'", 'capabilities': []}
 Found comfy_kitchen backend cuda: {'available': False, 'disabled': False, 'unavailable_reason': 'CUDA not available on this system', 'capabilities': []}
+Found comfy_kitchen backend triton: {'available': False, 'disabled': True, 'unavailable_reason': "ImportError: No module named 'triton'", 'capabilities': []}
 Checkpoint files will always be loaded safely.
 Total VRAM 16379 MB, total RAM 16379 MB
 pytorch version: 2.11.0+cu130
@@ -31,15 +31,15 @@ comfy-kitchen version: 0.2.8
 ****** User settings have been changed to be stored on the server instead of browser storage. ******
 ****** For multi-user setups add the --multi-user CLI argument to enable multiple user profiles. ******
 ComfyUI frontend version: 1.43.18
-[Prompt Server] web root: D:\a\comfy-gpu-ci\comfy-gpu-ci\test_workspaces\HYWM2-1944\portable-comfyui\ComfyUI_windows_portable\python_embeded\Lib\site-packages\comfyui_frontend_package\static
+[Prompt Server] web root: D:\a\comfy-gpu-ci\comfy-gpu-ci\test_workspaces\HYWM2-1608\portable-comfyui\ComfyUI_windows_portable\python_embeded\Lib\site-packages\comfyui_frontend_package\static
 Asset seeder disabled
 [comfy-env] Version: 0.3.89
 [comfy-env] register_nodes: ComfyUI-HYWM2
-[comfy-env] ComfyUI source dir: D:\a\comfy-gpu-ci\comfy-gpu-ci\test_workspaces\HYWM2-1944\portable-comfyui\ComfyUI_windows_portable\ComfyUI
+[comfy-env] ComfyUI source dir: D:\a\comfy-gpu-ci\comfy-gpu-ci\test_workspaces\HYWM2-1608\portable-comfyui\ComfyUI_windows_portable\ComfyUI
 [comfy-env] Found 1 isolation env(s)
 [comfy-env] Scanning nodes metadata (isolation root)...
 [comfy-env] hywm2-nodes: Library/bin has 429 DLLs
-[comfy-env] Metadata scan: C:\Users\stduser\.pixi\bin\pixi.exe run --as-is --manifest-path C:\Users\stduser\AppData\Local\Programs\comfy-env\pixi.toml -e hywm2-nodes python C:\Users\stduser\AppData\Local\Temp\comfy_meta_7usb4d_z.py D:\a\comfy-gpu-ci\comfy-gpu-ci\test_workspaces\HYWM2-1944\portable-comfyui\ComfyUI_windows_portable\ComfyUI\custom_nodes\ComfyUI-HYWM2 nodes C:\Users\stduser\AppData\Local\Temp\comfy_meta_out__b1vamw_.pkl
+[comfy-env] Metadata scan: C:\Users\stduser\.pixi\bin\pixi.exe run --as-is --manifest-path C:\Users\stduser\AppData\Local\Programs\comfy-env\pixi.toml -e hywm2-nodes python C:\Users\stduser\AppData\Local\Temp\comfy_meta_detuuyg9.py D:\a\comfy-gpu-ci\comfy-gpu-ci\test_workspaces\HYWM2-1608\portable-comfyui\ComfyUI_windows_portable\ComfyUI\custom_nodes\ComfyUI-HYWM2 nodes C:\Users\stduser\AppData\Local\Temp\comfy_meta_out_rddro_bk.pkl
 [comfy-env] Scan env PATH for nodes:
 [comfy-env]   [0] C:\Users\stduser\AppData\Local\Programs\comfy-env\.pixi\envs\hywm2-nodes
 [comfy-env]   [1] C:\Users\stduser\AppData\Local\Programs\comfy-env\.pixi\envs\hywm2-nodes\Library\bin
@@ -49,17 +49,17 @@ Asset seeder disabled
 [comfy-env]   [5] C:\Windows
 [comfy-env]   [6] C:\Windows\System32\Wbem
 [comfy-env] Metadata scan stderr for nodes:
-[comfy-env]   [meta-scan] importing nodes from D:\a\comfy-gpu-ci\comfy-gpu-ci\test_workspaces\HYWM2-1944\portable-comfyui\ComfyUI_windows_portable\ComfyUI\custom_nodes\ComfyUI-HYWM2
+[comfy-env]   [meta-scan] importing nodes from D:\a\comfy-gpu-ci\comfy-gpu-ci\test_workspaces\HYWM2-1608\portable-comfyui\ComfyUI_windows_portable\ComfyUI\custom_nodes\ComfyUI-HYWM2
 [comfy-env]   [meta-scan] import OK
-[comfy-env] Scanned nodes: 9 nodes (8.5s)
-[comfy-env] Scanned nodes root: 9 nodes (8.5s)
+[comfy-env] Scanned nodes: 9 nodes (6.6s)
+[comfy-env] Scanned nodes root: 9 nodes (6.6s)
 [comfy-env] Imported nodes root: 9 nodes (isolation)
 [comfy-env] Registered 9 total nodes
 
 Import times for custom nodes:
-   0.0 seconds: D:\a\comfy-gpu-ci\comfy-gpu-ci\test_workspaces\HYWM2-1944\portable-comfyui\ComfyUI_windows_portable\ComfyUI\custom_nodes\websocket_image_save.py
-   0.0 seconds: D:\a\comfy-gpu-ci\comfy-gpu-ci\test_workspaces\HYWM2-1944\portable-comfyui\ComfyUI_windows_portable\ComfyUI\custom_nodes\ComfyUI-validate-endpoint
-   9.3 seconds: D:\a\comfy-gpu-ci\comfy-gpu-ci\test_workspaces\HYWM2-1944\portable-comfyui\ComfyUI_windows_portable\ComfyUI\custom_nodes\ComfyUI-HYWM2
+   0.0 seconds: D:\a\comfy-gpu-ci\comfy-gpu-ci\test_workspaces\HYWM2-1608\portable-comfyui\ComfyUI_windows_portable\ComfyUI\custom_nodes\websocket_image_save.py
+   0.0 seconds: D:\a\comfy-gpu-ci\comfy-gpu-ci\test_workspaces\HYWM2-1608\portable-comfyui\ComfyUI_windows_portable\ComfyUI\custom_nodes\ComfyUI-validate-endpoint
+   7.2 seconds: D:\a\comfy-gpu-ci\comfy-gpu-ci\test_workspaces\HYWM2-1608\portable-comfyui\ComfyUI_windows_portable\ComfyUI\custom_nodes\ComfyUI-HYWM2
 
 Context impl SQLiteImpl.
 Will assume non-transactional DDL.
@@ -75,7 +75,7 @@ Change preview_id FK from assets.id to asset_references.id.
 Database upgraded from None to 0003_add_metadata_job_id
 Starting server
 
-To see the GUI go to: http://127.0.0.1:41889
+To see the GUI go to: http://127.0.0.1:41897
 === /validate endpoint called ===
 Received JSON with keys: ['prompt']
 Prompt has 6 nodes
@@ -91,21 +91,21 @@ Prompt has 6 nodes
     Inputs: {"images": ["2", 0]}
   Node 11: PreviewImage
     Inputs: {"images": ["2", 1]}
-Generated prompt_id: 99aace91-a902-43cd-aa7b-34ed0a6a4544
+Generated prompt_id: 65f26e07-d219-451e-8673-746b4288d728
 Calling execution.validate_prompt()...
 Validation result: valid=True
 === Validation PASSED ===
 got prompt
 [comfy-env] Running LoadHYWM2Model: precision: 'auto', target_size: 952, predict_camera: False, predict_depth: True, predict_normals: True, predict_points: False, predict_gaussians: False
 [comfy-env] SubprocessWorker: C:\Users\stduser\AppData\Local\Programs\comfy-env\.pixi\envs\hywm2-nodes\python.exe
-[comfy-env] env_vars: {'COMFYUI_BASE': 'D:\\a\\comfy-gpu-ci\\comfy-gpu-ci\\test_workspaces\\HYWM2-1944\\portable-comfyui\\ComfyUI_windows_portable\\ComfyUI'}
+[comfy-env] env_vars: {'COMFYUI_BASE': 'D:\\a\\comfy-gpu-ci\\comfy-gpu-ci\\test_workspaces\\HYWM2-1608\\portable-comfyui\\ComfyUI_windows_portable\\ComfyUI'}
 [SubprocessWorker] call_method: nodes.load_model.LoadHYWM2Model.EXECUTE_NORMALIZED
 [SubprocessWorker] acquired lock, ensuring started...
 [comfy-env] hywm2-nodes: Library/bin has 429 DLLs
 [ComfyUI-HYWM2] python: C:\Users\stduser\AppData\Local\Programs\comfy-env\.pixi\envs\hywm2-nodes\python.exe
-[ComfyUI-HYWM2] sys_path sent to worker: ['D:\\a\\comfy-gpu-ci\\comfy-gpu-ci\\test_workspaces\\HYWM2-1944\\portable-comfyui\\ComfyUI_windows_portable\\ComfyUI', 'D:\\a\\comfy-gpu-ci\\comfy-gpu-ci\\test_workspaces\\HYWM2-1944\\portable-comfyui\\ComfyUI_windows_portable\\ComfyUI\\custom_nodes\\ComfyUI-HYWM2', 'C:\\Users\\stduser\\AppData\\Local\\Programs\\comfy-env\\.pixi\\envs\\hywm2-nodes\\Lib\\site-packages', 'D:\\a\\comfy-gpu-ci\\comfy-gpu-ci\\test_workspaces\\HYWM2-1944\\portable-comfyui\\ComfyUI_windows_portable\\ComfyUI\\custom_nodes\\ComfyUI-HYWM2']
+[ComfyUI-HYWM2] sys_path sent to worker: ['D:\\a\\comfy-gpu-ci\\comfy-gpu-ci\\test_workspaces\\HYWM2-1608\\portable-comfyui\\ComfyUI_windows_portable\\ComfyUI', 'D:\\a\\comfy-gpu-ci\\comfy-gpu-ci\\test_workspaces\\HYWM2-1608\\portable-comfyui\\ComfyUI_windows_portable\\ComfyUI\\custom_nodes\\ComfyUI-HYWM2', 'C:\\Users\\stduser\\AppData\\Local\\Programs\\comfy-env\\.pixi\\envs\\hywm2-nodes\\Lib\\site-packages', 'D:\\a\\comfy-gpu-ci\\comfy-gpu-ci\\test_workspaces\\HYWM2-1608\\portable-comfyui\\ComfyUI_windows_portable\\ComfyUI\\custom_nodes\\ComfyUI-HYWM2']
 [SubprocessWorker] is_pixi=True, python=C:\Users\stduser\AppData\Local\Programs\comfy-env\.pixi\envs\hywm2-nodes\python.exe
-[SubprocessWorker] launching cmd=['C:\\Users\\stduser\\.pixi\\bin\\pixi.exe', 'run', '--as-is', '--manifest-path', 'C:\\Users\\stduser\\AppData\\Local\\Programs\\comfy-env\\pixi.toml', '-e', 'hywm2-nodes', 'python', 'C:\\Users\\stduser\\AppData\\Local\\Temp\\comfyui_pvenv_yhhi1vsd\\persistent_worker.py', 'tcp://127.0.0.1:61238']...
+[SubprocessWorker] launching cmd=['C:\\Users\\stduser\\.pixi\\bin\\pixi.exe', 'run', '--as-is', '--manifest-path', 'C:\\Users\\stduser\\AppData\\Local\\Programs\\comfy-env\\pixi.toml', '-e', 'hywm2-nodes', 'python', 'C:\\Users\\stduser\\AppData\\Local\\Temp\\comfyui_pvenv_8b5z45jt\\persistent_worker.py', 'tcp://127.0.0.1:56578']...
 C:\Users\stduser\AppData\Local\Programs\comfy-env\.pixi\envs\hywm2-nodes\Lib\site-packages\torch\cuda\__init__.py:180: UserWarning: cudaGetDeviceCount() returned cudaErrorNotSupported, likely using older driver or on CPU machine (Triggered internally at C:\actions-runner\_work\pytorch\pytorch\pytorch\c10\cuda\CUDAFunctions.cpp:88.)
   return torch._C._cuda_getDeviceCount() > 0
 [worker:ComfyUI-HYWM2] ERROR: Failed to import comfy_kitchen, Error: No module named 'comfy_kitchen', fp8 and fp4 support will not be available.
@@ -114,40 +114,42 @@ C:\Users\stduser\AppData\Local\Programs\comfy-env\.pixi\envs\hywm2-nodes\Lib\sit
 [SubprocessWorker] created 0 shm blocks
 [SubprocessWorker] sending request via socket...
 [SubprocessWorker] call_id=1 sending call_method
-model.safetensors:   0%|          | 0.00/3.27G [00:00<?, ?B/s]model.safetensors:   0%|          | 0.00/3.27G [00:00<?, ?B/s]model.safetensors:   2%|▏         | 67.1M/3.27G [00:01<01:11, 44.9MB/s][SubprocessWorker] callback 'report_progress' from call_id=1
-model.safetensors:   4%|▍         | 142M/3.27G [00:01<00:33, 93.7MB/s] [SubprocessWorker] callback 'report_progress' from call_id=1
-model.safetensors:   9%|▊         | 286M/3.27G [00:02<00:15, 198MB/s] [SubprocessWorker] callback 'report_progress' from call_id=1
-model.safetensors:  11%|█         | 353M/3.27G [00:02<00:15, 186MB/s][SubprocessWorker] callback 'report_progress' from call_id=1
-model.safetensors:  18%|█▊        | 605M/3.27G [00:02<00:08, 319MB/s][SubprocessWorker] callback 'report_progress' from call_id=1
-model.safetensors:  22%|██▏       | 706M/3.27G [00:03<00:06, 369MB/s][SubprocessWorker] callback 'report_progress' from call_id=1
-model.safetensors:  27%|██▋       | 890M/3.27G [00:03<00:06, 358MB/s][SubprocessWorker] callback 'report_progress' from call_id=1
-model.safetensors:  31%|███▏      | 1.02G/3.27G [00:03<00:05, 385MB/s][SubprocessWorker] callback 'report_progress' from call_id=1
-model.safetensors:  37%|███▋      | 1.22G/3.27G [00:04<00:04, 470MB/s][SubprocessWorker] callback 'report_progress' from call_id=1
-model.safetensors:  41%|████      | 1.33G/3.27G [00:04<00:04, 417MB/s][SubprocessWorker] callback 'report_progress' from call_id=1
-model.safetensors:  46%|████▌     | 1.50G/3.27G [00:05<00:05, 306MB/s][SubprocessWorker] callback 'report_progress' from call_id=1
-model.safetensors:  48%|████▊     | 1.57G/3.27G [00:06<00:08, 199MB/s][SubprocessWorker] callback 'report_progress' from call_id=1
-model.safetensors:  52%|█████▏    | 1.70G/3.27G [00:07<00:08, 189MB/s][SubprocessWorker] callback 'report_progress' from call_id=1
-model.safetensors:  54%|█████▍    | 1.77G/3.27G [00:07<00:07, 192MB/s][SubprocessWorker] callback 'report_progress' from call_id=1
-model.safetensors:  58%|█████▊    | 1.90G/3.27G [00:07<00:05, 260MB/s][SubprocessWorker] callback 'report_progress' from call_id=1
-model.safetensors:  62%|██████▏   | 2.04G/3.27G [00:07<00:03, 310MB/s][SubprocessWorker] callback 'report_progress' from call_id=1
-model.safetensors:  64%|██████▍   | 2.10G/3.27G [00:08<00:03, 293MB/s][SubprocessWorker] callback 'report_progress' from call_id=1
-model.safetensors:  66%|██████▋   | 2.17G/3.27G [00:08<00:05, 202MB/s][SubprocessWorker] callback 'report_progress' from call_id=1
-model.safetensors:  70%|███████   | 2.31G/3.27G [00:09<00:03, 261MB/s][SubprocessWorker] callback 'report_progress' from call_id=1
-model.safetensors:  75%|███████▍  | 2.44G/3.27G [00:09<00:02, 302MB/s][SubprocessWorker] callback 'report_progress' from call_id=1
-model.safetensors:  77%|███████▋  | 2.51G/3.27G [00:09<00:02, 329MB/s][SubprocessWorker] callback 'report_progress' from call_id=1
-model.safetensors:  85%|████████▍ | 2.78G/3.27G [00:09<00:00, 522MB/s][SubprocessWorker] callback 'report_progress' from call_id=1
-model.safetensors:  89%|████████▉ | 2.91G/3.27G [00:10<00:00, 527MB/s][SubprocessWorker] callback 'report_progress' from call_id=1
-model.safetensors:  93%|█████████▎| 3.04G/3.27G [00:10<00:00, 529MB/s][SubprocessWorker] callback 'report_progress' from call_id=1
-model.safetensors:  97%|█████████▋| 3.18G/3.27G [00:10<00:00, 531MB/s][SubprocessWorker] callback 'report_progress' from call_id=1
-model.safetensors: 100%|██████████| 3.27G/3.27G [00:10<00:00, 305MB/s]
-[SubprocessWorker] callback 'report_progress' from call_id=1
 Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
 [worker:ComfyUI-HYWM2] WARNING: Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+model.safetensors:   0%|          | 0.00/3.27G [00:00<?, ?B/s]model.safetensors:   2%|▏         | 67.1M/3.27G [00:02<02:02, 26.1MB/s][SubprocessWorker] callback 'report_progress' from call_id=1
+model.safetensors:   8%|▊         | 269M/3.27G [00:02<00:24, 122MB/s]  [SubprocessWorker] callback 'report_progress' from call_id=1
+model.safetensors:  10%|▉         | 320M/3.27G [00:03<00:22, 133MB/s][SubprocessWorker] callback 'report_progress' from call_id=1
+model.safetensors:  12%|█▏        | 404M/3.27G [00:03<00:17, 169MB/s][SubprocessWorker] callback 'report_progress' from call_id=1
+model.safetensors:  15%|█▍        | 487M/3.27G [00:03<00:14, 193MB/s][SubprocessWorker] callback 'report_progress' from call_id=1
+model.safetensors:  17%|█▋        | 572M/3.27G [00:03<00:11, 235MB/s][SubprocessWorker] callback 'report_progress' from call_id=1
+model.safetensors:  23%|██▎       | 768M/3.27G [00:04<00:07, 348MB/s][SubprocessWorker] callback 'report_progress' from call_id=1
+model.safetensors:  27%|██▋       | 873M/3.27G [00:04<00:06, 387MB/s][SubprocessWorker] callback 'report_progress' from call_id=1
+model.safetensors:  29%|██▉       | 957M/3.27G [00:04<00:06, 350MB/s][SubprocessWorker] callback 'report_progress' from call_id=1
+model.safetensors:  31%|███▏      | 1.02G/3.27G [00:04<00:06, 355MB/s][SubprocessWorker] callback 'report_progress' from call_id=1
+model.safetensors:  37%|███▋      | 1.22G/3.27G [00:05<00:04, 466MB/s][SubprocessWorker] callback 'report_progress' from call_id=1
+model.safetensors:  41%|████      | 1.35G/3.27G [00:05<00:03, 491MB/s][SubprocessWorker] callback 'report_progress' from call_id=1
+model.safetensors:  43%|████▎     | 1.42G/3.27G [00:06<00:07, 260MB/s][SubprocessWorker] callback 'report_progress' from call_id=1
+model.safetensors:  46%|████▌     | 1.50G/3.27G [00:06<00:06, 280MB/s][SubprocessWorker] callback 'report_progress' from call_id=1
+model.safetensors:  48%|████▊     | 1.57G/3.27G [00:07<00:08, 191MB/s][SubprocessWorker] callback 'report_progress' from call_id=1
+model.safetensors:  52%|█████▏    | 1.70G/3.27G [00:08<00:09, 163MB/s][SubprocessWorker] callback 'report_progress' from call_id=1
+model.safetensors:  54%|█████▍    | 1.77G/3.27G [00:08<00:08, 176MB/s][SubprocessWorker] callback 'report_progress' from call_id=1
+model.safetensors:  58%|█████▊    | 1.90G/3.27G [00:08<00:05, 237MB/s][SubprocessWorker] callback 'report_progress' from call_id=1
+model.safetensors:  60%|██████    | 1.97G/3.27G [00:08<00:05, 243MB/s][SubprocessWorker] callback 'report_progress' from call_id=1
+model.safetensors:  64%|██████▍   | 2.10G/3.27G [00:09<00:03, 311MB/s][SubprocessWorker] callback 'report_progress' from call_id=1
+model.safetensors:  66%|██████▋   | 2.17G/3.27G [00:09<00:03, 296MB/s][SubprocessWorker] callback 'report_progress' from call_id=1
+model.safetensors:  70%|███████   | 2.31G/3.27G [00:09<00:02, 377MB/s][SubprocessWorker] callback 'report_progress' from call_id=1
+model.safetensors:  75%|███████▍  | 2.44G/3.27G [00:09<00:01, 421MB/s][SubprocessWorker] callback 'report_progress' from call_id=1
+model.safetensors:  81%|████████  | 2.64G/3.27G [00:10<00:01, 530MB/s][SubprocessWorker] callback 'report_progress' from call_id=1
+model.safetensors:  87%|████████▋ | 2.84G/3.27G [00:10<00:00, 609MB/s][SubprocessWorker] callback 'report_progress' from call_id=1
+model.safetensors:  91%|█████████ | 2.98G/3.27G [00:10<00:00, 588MB/s][SubprocessWorker] callback 'report_progress' from call_id=1
+model.safetensors:  95%|█████████▌| 3.11G/3.27G [00:10<00:00, 573MB/s][SubprocessWorker] callback 'report_progress' from call_id=1
+model.safetensors: 100%|██████████| 3.27G/3.27G [00:11<00:00, 605MB/s][SubprocessWorker] callback 'report_progress' from call_id=1
+model.safetensors: 100%|██████████| 3.27G/3.27G [00:11<00:00, 295MB/s]
 config.json:   0%|          | 0.00/842 [00:00<?, ?B/s][SubprocessWorker] callback 'report_progress' from call_id=1
-config.json: 100%|██████████| 842/842 [00:00<00:00, 889kB/s]
+config.json: 100%|██████████| 842/842 [00:00<00:00, 1.03MB/s]
 [SubprocessWorker] callback 'report_progress' from call_id=1
 [SubprocessWorker] got response: ok
-[comfy-env] LoadHYWM2Model done (18.40s): result: NodeOutput
+[comfy-env] LoadHYWM2Model done (19.11s): result: NodeOutput
 [comfy-env] Running HYWM2Reconstruct: prior_camera_json: '', depth_colormap: 'viridis', apply_mask: True, view_index: -1, points_conf_percentile: 0.0, points_max: 2000000, gaussians_weight_threshold: 0.3, gaussians_downsample: 1.0, model: dict, images: torch.float32 [1,436,768,3] cpu
 [SubprocessWorker] call_method: nodes.reconstruct.HYWM2Reconstruct.EXECUTE_NORMALIZED
 [SubprocessWorker] acquired lock, ensuring started...
@@ -162,103 +164,201 @@ Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF
 [worker:ComfyUI-HYWM2] [comfy-env] _from_shm got dict with keys: ['__type__', 'strategy', 'manager_path', 'storage_key', 'storage_size']
 [worker:ComfyUI-HYWM2] [comfy-env] DESERIALIZE TensorRef: tensor_size=[1, 436, 768, 3]
 [worker:ComfyUI-HYWM2] [comfy-env] DESERIALIZED tensor shape: torch.Size([1, 436, 768, 3])
-[worker:ComfyUI-HYWM2] [Pipeline] Single-GPU mode
-[worker:ComfyUI-HYWM2] [Init] Found local model at D:\a\comfy-gpu-ci\comfy-gpu-ci\test_workspaces\HYWM2-1944\portable-comfyui\ComfyUI_windows_portable\ComfyUI\models\hywm2\
-[worker:ComfyUI-HYWM2] [WorldMirror] model_size: large, embed_dim: 1024, depth: 24, num_heads: 16, mlp_ratio: 4.0, gs_dim: 256, num_register_tokens: 4
-[worker:ComfyUI-HYWM2] [INFO] Using normalized RoPE!
 [worker:ComfyUI-HYWM2] 
 === WATCHDOG TICK 1 ===
-[worker:ComfyUI-HYWM2] Thread 0x00002154 (most recent call first):
+[worker:ComfyUI-HYWM2] Thread 0x000020c4 (most recent call first):
   File "C:\Users\stduser\AppData\Local\Programs\comfy-env\.pixi\envs\hywm2-nodes\Lib\threading.py", line 363 in wait
   File "C:\Users\stduser\AppData\Local\Programs\comfy-env\.pixi\envs\hywm2-nodes\Lib\threading.py", line 660 in wait
   File "C:\Users\stduser\AppData\Local\Programs\comfy-env\.pixi\envs\hywm2-nodes\Lib\site-packages\tqdm\_monitor.py", line 60 in run
   File "C:\Users\stduser\AppData\Local\Programs\comfy-env\.pixi\envs\hywm2-nodes\Lib\threading.py", line 1044 in _bootstrap_inner
   File "C:\Users\stduser\AppData\Local\Programs\comfy-env\.pixi\envs\hywm2-nodes\Lib\threading.py", line 1015 in _bootstrap
 
-Current thread 0x00001454 (most recent call first):
-  File "C:\Users\stduser\AppData\Local\Temp\comfyui_pvenv_yhhi1vsd\persistent_worker.py", line 52 in _watchdog
+Current thread 0x000006bc (most recent call first):
+  File "C:\Users\stduser\AppData\Local\Temp\comfyui_pvenv_8b5z45jt\persistent_worker.py", line 52 in _watchdog
   File "C:\Users\stduser\AppData\Local\Programs\comfy-env\.pixi\envs\hywm2-nodes\Lib\threading.py", line 995 in run
   File "C:\Users\stduser\AppData\Local\Programs\comfy-env\.pixi\envs\hywm2-nodes\Lib\threading.py", line 1044 in _bootstrap_inner
   File "C:\Users\stduser\AppData\Local\Programs\comfy-env\.pixi\envs\hywm2-nodes\Lib\threading.py", line 1015 in _bootstrap
 
-Thread 0x000021e8 (most recent call first):
-  File "C:\Users\stduser\AppData\Local\Programs\comfy-env\.pixi\envs\hywm2-nodes\Lib\site-packages\torch\nn\modules\module.py", line 2496 in _load_from_state_dict
-  File "C:\Users\stduser\AppData\Local\Programs\comfy-env\.pixi\envs\hywm2-nodes\Lib\site-packages\torch\nn\modules\module.py", line 2589 in load
-  File "C:\Users\stduser\AppData\Local\Programs\comfy-env\.pixi\envs\hywm2-nodes\Lib\site-packages\torch\nn\modules\module.py", line 2606 in load
-  File "C:\Users\stduser\AppData\Local\Programs\comfy-env\.pixi\envs\hywm2-nodes\Lib\site-packages\torch\nn\modules\module.py", line 2606 in load
-  File "C:\Users\stduser\AppData\Local\Programs\comfy-env\.pixi\envs\hywm2-nodes\Lib\site-packages\torch\nn\modules\module.py", line 2606 in load
-  File "C:\Users\stduser\AppData\Local\Programs\comfy-env\.pixi\envs\hywm2-nodes\Lib\site-packages\torch\nn\modules\module.py", line 2606 in load
-  File "C:\Users\stduser\AppData\Local\Programs\comfy-env\.pixi\envs\hywm2-nodes\Lib\site-packages\torch\nn\modules\module.py", line 2606 in load
-  File "C:\Users\stduser\AppData\Local\Programs\comfy-env\.pixi\envs\hywm2-nodes\Lib\site-packages\torch\nn\modules\module.py", line 2606 in load
-  File "C:\Users\stduser\AppData\Local\Programs\comfy-env\.pixi\envs\hywm2-nodes\Lib\site-packages\torch\nn\modules\module.py", line 2619 in load_state_dict
-  File "D:\a\comfy-gpu-ci\comfy-gpu-ci\test_workspaces\HYWM2-1944\portable-comfyui\ComfyUI_windows_portable\ComfyUI\custom_nodes\ComfyUI-HYWM2\nodes\hyworld2\worldrecon\pipeline.py", line 92 in _load_state_dict_selective
-  File "D:\a\comfy-gpu-ci\comfy-gpu-ci\test_workspaces\HYWM2-1944\portable-comfyui\ComfyUI_windows_portable\ComfyUI\custom_nodes\ComfyUI-HYWM2\nodes\hyworld2\worldrecon\pipeline.py", line 324 in from_pretrained
-  File "D:\a\comfy-gpu-ci\comfy-gpu-ci\test_workspaces\HYWM2-1944\portable-comfyui\ComfyUI_windows_portable\ComfyUI\custom_nodes\ComfyUI-HYWM2\nodes\reconstruct.py", line 383 in _get_pipeline
-  File "D:\a\comfy-gpu-ci\comfy-gpu-ci\test_workspaces\HYWM2-1944\portable-comfyui\ComfyUI_windows_portable\ComfyUI\custom_nodes\ComfyUI-HYWM2\nodes\reconstruct.py", line 240 in execute
-  File "C:\Users\stduser\AppData\Local\Programs\comfy-env\.pixi\envs\hywm2-nodes\Lib\site-packages\torch\utils\_contextlib.py", line 124 in decorate_context
-  File "D:\a\comfy-gpu-ci\comfy-gpu-ci\test_workspaces\HYWM2-1944\portable-comfyui\ComfyUI_windows_portable\ComfyUI\comfy_api\latest\_io.py", line 1833 in EXECUTE_NORMALIZED
-  File "C:\Users\stduser\AppData\Local\Temp\comfyui_pvenv_yhhi1vsd\persistent_worker.py", line 1762 in main
-  File "C:\Users\stduser\AppData\Local\Temp\comfyui_pvenv_yhhi1vsd\persistent_worker.py", line 1807 in <module>
+Thread 0x00001be0 (most recent call first):
+  File "<frozen importlib._bootstrap_external>", line 152 in _path_stat
+  File "<frozen importlib._bootstrap_external>", line 158 in _path_is_mode_type
+  File "<frozen importlib._bootstrap_external>", line 166 in _path_isfile
+  File "<frozen importlib._bootstrap_external>", line 1662 in find_spec
+  File "<frozen importlib._bootstrap_external>", line 1530 in _get_spec
+  File "<frozen importlib._bootstrap_external>", line 1556 in find_spec
+  File "<frozen importlib._bootstrap>", line 1262 in _find_spec
+  File "<frozen importlib._bootstrap>", line 1322 in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 1360 in _find_and_load
+  File "C:\Users\stduser\AppData\Local\Programs\comfy-env\.pixi\envs\hywm2-nodes\Lib\site-packages\scipy\fft\__init__.py", line 90 in <module>
+  File "<frozen importlib._bootstrap>", line 488 in _call_with_frames_removed
+  File "<frozen importlib._bootstrap_external>", line 1023 in exec_module
+  File "<frozen importlib._bootstrap>", line 935 in _load_unlocked
+  File "<frozen importlib._bootstrap>", line 1331 in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 1360 in _find_and_load
+  File "<frozen importlib._bootstrap>", line 488 in _call_with_frames_removed
+  File "<frozen importlib._bootstrap_external>", line 1325 in exec_module
+  File "<frozen importlib._bootstrap>", line 935 in _load_unlocked
+  File "<frozen importlib._bootstrap>", line 1331 in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 1360 in _find_and_load
+  File "C:\Users\stduser\AppData\Local\Programs\comfy-env\.pixi\envs\hywm2-nodes\Lib\site-packages\scipy\linalg\interpolative.py", line 360 in <module>
+  File "<frozen importlib._bootstrap>", line 488 in _call_with_frames_removed
+  File "<frozen importlib._bootstrap_external>", line 1023 in exec_module
+  File "<frozen importlib._bootstrap>", line 935 in _load_unlocked
+  File "<frozen importlib._bootstrap>", line 1331 in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 1360 in _find_and_load
+  File "C:\Users\stduser\AppData\Local\Programs\comfy-env\.pixi\envs\hywm2-nodes\Lib\site-packages\scipy\optimize\_remove_redundancy.py", line 9 in <module>
+  File "<frozen importlib._bootstrap>", line 488 in _call_with_frames_removed
+  File "<frozen importlib._bootstrap_external>", line 1023 in exec_module
+  File "<frozen importlib._bootstrap>", line 935 in _load_unlocked
+  File "<frozen importlib._bootstrap>", line 1331 in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 1360 in _find_and_load
+  File "C:\Users\stduser\AppData\Local\Programs\comfy-env\.pixi\envs\hywm2-nodes\Lib\site-packages\scipy\optimize\_linprog_util.py", line 9 in <module>
+  File "<frozen importlib._bootstrap>", line 488 in _call_with_frames_removed
+  File "<frozen importlib._bootstrap_external>", line 1023 in exec_module
+  File "<frozen importlib._bootstrap>", line 935 in _load_unlocked
+  File "<frozen importlib._bootstrap>", line 1331 in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 1360 in _find_and_load
+  File "C:\Users\stduser\AppData\Local\Programs\comfy-env\.pixi\envs\hywm2-nodes\Lib\site-packages\scipy\optimize\_linprog_ip.py", line 27 in <module>
+  File "<frozen importlib._bootstrap>", line 488 in _call_with_frames_removed
+  File "<frozen importlib._bootstrap_external>", line 1023 in exec_module
+  File "<frozen importlib._bootstrap>", line 935 in _load_unlocked
+  File "<frozen importlib._bootstrap>", line 1331 in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 1360 in _find_and_load
+  File "C:\Users\stduser\AppData\Local\Programs\comfy-env\.pixi\envs\hywm2-nodes\Lib\site-packages\scipy\optimize\_linprog.py", line 22 in <module>
+  File "<frozen importlib._bootstrap>", line 488 in _call_with_frames_removed
+  File "<frozen importlib._bootstrap_external>", line 1023 in exec_module
+  File "<frozen importlib._bootstrap>", line 935 in _load_unlocked
+  File "<frozen importlib._bootstrap>", line 1331 in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 1360 in _find_and_load
+  File "C:\Users\stduser\AppData\Local\Programs\comfy-env\.pixi\envs\hywm2-nodes\Lib\site-packages\scipy\optimize\__init__.py", line 435 in <module>
+  File "<frozen importlib._bootstrap>", line 488 in _call_with_frames_removed
+  File "<frozen importlib._bootstrap_external>", line 1023 in exec_module
+  File "<frozen importlib._bootstrap>", line 935 in _load_unlocked
+  File "<frozen importlib._bootstrap>", line 1331 in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 1360 in _find_and_load
+  File "C:\Users\stduser\AppData\Local\Programs\comfy-env\.pixi\envs\hywm2-nodes\Lib\site-packages\trimesh\nsphere.py", line 17 in <module>
+  File "<frozen importlib._bootstrap>", line 488 in _call_with_frames_removed
+  File "<frozen importlib._bootstrap_external>", line 1023 in exec_module
+  File "<frozen importlib._bootstrap>", line 935 in _load_unlocked
+  File "<frozen importlib._bootstrap>", line 1331 in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 1360 in _find_and_load
+  File "<frozen importlib._bootstrap>", line 488 in _call_with_frames_removed
+  File "<frozen importlib._bootstrap>", line 1423 in _handle_fromlist
+  File "C:\Users\stduser\AppData\Local\Programs\comfy-env\.pixi\envs\hywm2-nodes\Lib\site-packages\trimesh\bounds.py", line 3 in <module>
+  File "<frozen importlib._bootstrap>", line 488 in _call_with_frames_removed
+  File "<frozen importlib._bootstrap_external>", line 1023 in exec_module
+  File "<frozen importlib._bootstrap>", line 935 in _load_unlocked
+  File "<frozen importlib._bootstrap>", line 1331 in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 1360 in _find_and_load
+  File "<frozen importlib._bootstrap>", line 488 in _call_with_frames_removed
+  File "<frozen importlib._bootstrap>", line 1423 in _handle_fromlist
+  File "C:\Users\stduser\AppData\Local\Programs\comfy-env\.pixi\envs\hywm2-nodes\Lib\site-packages\trimesh\__init__.py", line 12 in <module>
+  File "<frozen importlib._bootstrap>", line 488 in _call_with_frames_removed
+  File "<frozen importlib._bootstrap_external>", line 1023 in exec_module
+  File "<frozen importlib._bootstrap>", line 935 in _load_unlocked
+  File "<frozen importlib._bootstrap>", line 1331 in _find_and_load_unlocked
 
 [worker:ComfyUI-HYWM2] === END ===
 
-[worker:ComfyUI-HYWM2]   Loaded 1545/1593 keys from D:\a\comfy-gpu-ci\comfy-gpu-ci\test_workspaces\HYWM2-1944\portable-comfyui\ComfyUI_windows_portable\ComfyUI\models\hywm2\
+[worker:ComfyUI-HYWM2] [Pipeline] Single-GPU mode
+[worker:ComfyUI-HYWM2] [Init] Found local model at D:\a\comfy-gpu-ci\comfy-gpu-ci\test_workspaces\HYWM2-1608\portable-comfyui\ComfyUI_windows_portable\ComfyUI\models\hywm2\
+[worker:ComfyUI-HYWM2] [WorldMirror] model_size: large, embed_dim: 1024, depth: 24, num_heads: 16, mlp_ratio: 4.0, gs_dim: 256, num_register_tokens: 4
+[worker:ComfyUI-HYWM2] [INFO] Using normalized RoPE!
+[worker:ComfyUI-HYWM2]   Loaded 1545/1593 keys from D:\a\comfy-gpu-ci\comfy-gpu-ci\test_workspaces\HYWM2-1608\portable-comfyui\ComfyUI_windows_portable\ComfyUI\models\hywm2\
 [worker:ComfyUI-HYWM2] [Init] Disabled heads: ['camera', 'points', 'gs'], freed ~281.8M params
-[worker:ComfyUI-HYWM2] [Init] Model ready in 26.0s
+[worker:ComfyUI-HYWM2] [Init] Model ready in 23.2s
 [worker:ComfyUI-HYWM2] WARNING: No comfy kitchen, using old apply_rope functions.
-[SubprocessWorker] callback 'request_vram_budget' from call_id=2
-[comfy-env] VRAM request: 3.93GB, free before eviction: 7.66GB
-[comfy-env] VRAM after eviction: 7.66GB
-[worker:ComfyUI-HYWM2] [Inference] 1 images, shape=torch.Size([1, 1, 3, 434, 756]), sp_size=1
-D:\a\comfy-gpu-ci\comfy-gpu-ci\test_workspaces\HYWM2-1944\portable-comfyui\ComfyUI_windows_portable\ComfyUI\custom_nodes\ComfyUI-HYWM2\nodes\hyworld2\worldrecon\hyworldmirror\models\models\visual_transformer.py:303: UserWarning: CUDA is not available or torch_xla is imported. Disabling autocast.
-  with torch.amp.autocast('cuda', enabled=(not enable_bf16), dtype=torch.bfloat16):
-D:\a\comfy-gpu-ci\comfy-gpu-ci\test_workspaces\HYWM2-1944\portable-comfyui\ComfyUI_windows_portable\ComfyUI\custom_nodes\ComfyUI-HYWM2\nodes\hyworld2\worldrecon\hyworldmirror\models\models\visual_transformer.py:344: UserWarning: CUDA is not available or torch_xla is imported. Disabling autocast.
-  with torch.amp.autocast('cuda', enabled=(not enable_bf16), dtype=torch.bfloat16):
 [worker:ComfyUI-HYWM2] 
 === WATCHDOG TICK 2 ===
-[worker:ComfyUI-HYWM2] Thread 0x00002154 (most recent call first):
+[worker:ComfyUI-HYWM2] Thread 0x000020c4 (most recent call first):
   File "C:\Users\stduser\AppData\Local\Programs\comfy-env\.pixi\envs\hywm2-nodes\Lib\threading.py", line 363 in wait
   File "C:\Users\stduser\AppData\Local\Programs\comfy-env\.pixi\envs\hywm2-nodes\Lib\threading.py", line 660 in wait
   File "C:\Users\stduser\AppData\Local\Programs\comfy-env\.pixi\envs\hywm2-nodes\Lib\site-packages\tqdm\_monitor.py", line 60 in run
   File "C:\Users\stduser\AppData\Local\Programs\comfy-env\.pixi\envs\hywm2-nodes\Lib\threading.py", line 1044 in _bootstrap_inner
   File "C:\Users\stduser\AppData\Local\Programs\comfy-env\.pixi\envs\hywm2-nodes\Lib\threading.py", line 1015 in _bootstrap
 
-Current thread 0x00001454 (most recent call first):
-  File "C:\Users\stduser\AppData\Local\Temp\comfyui_pvenv_yhhi1vsd\persistent_worker.py", line 52 in _watchdog
+Current thread 0x000006bc (most recent call first):
+  File "C:\Users\stduser\AppData\Local\Temp\comfyui_pvenv_8b5z45jt\persistent_worker.py", line 52 in _watchdog
   File "C:\Users\stduser\AppData\Local\Programs\comfy-env\.pixi\envs\hywm2-nodes\Lib\threading.py", line 995 in run
   File "C:\Users\stduser\AppData\Local\Programs\comfy-env\.pixi\envs\hywm2-nodes\Lib\threading.py", line 1044 in _bootstrap_inner
   File "C:\Users\stduser\AppData\Local\Programs\comfy-env\.pixi\envs\hywm2-nodes\Lib\threading.py", line 1015 in _bootstrap
 
-Thread 0x000021e8 (most recent call first):
-  File "D:\a\comfy-gpu-ci\comfy-gpu-ci\test_workspaces\HYWM2-1944\portable-comfyui\ComfyUI_windows_portable\ComfyUI\custom_nodes\ComfyUI-HYWM2\nodes\hyworld2\worldrecon\hyworldmirror\models\layers\attention.py", line 94 in _apply_attention
-  File "D:\a\comfy-gpu-ci\comfy-gpu-ci\test_workspaces\HYWM2-1944\portable-comfyui\ComfyUI_windows_portable\ComfyUI\custom_nodes\ComfyUI-HYWM2\nodes\hyworld2\worldrecon\hyworldmirror\models\layers\attention.py", line 110 in forward
-  File "C:\Users\stduser\AppData\Local\Programs\comfy-env\.pixi\envs\hywm2-nodes\Lib\site-packages\torch\nn\modules\module.py", line 1790 in _call_impl
-  File "C:\Users\stduser\AppData\Local\Programs\comfy-env\.pixi\envs\hywm2-nodes\Lib\site-packages\torch\nn\modules\module.py", line 1779 in _wrapped_call_impl
-  File "D:\a\comfy-gpu-ci\comfy-gpu-ci\test_workspaces\HYWM2-1944\portable-comfyui\ComfyUI_windows_portable\ComfyUI\custom_nodes\ComfyUI-HYWM2\nodes\hyworld2\worldrecon\hyworldmirror\models\layers\block.py", line 74 in attn_residual_func
-  File "D:\a\comfy-gpu-ci\comfy-gpu-ci\test_workspaces\HYWM2-1944\portable-comfyui\ComfyUI_windows_portable\ComfyUI\custom_nodes\ComfyUI-HYWM2\nodes\hyworld2\worldrecon\hyworldmirror\models\layers\block.py", line 91 in forward
-  File "C:\Users\stduser\AppData\Local\Programs\comfy-env\.pixi\envs\hywm2-nodes\Lib\site-packages\torch\nn\modules\module.py", line 1790 in _call_impl
-  File "C:\Users\stduser\AppData\Local\Programs\comfy-env\.pixi\envs\hywm2-nodes\Lib\site-packages\torch\nn\modules\module.py", line 1779 in _wrapped_call_impl
-  File "D:\a\comfy-gpu-ci\comfy-gpu-ci\test_workspaces\HYWM2-1944\portable-comfyui\ComfyUI_windows_portable\ComfyUI\custom_nodes\ComfyUI-HYWM2\nodes\hyworld2\worldrecon\hyworldmirror\models\models\visual_transformer.py", line 480 in _process_attention_blocks
-  File "D:\a\comfy-gpu-ci\comfy-gpu-ci\test_workspaces\HYWM2-1944\portable-comfyui\ComfyUI_windows_portable\ComfyUI\custom_nodes\ComfyUI-HYWM2\nodes\hyworld2\worldrecon\hyworldmirror\models\models\visual_transformer.py", line 396 in forward
-  File "C:\Users\stduser\AppData\Local\Programs\comfy-env\.pixi\envs\hywm2-nodes\Lib\site-packages\torch\nn\modules\module.py", line 1790 in _call_impl
-  File "C:\Users\stduser\AppData\Local\Programs\comfy-env\.pixi\envs\hywm2-nodes\Lib\site-packages\torch\nn\modules\module.py", line 1779 in _wrapped_call_impl
-  File "D:\a\comfy-gpu-ci\comfy-gpu-ci\test_workspaces\HYWM2-1944\portable-comfyui\ComfyUI_windows_portable\ComfyUI\custom_nodes\ComfyUI-HYWM2\nodes\hyworld2\worldrecon\hyworldmirror\models\models\worldmirror.py", line 288 in forward
-  File "C:\Users\stduser\AppData\Local\Programs\comfy-env\.pixi\envs\hywm2-nodes\Lib\site-packages\torch\nn\modules\module.py", line 1790 in _call_impl
-  File "C:\Users\stduser\AppData\Local\Programs\comfy-env\.pixi\envs\hywm2-nodes\Lib\site-packages\torch\nn\modules\module.py", line 1779 in _wrapped_call_impl
-  File "D:\a\comfy-gpu-ci\comfy-gpu-ci\test_workspaces\HYWM2-1944\portable-comfyui\ComfyUI_windows_portable\ComfyUI\custom_nodes\ComfyUI-HYWM2\nodes\hyworld2\worldrecon\pipeline.py", line 636 in _run_inference
-  File "D:\a\comfy-gpu-ci\comfy-gpu-ci\test_workspaces\HYWM2-1944\portable-comfyui\ComfyUI_windows_portable\ComfyUI\custom_nodes\ComfyUI-HYWM2\nodes\reconstruct.py", line 279 in execute
+Thread 0x00001be0 (most recent call first):
+  File "C:\Users\stduser\AppData\Local\Programs\comfy-env\.pixi\envs\hywm2-nodes\Lib\site-packages\transformers\utils\import_utils.py", line 2732 in create_import_structure_from_path
+  File "C:\Users\stduser\AppData\Local\Programs\comfy-env\.pixi\envs\hywm2-nodes\Lib\site-packages\transformers\utils\import_utils.py", line 2716 in create_import_structure_from_path
+  File "C:\Users\stduser\AppData\Local\Programs\comfy-env\.pixi\envs\hywm2-nodes\Lib\site-packages\transformers\utils\import_utils.py", line 2999 in define_import_structure
+  File "C:\Users\stduser\AppData\Local\Programs\comfy-env\.pixi\envs\hywm2-nodes\Lib\site-packages\transformers\__init__.py", line 792 in <module>
+  File "<frozen importlib._bootstrap>", line 488 in _call_with_frames_removed
+  File "<frozen importlib._bootstrap_external>", line 1023 in exec_module
+  File "<frozen importlib._bootstrap>", line 935 in _load_unlocked
+  File "<frozen importlib._bootstrap>", line 1331 in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 1360 in _find_and_load
+  File "D:\a\comfy-gpu-ci\comfy-gpu-ci\test_workspaces\HYWM2-1608\portable-comfyui\ComfyUI_windows_portable\ComfyUI\comfy\sd1_clip.py", line 3 in <module>
+  File "<frozen importlib._bootstrap>", line 488 in _call_with_frames_removed
+  File "<frozen importlib._bootstrap_external>", line 1023 in exec_module
+  File "<frozen importlib._bootstrap>", line 935 in _load_unlocked
+  File "<frozen importlib._bootstrap>", line 1331 in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 1360 in _find_and_load
+  File "<frozen importlib._bootstrap>", line 488 in _call_with_frames_removed
+  File "<frozen importlib._bootstrap>", line 1423 in _handle_fromlist
+  File "D:\a\comfy-gpu-ci\comfy-gpu-ci\test_workspaces\HYWM2-1608\portable-comfyui\ComfyUI_windows_portable\ComfyUI\comfy\text_encoders\qwen35.py", line 10 in <module>
+  File "<frozen importlib._bootstrap>", line 488 in _call_with_frames_removed
+  File "<frozen importlib._bootstrap_external>", line 1023 in exec_module
+  File "<frozen importlib._bootstrap>", line 935 in _load_unlocked
+  File "<frozen importlib._bootstrap>", line 1331 in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 1360 in _find_and_load
+  File "D:\a\comfy-gpu-ci\comfy-gpu-ci\test_workspaces\HYWM2-1608\portable-comfyui\ComfyUI_windows_portable\ComfyUI\comfy\ldm\hidream_o1\model.py", line 20 in <module>
+  File "<frozen importlib._bootstrap>", line 488 in _call_with_frames_removed
+  File "<frozen importlib._bootstrap_external>", line 1023 in exec_module
+  File "<frozen importlib._bootstrap>", line 935 in _load_unlocked
+  File "<frozen importlib._bootstrap>", line 1331 in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 1360 in _find_and_load
+  File "D:\a\comfy-gpu-ci\comfy-gpu-ci\test_workspaces\HYWM2-1608\portable-comfyui\ComfyUI_windows_portable\ComfyUI\comfy\model_base.py", line 61 in <module>
+  File "<frozen importlib._bootstrap>", line 488 in _call_with_frames_removed
+  File "<frozen importlib._bootstrap_external>", line 1023 in exec_module
+  File "<frozen importlib._bootstrap>", line 935 in _load_unlocked
+  File "<frozen importlib._bootstrap>", line 1331 in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 1360 in _find_and_load
+  File "D:\a\comfy-gpu-ci\comfy-gpu-ci\test_workspaces\HYWM2-1608\portable-comfyui\ComfyUI_windows_portable\ComfyUI\comfy\lora.py", line 23 in <module>
+  File "<frozen importlib._bootstrap>", line 488 in _call_with_frames_removed
+  File "<frozen importlib._bootstrap_external>", line 1023 in exec_module
+  File "<frozen importlib._bootstrap>", line 935 in _load_unlocked
+  File "<frozen importlib._bootstrap>", line 1331 in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 1360 in _find_and_load
+  File "D:\a\comfy-gpu-ci\comfy-gpu-ci\test_workspaces\HYWM2-1608\portable-comfyui\ComfyUI_windows_portable\ComfyUI\comfy\hooks.py", line 14 in <module>
+  File "<frozen importlib._bootstrap>", line 488 in _call_with_frames_removed
+  File "<frozen importlib._bootstrap_external>", line 1023 in exec_module
+  File "<frozen importlib._bootstrap>", line 935 in _load_unlocked
+  File "<frozen importlib._bootstrap>", line 1331 in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 1360 in _find_and_load
+  File "D:\a\comfy-gpu-ci\comfy-gpu-ci\test_workspaces\HYWM2-1608\portable-comfyui\ComfyUI_windows_portable\ComfyUI\comfy\model_patcher.py", line 32 in <module>
+  File "<frozen importlib._bootstrap>", line 488 in _call_with_frames_removed
+  File "<frozen importlib._bootstrap_external>", line 1023 in exec_module
+  File "<frozen importlib._bootstrap>", line 935 in _load_unlocked
+  File "<frozen importlib._bootstrap>", line 1331 in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 1360 in _find_and_load
+  File "D:\a\comfy-gpu-ci\comfy-gpu-ci\test_workspaces\HYWM2-1608\portable-comfyui\ComfyUI_windows_portable\ComfyUI\custom_nodes\ComfyUI-HYWM2\nodes\reconstruct.py", line 393 in _get_pipeline
+  File "D:\a\comfy-gpu-ci\comfy-gpu-ci\test_workspaces\HYWM2-1608\portable-comfyui\ComfyUI_windows_portable\ComfyUI\custom_nodes\ComfyUI-HYWM2\nodes\reconstruct.py", line 240 in execute
   File "C:\Users\stduser\AppData\Local\Programs\comfy-env\.pixi\envs\hywm2-nodes\Lib\site-packages\torch\utils\_contextlib.py", line 124 in decorate_context
-  File "D:\a\comfy-gpu-ci\comfy-gpu-ci\test_workspaces\HYWM2-1944\portable-comfyui\ComfyUI_windows_portable\ComfyUI\comfy_api\latest\_io.py", line 1833 in EXECUTE_NORMALIZED
-  File "C:\Users\stduser\AppData\Local\Temp\comfyui_pvenv_yhhi1vsd\persistent_worker.py", line 1762 in main
-  File "C:\Users\stduser\AppData\Local\Temp\comfyui_pvenv_yhhi1vsd\persistent_worker.py", line 1807 in <module>
+  File "D:\a\comfy-gpu-ci\comfy-gpu-ci\test_workspaces\HYWM2-1608\portable-comfyui\ComfyUI_windows_portable\ComfyUI\comfy_api\latest\_io.py", line 1833 in EXECUTE_NORMALIZED
+  File "C:\Users\stduser\AppData\Local\Temp\comfyui_pvenv_8b5z45jt\persistent_worker.py", line 1762 in main
+  File "C:\Users\stduser\AppData\Local\Temp\comfyui_pvenv_8b5z45jt\persistent_worker.py", line 1807 in <module>
 
 [worker:ComfyUI-HYWM2] === END ===
 
-D:\a\comfy-gpu-ci\comfy-gpu-ci\test_workspaces\HYWM2-1944\portable-comfyui\ComfyUI_windows_portable\ComfyUI\custom_nodes\ComfyUI-HYWM2\nodes\hyworld2\worldrecon\hyworldmirror\models\models\worldmirror.py:292: UserWarning: CUDA is not available or torch_xla is imported. Disabling autocast.
+[SubprocessWorker] callback 'request_vram_budget' from call_id=2
+[comfy-env] VRAM request: 3.93GB, free before eviction: 7.74GB
+[comfy-env] VRAM after eviction: 7.74GB
+[worker:ComfyUI-HYWM2] [Inference] 1 images, shape=torch.Size([1, 1, 3, 434, 756]), sp_size=1
+D:\a\comfy-gpu-ci\comfy-gpu-ci\test_workspaces\HYWM2-1608\portable-comfyui\ComfyUI_windows_portable\ComfyUI\custom_nodes\ComfyUI-HYWM2\nodes\hyworld2\worldrecon\hyworldmirror\models\models\visual_transformer.py:303: UserWarning: CUDA is not available or torch_xla is imported. Disabling autocast.
+  with torch.amp.autocast('cuda', enabled=(not enable_bf16), dtype=torch.bfloat16):
+D:\a\comfy-gpu-ci\comfy-gpu-ci\test_workspaces\HYWM2-1608\portable-comfyui\ComfyUI_windows_portable\ComfyUI\custom_nodes\ComfyUI-HYWM2\nodes\hyworld2\worldrecon\hyworldmirror\models\models\visual_transformer.py:344: UserWarning: CUDA is not available or torch_xla is imported. Disabling autocast.
+  with torch.amp.autocast('cuda', enabled=(not enable_bf16), dtype=torch.bfloat16):
+D:\a\comfy-gpu-ci\comfy-gpu-ci\test_workspaces\HYWM2-1608\portable-comfyui\ComfyUI_windows_portable\ComfyUI\custom_nodes\ComfyUI-HYWM2\nodes\hyworld2\worldrecon\hyworldmirror\models\models\worldmirror.py:292: UserWarning: CUDA is not available or torch_xla is imported. Disabling autocast.
   with torch.amp.autocast('cuda', enabled=(not self.enable_bf16), dtype=torch.float32):
-[worker:ComfyUI-HYWM2] [Inference] Done in 46.77s
+[worker:ComfyUI-HYWM2] [Inference] Done in 43.48s
 [SubprocessWorker] got response: ok
-[comfy-env] HYWM2Reconstruct done (118.70s): result: NodeOutput
+[comfy-env] HYWM2Reconstruct done (154.40s): result: NodeOutput
 [comfy-env] Running HYWM2Reconstruct: prior_camera_json: '', depth_colormap: 'viridis', apply_mask: True, view_index: -1, points_conf_percentile: 0.0, points_max: 2000000, gaussians_weight_threshold: 0.3, gaussians_downsample: 1.0, model: dict, images: torch.float32 [1,436,768,3] cpu
 [SubprocessWorker] call_method: nodes.reconstruct.HYWM2Reconstruct.EXECUTE_NORMALIZED
 [SubprocessWorker] acquired lock, ensuring started...
@@ -274,52 +374,58 @@ D:\a\comfy-gpu-ci\comfy-gpu-ci\test_workspaces\HYWM2-1944\portable-comfyui\Comfy
 [worker:ComfyUI-HYWM2] [comfy-env] DESERIALIZE TensorRef: tensor_size=[1, 436, 768, 3]
 [worker:ComfyUI-HYWM2] [comfy-env] DESERIALIZED tensor shape: torch.Size([1, 436, 768, 3])
 [SubprocessWorker] callback 'request_vram_budget' from call_id=3
-[comfy-env] VRAM request: 3.93GB, free before eviction: 7.73GB
-[comfy-env] VRAM after eviction: 7.73GB
+[comfy-env] VRAM request: 3.93GB, free before eviction: 7.97GB
+[comfy-env] VRAM after eviction: 7.97GB
 [worker:ComfyUI-HYWM2] [Inference] 1 images, shape=torch.Size([1, 1, 3, 434, 756]), sp_size=1
 [worker:ComfyUI-HYWM2] 
 === WATCHDOG TICK 3 ===
-[worker:ComfyUI-HYWM2] Thread 0x00002154 (most recent call first):
+[worker:ComfyUI-HYWM2] Thread 0x000020c4 (most recent call first):
   File "C:\Users\stduser\AppData\Local\Programs\comfy-env\.pixi\envs\hywm2-nodes\Lib\threading.py", line 363 in wait
   File "C:\Users\stduser\AppData\Local\Programs\comfy-env\.pixi\envs\hywm2-nodes\Lib\threading.py", line 660 in wait
   File "C:\Users\stduser\AppData\Local\Programs\comfy-env\.pixi\envs\hywm2-nodes\Lib\site-packages\tqdm\_monitor.py", line 60 in run
   File "C:\Users\stduser\AppData\Local\Programs\comfy-env\.pixi\envs\hywm2-nodes\Lib\threading.py", line 1044 in _bootstrap_inner
   File "C:\Users\stduser\AppData\Local\Programs\comfy-env\.pixi\envs\hywm2-nodes\Lib\threading.py", line 1015 in _bootstrap
 
-Current thread 0x00001454 (most recent call first):
-  File "C:\Users\stduser\AppData\Local\Temp\comfyui_pvenv_yhhi1vsd\persistent_worker.py", line 52 in _watchdog
+Current thread 0x000006bc (most recent call first):
+  File "C:\Users\stduser\AppData\Local\Temp\comfyui_pvenv_8b5z45jt\persistent_worker.py", line 52 in _watchdog
   File "C:\Users\stduser\AppData\Local\Programs\comfy-env\.pixi\envs\hywm2-nodes\Lib\threading.py", line 995 in run
   File "C:\Users\stduser\AppData\Local\Programs\comfy-env\.pixi\envs\hywm2-nodes\Lib\threading.py", line 1044 in _bootstrap_inner
   File "C:\Users\stduser\AppData\Local\Programs\comfy-env\.pixi\envs\hywm2-nodes\Lib\threading.py", line 1015 in _bootstrap
 
-Thread 0x000021e8 (most recent call first):
+Thread 0x00001be0 (most recent call first):
+  File "C:\Users\stduser\AppData\Local\Programs\comfy-env\.pixi\envs\hywm2-nodes\Lib\site-packages\torch\nn\modules\linear.py", line 134 in forward
   File "C:\Users\stduser\AppData\Local\Programs\comfy-env\.pixi\envs\hywm2-nodes\Lib\site-packages\torch\nn\modules\module.py", line 1790 in _call_impl
   File "C:\Users\stduser\AppData\Local\Programs\comfy-env\.pixi\envs\hywm2-nodes\Lib\site-packages\torch\nn\modules\module.py", line 1779 in _wrapped_call_impl
-  File "D:\a\comfy-gpu-ci\comfy-gpu-ci\test_workspaces\HYWM2-1944\portable-comfyui\ComfyUI_windows_portable\ComfyUI\custom_nodes\ComfyUI-HYWM2\nodes\hyworld2\worldrecon\hyworldmirror\models\heads\dense_head.py", line 619 in forward
+  File "D:\a\comfy-gpu-ci\comfy-gpu-ci\test_workspaces\HYWM2-1608\portable-comfyui\ComfyUI_windows_portable\ComfyUI\custom_nodes\ComfyUI-HYWM2\nodes\hyworld2\worldrecon\hyworldmirror\models\layers\mlp.py", line 30 in forward
   File "C:\Users\stduser\AppData\Local\Programs\comfy-env\.pixi\envs\hywm2-nodes\Lib\site-packages\torch\nn\modules\module.py", line 1790 in _call_impl
   File "C:\Users\stduser\AppData\Local\Programs\comfy-env\.pixi\envs\hywm2-nodes\Lib\site-packages\torch\nn\modules\module.py", line 1779 in _wrapped_call_impl
-  File "D:\a\comfy-gpu-ci\comfy-gpu-ci\test_workspaces\HYWM2-1944\portable-comfyui\ComfyUI_windows_portable\ComfyUI\custom_nodes\ComfyUI-HYWM2\nodes\hyworld2\worldrecon\hyworldmirror\models\heads\dense_head.py", line 91 in scratch_forward
-  File "D:\a\comfy-gpu-ci\comfy-gpu-ci\test_workspaces\HYWM2-1944\portable-comfyui\ComfyUI_windows_portable\ComfyUI\custom_nodes\ComfyUI-HYWM2\nodes\hyworld2\worldrecon\hyworldmirror\models\heads\dense_head.py", line 129 in _extract_fused_features
-  File "D:\a\comfy-gpu-ci\comfy-gpu-ci\test_workspaces\HYWM2-1944\portable-comfyui\ComfyUI_windows_portable\ComfyUI\custom_nodes\ComfyUI-HYWM2\nodes\hyworld2\worldrecon\hyworldmirror\models\heads\dense_head.py", line 338 in _forward_impl
-  File "D:\a\comfy-gpu-ci\comfy-gpu-ci\test_workspaces\HYWM2-1944\portable-comfyui\ComfyUI_windows_portable\ComfyUI\custom_nodes\ComfyUI-HYWM2\nodes\hyworld2\worldrecon\hyworldmirror\models\heads\dense_head.py", line 251 in forward
+  File "D:\a\comfy-gpu-ci\comfy-gpu-ci\test_workspaces\HYWM2-1608\portable-comfyui\ComfyUI_windows_portable\ComfyUI\custom_nodes\ComfyUI-HYWM2\nodes\hyworld2\worldrecon\hyworldmirror\models\layers\block.py", line 77 in ffn_residual_func
+  File "D:\a\comfy-gpu-ci\comfy-gpu-ci\test_workspaces\HYWM2-1608\portable-comfyui\ComfyUI_windows_portable\ComfyUI\custom_nodes\ComfyUI-HYWM2\nodes\hyworld2\worldrecon\hyworldmirror\models\layers\block.py", line 92 in forward
+  File "D:\a\comfy-gpu-ci\comfy-gpu-ci\test_workspaces\HYWM2-1608\portable-comfyui\ComfyUI_windows_portable\ComfyUI\custom_nodes\ComfyUI-HYWM2\nodes\hyworld2\worldrecon\hyworldmirror\models\layers\block.py", line 263 in forward
   File "C:\Users\stduser\AppData\Local\Programs\comfy-env\.pixi\envs\hywm2-nodes\Lib\site-packages\torch\nn\modules\module.py", line 1790 in _call_impl
   File "C:\Users\stduser\AppData\Local\Programs\comfy-env\.pixi\envs\hywm2-nodes\Lib\site-packages\torch\nn\modules\module.py", line 1779 in _wrapped_call_impl
-  File "D:\a\comfy-gpu-ci\comfy-gpu-ci\test_workspaces\HYWM2-1944\portable-comfyui\ComfyUI_windows_portable\ComfyUI\custom_nodes\ComfyUI-HYWM2\nodes\hyworld2\worldrecon\hyworldmirror\models\models\worldmirror.py", line 613 in _gen_all_preds
-  File "D:\a\comfy-gpu-ci\comfy-gpu-ci\test_workspaces\HYWM2-1944\portable-comfyui\ComfyUI_windows_portable\ComfyUI\custom_nodes\ComfyUI-HYWM2\nodes\hyworld2\worldrecon\hyworldmirror\models\models\worldmirror.py", line 299 in forward
+  File "D:\a\comfy-gpu-ci\comfy-gpu-ci\test_workspaces\HYWM2-1608\portable-comfyui\ComfyUI_windows_portable\ComfyUI\custom_nodes\ComfyUI-HYWM2\nodes\hyworld2\worldrecon\hyworldmirror\models\layers\vision_transformer.py", line 259 in forward_features
+  File "D:\a\comfy-gpu-ci\comfy-gpu-ci\test_workspaces\HYWM2-1608\portable-comfyui\ComfyUI_windows_portable\ComfyUI\custom_nodes\ComfyUI-HYWM2\nodes\hyworld2\worldrecon\hyworldmirror\models\layers\vision_transformer.py", line 323 in forward
   File "C:\Users\stduser\AppData\Local\Programs\comfy-env\.pixi\envs\hywm2-nodes\Lib\site-packages\torch\nn\modules\module.py", line 1790 in _call_impl
   File "C:\Users\stduser\AppData\Local\Programs\comfy-env\.pixi\envs\hywm2-nodes\Lib\site-packages\torch\nn\modules\module.py", line 1779 in _wrapped_call_impl
-  File "D:\a\comfy-gpu-ci\comfy-gpu-ci\test_workspaces\HYWM2-1944\portable-comfyui\ComfyUI_windows_portable\ComfyUI\custom_nodes\ComfyUI-HYWM2\nodes\hyworld2\worldrecon\pipeline.py", line 636 in _run_inference
-  File "D:\a\comfy-gpu-ci\comfy-gpu-ci\test_workspaces\HYWM2-1944\portable-comfyui\ComfyUI_windows_portable\ComfyUI\custom_nodes\ComfyUI-HYWM2\nodes\reconstruct.py", line 279 in execute
+  File "D:\a\comfy-gpu-ci\comfy-gpu-ci\test_workspaces\HYWM2-1608\portable-comfyui\ComfyUI_windows_portable\ComfyUI\custom_nodes\ComfyUI-HYWM2\nodes\hyworld2\worldrecon\hyworldmirror\models\models\visual_transformer.py", line 306 in forward
+  File "C:\Users\stduser\AppData\Local\Programs\comfy-env\.pixi\envs\hywm2-nodes\Lib\site-packages\torch\nn\modules\module.py", line 1790 in _call_impl
+  File "C:\Users\stduser\AppData\Local\Programs\comfy-env\.pixi\envs\hywm2-nodes\Lib\site-packages\torch\nn\modules\module.py", line 1779 in _wrapped_call_impl
+  File "D:\a\comfy-gpu-ci\comfy-gpu-ci\test_workspaces\HYWM2-1608\portable-comfyui\ComfyUI_windows_portable\ComfyUI\custom_nodes\ComfyUI-HYWM2\nodes\hyworld2\worldrecon\hyworldmirror\models\models\worldmirror.py", line 288 in forward
+  File "C:\Users\stduser\AppData\Local\Programs\comfy-env\.pixi\envs\hywm2-nodes\Lib\site-packages\torch\nn\modules\module.py", line 1790 in _call_impl
+  File "C:\Users\stduser\AppData\Local\Programs\comfy-env\.pixi\envs\hywm2-nodes\Lib\site-packages\torch\nn\modules\module.py", line 1779 in _wrapped_call_impl
+  File "D:\a\comfy-gpu-ci\comfy-gpu-ci\test_workspaces\HYWM2-1608\portable-comfyui\ComfyUI_windows_portable\ComfyUI\custom_nodes\ComfyUI-HYWM2\nodes\hyworld2\worldrecon\pipeline.py", line 636 in _run_inference
+  File "D:\a\comfy-gpu-ci\comfy-gpu-ci\test_workspaces\HYWM2-1608\portable-comfyui\ComfyUI_windows_portable\ComfyUI\custom_nodes\ComfyUI-HYWM2\nodes\reconstruct.py", line 279 in execute
   File "C:\Users\stduser\AppData\Local\Programs\comfy-env\.pixi\envs\hywm2-nodes\Lib\site-packages\torch\utils\_contextlib.py", line 124 in decorate_context
-  File "D:\a\comfy-gpu-ci\comfy-gpu-ci\test_workspaces\HYWM2-1944\portable-comfyui\ComfyUI_windows_portable\ComfyUI\comfy_api\latest\_io.py", line 1833 in EXECUTE_NORMALIZED
-  File "C:\Users\stduser\AppData\Local\Temp\comfyui_pvenv_yhhi1vsd\persistent_worker.py", line 1762 in main
-  File "C:\Users\stduser\AppData\Local\Temp\comfyui_pvenv_yhhi1vsd\persistent_worker.py", line 1807 in <module>
+  File "D:\a\comfy-gpu-ci\comfy-gpu-ci\test_workspaces\HYWM2-1608\portable-comfyui\ComfyUI_windows_portable\ComfyUI\comfy_api\latest\_io.py", line 1833 in EXECUTE_NORMALIZED
+  File "C:\Users\stduser\AppData\Local\Temp\comfyui_pvenv_8b5z45jt\persistent_worker.py", line 1762 in main
+  File "C:\Users\stduser\AppData\Local\Temp\comfyui_pvenv_8b5z45jt\persistent_worker.py", line 1807 in <module>
 
 [worker:ComfyUI-HYWM2] === END ===
 
-[worker:ComfyUI-HYWM2] [Inference] Done in 45.09s
+[worker:ComfyUI-HYWM2] [Inference] Done in 40.80s
 [SubprocessWorker] got response: ok
-[comfy-env] HYWM2Reconstruct done (45.57s): result: NodeOutput
+[comfy-env] HYWM2Reconstruct done (41.72s): result: NodeOutput
 [comfy-env] Running HYWM2Reconstruct: prior_camera_json: '', depth_colormap: 'viridis', apply_mask: True, view_index: -1, points_conf_percentile: 0.0, points_max: 2000000, gaussians_weight_threshold: 0.3, gaussians_downsample: 1.0, model: dict, images: torch.float32 [1,436,768,3] cpu
 [SubprocessWorker] call_method: nodes.reconstruct.HYWM2Reconstruct.EXECUTE_NORMALIZED
 [SubprocessWorker] acquired lock, ensuring started...
@@ -335,12 +441,54 @@ Thread 0x000021e8 (most recent call first):
 [worker:ComfyUI-HYWM2] [comfy-env] DESERIALIZE TensorRef: tensor_size=[1, 436, 768, 3]
 [worker:ComfyUI-HYWM2] [comfy-env] DESERIALIZED tensor shape: torch.Size([1, 436, 768, 3])
 [SubprocessWorker] callback 'request_vram_budget' from call_id=4
-[comfy-env] VRAM request: 3.93GB, free before eviction: 7.93GB
-[comfy-env] VRAM after eviction: 7.93GB
+[comfy-env] VRAM request: 3.93GB, free before eviction: 8.14GB
+[comfy-env] VRAM after eviction: 8.14GB
 [worker:ComfyUI-HYWM2] [Inference] 1 images, shape=torch.Size([1, 1, 3, 434, 756]), sp_size=1
-[worker:ComfyUI-HYWM2] [Inference] Done in 43.25s
+[worker:ComfyUI-HYWM2] 
+=== WATCHDOG TICK 4 ===
+[worker:ComfyUI-HYWM2] Thread 0x000020c4 (most recent call first):
+  File "C:\Users\stduser\AppData\Local\Programs\comfy-env\.pixi\envs\hywm2-nodes\Lib\threading.py", line 363 in wait
+  File "C:\Users\stduser\AppData\Local\Programs\comfy-env\.pixi\envs\hywm2-nodes\Lib\threading.py", line 660 in wait
+  File "C:\Users\stduser\AppData\Local\Programs\comfy-env\.pixi\envs\hywm2-nodes\Lib\site-packages\tqdm\_monitor.py", line 60 in run
+  File "C:\Users\stduser\AppData\Local\Programs\comfy-env\.pixi\envs\hywm2-nodes\Lib\threading.py", line 1044 in _bootstrap_inner
+  File "C:\Users\stduser\AppData\Local\Programs\comfy-env\.pixi\envs\hywm2-nodes\Lib\threading.py", line 1015 in _bootstrap
+
+Current thread 0x000006bc (most recent call first):
+  File "C:\Users\stduser\AppData\Local\Temp\comfyui_pvenv_8b5z45jt\persistent_worker.py", line 52 in _watchdog
+  File "C:\Users\stduser\AppData\Local\Programs\comfy-env\.pixi\envs\hywm2-nodes\Lib\threading.py", line 995 in run
+  File "C:\Users\stduser\AppData\Local\Programs\comfy-env\.pixi\envs\hywm2-nodes\Lib\threading.py", line 1044 in _bootstrap_inner
+  File "C:\Users\stduser\AppData\Local\Programs\comfy-env\.pixi\envs\hywm2-nodes\Lib\threading.py", line 1015 in _bootstrap
+
+Thread 0x00001be0 (most recent call first):
+  File "C:\Users\stduser\AppData\Local\Programs\comfy-env\.pixi\envs\hywm2-nodes\Lib\site-packages\torch\nn\modules\linear.py", line 134 in forward
+  File "C:\Users\stduser\AppData\Local\Programs\comfy-env\.pixi\envs\hywm2-nodes\Lib\site-packages\torch\nn\modules\module.py", line 1790 in _call_impl
+  File "C:\Users\stduser\AppData\Local\Programs\comfy-env\.pixi\envs\hywm2-nodes\Lib\site-packages\torch\nn\modules\module.py", line 1779 in _wrapped_call_impl
+  File "D:\a\comfy-gpu-ci\comfy-gpu-ci\test_workspaces\HYWM2-1608\portable-comfyui\ComfyUI_windows_portable\ComfyUI\custom_nodes\ComfyUI-HYWM2\nodes\hyworld2\worldrecon\hyworldmirror\models\layers\mlp.py", line 30 in forward
+  File "C:\Users\stduser\AppData\Local\Programs\comfy-env\.pixi\envs\hywm2-nodes\Lib\site-packages\torch\nn\modules\module.py", line 1790 in _call_impl
+  File "C:\Users\stduser\AppData\Local\Programs\comfy-env\.pixi\envs\hywm2-nodes\Lib\site-packages\torch\nn\modules\module.py", line 1779 in _wrapped_call_impl
+  File "D:\a\comfy-gpu-ci\comfy-gpu-ci\test_workspaces\HYWM2-1608\portable-comfyui\ComfyUI_windows_portable\ComfyUI\custom_nodes\ComfyUI-HYWM2\nodes\hyworld2\worldrecon\hyworldmirror\models\layers\block.py", line 77 in ffn_residual_func
+  File "D:\a\comfy-gpu-ci\comfy-gpu-ci\test_workspaces\HYWM2-1608\portable-comfyui\ComfyUI_windows_portable\ComfyUI\custom_nodes\ComfyUI-HYWM2\nodes\hyworld2\worldrecon\hyworldmirror\models\layers\block.py", line 92 in forward
+  File "C:\Users\stduser\AppData\Local\Programs\comfy-env\.pixi\envs\hywm2-nodes\Lib\site-packages\torch\nn\modules\module.py", line 1790 in _call_impl
+  File "C:\Users\stduser\AppData\Local\Programs\comfy-env\.pixi\envs\hywm2-nodes\Lib\site-packages\torch\nn\modules\module.py", line 1779 in _wrapped_call_impl
+  File "D:\a\comfy-gpu-ci\comfy-gpu-ci\test_workspaces\HYWM2-1608\portable-comfyui\ComfyUI_windows_portable\ComfyUI\custom_nodes\ComfyUI-HYWM2\nodes\hyworld2\worldrecon\hyworldmirror\models\models\visual_transformer.py", line 480 in _process_attention_blocks
+  File "D:\a\comfy-gpu-ci\comfy-gpu-ci\test_workspaces\HYWM2-1608\portable-comfyui\ComfyUI_windows_portable\ComfyUI\custom_nodes\ComfyUI-HYWM2\nodes\hyworld2\worldrecon\hyworldmirror\models\models\visual_transformer.py", line 407 in forward
+  File "C:\Users\stduser\AppData\Local\Programs\comfy-env\.pixi\envs\hywm2-nodes\Lib\site-packages\torch\nn\modules\module.py", line 1790 in _call_impl
+  File "C:\Users\stduser\AppData\Local\Programs\comfy-env\.pixi\envs\hywm2-nodes\Lib\site-packages\torch\nn\modules\module.py", line 1779 in _wrapped_call_impl
+  File "D:\a\comfy-gpu-ci\comfy-gpu-ci\test_workspaces\HYWM2-1608\portable-comfyui\ComfyUI_windows_portable\ComfyUI\custom_nodes\ComfyUI-HYWM2\nodes\hyworld2\worldrecon\hyworldmirror\models\models\worldmirror.py", line 288 in forward
+  File "C:\Users\stduser\AppData\Local\Programs\comfy-env\.pixi\envs\hywm2-nodes\Lib\site-packages\torch\nn\modules\module.py", line 1790 in _call_impl
+  File "C:\Users\stduser\AppData\Local\Programs\comfy-env\.pixi\envs\hywm2-nodes\Lib\site-packages\torch\nn\modules\module.py", line 1779 in _wrapped_call_impl
+  File "D:\a\comfy-gpu-ci\comfy-gpu-ci\test_workspaces\HYWM2-1608\portable-comfyui\ComfyUI_windows_portable\ComfyUI\custom_nodes\ComfyUI-HYWM2\nodes\hyworld2\worldrecon\pipeline.py", line 636 in _run_inference
+  File "D:\a\comfy-gpu-ci\comfy-gpu-ci\test_workspaces\HYWM2-1608\portable-comfyui\ComfyUI_windows_portable\ComfyUI\custom_nodes\ComfyUI-HYWM2\nodes\reconstruct.py", line 279 in execute
+  File "C:\Users\stduser\AppData\Local\Programs\comfy-env\.pixi\envs\hywm2-nodes\Lib\site-packages\torch\utils\_contextlib.py", line 124 in decorate_context
+  File "D:\a\comfy-gpu-ci\comfy-gpu-ci\test_workspaces\HYWM2-1608\portable-comfyui\ComfyUI_windows_portable\ComfyUI\comfy_api\latest\_io.py", line 1833 in EXECUTE_NORMALIZED
+  File "C:\Users\stduser\AppData\Local\Temp\comfyui_pvenv_8b5z45jt\persistent_worker.py", line 1762 in main
+  File "C:\Users\stduser\AppData\Local\Temp\comfyui_pvenv_8b5z45jt\persistent_worker.py", line 1807 in <module>
+
+[worker:ComfyUI-HYWM2] === END ===
+
+[worker:ComfyUI-HYWM2] [Inference] Done in 40.91s
 [SubprocessWorker] got response: ok
-[comfy-env] HYWM2Reconstruct done (43.53s): result: NodeOutput
+[comfy-env] HYWM2Reconstruct done (41.79s): result: NodeOutput
 [comfy-env] Running HYWM2Reconstruct: prior_camera_json: '', depth_colormap: 'viridis', apply_mask: True, view_index: -1, points_conf_percentile: 0.0, points_max: 2000000, gaussians_weight_threshold: 0.3, gaussians_downsample: 1.0, model: dict, images: torch.float32 [1,436,768,3] cpu
 [SubprocessWorker] call_method: nodes.reconstruct.HYWM2Reconstruct.EXECUTE_NORMALIZED
 [SubprocessWorker] acquired lock, ensuring started...
@@ -356,52 +504,10 @@ Thread 0x000021e8 (most recent call first):
 [worker:ComfyUI-HYWM2] [comfy-env] DESERIALIZE TensorRef: tensor_size=[1, 436, 768, 3]
 [worker:ComfyUI-HYWM2] [comfy-env] DESERIALIZED tensor shape: torch.Size([1, 436, 768, 3])
 [SubprocessWorker] callback 'request_vram_budget' from call_id=5
-[comfy-env] VRAM request: 3.93GB, free before eviction: 8.09GB
-[comfy-env] VRAM after eviction: 8.09GB
+[comfy-env] VRAM request: 3.93GB, free before eviction: 8.58GB
+[comfy-env] VRAM after eviction: 8.58GB
 [worker:ComfyUI-HYWM2] [Inference] 1 images, shape=torch.Size([1, 1, 3, 434, 756]), sp_size=1
-[worker:ComfyUI-HYWM2] 
-=== WATCHDOG TICK 4 ===
-[worker:ComfyUI-HYWM2] Thread 0x00002154 (most recent call first):
-  File "C:\Users\stduser\AppData\Local\Programs\comfy-env\.pixi\envs\hywm2-nodes\Lib\threading.py", line 363 in wait
-  File "C:\Users\stduser\AppData\Local\Programs\comfy-env\.pixi\envs\hywm2-nodes\Lib\threading.py", line 660 in wait
-  File "C:\Users\stduser\AppData\Local\Programs\comfy-env\.pixi\envs\hywm2-nodes\Lib\site-packages\tqdm\_monitor.py", line 60 in run
-  File "C:\Users\stduser\AppData\Local\Programs\comfy-env\.pixi\envs\hywm2-nodes\Lib\threading.py", line 1044 in _bootstrap_inner
-  File "C:\Users\stduser\AppData\Local\Programs\comfy-env\.pixi\envs\hywm2-nodes\Lib\threading.py", line 1015 in _bootstrap
-
-Current thread 0x00001454 (most recent call first):
-  File "C:\Users\stduser\AppData\Local\Temp\comfyui_pvenv_yhhi1vsd\persistent_worker.py", line 52 in _watchdog
-  File "C:\Users\stduser\AppData\Local\Programs\comfy-env\.pixi\envs\hywm2-nodes\Lib\threading.py", line 995 in run
-  File "C:\Users\stduser\AppData\Local\Programs\comfy-env\.pixi\envs\hywm2-nodes\Lib\threading.py", line 1044 in _bootstrap_inner
-  File "C:\Users\stduser\AppData\Local\Programs\comfy-env\.pixi\envs\hywm2-nodes\Lib\threading.py", line 1015 in _bootstrap
-
-Thread 0x000021e8 (most recent call first):
-  File "C:\Users\stduser\AppData\Local\Programs\comfy-env\.pixi\envs\hywm2-nodes\Lib\site-packages\torch\nn\modules\linear.py", line 134 in forward
-  File "C:\Users\stduser\AppData\Local\Programs\comfy-env\.pixi\envs\hywm2-nodes\Lib\site-packages\torch\nn\modules\module.py", line 1790 in _call_impl
-  File "C:\Users\stduser\AppData\Local\Programs\comfy-env\.pixi\envs\hywm2-nodes\Lib\site-packages\torch\nn\modules\module.py", line 1779 in _wrapped_call_impl
-  File "D:\a\comfy-gpu-ci\comfy-gpu-ci\test_workspaces\HYWM2-1944\portable-comfyui\ComfyUI_windows_portable\ComfyUI\custom_nodes\ComfyUI-HYWM2\nodes\hyworld2\worldrecon\hyworldmirror\models\layers\mlp.py", line 30 in forward
-  File "C:\Users\stduser\AppData\Local\Programs\comfy-env\.pixi\envs\hywm2-nodes\Lib\site-packages\torch\nn\modules\module.py", line 1790 in _call_impl
-  File "C:\Users\stduser\AppData\Local\Programs\comfy-env\.pixi\envs\hywm2-nodes\Lib\site-packages\torch\nn\modules\module.py", line 1779 in _wrapped_call_impl
-  File "D:\a\comfy-gpu-ci\comfy-gpu-ci\test_workspaces\HYWM2-1944\portable-comfyui\ComfyUI_windows_portable\ComfyUI\custom_nodes\ComfyUI-HYWM2\nodes\hyworld2\worldrecon\hyworldmirror\models\layers\block.py", line 77 in ffn_residual_func
-  File "D:\a\comfy-gpu-ci\comfy-gpu-ci\test_workspaces\HYWM2-1944\portable-comfyui\ComfyUI_windows_portable\ComfyUI\custom_nodes\ComfyUI-HYWM2\nodes\hyworld2\worldrecon\hyworldmirror\models\layers\block.py", line 92 in forward
-  File "C:\Users\stduser\AppData\Local\Programs\comfy-env\.pixi\envs\hywm2-nodes\Lib\site-packages\torch\nn\modules\module.py", line 1790 in _call_impl
-  File "C:\Users\stduser\AppData\Local\Programs\comfy-env\.pixi\envs\hywm2-nodes\Lib\site-packages\torch\nn\modules\module.py", line 1779 in _wrapped_call_impl
-  File "D:\a\comfy-gpu-ci\comfy-gpu-ci\test_workspaces\HYWM2-1944\portable-comfyui\ComfyUI_windows_portable\ComfyUI\custom_nodes\ComfyUI-HYWM2\nodes\hyworld2\worldrecon\hyworldmirror\models\models\visual_transformer.py", line 480 in _process_attention_blocks
-  File "D:\a\comfy-gpu-ci\comfy-gpu-ci\test_workspaces\HYWM2-1944\portable-comfyui\ComfyUI_windows_portable\ComfyUI\custom_nodes\ComfyUI-HYWM2\nodes\hyworld2\worldrecon\hyworldmirror\models\models\visual_transformer.py", line 407 in forward
-  File "C:\Users\stduser\AppData\Local\Programs\comfy-env\.pixi\envs\hywm2-nodes\Lib\site-packages\torch\nn\modules\module.py", line 1790 in _call_impl
-  File "C:\Users\stduser\AppData\Local\Programs\comfy-env\.pixi\envs\hywm2-nodes\Lib\site-packages\torch\nn\modules\module.py", line 1779 in _wrapped_call_impl
-  File "D:\a\comfy-gpu-ci\comfy-gpu-ci\test_workspaces\HYWM2-1944\portable-comfyui\ComfyUI_windows_portable\ComfyUI\custom_nodes\ComfyUI-HYWM2\nodes\hyworld2\worldrecon\hyworldmirror\models\models\worldmirror.py", line 288 in forward
-  File "C:\Users\stduser\AppData\Local\Programs\comfy-env\.pixi\envs\hywm2-nodes\Lib\site-packages\torch\nn\modules\module.py", line 1790 in _call_impl
-  File "C:\Users\stduser\AppData\Local\Programs\comfy-env\.pixi\envs\hywm2-nodes\Lib\site-packages\torch\nn\modules\module.py", line 1779 in _wrapped_call_impl
-  File "D:\a\comfy-gpu-ci\comfy-gpu-ci\test_workspaces\HYWM2-1944\portable-comfyui\ComfyUI_windows_portable\ComfyUI\custom_nodes\ComfyUI-HYWM2\nodes\hyworld2\worldrecon\pipeline.py", line 636 in _run_inference
-  File "D:\a\comfy-gpu-ci\comfy-gpu-ci\test_workspaces\HYWM2-1944\portable-comfyui\ComfyUI_windows_portable\ComfyUI\custom_nodes\ComfyUI-HYWM2\nodes\reconstruct.py", line 279 in execute
-  File "C:\Users\stduser\AppData\Local\Programs\comfy-env\.pixi\envs\hywm2-nodes\Lib\site-packages\torch\utils\_contextlib.py", line 124 in decorate_context
-  File "D:\a\comfy-gpu-ci\comfy-gpu-ci\test_workspaces\HYWM2-1944\portable-comfyui\ComfyUI_windows_portable\ComfyUI\comfy_api\latest\_io.py", line 1833 in EXECUTE_NORMALIZED
-  File "C:\Users\stduser\AppData\Local\Temp\comfyui_pvenv_yhhi1vsd\persistent_worker.py", line 1762 in main
-  File "C:\Users\stduser\AppData\Local\Temp\comfyui_pvenv_yhhi1vsd\persistent_worker.py", line 1807 in <module>
-
-[worker:ComfyUI-HYWM2] === END ===
-
-[worker:ComfyUI-HYWM2] [Inference] Done in 44.74s
+[worker:ComfyUI-HYWM2] [Inference] Done in 40.66s
 [SubprocessWorker] got response: ok
-[comfy-env] HYWM2Reconstruct done (45.19s): result: NodeOutput
-Prompt executed in 271.71 seconds
+[comfy-env] HYWM2Reconstruct done (41.35s): result: NodeOutput
+Prompt executed in 298.71 seconds
