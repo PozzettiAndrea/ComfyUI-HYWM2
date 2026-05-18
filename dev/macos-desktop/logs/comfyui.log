@@ -1,277 +1,29 @@
-[2026-05-11 10:38:52.679] [info]  setup plugin alembic.autogenerate.schemas
+[2026-05-18 18:38:14.157] [info]  setup plugin alembic.autogenerate.schemas
 setup plugin alembic.autogenerate.tables
 setup plugin alembic.autogenerate.types
 
-[2026-05-11 10:38:52.681] [info]  setup plugin alembic.autogenerate.constraints
+[2026-05-18 18:38:14.161] [info]  setup plugin alembic.autogenerate.constraints
 setup plugin alembic.autogenerate.defaults
 setup plugin alembic.autogenerate.comments
 
-[2026-05-11 10:38:52.926] [info]  comfy-aimdo os not supported Darwin
-NOTE: comfy-aimdo is currently only support for Windows and Linux
+[2026-05-18 18:38:14.426] [info]  Could not autodetect AIMDO implementation, assuming Nvidia
 
-[2026-05-11 10:38:53.268] [info]  Adding extra search path custom_nodes /Users/runner/Documents/ComfyUI/custom_nodes
+[2026-05-18 18:38:14.427] [info]  comfy-aimdo unsupported operating system: Darwin
+NOTE: comfy-aimdo currently only supports Windows and Linux
+
+[2026-05-18 18:38:14.831] [info]  Adding extra search path custom_nodes /Users/runner/Documents/ComfyUI/custom_nodes
 Adding extra search path download_model_base /Users/runner/Documents/ComfyUI/models
 Adding extra search path custom_nodes /Users/runner/.comfy-test-cache/desktop/ComfyUI.app/Contents/Resources/ComfyUI/custom_nodes
 Setting output directory to: /Users/runner/Documents/ComfyUI/output
 Setting input directory to: /Users/runner/Documents/ComfyUI/input
 Setting user directory to: /Users/runner/Documents/ComfyUI/user
 
-[2026-05-11 10:38:54.752] [info]  [START] Security scan
+[2026-05-18 18:38:16.302] [info]  [START] Security scan
 [DONE] Security scan
-** ComfyUI startup time: 2026-05-11 10:38:54.751
-** Platform:
-[2026-05-11 10:38:54.754] [info]   Darwin
-** Python version: 3.12.11 (main, Aug 18 2025, 19:02:39) [Clang 20.1.4 ]
-** Python executable: /Users/runner/Documents/ComfyUI/.venv/bin/python
-** ComfyUI Path: /Users/runner/.comfy-test-cache/desktop/ComfyUI.app/Contents/Resources/ComfyUI
-** ComfyUI Base Folder Path: /Users/runner/.comfy-test-cache/desktop/ComfyUI.app/Contents/Resources/ComfyUI
-** User directory: /Users/runner/Documents/ComfyUI/user
-
-[2026-05-11 10:38:54.754] [info]  ** ComfyUI-Manager config path: /Users/runner/Documents/ComfyUI/user/__manager/config.ini
-** Log path: /Users/runner/Documents/ComfyUI/user/comfyui.log
-
-[2026-05-11 10:38:55.245] [info]  [ComfyUI-Manager] Skipped fixing the 'comfyui-frontend-package' dependency because the ComfyUI is outdated.
-
-[2026-05-11 10:38:55.248] [info]  [PRE] ComfyUI-Manager
-
-[2026-05-11 10:39:03.096] [info]  Found comfy_kitchen backend cuda: {'available': False, 'disabled': True, 'unavailable_reason': 'Extension file not found: /Users/runner/Documents/ComfyUI/.venv/lib/python3.12/site-packages/comfy_kitchen/backends/cuda/_C.abi3.so', 'capabilities': []}
-Found comfy_kitchen backend eager: {'available': True, 'disabled': False, 'unavailable_reason': None, 'capabilities': ['apply_rope', 'apply_rope1', 'dequantize_mxfp8', 'dequantize_nvfp4', 'dequantize_per_tensor_fp8', 'quantize_mxfp8', 'quantize_nvfp4', 'quantize_per_tensor_fp8', 'scaled_mm_mxfp8', 'scaled_mm_nvfp4']}
-
-[2026-05-11 10:39:03.099] [info]  Found comfy_kitchen backend triton: {'available': False, 'disabled': True, 'unavailable_reason': "ImportError: No module named 'triton'", 'capabilities': []}
-
-[2026-05-11 10:39:03.165] [info]  Checkpoint files will always be loaded safely.
-
-[2026-05-11 10:39:03.271] [info]  Total VRAM 7168 MB, total RAM 7168 MB
-pytorch version: 2.10.0
-
-[2026-05-11 10:39:03.274] [info]  Mac Version (15, 7, 4)
-
-[2026-05-11 10:39:03.275] [info]  Set vram state to: SHARED
-Device: mps
-
-[2026-05-11 10:39:04.544] [info]  Using sub quadratic optimization for attention, if you have memory or speed issues try using: --use-split-cross-attention
-
-[2026-05-11 10:39:09.812] [info]  Python version: 3.12.11 (main, Aug 18 2025, 19:02:39) [Clang 20.1.4 ]
-
-[2026-05-11 10:39:09.814] [info]  ComfyUI version: 0.20.1
-
-[2026-05-11 10:39:09.815] [info]  comfy-aimdo version: 0.2.14
-
-[2026-05-11 10:39:09.816] [info]  comfy-kitchen version: 0.2.8
-
-[2026-05-11 10:39:09.817] [info]  [Prompt Server] web root: /Users/runner/.comfy-test-cache/desktop/ComfyUI.app/Contents/Resources/ComfyUI/web_custom_versions/desktop_app
-
-[2026-05-11 10:39:09.818] [info]  Asset seeder disabled
-
-[2026-05-11 10:39:09.818] [info]  [START] ComfyUI-Manager
-
-[2026-05-11 10:39:10.168] [info]  [ComfyUI-Manager] Using GitPython backend
-
-[2026-05-11 10:39:10.239] [info]  [ComfyUI-Manager] network_mode: public
-
-[2026-05-11 10:39:10.249] [info]  [ComfyUI-Manager] The matrix sharing feature has been disabled because the `matrix-nio` dependency is not installed.
-	To use this feature, please run the following command:
-	/Users/runner/Documents/ComfyUI/.venv/bin/python -m pip install matrix-nio
-
-
-[2026-05-11 10:39:13.024] [info]  
-Import times for custom nodes:
-
-[2026-05-11 10:39:13.025] [info]     0.0 seconds: /Users/runner/.comfy-test-cache/desktop/ComfyUI.app/Contents/Resources/ComfyUI/custom_nodes/websocket_image_save.py
-
-
-[2026-05-11 10:39:13.050] [info]  Context impl SQLiteImpl.
-
-[2026-05-11 10:39:13.052] [info]  Will assume non-transactional DDL.
-
-[2026-05-11 10:39:13.072] [info]  Context impl SQLiteImpl.
-Will assume non-transactional DDL.
-
-[2026-05-11 10:39:13.077] [info]  Running upgrade  -> 0001_assets, Initial assets schema
-Revision ID: 0001_assets
-Revises: None
-Create Date: 2025-12-10 00:00:00
-
-[2026-05-11 10:39:13.122] [info]  Running upgrade 0001_assets -> 0002_merge_to_asset_references, Merge AssetInfo and AssetCacheState into unified asset_references table.
-
-[2026-05-11 10:39:13.149] [info]  Running upgrade 0002_merge_to_asset_references -> 0003_add_metadata_job_id, Add system_metadata and job_id columns to asset_references.
-Change preview_id FK from assets.id to asset_references.id.
-
-[2026-05-11 10:39:13.194] [info]  Database upgraded from None to 0003_add_metadata_job_id
-
-[2026-05-11 10:39:13.270] [info]  Starting server
-
-
-[2026-05-11 10:39:13.271] [info]  To see the GUI go to: http://127.0.0.1:8000
-
-[2026-05-11 10:40:32.824] [info]  [ComfyUI-Manager] Using uv as Python module for pip operations.
-
-[2026-05-11 10:40:34.023] [error]   0%|          | 0.00/17.2M [00:00<?, ?B/s]
-[2026-05-11 10:40:34.126] [error]  13%|█▎        | 2.16M/17.2M [00:00<00:00, 21.6MB/s]
-[2026-05-11 10:40:34.229] [error]  39%|███▊      | 6.65M/17.2M [00:00<00:00, 34.7MB/s]
-[2026-05-11 10:40:34.333] [error]  73%|███████▎  | 12.6M/17.2M [00:00<00:00, 44.7MB/s]
-[2026-05-11 10:40:34.442] [error]  99%|█████████▉| 17.0M/17.2M [00:00<00:00, 43.0MB/s]
-[2026-05-11 10:40:34.447] [error] 100%|██████████| 17.2M/17.2M [00:00<00:00, 40.7MB/s]
-[2026-05-11 10:40:34.449] [error] 
-
-[2026-05-11 10:40:34.516] [info]  Extracted zip file to /Users/runner/Documents/ComfyUI/custom_nodes/comfyui-hywm2
-
-[2026-05-11 10:40:34.524] [info]  Install: pip packages
-
-[2026-05-11 10:40:34.783] [info]  
-## ComfyUI-Manager: EXECUTE => 
-['/Users/runner/Documents/ComfyUI/.venv/bin/python', '-m', 'uv', 'pip', 
-'install', 'comfy-env==0.3.84']
-
-[2026-05-11 10:40:34.892] [error] [!]
-[2026-05-11 10:40:34.894] [error]  Using Python 3.12.11 environment at: /Users/runner/Documents/ComfyUI/.venv
-
-[2026-05-11 10:40:35.499] [error] [!]
-[2026-05-11 10:40:35.502] [error]  Resolved 16 packages in 553ms
-
-[2026-05-11 10:40:35.548] [error] [!]
-[2026-05-11 10:40:35.550] [error]  Downloading virtualenv (7.2MiB)
-
-[2026-05-11 10:40:35.884] [error] [!]  Downloaded virtualenv
-
-[2026-05-11 10:40:35.890] [error] [!] Prepared 12 packages in 387ms
-
-[2026-05-11 10:40:35.914] [error] [!]
-[2026-05-11 10:40:35.915] [error]  Uninstalled 1 package in 23ms
-
-[2026-05-11 10:40:36.053] [error] [!]
-[2026-05-11 10:40:36.055] [error]  Installed 12 packages in 137ms
-[!]  + cfgv==3.5.0
-[!]  + comfy-env==0.3.84
-[!]  + distlib==0.4.0
-[!]  - filelock==3.20.3
-
-[2026-05-11 10:40:36.058] [error] [!]  + filelock==3.29.0
-[!]  + identify==2.6.19
-[!]  + nodeenv==1.10.0
-[!]  + platformdirs==4.9.6
-[!]  + pre-commit==4.6.0
-[!]  + python-discovery==1.3.0
-[!]  + tomli==2.4.1
-[!]  + tomli-w==1.2.0
-[!]  + virtualenv==21.3.1
-
-[2026-05-11 10:40:36.071] [info]  
-## ComfyUI-Manager: EXECUTE => 
-['/Users/runner/Documents/ComfyUI/.venv/bin/python', '-m', 'uv', 'pip', 
-'install', 'comfy-3d-viewers==0.2.44']
-
-[2026-05-11 10:40:36.142] [error] [!] Using Python 3.12.11 environment at: /Users/runner/Documents/ComfyUI/.venv
-
-[2026-05-11 10:40:36.238] [error] [!] Resolved 1 package in 87ms
-
-[2026-05-11 10:40:36.251] [error] [!] Downloading comfy-3d-viewers (1.2MiB)
-
-[2026-05-11 10:40:36.345] [error] [!]  Downloaded comfy-3d-viewers
-[!] Prepared 1 package in 106ms
-
-[2026-05-11 10:40:36.400] [error] [!] Installed 1 package in 49ms
-[!]  + comfy-3d-viewers==0.2.44
-
-[2026-05-11 10:40:36.540] [info]  [ComfyUI-Manager] Skipped fixing the 'comfyui-frontend-package' dependency because the ComfyUI is outdated.
-
-[2026-05-11 10:40:36.542] [info]  Install: install script
-
-[2026-05-11 10:40:36.546] [info]  
-## ComfyUI-Manager: EXECUTE => 
-['/Users/runner/Documents/ComfyUI/.venv/bin/python', 'install.py']
-
-[2026-05-11 10:40:37.107] [error] [!]
-[2026-05-11 10:40:37.110] [error]  [comfy-env] pixi not found, downloading...
-
-[2026-05-11 10:40:38.492] [error] [!] [comfy-env] pixi installed: /Users/runner/.pixi/bin/pixi
-
-[2026-05-11 10:40:38.494] [info]   [comfy-env] _discover: scanning /Users/runner/Documents/ComfyUI/custom_nodes
- [comfy-env] _discover: comfyui-hywm2 -> hywm2-nodes (custom_nodes/comfyui-hywm2/nodes/comfy-env.toml)
-
-[2026-05-11 10:40:38.511] [info]   [comfy-env] Workspace: /Users/runner/.ce
- [comfy-env] ComfyUI: /Users/runner/Documents/ComfyUI
- [comfy-env] Found 1 node config(s):
-   - hywm2-nodes <- custom_nodes/comfyui-hywm2/nodes/comfy-env.toml (python=host)
-
-[2026-05-11 10:40:38.563] [info]   [comfy-env] Bootstrap interpreter has python 3.12 + torch 2.10.0 (cpu). Looking for cuda-only wheels matching cpu/torch2.10/cp312.
-
-[2026-05-11 10:40:38.572] [info]   
-[2026-05-11 10:40:38.573] [info]  [comfy-env] Root conda deps from comfyui-hywm2: ['av', 'ffmpeg']
-
-[2026-05-11 10:40:38.580] [info]   [comfy-env] Desktop app detected: source=/Users/runner/.comfy-test-cache/desktop/ComfyUI.app/Contents/Resources/ComfyUI, data=/Users/runner/Documents/ComfyUI
-
-[2026-05-11 10:40:38.593] [info]   Generated /Users/runner/.ce/pixi.toml
- [comfy-env] Installing 1 environment(s):
-   - hywm2-nodes (python=host, 5 pypi deps, 2 cuda wheels)
- [comfy-env] Running `pixi install -e hywm2-nodes`...
-
-[2026-05-11 10:40:46.174] [info]  FETCH ComfyRegistry Data [DONE]
-
-[2026-05-11 10:40:46.634] [info]  [ComfyUI-Manager] default cache updated: https://api.comfy.org/nodes
-
-[2026-05-11 10:40:46.660] [info]  FETCH DATA from: /Users/runner/Documents/ComfyUI/user/__manager/cache/1514988643_custom-node-list.json
-[2026-05-11 10:40:46.682] [info]   [DONE]
-[2026-05-11 10:40:46.684] [info]  
-
-[2026-05-11 10:40:46.725] [info]  [ComfyUI-Manager] All startup tasks have been completed.
-
-[2026-05-11 10:41:04.998] [info]      WARN Skipped running the post-link scripts because `run-post-link-scripts` = `false`
-
-[2026-05-11 10:41:05.008] [info]     	- bin/.librsvg-pre-unlink.sh
-   To enable them, run:
-   	pixi config set --local run-post-link-scripts insecure
-   More info:
-   	https://pixi.sh/latest/reference/pixi_configuration/#run-post-link-scripts
-
-[2026-05-11 10:41:14.642] [info]     ✔ The hywm2-nodes environment has been installed.
-
-[2026-05-11 10:41:14.942] [info]   [comfy-env] hywm2-nodes: deduped libomp
-
-[2026-05-11 10:41:14.944] [info]   [comfy-env] Recorded install hash 1080bccec2bc -> /Users/runner/.ce/install.hash
- 
-[2026-05-11 10:41:14.945] [info]  [comfy-env] Install log: /Users/runner/.ce/install.log
- 
-
-[2026-05-11 10:41:14.952] [info]   Installation complete!
-
-[2026-05-11 10:41:15.821] [info]  
-Restarting... [Legacy Mode]
-
-
-Command: ['/Users/runner/Documents/ComfyUI/.venv/bin/python', '/Users/runner/.comfy-test-cache/desktop/ComfyUI.app/Contents/Resources/ComfyUI/main.py', '--user-directory', '/Users/runner/Documents/ComfyUI/user', '--input-directory', '/Users/runner/Documents/ComfyUI/input', '--output-directory', '/Users/runner/Documents/ComfyUI/output', '--front-end-root', '/Users/runner/.comfy-test-cache/desktop/ComfyUI.app/Contents/Resources/ComfyUI/web_custom_versions/desktop_app', '--base-directory', '/Users/runner/Documents/ComfyUI', '--database-url', 'sqlite:////Users/runner/Documents/ComfyUI/user/comfyui.db', '--extra-model-paths-config', '/Users/runner/Library/Application Support/ComfyUI/extra_models_config.yaml', '--log-stdout', '--listen', '127.0.0.1', '--port', '8000', '--enable-manager']
-
-[2026-05-11 10:41:15.903] [error] /Users/runner/.local/share/uv/python/cpython-3.12.11-macos-aarch64-none/lib/python3.12/multiprocessing/resource_tracker.py:279: UserWarning: resource_tracker: There appear to be 1 leaked semaphore objects to clean up at shutdown
-  warnings.warn('resource_tracker: There appear to be %d '
-
-[2026-05-11 10:41:16.734] [info]  setup plugin alembic.autogenerate.schemas
-setup plugin alembic.autogenerate.tables
-
-[2026-05-11 10:41:16.742] [info]  setup plugin alembic.autogenerate.types
-setup plugin alembic.autogenerate.constraints
-setup plugin alembic.autogenerate.defaults
-setup plugin alembic.autogenerate.comments
-
-[2026-05-11 10:41:16.896] [info]  comfy-aimdo os not supported Darwin
-
-[2026-05-11 10:41:16.899] [info]  NOTE: comfy-aimdo is currently only support for Windows and Linux
-
-[2026-05-11 10:41:17.116] [info]  Adding extra search path custom_nodes /Users/runner/Documents/ComfyUI/custom_nodes
-Adding extra search path download_model_base /Users/runner/Documents/ComfyUI/models
-Adding extra search path custom_nodes /Users/runner/.comfy-test-cache/desktop/ComfyUI.app/Contents/Resources/ComfyUI/custom_nodes
-Setting output directory to: /Users/runner/Documents/ComfyUI/output
-Setting input directory to: /Users/runner/Documents/ComfyUI/input
-
-[2026-05-11 10:41:17.118] [info]  Setting user directory to: /Users/runner/Documents/ComfyUI/user
-
-[2026-05-11 10:41:17.823] [info]  [START] Security scan
-[ComfyUI-Manager] Using uv as Python module for pip operations.
-
-[2026-05-11 10:41:18.072] [info]  [DONE] Security scan
-** ComfyUI startup time: 2026-05-11 10:41:18.071
+** ComfyUI startup time: 2026-05-18 18:38:16.301
 ** Platform: Darwin
-** Python version: 
-[2026-05-11 10:41:18.074] [info]  3.12.11 (main, Aug 18 2025, 19:02:39) [Clang 20.1.4 ]
+
+[2026-05-18 18:38:16.303] [info]  ** Python version: 3.12.11 (main, Aug 18 2025, 19:02:39) [Clang 20.1.4 ]
 ** Python executable: /Users/runner/Documents/ComfyUI/.venv/bin/python
 ** ComfyUI Path: /Users/runner/.comfy-test-cache/desktop/ComfyUI.app/Contents/Resources/ComfyUI
 ** ComfyUI Base Folder Path: /Users/runner/.comfy-test-cache/desktop/ComfyUI.app/Contents/Resources/ComfyUI
@@ -279,188 +31,403 @@ Setting input directory to: /Users/runner/Documents/ComfyUI/input
 ** ComfyUI-Manager config path: /Users/runner/Documents/ComfyUI/user/__manager/config.ini
 ** Log path: /Users/runner/Documents/ComfyUI/user/comfyui.log
 
-[2026-05-11 10:41:18.194] [info]  [ComfyUI-Manager] Skipped fixing the 'comfyui-frontend-package' dependency because the ComfyUI is outdated.
+[2026-05-18 18:38:16.848] [info]  [ComfyUI-Manager] Skipped fixing the 'comfyui-frontend-package' dependency because the ComfyUI is outdated.
 
-[2026-05-11 10:41:18.195] [info]  [PRE] ComfyUI-Manager
+[2026-05-18 18:38:16.849] [info]  [PRE] ComfyUI-Manager
 
-[2026-05-11 10:41:18.693] [error] [comfy-env] comfyui-hywm2: 1 isolation env(s):
-[2026-05-11 10:41:18.696] [error] 
-[comfy-env]   nodes -> /Users/runner/Documents/ComfyUI/custom_nodes/comfyui-hywm2/nodes
+[2026-05-18 18:38:25.047] [info]  Found comfy_kitchen backend eager: {'available': True, 'disabled': False, 'unavailable_reason': None, 'capabilities': ['apply_rope', 'apply_rope1', 'dequantize_mxfp8', 'dequantize_nvfp4', 'dequantize_per_tensor_fp8', 'quantize_mxfp8', 'quantize_nvfp4', 'quantize_per_tensor_fp8', 'scaled_mm_mxfp8', 'scaled_mm_nvfp4']}
 
-[2026-05-11 10:41:21.034] [error] [comfy-env] prestartup complete
+[2026-05-18 18:38:25.049] [info]  Found comfy_kitchen backend cuda: {'available': False, 'disabled': True, 'unavailable_reason': 'Extension file not found: /Users/runner/Documents/ComfyUI/.venv/lib/python3.12/site-packages/comfy_kitchen/backends/cuda/_C.abi3.so', 'capabilities': []}
+Found comfy_kitchen backend triton: {'available': False, 'disabled': True, 'unavailable_reason': "ImportError: No module named 'triton'", 'capabilities': []}
 
-[2026-05-11 10:41:21.150] [info]  WARNING: Potential Error in code: Torch already imported, torch should never be imported before this point.
+[2026-05-18 18:38:25.119] [info]  Checkpoint files will always be loaded safely.
 
-[2026-05-11 10:41:23.012] [info]  Found comfy_kitchen backend cuda: {'available': False, 'disabled': True, 'unavailable_reason': 'Extension file not found: /Users/runner/Documents/ComfyUI/.venv/lib/python3.12/site-packages/comfy_kitchen/backends/cuda/_C.abi3.so', 'capabilities': []}
-Found comfy_kitchen backend eager: {'available': True, 'disabled': False, 'unavailable_reason': None, 'capabilities': ['apply_rope', 'apply_rope1', 'dequantize_mxfp8', 'dequantize_nvfp4', 'dequantize_per_tensor_fp8', 'quantize_mxfp8', 'quantize_nvfp4', 'quantize_per_tensor_fp8', 'scaled_mm_mxfp8', 'scaled_mm_nvfp4']}
-
-[2026-05-11 10:41:23.016] [info]  Found comfy_kitchen backend triton: {'available': False, 'disabled': True, 'unavailable_reason': "ImportError: No module named 'triton'", 'capabilities': []}
-
-[2026-05-11 10:41:23.031] [info]  Checkpoint files will always be loaded safely.
-
-[2026-05-11 10:41:23.076] [info]  Total VRAM 7168 MB, total RAM 7168 MB
+[2026-05-18 18:38:25.267] [info]  Total VRAM 7168 MB, total RAM 7168 MB
 pytorch version: 2.10.0
 
-[2026-05-11 10:41:23.084] [info]  Mac Version (15, 7, 4)
+[2026-05-18 18:38:25.271] [info]  Mac Version (15, 7, 4)
 
-[2026-05-11 10:41:23.086] [info]  Set vram state to: SHARED
+[2026-05-18 18:38:25.276] [info]  Set vram state to: SHARED
 Device: mps
 
-[2026-05-11 10:41:23.538] [info]  Using sub quadratic optimization for attention, if you have memory or speed issues try using: --use-split-cross-attention
+[2026-05-18 18:38:26.961] [info]  Using sub quadratic optimization for attention, if you have memory or speed issues try using: --use-split-cross-attention
 
-[2026-05-11 10:41:27.576] [info]  Python version: 3.12.11 (main, Aug 18 2025, 19:02:39) [Clang 20.1.4 ]
-ComfyUI version: 0.20.1
+[2026-05-18 18:38:33.824] [info]  Python version: 3.12.11 (main, Aug 18 2025, 19:02:39) [Clang 20.1.4 ]
 
-[2026-05-11 10:41:27.578] [info]  comfy-aimdo version: 0.2.14
-comfy-kitchen version: 0.2.8
+[2026-05-18 18:38:33.828] [info]  ComfyUI version: 0.21.1
+comfy-aimdo version: 0.3.0
 
-[2026-05-11 10:41:27.581] [info]  [Prompt Server] web root: /Users/runner/.comfy-test-cache/desktop/ComfyUI.app/Contents/Resources/ComfyUI/web_custom_versions/desktop_app
+[2026-05-18 18:38:33.831] [info]  comfy-kitchen version: 0.2.8
 
-[2026-05-11 10:41:27.583] [info]  Asset seeder disabled
+[2026-05-18 18:38:33.834] [info]  [Prompt Server] web root: /Users/runner/.comfy-test-cache/desktop/ComfyUI.app/Contents/Resources/ComfyUI/web_custom_versions/desktop_app
+
+[2026-05-18 18:38:33.836] [info]  Asset seeder disabled
 [START] ComfyUI-Manager
 
-[2026-05-11 10:41:27.769] [info]  [ComfyUI-Manager] Using GitPython backend
+[2026-05-18 18:38:34.135] [info]  [ComfyUI-Manager] Using GitPython backend
 
-[2026-05-11 10:41:27.822] [info]  [ComfyUI-Manager] network_mode: public
+[2026-05-18 18:38:34.194] [info]  [ComfyUI-Manager] network_mode: public
 
-[2026-05-11 10:41:27.826] [info]  [ComfyUI-Manager] The matrix sharing feature has been disabled because the `matrix-nio` dependency is not installed.
+[2026-05-18 18:38:34.205] [info]  [ComfyUI-Manager] The matrix sharing feature has been disabled because the `matrix-nio` dependency is not installed.
 	To use this feature, please run the following command:
 	/Users/runner/Documents/ComfyUI/.venv/bin/python -m pip install matrix-nio
 
 
-[2026-05-11 10:41:29.923] [error] [comfy-env] Version: 0.3.84
-[2026-05-11 10:41:29.926] [error] 
+[2026-05-18 18:38:37.120] [info]  
+Import times for custom nodes:
+   0.0 seconds: /Users/runner/.comfy-test-cache/desktop/ComfyUI.app/Contents/Resources/ComfyUI/custom_nodes/websocket_image_save.py
 
-[2026-05-11 10:41:30.277] [error] [comfy-env] register_nodes: comfyui-hywm2
-[2026-05-11 10:41:30.285] [error] 
 
-[2026-05-11 10:41:30.288] [error] [comfy-env] ComfyUI source dir: /Users/runner/.comfy-test-cache/desktop/ComfyUI.app/Contents/Resources/ComfyUI
+[2026-05-18 18:38:37.138] [info]  Context impl SQLiteImpl.
+Will assume non-transactional DDL.
 
-[2026-05-11 10:41:30.503] [error] [comfy-env] Scanning nodes metadata (isolation root)...
+[2026-05-18 18:38:37.151] [info]  Context impl SQLiteImpl.
+Will assume non-transactional DDL.
 
-[2026-05-11 10:41:37.712] [error] [comfy-env] Scanned nodes: 9 nodes (7.2s)
-[2026-05-11 10:41:37.714] [error] 
+[2026-05-18 18:38:37.156] [info]  Running upgrade  -> 0001_assets, Initial assets schema
+Revision ID: 0001_assets
+Revises: None
+Create Date: 2025-12-10 00:00:00
 
-[2026-05-11 10:41:37.716] [error] [comfy-env] Scanned nodes root: 9 nodes (7.2s)
+[2026-05-18 18:38:37.199] [info]  Running upgrade 0001_assets -> 0002_merge_to_asset_references, Merge AssetInfo and AssetCacheState into unified asset_references table.
 
-[2026-05-11 10:41:37.718] [error] [comfy-env] Imported nodes root: 9 nodes (isolation)
+[2026-05-18 18:38:37.220] [info]  Running upgrade 0002_merge_to_asset_references -> 0003_add_metadata_job_id, Add system_metadata and job_id columns to asset_references.
+Change preview_id FK from assets.id to asset_references.id.
+
+[2026-05-18 18:38:37.255] [info]  Database upgraded from None to 0003_add_metadata_job_id
+
+[2026-05-18 18:38:37.327] [info]  Starting server
+
+
+[2026-05-18 18:38:37.328] [info]  To see the GUI go to: http://127.0.0.1:8000
+
+[2026-05-18 18:39:51.717] [info]  [ComfyUI-Manager] Using uv as Python module for pip operations.
+
+[2026-05-18 18:39:53.018] [error]   0%|          | 0.00/17.2M [00:00<?, ?B/s]
+[2026-05-18 18:39:53.148] [error]  37%|███▋      | 6.29M/17.2M [00:00<00:00, 49.5MB/s]
+[2026-05-18 18:39:53.284] [error]  73%|███████▎  | 12.6M/17.2M [00:00<00:00, 47.0MB/s]
+[2026-05-18 18:39:53.360] [error] 100%|██████████| 17.2M/17.2M [00:00<00:00, 50.2MB/s]
+[2026-05-18 18:39:53.361] [error] 
+
+[2026-05-18 18:39:53.406] [info]  Extracted zip file to /Users/runner/Documents/ComfyUI/custom_nodes/comfyui-hywm2
+
+[2026-05-18 18:39:53.413] [info]  Install: pip packages
+
+[2026-05-18 18:39:53.480] [info]  
+## ComfyUI-Manager: EXECUTE => 
+['/Users/runner/Documents/ComfyUI/.venv/bin/python', '-m', 'uv', 'pip', 
+'install', 'comfy-env==0.3.84']
+
+[2026-05-18 18:39:53.604] [error] [!]
+[2026-05-18 18:39:53.605] [error]  Using Python 3.12.11 environment at: /Users/runner/Documents/ComfyUI/.venv
+
+[2026-05-18 18:39:53.919] [error] [!]
+[2026-05-18 18:39:53.920] [error]  Resolved 16 packages in 285ms
+
+[2026-05-18 18:39:53.958] [error] [!]
+[2026-05-18 18:39:53.959] [error]  Downloading virtualenv (7.2MiB)
+
+[2026-05-18 18:39:54.107] [error] [!]  Downloaded virtualenv
+[!]
+[2026-05-18 18:39:54.108] [error]  Prepared 12 packages in 187ms
+
+[2026-05-18 18:39:54.122] [error] [!] Uninstalled 1 package in 13ms
+
+[2026-05-18 18:39:54.191] [error] [!] 
+[2026-05-18 18:39:54.192] [error] Installed 12 packages in 69ms
+
+[2026-05-18 18:39:54.193] [error] [!]  + cfgv==3.5.0
+[!]  + comfy-env==0.3.84
+[!]  + distlib==0.4.0
+
+[2026-05-18 18:39:54.194] [error] [!]  - filelock==3.20.3
+[!]  + filelock==3.29.0
+[!]  + identify==2.6.19
+[!] 
+[2026-05-18 18:39:54.196] [error]  + nodeenv==1.10.0
+[!]  + platformdirs==4.9.6
+[!]  + pre-commit==4.6.0
+[!]  + python-discovery==1.3.1
+[!]  + tomli==2.4.1
+[!]  + tomli-w==1.2.0
+[!]  + virtualenv==21.3.3
+
+[2026-05-18 18:39:54.207] [info]  
+## ComfyUI-Manager: EXECUTE => 
+['/Users/runner/Documents/ComfyUI/.venv/bin/python', '-m', 'uv', 'pip', 
+'install', 'comfy-3d-viewers==0.2.44']
+
+[2026-05-18 18:39:54.299] [error] [!] Using Python 3.12.11 environment at: /Users/runner/Documents/ComfyUI/.venv
+
+[2026-05-18 18:39:54.401] [error] [!] 
+[2026-05-18 18:39:54.403] [error] Resolved 1 package in 91ms
+
+[2026-05-18 18:39:54.419] [error] [!]
+[2026-05-18 18:39:54.420] [error]  Downloading comfy-3d-viewers (1.2MiB)
+
+[2026-05-18 18:39:54.494] [error] [!]  Downloaded comfy-3d-viewers
+
+[2026-05-18 18:39:54.497] [error] [!] 
+[2026-05-18 18:39:54.498] [error] Prepared 1 package in 95ms
+
+[2026-05-18 18:39:54.520] [error] [!] 
+[2026-05-18 18:39:54.522] [error] Installed 1 package in 23ms
+[!]  + comfy-3d-viewers==0.2.44
+
+[2026-05-18 18:39:54.573] [info]  [ComfyUI-Manager] Skipped fixing the 'comfyui-frontend-package' dependency because the ComfyUI is outdated.
+
+[2026-05-18 18:39:54.574] [info]  Install: install script
+
+## ComfyUI-Manager: EXECUTE => 
+['/Users/runner/Documents/ComfyUI/.venv/bin/python', 'install.py']
+
+[2026-05-18 18:39:54.863] [error] [!] [comfy-env] pixi not found, downloading...
+
+[2026-05-18 18:39:55.876] [error] [!] 
+[2026-05-18 18:39:55.881] [error] [comfy-env] pixi installed: /Users/runner/.pixi/bin/pixi
+
+[2026-05-18 18:39:55.881] [info]   [comfy-env] _discover: scanning /Users/runner/Documents/ComfyUI/custom_nodes
+
+[2026-05-18 18:39:55.889] [info]   [comfy-env] _discover: comfyui-hywm2 -> hywm2-nodes (custom_nodes/comfyui-hywm2/nodes/comfy-env.toml)
+ [comfy-env] Workspace: /Users/runner/.ce
+ [comfy-env] ComfyUI: /Users/runner/Documents/ComfyUI
+ 
+[2026-05-18 18:39:55.899] [info]  [comfy-env] Found 1 node config(s):
+   - hywm2-nodes <- custom_nodes/comfyui-hywm2/nodes/comfy-env.toml (python=host)
+ [comfy-env] Bootstrap interpreter has python 3.12 + torch 2.10.0 (cpu). Looking for cuda-only wheels matching cpu/torch2.10/cp312.
+ [comfy-env] Root conda deps from comfyui-hywm2: ['av', 'ffmpeg']
+ [comfy-env] Desktop app detected: source=/Users/runner/.comfy-test-cache/desktop/ComfyUI.app/Contents/Resources/ComfyUI, data=/Users/runner/Documents/ComfyUI
+
+[2026-05-18 18:39:55.907] [info]   Generated /Users/runner/.ce/pixi.toml
+ [comfy-env] Installing 1 environment(s):
+   - hywm2-nodes (python=host, 5 pypi deps, 2 cuda wheels)
+ [comfy-env] Running `pixi install -e hywm2-nodes`...
+
+[2026-05-18 18:40:10.561] [info]  FETCH ComfyRegistry Data [DONE]
+
+[2026-05-18 18:40:10.755] [info]  [ComfyUI-Manager] default cache updated: https://api.comfy.org/nodes
+
+[2026-05-18 18:40:10.775] [info]  FETCH DATA from: /Users/runner/Documents/ComfyUI/user/__manager/cache/1514988643_custom-node-list.json
+[2026-05-18 18:40:10.787] [info]   [DONE]
+[2026-05-18 18:40:10.788] [info]  
+
+[2026-05-18 18:40:10.809] [info]  [ComfyUI-Manager] All startup tasks have been completed.
+
+[2026-05-18 18:40:12.960] [info]   
+[2026-05-18 18:40:12.961] [info]     WARN Skipped running the post-link scripts because `run-post-link-scripts` = `false`
+   	- bin/.librsvg-pre-unlink.sh
+   To enable them, run:
+
+[2026-05-18 18:40:12.962] [info]     	pixi config set --local run-post-link-scripts insecure
+   More info:
+   	https://pixi.sh/latest/reference/pixi_configuration/#run-post-link-scripts
+
+[2026-05-18 18:40:20.494] [info]   
+[2026-05-18 18:40:20.498] [info]    ✔ The hywm2-nodes environment has been installed.
+
+[2026-05-18 18:40:20.670] [info]   [comfy-env] hywm2-nodes: deduped libomp
+ [comfy-env] Recorded install hash 1080bccec2bc -> /Users/runner/.ce/install.hash
+ [comfy-env] Install log: /Users/runner/.ce/install.log
+
+[2026-05-18 18:40:20.673] [info]   
+ Installation complete!
+
+[2026-05-18 18:40:22.272] [info]  
+Restarting... [Legacy Mode]
+
+
+Command: ['/Users/runner/Documents/ComfyUI/.venv/bin/python', '/Users/runner/.comfy-test-cache/desktop/ComfyUI.app/Contents/Resources/ComfyUI/main.py', '--user-directory', '/Users/runner/Documents/ComfyUI/user', '--input-directory', '/Users/runner/Documents/ComfyUI/input', '--output-directory', '/Users/runner/Documents/ComfyUI/output', '--front-end-root', '/Users/runner/.comfy-test-cache/desktop/ComfyUI.app/Contents/Resources/ComfyUI/web_custom_versions/desktop_app', '--base-directory', '/Users/runner/Documents/ComfyUI', '--database-url', 'sqlite:////Users/runner/Documents/ComfyUI/user/comfyui.db', '--extra-model-paths-config', '/Users/runner/Library/Application Support/ComfyUI/extra_models_config.yaml', '--log-stdout', '--listen', '127.0.0.1', '--port', '8000', '--enable-manager']
+
+[2026-05-18 18:40:22.405] [error] /Users/runner/.local/share/uv/python/cpython-3.12.11-macos-aarch64-none/lib/python3.12/multiprocessing/resource_tracker.py:279: UserWarning: resource_tracker: There appear to be 1 leaked semaphore objects to clean up at shutdown
+  warnings.warn('resource_tracker: There appear to be %d '
+
+[2026-05-18 18:40:23.388] [info]  setup plugin alembic.autogenerate.schemas
+setup plugin alembic.autogenerate.tables
+
+[2026-05-18 18:40:23.390] [info]  setup plugin alembic.autogenerate.types
+setup plugin alembic.autogenerate.constraints
+setup plugin alembic.autogenerate.defaults
+setup plugin alembic.autogenerate.comments
+
+[2026-05-18 18:40:23.538] [info]  Could not autodetect AIMDO implementation, assuming Nvidia
+
+[2026-05-18 18:40:23.540] [info]  comfy-aimdo unsupported operating system: Darwin
+NOTE: comfy-aimdo currently only supports Windows and Linux
+
+[2026-05-18 18:40:23.777] [info]  Adding extra search path custom_nodes /Users/runner/Documents/ComfyUI/custom_nodes
+Adding extra search path download_model_base /Users/runner/Documents/ComfyUI/models
+Adding extra search path custom_nodes /Users/runner/.comfy-test-cache/desktop/ComfyUI.app/Contents/Resources/ComfyUI/custom_nodes
+Setting output directory to: /Users/runner/Documents/ComfyUI/output
+Setting input directory to: /Users/runner/Documents/ComfyUI/input
+Setting user directory to: /Users/runner/Documents/ComfyUI/user
+
+[2026-05-18 18:40:24.212] [info]  [START] Security scan
+[ComfyUI-Manager] Using uv as Python module for pip operations.
+
+[2026-05-18 18:40:24.366] [info]  [DONE] Security scan
+** ComfyUI startup time: 2026-05-18 18:40:24.366
+
+[2026-05-18 18:40:24.367] [info]  ** Platform: Darwin
+** Python version: 3.12.11 (main, Aug 18 2025, 19:02:39) [Clang 20.1.4 ]
+** Python executable: /Users/runner/Documents/ComfyUI/.venv/bin/python
+** ComfyUI Path: /Users/runner/.comfy-test-cache/desktop/ComfyUI.app/Contents/Resources/ComfyUI
+** ComfyUI Base Folder Path: /Users/runner/.comfy-test-cache/desktop/ComfyUI.app/Contents/Resources/ComfyUI
+** User directory: /Users/runner/Documents/ComfyUI/user
+** ComfyUI-Manager config path: /Users/runner/Documents/ComfyUI/user/__manager/config.ini
+** Log path: /Users/runner/Documents/ComfyUI/user/comfyui.log
+
+[2026-05-18 18:40:24.448] [info]  [ComfyUI-Manager] Skipped fixing the 'comfyui-frontend-package' dependency because the ComfyUI is outdated.
+
+[2026-05-18 18:40:24.449] [info]  [PRE] ComfyUI-Manager
+
+[2026-05-18 18:40:24.635] [error] [comfy-env] comfyui-hywm2: 1 isolation env(s):
+[2026-05-18 18:40:24.636] [error] 
+[comfy-env]   nodes -> /Users/runner/Documents/ComfyUI/custom_nodes/comfyui-hywm2/nodes
+
+[2026-05-18 18:40:26.065] [error] [comfy-env] prestartup complete
+[2026-05-18 18:40:26.067] [error] 
+
+[2026-05-18 18:40:26.194] [info]  WARNING: Potential Error in code: Torch already imported, torch should never be imported before this point.
+
+[2026-05-18 18:40:27.346] [info]  Found comfy_kitchen backend cuda: {'available': False, 'disabled': True, 'unavailable_reason': 'Extension file not found: /Users/runner/Documents/ComfyUI/.venv/lib/python3.12/site-packages/comfy_kitchen/backends/cuda/_C.abi3.so', 'capabilities': []}
+Found comfy_kitchen backend triton: {'available': False, 'disabled': True, 'unavailable_reason': "ImportError: No module named 'triton'", 'capabilities': []}
+
+[2026-05-18 18:40:27.347] [info]  Found comfy_kitchen backend eager: {'available': True, 'disabled': False, 'unavailable_reason': None, 'capabilities': ['apply_rope', 'apply_rope1', 'dequantize_mxfp8', 'dequantize_nvfp4', 'dequantize_per_tensor_fp8', 'quantize_mxfp8', 'quantize_nvfp4', 'quantize_per_tensor_fp8', 'scaled_mm_mxfp8', 'scaled_mm_nvfp4']}
+
+[2026-05-18 18:40:27.354] [info]  Checkpoint files will always be loaded safely.
+
+[2026-05-18 18:40:27.394] [info]  Total VRAM 7168 MB, total RAM 7168 MB
+
+[2026-05-18 18:40:27.395] [info]  pytorch version: 2.10.0
+
+[2026-05-18 18:40:27.398] [info]  Mac Version (15, 7, 4)
+
+[2026-05-18 18:40:27.399] [info]  Set vram state to: SHARED
+Device: mps
+
+[2026-05-18 18:40:27.852] [info]  Using sub quadratic optimization for attention, if you have memory or speed issues try using: --use-split-cross-attention
+
+[2026-05-18 18:40:30.510] [info]  Python version: 3.12.11 (main, Aug 18 2025, 19:02:39) [Clang 20.1.4 ]
+
+[2026-05-18 18:40:30.514] [info]  ComfyUI version: 0.21.1
+comfy-aimdo version: 0.3.0
+comfy-kitchen version: 0.2.8
+
+[2026-05-18 18:40:30.517] [info]  [Prompt Server] web root: /Users/runner/.comfy-test-cache/desktop/ComfyUI.app/Contents/Resources/ComfyUI/web_custom_versions/desktop_app
+
+[2026-05-18 18:40:30.519] [info]  Asset seeder disabled
+[START] ComfyUI-Manager
+
+[2026-05-18 18:40:30.644] [info]  [ComfyUI-Manager] Using GitPython backend
+
+[2026-05-18 18:40:30.677] [info]  [ComfyUI-Manager] network_mode: public
+
+[2026-05-18 18:40:30.683] [info]  [ComfyUI-Manager] The matrix sharing feature has been disabled because the `matrix-nio` dependency is not installed.
+	To use this feature, please run the following command:
+	/Users/runner/Documents/ComfyUI/.venv/bin/python -m pip install matrix-nio
+
+
+[2026-05-18 18:40:31.977] [error] [comfy-env] Version: 0.3.84
+[2026-05-18 18:40:31.979] [error] 
+
+[2026-05-18 18:40:32.153] [error] [comfy-env] register_nodes: comfyui-hywm2
+
+[2026-05-18 18:40:32.155] [error] [comfy-env] ComfyUI source dir: /Users/runner/.comfy-test-cache/desktop/ComfyUI.app/Contents/Resources/ComfyUI
+
+[2026-05-18 18:40:32.166] [error] [comfy-env] Scanning nodes metadata (isolation root)...
+
+[2026-05-18 18:40:37.415] [error] [comfy-env] Scanned nodes: 9 nodes (5.2s)
+
+[2026-05-18 18:40:37.417] [error] [comfy-env] Scanned nodes root: 9 nodes (5.2s)
+
+[2026-05-18 18:40:37.419] [error] [comfy-env] Imported nodes root: 9 nodes (isolation)
 [comfy-env] Registered 9 total nodes
 
-[2026-05-11 10:41:37.726] [info]  
+[2026-05-18 18:40:37.425] [info]  
 Import times for custom nodes:
 
-[2026-05-11 10:41:37.727] [info]     0.0 seconds: /Users/runner/.comfy-test-cache/desktop/ComfyUI.app/Contents/Resources/ComfyUI/custom_nodes/websocket_image_save.py
-   7.8 seconds: /Users/runner/Documents/ComfyUI/custom_nodes/comfyui-hywm2
+[2026-05-18 18:40:37.429] [info]     0.0 seconds: /Users/runner/.comfy-test-cache/desktop/ComfyUI.app/Contents/Resources/ComfyUI/custom_nodes/websocket_image_save.py
+   5.5 seconds: /Users/runner/Documents/ComfyUI/custom_nodes/comfyui-hywm2
 
 
-[2026-05-11 10:41:37.739] [info]  Context impl SQLiteImpl.
+[2026-05-18 18:40:37.441] [info]  Context impl SQLiteImpl.
 
-[2026-05-11 10:41:37.742] [info]  Will assume non-transactional DDL.
+[2026-05-18 18:40:37.443] [info]  Will assume non-transactional DDL.
 
-[2026-05-11 10:41:37.933] [info]  Starting server
+[2026-05-18 18:40:37.631] [info]  Starting server
 
 
-[2026-05-11 10:41:37.934] [info]  To see the GUI go to: http://127.0.0.1:8000
+[2026-05-18 18:40:37.632] [info]  To see the GUI go to: http://127.0.0.1:8000
 
-[2026-05-11 10:41:39.153] [info]  [ComfyUI-Manager] The ComfyRegistry cache update is still in progress, so an outdated cache is being used.
+[2026-05-18 18:40:41.846] [info]  [ComfyUI-Manager] The ComfyRegistry cache update is still in progress, so an outdated cache is being used.
 
-[2026-05-11 10:41:39.230] [info]  FETCH DATA from: /Users/runner/Documents/ComfyUI/.venv/lib/python3.12/site-packages/comfyui_manager/custom-node-list.json
-[2026-05-11 10:41:39.251] [info]   [DONE]
+[2026-05-18 18:40:41.897] [info]  FETCH DATA from: /Users/runner/Documents/ComfyUI/.venv/lib/python3.12/site-packages/comfyui_manager/custom-node-list.json
+[2026-05-18 18:40:41.918] [info]   [DONE]
 
-[2026-05-11 10:41:45.308] [info]  [ComfyUI-Manager] The ComfyRegistry cache update is still in progress, so an outdated cache is being used.
+[2026-05-18 18:40:43.749] [info]  [ComfyUI-Manager] The ComfyRegistry cache update is still in progress, so an outdated cache is being used.
 
-[2026-05-11 10:41:45.391] [info]  FETCH DATA from: /Users/runner/Documents/ComfyUI/.venv/lib/python3.12/site-packages/comfyui_manager/custom-node-list.json
-[2026-05-11 10:41:45.411] [info]   [DONE]
+[2026-05-18 18:40:43.802] [info]  FETCH DATA from: /Users/runner/Documents/ComfyUI/.venv/lib/python3.12/site-packages/comfyui_manager/custom-node-list.json
+[2026-05-18 18:40:43.821] [info]   [DONE]
 
-[2026-05-11 10:41:50.466] [info]  [ComfyUI-Manager] The ComfyRegistry cache update is still in progress, so an outdated cache is being used.
+[2026-05-18 18:40:49.005] [info]  [ComfyUI-Manager] The ComfyRegistry cache update is still in progress, so an outdated cache is being used.
 
-[2026-05-11 10:41:50.524] [info]  FETCH DATA from: /Users/runner/Documents/ComfyUI/.venv/lib/python3.12/site-packages/comfyui_manager/custom-node-list.json
-[2026-05-11 10:41:50.538] [info]   [DONE]
+[2026-05-18 18:40:49.089] [info]  FETCH DATA from: /Users/runner/Documents/ComfyUI/.venv/lib/python3.12/site-packages/comfyui_manager/custom-node-list.json
+[2026-05-18 18:40:49.103] [info]   [DONE]
+[2026-05-18 18:40:49.105] [info]  
 
-[2026-05-11 10:42:12.372] [info]  got prompt
+[2026-05-18 18:41:08.578] [info]  got prompt
 
-[2026-05-11 10:42:12.728] [info]  [comfyui-hywm2] python: /Users/runner/.ce/.pixi/envs/hywm2-nodes/bin/python
+[2026-05-18 18:41:09.107] [info]  [comfyui-hywm2] python: /Users/runner/.ce/.pixi/envs/hywm2-nodes/bin/python
+[comfyui-hywm2] sys_path sent to worker: ['/Users/runner/.comfy-test-cache/desktop/ComfyUI.app/Contents/Resources/ComfyUI', '/Users/runner/Documents/ComfyUI/custom_nodes/comfyui-hywm2', '/Users/runner/.ce/.pixi/envs/hywm2-nodes/lib/python3.1/site-packages', '/Users/runner/Documents/ComfyUI/custom_nodes/comfyui-hywm2']
 
-[2026-05-11 10:42:12.733] [info]  [comfyui-hywm2] sys_path sent to worker: ['/Users/runner/.comfy-test-cache/desktop/ComfyUI.app/Contents/Resources/ComfyUI', '/Users/runner/Documents/ComfyUI/custom_nodes/comfyui-hywm2', '/Users/runner/.ce/.pixi/envs/hywm2-nodes/lib/python3.1/site-packages', '/Users/runner/Documents/ComfyUI/custom_nodes/comfyui-hywm2']
+[2026-05-18 18:41:13.417] [error] [worker:comfyui-hywm2] ERROR: Failed to import comfy_kitchen, Error: No module named 'comfy_kitchen', fp8 and fp4 support will not be available.
 
-[2026-05-11 10:42:14.369] [error] [worker:comfyui-hywm2] ERROR: Failed to import comfy_kitchen, Error: No module named 'comfy_kitchen', fp8 and fp4 support will not be available.
+[2026-05-18 18:41:16.975] [error] model.safetensors:   0%|          | 0.00/3.27G [00:00<?, ?B/s]
+[2026-05-18 18:41:17.267] [error] model.safetensors:   0%|          | 0.00/3.27G [00:00<?, ?B/s]
+[2026-05-18 18:41:20.307] [error] model.safetensors:   2%|▏         | 67.1M/3.27G [00:03<02:25, 22.1MB/s]
+[2026-05-18 18:41:23.096] [error] model.safetensors:   3%|▎         | 104M/3.27G [00:06<03:04, 17.2MB/s] 
+[2026-05-18 18:41:23.809] [error] model.safetensors:   4%|▍         | 142M/3.27G [00:06<02:15, 23.2MB/s]
+[2026-05-18 18:41:33.110] [error] model.safetensors:   6%|▋         | 209M/3.27G [00:16<04:37, 11.0MB/s]
+[2026-05-18 18:41:47.166] [error] model.safetensors:   6%|▋         | 209M/3.27G [00:30<04:37, 11.0MB/s]
+[2026-05-18 18:42:05.442] [error] model.safetensors:  12%|█▏        | 404M/3.27G [00:48<06:45, 7.07MB/s]
+[2026-05-18 18:42:06.347] [error] model.safetensors:  17%|█▋        | 572M/3.27G [00:49<03:35, 12.5MB/s]
+[2026-05-18 18:42:07.325] [error] model.safetensors:  23%|██▎       | 756M/3.27G [00:50<02:02, 20.5MB/s]
+[2026-05-18 18:42:08.292] [error] model.safetensors:  28%|██▊       | 924M/3.27G [00:51<01:19, 29.7MB/s]
+[2026-05-18 18:42:09.308] [error] model.safetensors:  33%|███▎      | 1.07G/3.27G [00:52<00:55, 39.5MB/s]
+[2026-05-18 18:42:27.244] [error] model.safetensors:  33%|███▎      | 1.07G/3.27G [01:10<00:55, 39.5MB/s]
+[2026-05-18 18:42:43.948] [info]  FETCH ComfyRegistry Data [DONE]
 
-[2026-05-11 10:42:16.367] [error] model.safetensors:   0%|          | 0.00/3.27G [00:00<?, ?B/s]
-[2026-05-11 10:42:19.684] [error] model.safetensors:   6%|▋         | 209M/3.27G [00:03<00:48, 63.5MB/s]
-[2026-05-11 10:42:21.658] [error] model.safetensors:  12%|█▏        | 404M/3.27G [00:05<00:36, 79.2MB/s]
-[2026-05-11 10:42:21.898] [error] model.safetensors:  15%|█▍        | 488M/3.27G [00:05<00:28, 99.2MB/s]
-[2026-05-11 10:42:22.194] [error] model.safetensors:  18%|█▊        | 605M/3.27G [00:05<00:20, 133MB/s] 
-[2026-05-11 10:42:23.649] [error] model.safetensors:  22%|██▏       | 706M/3.27G [00:07<00:24, 105MB/s]
-[2026-05-11 10:42:24.417] [error] model.safetensors:  26%|██▌       | 840M/3.27G [00:08<00:19, 123MB/s]
-[2026-05-11 10:42:28.907] [error] model.safetensors:  31%|███▏      | 1.02G/3.27G [00:12<00:33, 67.3MB/s]
-[2026-05-11 10:42:34.018] [error] model.safetensors:  32%|███▏      | 1.04G/3.27G [00:17<01:06, 33.8MB/s]
-[2026-05-11 10:42:34.702] [error] model.safetensors:  37%|███▋      | 1.22G/3.27G [00:18<00:37, 54.6MB/s]
-[2026-05-11 10:42:35.413] [error] model.safetensors:  46%|████▌     | 1.50G/3.27G [00:19<00:18, 94.9MB/s]
-[2026-05-11 10:42:43.422] [error] model.safetensors:  60%|██████    | 1.97G/3.27G [00:27<00:18, 71.2MB/s]
-[2026-05-11 10:42:45.151] [error] model.safetensors:  85%|████████▍ | 2.78G/3.27G [00:28<00:03, 137MB/s] 
-[2026-05-11 10:42:46.124] [error] model.safetensors: 100%|██████████| 3.27G/3.27G [00:29<00:00, 182MB/s]
-[2026-05-11 10:42:46.137] [error] model.safetensors: 100%|██████████| 3.27G/3.27G [00:29<00:00, 110MB/s]
+[2026-05-18 18:42:44.521] [info]  [ComfyUI-Manager] default cache updated: https://api.comfy.org/nodes
 
-[2026-05-11 10:42:46.343] [error] config.json:   0%|          | 0.00/842 [00:00<?, ?B/s]
-[2026-05-11 10:42:46.346] [error] config.json: 100%|██████████| 842/842 [00:00<00:00, 729kB/s]
+[2026-05-18 18:42:44.672] [info]  FETCH DATA from: /Users/runner/Documents/ComfyUI/user/__manager/cache/1514988643_custom-node-list.json
+[2026-05-18 18:42:44.710] [info]   [DONE]
 
-[2026-05-11 10:42:46.399] [error] [comfyui-hywm2] Health check: ping (timeout=5.0s)...
-[comfyui-hywm2] Health check: ok
+[2026-05-18 18:42:44.759] [info]  [ComfyUI-Manager] All startup tasks have been completed.
 
-[2026-05-11 10:42:58.841] [error] [worker:comfyui-hywm2] [Pipeline] Single-GPU mode
-[worker:comfyui-hywm2] [Init] Found local model at /Users/runner/.comfy-test-cache/desktop/ComfyUI.app/Contents/Resources/ComfyUI/models/hywm2/
+[2026-05-18 18:52:09.365] [error] !!! Exception during processing !!! comfyui-hywm2: call_id=1 timed out after 600.0s
 
-[2026-05-11 10:42:58.846] [error] [worker:comfyui-hywm2] [WorldMirror] model_size: large, embed_dim: 1024, depth: 24, num_heads: 16, mlp_ratio: 4.0, gs_dim: 256, num_register_tokens: 4
+[2026-05-18 18:52:09.445] [error] Traceback (most recent call last):
+  File "/Users/runner/.comfy-test-cache/desktop/ComfyUI.app/Contents/Resources/ComfyUI/execution.py", line 535, in execute
+    output_data, output_ui, has_subgraph, has_pending_tasks = await get_output_data(prompt_id, unique_id, obj, input_data_all, execution_block_cb=execution_block_cb, pre_execute_cb=pre_execute_cb, v3_data=v3_data)
+                                                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/runner/.comfy-test-cache/desktop/ComfyUI.app/Contents/Resources/ComfyUI/execution.py", line 335, in get_output_data
+    return_values = await _async_map_node_over_list(prompt_id, unique_id, obj, input_data_all, obj.FUNCTION, allow_interrupt=True, execution_block_cb=execution_block_cb, pre_execute_cb=pre_execute_cb, v3_data=v3_data)
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/runner/.comfy-test-cache/desktop/ComfyUI.app/Contents/Resources/ComfyUI/execution.py", line 309, in _async_map_node_over_list
+    await process_inputs(input_dict, i)
+  File "/Users/runner/.comfy-test-cache/desktop/ComfyUI.app/Contents/Resources/ComfyUI/execution.py", line 297, in process_inputs
+    result = f(**inputs)
+             ^^^^^^^^^^^
+  File "/Users/runner/Documents/ComfyUI/.venv/lib/python3.12/site-packages/comfy_env/isolation/metadata.py", line 556, in proxy
+    result = worker.call_method(
+             ^^^^^^^^^^^^^^^^^^^
+  File "/Users/runner/Documents/ComfyUI/.venv/lib/python3.12/site-packages/comfy_env/isolation/workers/subprocess.py", line 669, in call_method
+    response = self._send_request(request, timeout)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/runner/Documents/ComfyUI/.venv/lib/python3.12/site-packages/comfy_env/isolation/workers/subprocess.py", line 600, in _send_request
+    raise TimeoutError(f"{self.name}: call_id={call_id} timed out after {timeout}s")
+TimeoutError: comfyui-hywm2: call_id=1 timed out after 600.0s
 
-[2026-05-11 10:43:07.139] [info]  FETCH ComfyRegistry Data [DONE]
 
-[2026-05-11 10:43:07.393] [info]  [ComfyUI-Manager] default cache updated: https://api.comfy.org/nodes
-
-[2026-05-11 10:43:07.478] [info]  FETCH DATA from: /Users/runner/Documents/ComfyUI/user/__manager/cache/1514988643_custom-node-list.json
-[2026-05-11 10:43:07.505] [info]   [DONE]
-
-[2026-05-11 10:43:07.539] [info]  [ComfyUI-Manager] All startup tasks have been completed.
-
-[2026-05-11 10:43:08.680] [error] [worker:comfyui-hywm2] [INFO] Using normalized RoPE!
-
-[2026-05-11 10:44:16.519] [error] [worker:comfyui-hywm2]   Loaded 1545/1593 keys from /Users/runner/.comfy-test-cache/desktop/ComfyUI.app/Contents/Resources/ComfyUI/models/hywm2/
-
-[2026-05-11 10:44:29.741] [error] [worker:comfyui-hywm2] [Init] Disabled heads: ['camera', 'points', 'gs'], freed ~281.8M params
-
-[2026-05-11 10:44:29.746] [error] [worker:comfyui-hywm2] [Init] Model ready in 90.9s
-
-[2026-05-11 10:44:30.137] [error] [worker:comfyui-hywm2] WARNING: No comfy kitchen, using old apply_rope functions.
-[2026-05-11 10:44:30.138] [error] 
-
-[2026-05-11 10:44:33.831] [error] [worker:comfyui-hywm2] [Inference] 1 images, shape=torch.Size([1, 1, 3, 434, 756]), sp_size=1
-
-[2026-05-11 10:44:49.236] [error] [worker:comfyui-hywm2] [Inference] Done in 15.38s
-
-[2026-05-11 10:44:49.557] [error] [comfyui-hywm2] Health check: ping (timeout=5.0s)...
-
-[2026-05-11 10:44:49.560] [error] [comfyui-hywm2] Health check: ok
-
-[2026-05-11 10:44:49.834] [error] [worker:comfyui-hywm2] [Inference] 1 images, shape=torch.Size([1, 1, 3, 434, 756]), sp_size=1
-
-[2026-05-11 10:44:58.162] [error] [worker:comfyui-hywm2] [Inference] Done in 8.32s
-
-[2026-05-11 10:44:59.135] [error] [comfyui-hywm2] Health check: ping (timeout=5.0s)...
-[2026-05-11 10:44:59.137] [error] 
-[comfyui-hywm2] Health check: ok
-
-[2026-05-11 10:44:59.270] [error] [worker:comfyui-hywm2] [Inference] 1 images, shape=torch.Size([1, 1, 3, 434, 756]), sp_size=1
-
-[2026-05-11 10:45:07.103] [error] [worker:comfyui-hywm2] [Inference] Done in 7.81s
-
-[2026-05-11 10:45:08.067] [error] [comfyui-hywm2] Health check: ping (timeout=5.0s)...
-[2026-05-11 10:45:08.069] [error] 
-
-[2026-05-11 10:45:08.070] [error] [comfyui-hywm2] Health check: ok
-
-[2026-05-11 10:45:08.214] [error] [worker:comfyui-hywm2] [Inference] 1 images, shape=torch.Size([1, 1, 3, 434, 756]), sp_size=1
-[2026-05-11 10:45:08.217] [error] 
-
-[2026-05-11 10:45:16.401] [error] [worker:comfyui-hywm2] [Inference] Done in 8.17s
-
-[2026-05-11 10:45:17.979] [info]  Prompt executed in 185.58 seconds
+[2026-05-18 18:52:09.500] [info]  Prompt executed in 00:11:00
 
