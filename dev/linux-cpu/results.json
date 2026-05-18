@@ -1,12 +1,12 @@
 {
-  "timestamp": "2026-05-16T19:50:18.884000+00:00",
+  "timestamp": "2026-05-18T16:12:07.137190+00:00",
   "platform": "linux",
   "hardware": {
     "os": "Linux-6.17.0-1013-azure-x86_64-with-glibc2.39",
-    "cpu": "AMD EPYC 9V74 80-Core Processor"
+    "cpu": "Intel(R) Xeon(R) Platinum 8370C CPU @ 2.80GHz"
   },
   "commit_hash": "19c59d2b48a64bfe7165d280712f18a5ab9163fc",
-  "run_url": "https://github.com/PozzettiAndrea/comfy-gpu-ci/actions/runs/25971153398",
+  "run_url": "https://github.com/PozzettiAndrea/comfy-gpu-ci/actions/runs/26045276152",
   "success": true,
   "summary": {
     "total": 2,
@@ -17,19 +17,19 @@
     {
       "name": "depth_normal",
       "status": "pass",
-      "duration_seconds": 303.88,
+      "duration_seconds": 187.27,
       "error": null,
       "hardware": {
         "os": "Linux-6.17.0-1013-azure-x86_64-with-glibc2.39",
-        "cpu": "AMD EPYC 9V74 80-Core Processor"
+        "cpu": "Intel(R) Xeon(R) Platinum 8370C CPU @ 2.80GHz"
       },
       "resources": {
         "ram": {
-          "peak": 6.37,
-          "avg": 4.84
+          "peak": 7.22,
+          "avg": 4.68
         },
         "total_ram_gb": 15.6,
-        "samples": 303
+        "samples": 187
       }
     },
     {
