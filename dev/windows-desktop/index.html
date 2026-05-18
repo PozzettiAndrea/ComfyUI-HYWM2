@@ -68,6 +68,17 @@
             color: #8ba3c1;
         }
 
+        a.meta-chip {
+            text-decoration: none;
+            transition: background 0.15s, border-color 0.15s, color 0.15s;
+        }
+
+        a.meta-chip:hover {
+            background: #25395a;
+            border-color: #3a5587;
+            color: #cfe1f7;
+        }
+
         .meta-chip svg {
             width: 12px;
             height: 12px;
@@ -113,7 +124,7 @@
         }
 
         .progress-fill.has-failures {
-            background: linear-gradient(90deg, #3fb950 0%, #3fb950 100.0%, #f85149 100.0%, #f85149 100%);
+            background: linear-gradient(90deg, #3fb950 0%, #3fb950 0.0%, #f85149 0.0%, #f85149 100%);
             width: 100% !important;
             border-radius: 6px;
         }
@@ -924,7 +935,7 @@
     <header>
         <h1><a href="https://github.com/PozzettiAndrea/PozzettiAndrea/ComfyUI-HYWM2">PozzettiAndrea/ComfyUI-HYWM2</a> Test Results</h1>
         <div class="meta-chips">
-            <span class="meta-chip"><svg viewBox="0 0 16 16"><path d="M8 0a8 8 0 110 16A8 8 0 018 0zm.5 4.5a.5.5 0 00-1 0v3.793L5.854 9.854a.5.5 0 10.708.708l1.853-1.854a.5.5 0 00.085-.094V4.5z"/></svg> 2026-05-11 10:28 UTC</span> <span class="meta-chip"><svg viewBox="0 0 16 16"><path d="M2.5 4a.5.5 0 100 1 .5.5 0 000-1zM4 4.5a.5.5 0 01.5-.5h7a.5.5 0 010 1h-7a.5.5 0 01-.5-.5zM2.5 7a.5.5 0 100 1 .5.5 0 000-1zM4 7.5a.5.5 0 01.5-.5h7a.5.5 0 010 1h-7A.5.5 0 014 7.5zM2.5 10a.5.5 0 100 1 .5.5 0 000-1zM4 10.5a.5.5 0 01.5-.5h7a.5.5 0 010 1h-7a.5.5 0 01-.5-.5z"/></svg> Windows-2025Server-10.0.26100-SP0</span> <span class="meta-chip"><svg viewBox="0 0 16 16"><path d="M5 0a.5.5 0 01.5.5V2h1V.5a.5.5 0 011 0V2h1V.5a.5.5 0 011 0V2h.5A2.5 2.5 0 0112.5 4.5H14v1h-1.5v1H14v1h-1.5v1H14v1h-1.5A2.5 2.5 0 0110 12h-.5v1.5a.5.5 0 01-1 0V12h-1v1.5a.5.5 0 01-1 0V12H6v1.5a.5.5 0 01-1 0V12h-.5A2.5 2.5 0 012 9.5H.5v-1H2v-1H.5v-1H2v-1H.5v-1H2A2.5 2.5 0 014.5 2V.5A.5.5 0 015 0zm-.5 4A1.5 1.5 0 003 5.5v4A1.5 1.5 0 004.5 11h6a1.5 1.5 0 001.5-1.5v-4A1.5 1.5 0 0010.5 4h-6z"/></svg> AMD64 Family 25 Model 1 Stepping 1, AuthenticAMD</span>
+            <span class="meta-chip"><svg viewBox="0 0 16 16"><path d="M8 0a8 8 0 110 16A8 8 0 018 0zm.5 4.5a.5.5 0 00-1 0v3.793L5.854 9.854a.5.5 0 10.708.708l1.853-1.854a.5.5 0 00.085-.094V4.5z"/></svg> 2026-05-18 18:40 UTC</span> <a class="meta-chip" href="https://github.com/PozzettiAndrea/comfy-gpu-ci/actions/runs/26052448330" target="_blank" rel="noopener noreferrer"><svg viewBox="0 0 16 16"><path d="M8 0a8 8 0 100 16A8 8 0 008 0zM6.5 4.5l5 3.5-5 3.5v-7z"/></svg> Test run</a> <span class="meta-chip"><svg viewBox="0 0 16 16"><path d="M2.5 4a.5.5 0 100 1 .5.5 0 000-1zM4 4.5a.5.5 0 01.5-.5h7a.5.5 0 010 1h-7a.5.5 0 01-.5-.5zM2.5 7a.5.5 0 100 1 .5.5 0 000-1zM4 7.5a.5.5 0 01.5-.5h7a.5.5 0 010 1h-7A.5.5 0 014 7.5zM2.5 10a.5.5 0 100 1 .5.5 0 000-1zM4 10.5a.5.5 0 01.5-.5h7a.5.5 0 010 1h-7a.5.5 0 01-.5-.5z"/></svg> Windows-2025Server-10.0.26100-SP0</span> <span class="meta-chip"><svg viewBox="0 0 16 16"><path d="M5 0a.5.5 0 01.5.5V2h1V.5a.5.5 0 011 0V2h1V.5a.5.5 0 011 0V2h.5A2.5 2.5 0 0112.5 4.5H14v1h-1.5v1H14v1h-1.5v1H14v1h-1.5A2.5 2.5 0 0110 12h-.5v1.5a.5.5 0 01-1 0V12h-1v1.5a.5.5 0 01-1 0V12H6v1.5a.5.5 0 01-1 0V12h-.5A2.5 2.5 0 012 9.5H.5v-1H2v-1H.5v-1H2v-1H.5v-1H2A2.5 2.5 0 014.5 2V.5A.5.5 0 015 0zm-.5 4A1.5 1.5 0 003 5.5v4A1.5 1.5 0 004.5 11h6a1.5 1.5 0 001.5-1.5v-4A1.5 1.5 0 0010.5 4h-6z"/></svg> AMD64 Family 25 Model 17 Stepping 1, AuthenticAMD</span>
         </div>
     </header>
 
@@ -932,14 +943,14 @@
         <div class="summary">
             <div class="progress-wrapper">
                 <div class="progress-bar">
-                    <div class="progress-fill" style="width: 100.0%"></div>
+                    <div class="progress-fill has-failures" style="width: 0.0%"></div>
                 </div>
-                <span class="progress-label">100.0%</span>
+                <span class="progress-label">0.0%</span>
             </div>
             <div class="stats">
-                <span class="stat-badge stat-pass">1 passed</span>
-                
-                <span class="stat-total">1/1 tests</span>
+                <span class="stat-badge stat-pass">0 passed</span>
+                <span class="stat-badge stat-fail">1 failed</span>
+                <span class="stat-total">0/1 tests</span>
             </div>
         </div>
 
@@ -952,7 +963,7 @@
         </div>
         <div class="workflow-grid" id="workflow-grid">
             
-            <div class="workflow-card clickable " onclick="openLightboxByName('depth_normal')">
+            <div class="workflow-card clickable failed" onclick="openLightboxByName('depth_normal')">
                 
                 <img class="workflow-screenshot" src="screenshots/depth_normal_executed.png"
                      alt="depth_normal" loading="lazy">
@@ -960,10 +971,10 @@
                 <div class="workflow-info">
                     <div class="workflow-header">
                         <span class="workflow-name" title="depth_normal">depth_normal</span>
-                        <span class="workflow-badge pass">pass</span>
+                        <span class="workflow-badge fail">fail</span>
                     </div>
                     <div class="workflow-meta">
-                        <span>248.00s</span>
+                        <span>89.00s</span>
                     </div>
                 </div>
             </div>
@@ -971,6 +982,19 @@
         </div>
 
         
+        <div class="failed-section">
+            <h2>Failed Tests</h2>
+            
+            <div class="failed-item">
+                <div class="failed-header">
+                    <span class="failed-name">depth_normal</span>
+                    <span class="failed-duration">89.00s</span>
+                </div>
+                <div class="failed-error">{&quot;prompt_id&quot;: &quot;6332668b-780a-4c07-aa19-3923095d9c00&quot;, &quot;node_id&quot;: &quot;2&quot;, &quot;node_type&quot;: &quot;HYWM2Reconstruct&quot;, &quot;executed&quot;: [&quot;3&quot;, &quot;1&quot;, &quot;4&quot;], &quot;exception_message&quot;: &quot;No module named &#x27;torchvision&#x27;\n\nWorker traceback:\nTraceback (most recent call last):\n  File \&quot;C:\\Users\\stduser\\AppData\\Local\\Temp\\comfyui_pvenv_056254ef\\persistent_worker.py\&quot;, line 1762, in main\n    result = method(**inputs)\n             ^^^^^^^^^^^^^^^^\n  File \&quot;C:\\Users\\stduser\\.comfy-test-cache\\desktop\\ComfyUI\\resources\\ComfyUI\\comfy_api\\latest\\_io.py\&quot;, line 1833, in EXECUTE_NORMALIZED\n    to_return = cls.execute(*args, **kwargs)\n                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \&quot;C:\\ce\\.pixi\\envs\\hywm2-nodes\\Lib\\site-packages\\torch\\utils\\_contextlib.py\&quot;, line 124, in decorate_context\n    return func(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^\n  File \&quot;C:\\Users\\stduser\\Documents\\ComfyUI\\custom_nodes\\comfyui-hywm2\\nodes\\reconstruct.py\&quot;, line 240, in execute\n    pipeline = cls._get_pipeline(model)\n               ^^^^^^^^^^^^^^^^^^^^^^^^\n  File \&quot;C:\\Users\\stduser\\Documents\\ComfyUI\\custom_nodes\\comfyui-hywm2\\nodes\\reconstruct.py\&quot;, line 381, in _get_pipeline\n    from .hyworld2.worldrecon.pipeline import WorldMirrorPipeline\n  File \&quot;C:\\Users\\stduser\\Documents\\ComfyUI\\custom_nodes\\comfyui-hywm2\\nodes\\hyworld2\\worldrecon\\pipeline.py\&quot;, line 46, in &lt;module&gt;\n    from .hyworldmirror.utils.inference_utils import (\n  File \&quot;C:\\Users\\stduser\\Documents\\ComfyUI\\custom_nodes\\comfyui-hywm2\\nodes\\hyworld2\\worldrecon\\hyworldmirror\\utils\\inference_utils.py\&quot;, line 19, in &lt;module&gt;\n    from torchvision import transforms\nModuleNotFoundError: No module named &#x27;torchvision&#x27;\n\n&quot;, &quot;exception_type&quot;: &quot;comfy_env.isolation.workers.base.WorkerError&quot;, &quot;traceback&quot;: [&quot;  File \&quot;C:\\Users\\stduser\\.comfy-test-cache\\desktop\\ComfyUI\\resources\\ComfyUI\\execution.py\&quot;, line 535, in execute\n    output_data, output_ui, has_subgraph, has_pending_tasks = await get_output_data(prompt_id, unique_id, obj, input_data_all, execution_block_cb=execution_block_cb, pre_execute_cb=pre_execute_cb, v3_data=v3_data)\n                                                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n&quot;, &quot;  File \&quot;C:\\Users\\stduser\\.comfy-test-cache\\desktop\\ComfyUI\\resources\\ComfyUI\\execution.py\&quot;, line 335, in get_output_data\n    return_values = await _async_map_node_over_list(prompt_id, unique_id, obj, input_data_all, obj.FUNCTION, allow_interrupt=True, execution_block_cb=execution_block_cb, pre_execute_cb=pre_execute_cb, v3_data=v3_data)\n                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n&quot;, &quot;  File \&quot;C:\\Users\\stduser\\.comfy-test-cache\\desktop\\ComfyUI\\resources\\ComfyUI\\execution.py\&quot;, line 309, in _async_map_node_over_list\n    await process_inputs(input_dict, i)\n&quot;, &quot;  File \&quot;C:\\Users\\stduser\\.comfy-test-cache\\desktop\\ComfyUI\\resources\\ComfyUI\\execution.py\&quot;, line 297, in process_inputs\n    result = f(**inputs)\n             ^^^^^^^^^^^\n&quot;, &quot;  File \&quot;C:\\Users\\stduser\\Documents\\ComfyUI\\.venv\\Lib\\site-packages\\comfy_env\\isolation\\metadata.py\&quot;, line 556, in proxy\n    result = worker.call_method(\n             ^^^^^^^^^^^^^^^^^^^\n&quot;, &quot;  File \&quot;C:\\Users\\stduser\\Documents\\ComfyUI\\.venv\\Lib\\site-packages\\comfy_env\\isolation\\workers\\subprocess.py\&quot;, line 674, in call_method\n    raise WorkerError(\n&quot;], &quot;current_inputs&quot;: {&quot;prior_camera_json&quot;: [&quot;&quot;], &quot;depth_colormap&quot;: [&quot;viridis&quot;], &quot;apply_mask&quot;: [true], &quot;view_index&quot;: [-1], &quot;points_conf_percentile&quot;: [0], &quot;points_max&quot;: [2000000], &quot;gaussians_weight_threshold&quot;: [0.3], &quot;gaussians_downsample&quot;: [1], &quot;model&quot;: [&quot;{&#x27;model_dir&#x27;: &#x27;C:\\\\Users\\\\stduser\\\\.comfy-test-cache\\\\desktop\\\\ComfyUI\\\\resources\\\\ComfyUI\\\\models\\\\hywm2&#x27;, &#x27;subfolder&#x27;: &#x27;&#x27;, &#x27;repo_id&#x27;: &#x27;apozz/hy-worldmirror-2-bf16&#x27;, &#x27;precision&#x27;: &#x27;fp32&#x27;, &#x27;enable_bf16&#x27;: False, &#x27;target_size&#x27;: 952, &#x27;disable_heads&#x27;: [&#x27;camera&#x27;, &#x27;points&#x27;, &#x27;gs&#x27;]}&quot;], &quot;images&quot;: [&quot;tensor([[[[1.0000, 1.0000, 0.9922],\n          [1.0000, 1.0000, 0.9922],\n          [1.0000, 1.0000, 0.9922],\n          ...,\n          [0.5843, 0.6353, 0.6588],\n          [0.5882, 0.6392, 0.6706],\n          [0.5882, 0.6392, 0.6706]],\n\n         [[1.0000, 1.0000, 0.9922],\n          [1.0000, 1.0000, 0.9922],\n          [1.0000, 1.0000, 0.9922],\n          ...,\n          [0.5882, 0.6392, 0.6627],\n          [0.5922, 0.6431, 0.6745],\n          [0.5961, 0.6471, 0.6784]],\n\n         [[1.0000, 1.0000, 0.9922],\n          [1.0000, 1.0000, 0.9922],\n          [1.0000, 1.0000, 0.9922],\n          ...,\n          [0.6000, 0.6510, 0.6745],\n          [0.6000, 0.6510, 0.6824],\n          [0.6039, 0.6549, 0.6863]],\n\n         ...,\n\n         [[0.2627, 0.3216, 0.3020],\n          [0.2627, 0.3216, 0.3020],\n          [0.2667, 0.3255, 0.3059],\n          ...,\n          [0.3176, 0.2549, 0.1569],\n          [0.3137, 0.2510, 0.1529],\n          [0.3137, 0.2510, 0.1529]],\n\n         [[0.2627, 0.3216, 0.3020],\n          [0.2627, 0.3216, 0.3020],\n          [0.2667, 0.3255, 0.3059],\n          ...,\n          [0.3176, 0.2549, 0.1569],\n          [0.3137, 0.2510, 0.1529],\n          [0.3137, 0.2510, 0.1529]],\n\n         [[0.2627, 0.3216, 0.3020],\n          [0.2627, 0.3216, 0.3020],\n          [0.2667, 0.3255, 0.3059],\n          ...,\n          [0.3176, 0.2549, 0.1569],\n          [0.3137, 0.2510, 0.1529],\n          [0.3137, 0.2510, 0.1529]]]])&quot;, &quot;tensor([[[[0.6745, 0.7255, 0.8902],\n          [0.7412, 0.8000, 0.9294],\n          [0.8941, 0.9451, 1.0000],\n          ...,\n          [0.7843, 0.8275, 0.8510],\n          [0.7804, 0.8235, 0.8471],\n          [0.7804, 0.8235, 0.8471]],\n\n         [[0.6745, 0.7216, 0.8863],\n          [0.7412, 0.7922, 0.9255],\n          [0.8902, 0.9412, 1.0000],\n          ...,\n          [0.7843, 0.8275, 0.8510],\n          [0.7804, 0.8235, 0.8471],\n          [0.7804, 0.8235, 0.8471]],\n\n         [[0.6745, 0.7098, 0.8706],\n          [0.7490, 0.7843, 0.9137],\n          [0.8902, 0.9373, 1.0000],\n          ...,\n          [0.7843, 0.8275, 0.8510],\n          [0.7804, 0.8235, 0.8471],\n          [0.7804, 0.8235, 0.8471]],\n\n         ...,\n\n         [[0.0510, 0.1216, 0.0588],\n          [0.0471, 0.1176, 0.0549],\n          [0.0431, 0.1137, 0.0667],\n          ...,\n          [0.7098, 0.7765, 0.8039],\n          [0.7059, 0.7725, 0.8000],\n          [0.7059, 0.7725, 0.8000]],\n\n         [[0.0353, 0.1059, 0.0431],\n          [0.0314, 0.1020, 0.0392],\n          [0.0353, 0.1059, 0.0588],\n          ...,\n          [0.7098, 0.7765, 0.8039],\n          [0.7059, 0.7725, 0.8000],\n          [0.7059, 0.7725, 0.8000]],\n\n         [[0.0235, 0.0941, 0.0314],\n          [0.0235, 0.0941, 0.0314],\n          [0.0314, 0.1020, 0.0549],\n          ...,\n          [0.7098, 0.7765, 0.8039],\n          [0.7059, 0.7725, 0.8000],\n          [0.7059, 0.7725, 0.8000]]]])&quot;, &quot;tensor([[[[0.7686, 0.8980, 0.9333],\n          [0.7686, 0.8980, 0.9333],\n          [0.7725, 0.9020, 0.9373],\n          ...,\n          [0.7804, 0.8235, 0.8471],\n          [0.7765, 0.8196, 0.8431],\n          [0.7765, 0.8196, 0.8431]],\n\n         [[0.7686, 0.8980, 0.9333],\n          [0.7686, 0.8980, 0.9333],\n          [0.7725, 0.9020, 0.9373],\n          ...,\n          [0.7804, 0.8235, 0.8471],\n          [0.7765, 0.8196, 0.8431],\n          [0.7765, 0.8196, 0.8431]],\n\n         [[0.7686, 0.8980, 0.9333],\n          [0.7686, 0.8980, 0.9333],\n          [0.7725, 0.9020, 0.9373],\n          ...,\n          [0.7804, 0.8235, 0.8471],\n          [0.7765, 0.8196, 0.8431],\n          [0.7765, 0.8196, 0.8431]],\n\n         ...,\n\n         [[0.2314, 0.3608, 0.3961],\n          [0.2353, 0.3647, 0.4000],\n          [0.2471, 0.3647, 0.3961],\n          ...,\n          [0.3373, 0.3843, 0.3765],\n          [0.3333, 0.3804, 0.3725],\n          [0.3294, 0.3765, 0.3686]],\n\n         [[0.2235, 0.3529, 0.3882],\n          [0.2275, 0.3569, 0.3922],\n          [0.2392, 0.3569, 0.3882],\n          ...,\n          [0.3490, 0.3961, 0.3882],\n          [0.3451, 0.3922, 0.3843],\n          [0.3412, 0.3882, 0.3804]],\n\n         [[0.2157, 0.3451, 0.3804],\n          [0.2196, 0.3490, 0.3843],\n          [0.2314, 0.3490, 0.3804],\n          ...,\n          [0.3569, 0.4039, 0.3961],\n          [0.3529, 0.4000, 0.3922],\n          [0.3490, 0.3961, 0.3882]]]])&quot;, &quot;tensor([[[[0.6941, 0.7373, 0.7608],\n          [0.6941, 0.7373, 0.7608],\n          [0.6941, 0.7373, 0.7608],\n          ...,\n          [0.6824, 0.7647, 0.7294],\n          [0.6902, 0.7804, 0.7176],\n          [0.6863, 0.7765, 0.6980]],\n\n         [[0.6941, 0.7373, 0.7608],\n          [0.6941, 0.7373, 0.7608],\n          [0.6941, 0.7373, 0.7608],\n          ...,\n          [0.6980, 0.7804, 0.7451],\n          [0.7098, 0.8000, 0.7373],\n          [0.7176, 0.8078, 0.7373]],\n\n         [[0.6941, 0.7373, 0.7608],\n          [0.6941, 0.7373, 0.7608],\n          [0.6941, 0.7373, 0.7608],\n          ...,\n          [0.6824, 0.7686, 0.7216],\n          [0.6784, 0.7647, 0.7137],\n          [0.6863, 0.7765, 0.7137]],\n\n         ...,\n\n         [[0.2824, 0.4000, 0.4392],\n          [0.2824, 0.4000, 0.4392],\n          [0.2824, 0.4000, 0.4392],\n          ...,\n          [0.3961, 0.4784, 0.4980],\n          [0.3922, 0.4745, 0.4941],\n          [0.3882, 0.4706, 0.4902]],\n\n         [[0.2784, 0.3961, 0.4353],\n          [0.2784, 0.3961, 0.4353],\n          [0.2784, 0.3961, 0.4353],\n          ...,\n          [0.4118, 0.4941, 0.5137],\n          [0.4039, 0.4863, 0.5059],\n          [0.4000, 0.4824, 0.5020]],\n\n         [[0.2745, 0.3922, 0.4314],\n          [0.2745, 0.3922, 0.4314],\n          [0.2745, 0.3922, 0.4314],\n          ...,\n          [0.4235, 0.5059, 0.5255],\n          [0.4196, 0.5020, 0.5216],\n          [0.4157, 0.4980, 0.5176]]]])&quot;]}, &quot;current_outputs&quot;: [&quot;11&quot;, &quot;3&quot;, &quot;1&quot;, &quot;9&quot;, &quot;2&quot;, &quot;4&quot;], &quot;timestamp&quot;: 1779129641428}</div>
+            </div>
+        
+        </div>
+    
 
         
     </div>
@@ -1029,9 +1053,9 @@
             });
         }
 
-        const workflowData = {"depth_normal": {"src": "screenshots/depth_normal_executed.png", "title": "depth_normal", "status": "pass", "duration": "248.00", "log": "", "hardware": null}};
+        const workflowData = {"depth_normal": {"src": "screenshots/depth_normal_executed.png", "title": "depth_normal", "status": "fail", "duration": "89.00", "log": "", "hardware": null}};
         const workflowNames = Object.keys(workflowData);
-        const videoData = {"depth_normal": {"mp4": "driver.mp4", "duration_seconds": 248, "status": "pass"}};
+        const videoData = {"depth_normal": {"mp4": "driver.mp4", "duration_seconds": 89, "status": "fail"}};
 
         const inIframe = window !== window.top;
         let currentWorkflow = null;
