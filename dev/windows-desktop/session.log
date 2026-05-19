@@ -1,153 +1,99 @@
 [   2s] CDP targets: 1
 [   2s]   page: file:///C:/Users/stduser/.comfy-test-cache/desktop/ComfyUI/resources/desktop-ui/index.html#/not-supported | ComfyUI
-[   3s] Main page: file:///C:/Users/stduser/.comfy-test-cache/desktop/ComfyUI/resources/desktop-ui/index.html#/not-supported | ComfyUI
+[   2s] Main page: file:///C:/Users/stduser/.comfy-test-cache/desktop/ComfyUI/resources/desktop-ui/index.html#/not-supported | ComfyUI
 [   3s] Buttons: ['Learn More', 'Report Issue', 'Continue']
 [   3s]   wizard: COMFY_TEST_GPU=0 platform=win32 preferred=['CPU']
-[   6s]   clicked [BTN|Continue]
+[   5s]   clicked [BTN|Continue]
 [   9s]   url: file:///C:/Users/stduser/.comfy-test-cache/desktop/ComfyUI/resources/desktop-ui/index.html#/not-supported -> file:///C:/Users/stduser/.comfy-test-cache/desktop/ComfyUI/resources/desktop-ui/index.html#/install
-[  10s]   clicked [TILE|CPU]
+[   9s]   clicked [TILE|CPU]
 [  13s]   clicked [BTN|Next]
 [  20s]   clicked [BTN|Next]
-[  24s]   clicked [BTN|Install]
-[  27s]   url: file:///C:/Users/stduser/.comfy-test-cache/desktop/ComfyUI/resources/desktop-ui/index.html#/install -> file:///C:/Users/stduser/.comfy-test-cache/desktop/ComfyUI/resources/desktop-ui/index.html#/server-start
-[ 255s]   /system_stats up after 252s
-[ 255s]   app: waiting for backend stability (continuous /system_stats up for 30s)
-[ 255s]   app: /system_stats up; awaiting 30s of stability
-[ 286s]   app: backend stable for 30s; proceeding
-[ 286s]   capturing canvas load...
-[ 294s]   post: waiting for Cloud upsell
-[ 327s]   post: Cloud upsell not found, skipping
-[ 327s]   post: pressed Escape (Cloud upsell fallback)
-[ 329s]   post: waiting for Close Templates
-[ 341s]   post: Close Templates not found, skipping
-[ 341s]   post: pressed Escape (Close Templates fallback)
-[ 343s]   post: waiting for Extensions
-[ 344s]   post: clicked Extensions via [button[aria-label="Extensions"]:visible]
-[ 346s]   ext: node meta = display='HYWM2' publisher='pznodes' version='0.0.11'
-[ 349s]   ext: searching "HYWM2"
-[ 352s]   ext: clicking HYWM2 by pznodes tile
-[ 356s]   ext: scrolling to + opening version selector
-[ 360s]   ext: selected 0.0.11
-[ 361s]   ext: clicking right-panel Install
-[ 363s]   ext: clicked Install (last of 3 visible)
-[ 371s]   ext: waiting for "Apply Changes" toast
-[ 371s]   ext: clicked Apply Changes
-[ 376s]   app: Apply Changes already triggered in-app restart, skipping pkill
-[ 381s]   app: relaunching with CDP
-[ 381s]   app: waiting for CDP
-[ 382s]   app: CDP up after 1s
-[ 382s]   app: reconnecting Playwright
-[ 383s]   app: attached to http://127.0.0.1:8000/
-[ 557s]   app: server ready after 42s
-[ 557s]   app: waiting for main canvas (window.app.graph)
-[ 557s]   app: canvas ready after 1s (http://127.0.0.1:8000/)
-[ 562s]   app: forcing renderer reload to refresh node-pack manifest
-[ 566s]   app: canvas re-ready after reload in 3s
-[ 569s]   ext: closing Nodes Manager dialog
-[ 569s]   ext: dismissing What's New popup
-[ 569s]   ext: closed What's New popup
-[ 571s]   ext: dismissing Node Pack Issues modal (if present)
-[ 571s]   ext: Node Pack Issues modal not present
-[ 571s]   ext: opening Templates sidebar
-[ 572s]   ext: clicked Templates
-[ 576s]   ext: locating "comfyui-hywm2" section in Templates panel
-[ 578s]   ext: clicked comfyui-hywm2 section
-[ 580s]   ext: fetching comfy-test.toml from https://raw.githubusercontent.com/PozzettiAndrea/ComfyUI-HYWM2/main/comfy-test.toml
-[ 580s]   ext: cpu spec = include ['depth_normal']
-[ 580s]   ext: picking first matching comfyui-hywm2 template
-[ 580s]   ext: 2 visible cards
-[ 582s]   ext: clicked template depth_normal
-[ 587s]   ext: installing WS execution listener
-[ 587s]   ext: clicking Run
-[ 588s]   ext: clicked Run
-[ 588s]   ext: waiting for execution_success / execution_error
-[ 677s]   ext: WS events=115 elapsed=89s
-[ 677s]     ws: {'type': 'progress', 'ts': 1779129631765}
-[ 677s]     ws: {'type': 'progress_state', 'ts': 1779129634015}
-[ 677s]     ws: {'type': 'progress', 'ts': 1779129634015}
-[ 677s]     ws: {'type': 'progress_state', 'ts': 1779129634437}
-[ 677s]     ws: {'type': 'progress', 'ts': 1779129634438}
-[ 677s]     ws: {'type': 'progress_state', 'ts': 1779129634839}
-[ 677s]     ws: {'type': 'progress', 'ts': 1779129634839}
-[ 677s]     ws: {'type': 'progress_state', 'ts': 1779129634846}
-[ 677s]     ws: {'type': 'progress', 'ts': 1779129634846}
-[ 677s]     ws: {'type': 'progress_state', 'ts': 1779129634907}
-[ 677s]     ws: {'type': 'progress_state', 'ts': 1779129634910}
-[ 677s]     ws: {'type': 'executing', 'ts': 1779129634910}
-[ 677s]     ws: {'type': 'execution_error', 'ts': 1779129641445}
-[ 677s]     ws: {'type': 'status', 'ts': 1779129641468}
-[ 677s]     ws: {'type': 'executing', 'ts': 1779129641798}
-[ 677s]   ext: execution_error data:
-[ 677s] {
-  "prompt_id": "6332668b-780a-4c07-aa19-3923095d9c00",
-  "node_id": "2",
-  "node_type": "HYWM2Reconstruct",
-  "executed": [
-    "3",
-    "1",
-    "4"
-  ],
-  "exception_message": "No module named 'torchvision'\n\nWorker traceback:\nTraceback (most recent call last):\n  File \"C:\\Users\\stduser\\AppData\\Local\\Temp\\comfyui_pvenv_056254ef\\persistent_worker.py\", line 1762, in main\n    result = method(**inputs)\n             ^^^^^^^^^^^^^^^^\n  File \"C:\\Users\\stduser\\.comfy-test-cache\\desktop\\ComfyUI\\resources\\ComfyUI\\comfy_api\\latest\\_io.py\", line 1833, in EXECUTE_NORMALIZED\n    to_return = cls.execute(*args, **kwargs)\n                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\ce\\.pixi\\envs\\hywm2-nodes\\Lib\\site-packages\\torch\\utils\\_contextlib.py\", line 124, in decorate_context\n    return func(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\Users\\stduser\\Documents\\ComfyUI\\custom_nodes\\comfyui-hywm2\\nodes\\reconstruct.py\", line 240, in execute\n    pipeline = cls._get_pipeline(model)\n               ^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\Users\\stduser\\Documents\\ComfyUI\\custom_nodes\\comfyui-hywm2\\nodes\\reconstruct.py\", line 381, in _get_pipeline\n    from .hyworld2.worldrecon.pipeline import WorldMirrorPipeline\n  File \"C:\\Users\\stduser\\Documents\\ComfyUI\\custom_nodes\\comfyui-hywm2\\nodes\\hyworld2\\worldrecon\\pipeline.py\", line 46, in <module>\n    from .hyworldmirror.utils.inference_utils import (\n  File \"C:\\Users\\stduser\\Documents\\ComfyUI\\custom_nodes\\comfyui-hywm2\\nodes\\hyworld2\\worldrecon\\hyworldmirror\\utils\\inference_utils.py\", line 19, in <module>\n    from torchvision import transforms\nModuleNotFoundError: No module named 'torchvision'\n\n",
-  "exception_type": "comfy_env.isolation.workers.base.WorkerError",
-  "traceback": [
-    "  File \"C:\\Users\\stduser\\.comfy-test-cache\\desktop\\ComfyUI\\resources\\ComfyUI\\execution.py\", line 535, in execute\n    output_data, output_ui, has_subgraph, has_pending_tasks = await get_output_data(prompt_id, unique_id, obj, input_data_all, execution_block_cb=execution_block_cb, pre_execute_cb=pre_execute_cb, v3_data=v3_data)\n                                                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n",
-    "  File \"C:\\Users\\stduser\\.comfy-test-cache\\desktop\\ComfyUI\\resources\\ComfyUI\\execution.py\", line 335, in get_output_data\n    return_values = await _async_map_node_over_list(prompt_id, unique_id, obj, input_data_all, obj.FUNCTION, allow_interrupt=True, execution_block_cb=execution_block_cb, pre_execute_cb=pre_execute_cb, v3_data=v3_data)\n                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n",
-    "  File \"C:\\Users\\stduser\\.comfy-test-cache\\desktop\\ComfyUI\\resources\\ComfyUI\\execution.py\", line 309, in _async_map_node_over_list\n    await process_inputs(input_dict, i)\n",
-    "  File \"C:\\Users\\stduser\\.comfy-test-cache\\desktop\\ComfyUI\\resources\\ComfyUI\\execution.py\", line 297, in process_inputs\n    result = f(**inputs)\n             ^^^^^^^^^^^\n",
-    "  File \"C:\\Users\\stduser\\Documents\\ComfyUI\\.venv\\Lib\\site-packages\\comfy_env\\isolation\\metadata.py\", line 556, in proxy\n    result = worker.call_method(\n             ^^^^^^^^^^^^^^^^^^^\n",
-    "  File \"C:\\Users\\stduser\\Documents\\ComfyUI\\.venv\\Lib\\site-packages\\comfy_env\\isolation\\workers\\subprocess.py\", line 674, in call_method\n    raise WorkerError(\n"
-  ],
-  "current_inputs": {
-    "prior_camera_json": [
-      ""
-    ],
-    "depth_colormap": [
-      "viridis"
-    ],
-    "apply_mask": [
-      true
-    ],
-    "view_index": [
-      -1
-    ],
-    "points_conf_percentile": [
-      0
-    ],
-    "points_max": [
-      2000000
-    ],
-    "gaussians_weight_threshold": [
-      0.3
-    ],
-    "gaussians_downsample": [
-      1
-    ],
-    "model": [
-      "{'model_dir': 'C:\\\\Users\\\\stduser\\\\.comfy-test-cache\\\\desktop\\\\ComfyUI\\\\resources\\\\ComfyUI\\\\models\\\\hywm2', 'subfolder': '', 'repo_id': 'apozz/hy-worldmirror-2-bf16', 'precision': 'fp32', 'enable_bf16': False, 'target_size': 952, 'disable_heads': ['camera', 'points', 'gs']}"
-    ],
-    "images": [
-      "tensor([[[[1.0000, 1.0000, 0.9922],\n          [1.0000, 1.0000, 0.9922],\n          [1.0000, 1.0000, 0.9922],\n          ...,\n          [0.5843, 0.6353, 0.6588],\n          [0.5882, 0.6392, 0.6706],\n          [0.5882, 0.6392, 0.6706]],\n\n         [[1.0000, 1.0000, 0.9922],\n          [1.0000, 1.0000, 0.9922],\n          [1.0000, 1.0000, 0.9922],\n          ...,\n          [0.5882, 0.6392, 0.6627],\n          [0.5922, 0.6431, 0.6745],\n          [0.5961, 0.6471, 0.6784]],\n\n         [[1.0000, 1.0000, 0.9922],\n          [1.0000, 1.0000, 0.9922],\n          [1.0000, 1.0000, 0.9922],\n          ...,\n          [0.6000, 0.6510, 0.6745],\n          [0.6000, 0.6510, 0.6824],\n          [0.6039, 0.6549, 0.6863]],\n\n         ...,\n\n         [[0.2627, 0.3216, 0.3020],\n          [0.2627, 0.3216, 0.3020],\n          [0.2667, 0.3255, 0.3059],\n          ...,\n          [0.3176, 0.2549, 0.1569],\n          [0.3137, 0.2510, 0.1529],\n          [0.3137, 0.2510, 0.1529]],\n\n         [[0.2627, 0.3216, 0.3020],\n          [0.2627, 0.3216, 0.3020],\n          [0.2667, 0.3255, 0.3059],\n          ...,\n          [0.3176, 0.2549, 0.1569],\n          [0.3137, 0.2510, 0.1529],\n          [0.3137, 0.2510, 0.1529]],\n\n         [[0.2627, 0.3216, 0.3020],\n          [0.2627, 0.3216, 0.3020],\n          [0.2667, 0.3255, 0.3059],\n          ...,\n          [0.3176, 0.2549, 0.1569],\n          [0.3137, 0.2510, 0.1529],\n          [0.3137, 0.2510, 0.1529]]]])",
-      "tensor([[[[0.6745, 0.7255, 0.8902],\n          [0.7412, 0.8000, 0.9294],\n          [0.8941, 0.9451, 1.0000],\n          ...,\n          [0.7843, 0.8275, 0.8510],\n          [0.7804, 0.8235, 0.8471],\n          [0.7804, 0.8235, 0.8471]],\n\n         [[0.6745, 0.7216, 0.8863],\n          [0.7412, 0.7922, 0.9255],\n          [0.8902, 0.9412, 1.0000],\n          ...,\n          [0.7843, 0.8275, 0.8510],\n          [0.7804, 0.8235, 0.8471],\n          [0.7804, 0.8235, 0.8471]],\n\n         [[0.6745, 0.7098, 0.8706],\n          [0.7490, 0.7843, 0.9137],\n          [0.8902, 0.9373, 1.0000],\n          ...,\n          [0.7843, 0.8275, 0.8510],\n          [0.7804, 0.8235, 0.8471],\n          [0.7804, 0.8235, 0.8471]],\n\n         ...,\n\n         [[0.0510, 0.1216, 0.0588],\n          [0.0471, 0.1176, 0.0549],\n          [0.0431, 0.1137, 0.0667],\n          ...,\n          [0.7098, 0.7765, 0.8039],\n          [0.7059, 0.7725, 0.8000],\n          [0.7059, 0.7725, 0.8000]],\n\n         [[0.0353, 0.1059, 0.0431],\n          [0.0314, 0.1020, 0.0392],\n          [0.0353, 0.1059, 0.0588],\n          ...,\n          [0.7098, 0.7765, 0.8039],\n          [0.7059, 0.7725, 0.8000],\n          [0.7059, 0.7725, 0.8000]],\n\n         [[0.0235, 0.0941, 0.0314],\n          [0.0235, 0.0941, 0.0314],\n          [0.0314, 0.1020, 0.0549],\n          ...,\n          [0.7098, 0.7765, 0.8039],\n          [0.7059, 0.7725, 0.8000],\n          [0.7059, 0.7725, 0.8000]]]])",
-      "tensor([[[[0.7686, 0.8980, 0.9333],\n          [0.7686, 0.8980, 0.9333],\n          [0.7725, 0.9020, 0.9373],\n          ...,\n          [0.7804, 0.8235, 0.8471],\n          [0.7765, 0.8196, 0.8431],\n          [0.7765, 0.8196, 0.8431]],\n\n         [[0.7686, 0.8980, 0.9333],\n          [0.7686, 0.8980, 0.9333],\n          [0.7725, 0.9020, 0.9373],\n          ...,\n          [0.7804, 0.8235, 0.8471],\n          [0.7765, 0.8196, 0.8431],\n          [0.7765, 0.8196, 0.8431]],\n\n         [[0.7686, 0.8980, 0.9333],\n          [0.7686, 0.8980, 0.9333],\n          [0.7725, 0.9020, 0.9373],\n          ...,\n          [0.7804, 0.8235, 0.8471],\n          [0.7765, 0.8196, 0.8431],\n          [0.7765, 0.8196, 0.8431]],\n\n         ...,\n\n         [[0.2314, 0.3608, 0.3961],\n          [0.2353, 0.3647, 0.4000],\n          [0.2471, 0.3647, 0.3961],\n          ...,\n          [0.3373, 0.3843, 0.3765],\n          [0.3333, 0.3804, 0.3725],\n          [0.3294, 0.3765, 0.3686]],\n\n         [[0.2235, 0.3529, 0.3882],\n          [0.2275, 0.3569, 0.3922],\n          [0.2392, 0.3569, 0.3882],\n          ...,\n          [0.3490, 0.3961, 0.3882],\n          [0.3451, 0.3922, 0.3843],\n          [0.3412, 0.3882, 0.3804]],\n\n         [[0.2157, 0.3451, 0.3804],\n          [0.2196, 0.3490, 0.3843],\n          [0.2314, 0.3490, 0.3804],\n          ...,\n          [0.3569, 0.4039, 0.3961],\n          [0.3529, 0.4000, 0.3922],\n          [0.3490, 0.3961, 0.3882]]]])",
-      "tensor([[[[0.6941, 0.7373, 0.7608],\n          [0.6941, 0.7373, 0.7608],\n          [0.6941, 0.7373, 0.7608],\n          ...,\n          [0.6824, 0.7647, 0.7294],\n          [0.6902, 0.7804, 0.7176],\n          [0.6863, 0.7765, 0.6980]],\n\n         [[0.6941, 0.7373, 0.7608],\n          [0.6941, 0.7373, 0.7608],\n          [0.6941, 0.7373, 0.7608],\n          ...,\n          [0.6980, 0.7804, 0.7451],\n          [0.7098, 0.8000, 0.7373],\n          [0.7176, 0.8078, 0.7373]],\n\n         [[0.6941, 0.7373, 0.7608],\n          [0.6941, 0.7373, 0.7608],\n          [0.6941, 0.7373, 0.7608],\n          ...,\n          [0.6824, 0.7686, 0.7216],\n          [0.6784, 0.7647, 0.7137],\n          [0.6863, 0.7765, 0.7137]],\n\n         ...,\n\n         [[0.2824, 0.4000, 0.4392],\n          [0.2824, 0.4000, 0.4392],\n          [0.2824, 0.4000, 0.4392],\n          ...,\n          [0.3961, 0.4784, 0.4980],\n          [0.3922, 0.4745, 0.4941],\n          [0.3882, 0.4706, 0.4902]],\n\n         [[0.2784, 0.3961, 0.4353],\n          [0.2784, 0.3961, 0.4353],\n          [0.2784, 0.3961, 0.4353],\n          ...,\n          [0.4118, 0.4941, 0.5137],\n          [0.4039, 0.4863, 0.5059],\n          [0.4000, 0.4824, 0.5020]],\n\n         [[0.2745, 0.3922, 0.4314],\n          [0.2745, 0.3922, 0.4314],\n          [0.2745, 0.3922, 0.4314],\n          ...,\n          [0.4235, 0.5059, 0.5255],\n          [0.4196, 0.5020, 0.5216],\n          [0.4157, 0.4980, 0.5176]]]])"
-    ]
-  },
-  "current_outputs": [
-    "11",
-    "3",
-    "1",
-    "9",
-    "2",
-    "4"
-  ],
-  "timestamp": 1779129641428
-}
-[ 682s]   ext: fetching comfy-test.toml from https://raw.githubusercontent.com/PozzettiAndrea/ComfyUI-HYWM2/main/comfy-test.toml
-[ 682s]   ext: cpu spec = include ['depth_normal']
-[ 682s]   loop: spec=include items=['depth_normal'] -> 1 workflow(s) ['depth_normal']
-[ 682s]   loop: matching=1 first_ran='depth_normal' remaining=0 -> []
-[ 682s] Captured 538 frames
-[ 682s] Wrote D:\a\comfy-gpu-ci\comfy-gpu-ci\comfy-test-logs\HYWM2-1828\dev\windows-desktop\results.json (1 workflow(s), sha=b3c699e8fd23)
+[  27s]   click [BTN|Install] failed: Locator.click: Timeout 3000ms exceeded.
+Call log:
+  - waiting for locator("button[aria-label=\"Install\"]:not(.hardware-option)").first
+    - locator resolved to <button pc49="" type="button" aria-label="Install" data-pc-name="button" data-pc-section="root" data-p-disabled="false" class="p-button p-component px-8 py-2 bg-brand-yellow hover:bg-brand-yellow/90 font-inter rounded-lg border-0 transition-colors justify-self-end">…</button>
+  - attempting click action
+    - waiting for element to be visible, enabled and stable
+    - element is visible, enabled and stable
+    - scrolling into view if needed
+    - done scrolling
+    - performing click action
+
+[  34s]   url: file:///C:/Users/stduser/.comfy-test-cache/desktop/ComfyUI/resources/desktop-ui/index.html#/install -> file:///C:/Users/stduser/.comfy-test-cache/desktop/ComfyUI/resources/desktop-ui/index.html#/server-start
+[ 179s]   /system_stats up after 176s
+[ 179s]   app: waiting for backend stability (continuous /system_stats up for 30s)
+[ 179s]   app: /system_stats up; awaiting 30s of stability
+[ 209s]   app: backend stable for 30s; proceeding
+[ 209s]   capturing canvas load...
+[ 217s]   post: waiting for Cloud upsell
+[ 250s]   post: Cloud upsell not found, skipping
+[ 250s]   post: pressed Escape (Cloud upsell fallback)
+[ 252s]   post: waiting for Close Templates
+[ 264s]   post: Close Templates not found, skipping
+[ 264s]   post: pressed Escape (Close Templates fallback)
+[ 266s]   post: waiting for Extensions
+[ 267s]   post: clicked Extensions via [button[aria-label="Extensions"]:visible]
+[ 269s]   ext: node meta = display='HYWM2' publisher='pznodes' version='0.0.13'
+[ 272s]   ext: searching "HYWM2"
+[ 275s]   ext: clicking HYWM2 by pznodes tile
+[ 279s]   ext: scrolling to + opening version selector
+[ 282s]   ext: selected 0.0.13
+[ 283s]   ext: clicking right-panel Install
+[ 285s]   ext: clicked Install (last of 3 visible)
+[ 293s]   ext: waiting for "Apply Changes" toast
+[ 293s]   ext: clicked Apply Changes
+[ 299s]   app: Apply Changes already triggered in-app restart, skipping pkill
+[ 304s]   app: relaunching with CDP
+[ 304s]   app: waiting for CDP
+[ 305s]   app: CDP up after 1s
+[ 305s]   app: reconnecting Playwright
+[ 306s]   app: attached to http://127.0.0.1:8000/
+[ 534s]   app: server ready after 56s
+[ 534s]   app: waiting for main canvas (window.app.graph)
+[ 534s]   app: canvas ready after 1s (http://127.0.0.1:8000/)
+[ 539s]   app: forcing renderer reload to refresh node-pack manifest
+[ 542s]   app: canvas re-ready after reload in 3s
+[ 545s]   ext: closing Nodes Manager dialog
+[ 545s]   ext: dismissing What's New popup
+[ 546s]   ext: closed What's New popup
+[ 548s]   ext: dismissing Node Pack Issues modal (if present)
+[ 548s]   ext: closed Node Pack Issues modal
+[ 550s]   ext: opening Templates sidebar
+[ 551s]   ext: clicked Templates
+[ 555s]   ext: locating "comfyui-hywm2" section in Templates panel
+[ 557s]   ext: clicked comfyui-hywm2 section
+[ 559s]   ext: fetching comfy-test.toml from https://raw.githubusercontent.com/PozzettiAndrea/ComfyUI-HYWM2/main/comfy-test.toml
+[ 559s]   ext: cpu spec = include ['depth_normal']
+[ 559s]   ext: picking first matching comfyui-hywm2 template
+[ 559s]   ext: 2 visible cards
+[ 561s]   ext: clicked template depth_normal
+[ 566s]   ext: installing WS execution listener
+[ 566s]   ext: clicking Run
+[ 567s]   ext: clicked Run
+[ 567s]   ext: waiting for execution_success / execution_error
+[ 994s]   ext: WS events=119 elapsed=426s
+[ 994s]     ws: {'type': 'progress', 'ts': 1779190741719}
+[ 994s]     ws: {'type': 'progress_state', 'ts': 1779190741765}
+[ 994s]     ws: {'type': 'progress_state', 'ts': 1779190741769}
+[ 994s]     ws: {'type': 'executing', 'ts': 1779190741769}
+[ 994s]     ws: {'type': 'progress_state', 'ts': 1779191091499}
+[ 994s]     ws: {'type': 'progress_state', 'ts': 1779191091815}
+[ 994s]     ws: {'type': 'executing', 'ts': 1779191091825}
+[ 994s]     ws: {'type': 'executed', 'ts': 1779191096712}
+[ 994s]     ws: {'type': 'progress_state', 'ts': 1779191097211}
+[ 994s]     ws: {'type': 'progress_state', 'ts': 1779191097300}
+[ 994s]     ws: {'type': 'executing', 'ts': 1779191097301}
+[ 994s]     ws: {'type': 'executed', 'ts': 1779191097303}
+[ 994s]     ws: {'type': 'progress_state', 'ts': 1779191097304}
+[ 994s]     ws: {'type': 'execution_success', 'ts': 1779191097313}
+[ 994s]     ws: {'type': 'status', 'ts': 1779191097382}
+[ 994s]   ext: execution_success after 426s
+[ 999s]   ext: fetching comfy-test.toml from https://raw.githubusercontent.com/PozzettiAndrea/ComfyUI-HYWM2/main/comfy-test.toml
+[ 999s]   ext: cpu spec = include ['depth_normal']
+[ 999s]   loop: spec=include items=['depth_normal'] -> 1 workflow(s) ['depth_normal']
+[ 999s]   loop: matching=1 first_ran='depth_normal' remaining=0 -> []
+[ 999s] Captured 1088 frames
+[1000s] Wrote D:\a\comfy-gpu-ci\comfy-gpu-ci\comfy-test-logs\HYWM2-1127\dev\windows-desktop\results.json (1 workflow(s), sha=93d060eaa914)
 ffmpeg version 7.1-essentials_build-www.gyan.dev Copyright (c) 2000-2024 the FFmpeg developers
   built with gcc 14.2.0 (Rev1, Built by MSYS2 project)
   configuration: --enable-gpl --enable-version3 --enable-static --disable-w32threads --disable-autodetect --enable-fontconfig --enable-iconv --enable-gnutls --enable-libxml2 --enable-gmp --enable-bzlib --enable-lzma --enable-zlib --enable-libsrt --enable-libssh --enable-libzmq --enable-avisynth --enable-sdl2 --enable-libwebp --enable-libx264 --enable-libx265 --enable-libxvid --enable-libaom --enable-libopenjpeg --enable-libvpx --enable-mediafoundation --enable-libass --enable-libfreetype --enable-libfribidi --enable-libharfbuzz --enable-libvidstab --enable-libvmaf --enable-libzimg --enable-amf --enable-cuda-llvm --enable-cuvid --enable-dxva2 --enable-d3d11va --enable-d3d12va --enable-ffnvcodec --enable-libvpl --enable-nvdec --enable-nvenc --enable-vaapi --enable-libgme --enable-libopenmpt --enable-libopencore-amrwb --enable-libmp3lame --enable-libtheora --enable-libvo-amrwbenc --enable-libgsm --enable-libopencore-amrnb --enable-libopus --enable-libspeex --enable-libvorbis --enable-librubberband
@@ -159,16 +105,16 @@ ffmpeg version 7.1-essentials_build-www.gyan.dev Copyright (c) 2000-2024 the FFm
   libswscale      8.  3.100 /  8.  3.100
   libswresample   5.  3.100 /  5.  3.100
   libpostproc    58.  3.100 / 58.  3.100
-Input #0, image2, from 'D:\a\comfy-gpu-ci\comfy-gpu-ci\comfy-test-logs\HYWM2-1828\dev\windows-desktop\debug\electron_inspect\frames\frame_%06d.png':
-  Duration: 00:01:47.60, start: 0.000000, bitrate: N/A
+Input #0, image2, from 'D:\a\comfy-gpu-ci\comfy-gpu-ci\comfy-test-logs\HYWM2-1127\dev\windows-desktop\debug\electron_inspect\frames\frame_%06d.png':
+  Duration: 00:03:37.60, start: 0.000000, bitrate: N/A
   Stream #0:0: Video: png, rgb24(pc, gbr/bt709/iec61966-2-1), 1008x681, 5 fps, 5 tbr, 5 tbn
 Stream mapping:
   Stream #0:0 -> #0:0 (png (native) -> h264 (libx264))
 Press [q] to stop, [?] for help
-[libx264 @ 000001db0a923000] using cpu capabilities: MMX2 SSE2Fast SSSE3 SSE4.2 AVX FMA3 BMI2 AVX2
-[libx264 @ 000001db0a923000] profile High, level 3.1, 4:2:0, 8-bit
-[libx264 @ 000001db0a923000] 264 - core 164 r3192 c24e06c - H.264/MPEG-4 AVC codec - Copyleft 2003-2024 - http://www.videolan.org/x264.html - options: cabac=1 ref=3 deblock=1:0:0 analyse=0x3:0x113 me=hex subme=7 psy=1 psy_rd=1.00:0.00 mixed_ref=1 me_range=16 chroma_me=1 trellis=1 8x8dct=1 cqm=0 deadzone=21,11 fast_pskip=1 chroma_qp_offset=-2 threads=6 lookahead_threads=1 sliced_threads=0 nr=0 decimate=1 interlaced=0 bluray_compat=0 constrained_intra=0 bframes=3 b_pyramid=2 b_adapt=1 b_bias=0 direct=1 weightb=1 open_gop=0 weightp=2 keyint=250 keyint_min=5 scenecut=40 intra_refresh=0 rc_lookahead=40 rc=crf mbtree=1 crf=23.0 qcomp=0.60 qpmin=0 qpmax=69 qpstep=4 ip_ratio=1.40 aq=1:1.00
-Output #0, mp4, to 'D:\a\comfy-gpu-ci\comfy-gpu-ci\comfy-test-logs\HYWM2-1828\dev\windows-desktop\debug\electron_inspect\driver.mp4':
+[libx264 @ 000001bea28d8ac0] using cpu capabilities: MMX2 SSE2Fast SSSE3 SSE4.2 AVX FMA3 BMI2 AVX2 AVX512
+[libx264 @ 000001bea28d8ac0] profile High, level 3.1, 4:2:0, 8-bit
+[libx264 @ 000001bea28d8ac0] 264 - core 164 r3192 c24e06c - H.264/MPEG-4 AVC codec - Copyleft 2003-2024 - http://www.videolan.org/x264.html - options: cabac=1 ref=3 deblock=1:0:0 analyse=0x3:0x113 me=hex subme=7 psy=1 psy_rd=1.00:0.00 mixed_ref=1 me_range=16 chroma_me=1 trellis=1 8x8dct=1 cqm=0 deadzone=21,11 fast_pskip=1 chroma_qp_offset=-2 threads=6 lookahead_threads=1 sliced_threads=0 nr=0 decimate=1 interlaced=0 bluray_compat=0 constrained_intra=0 bframes=3 b_pyramid=2 b_adapt=1 b_bias=0 direct=1 weightb=1 open_gop=0 weightp=2 keyint=250 keyint_min=5 scenecut=40 intra_refresh=0 rc_lookahead=40 rc=crf mbtree=1 crf=23.0 qcomp=0.60 qpmin=0 qpmax=69 qpstep=4 ip_ratio=1.40 aq=1:1.00
+Output #0, mp4, to 'D:\a\comfy-gpu-ci\comfy-gpu-ci\comfy-test-logs\HYWM2-1127\dev\windows-desktop\debug\electron_inspect\driver.mp4':
   Metadata:
     encoder         : Lavf61.7.100
   Stream #0:0: Video: h264 (avc1 / 0x31637661), yuv420p(tv, unknown/bt709/iec61966-2-1, progressive), 1008x682, q=2-31, 5 fps, 10240 tbn
@@ -176,39 +122,44 @@ Output #0, mp4, to 'D:\a\comfy-gpu-ci\comfy-gpu-ci\comfy-test-logs\HYWM2-1828\de
         encoder         : Lavc61.19.100 libx264
       Side data:
         cpb: bitrate max/min/avg: 0/0/0 buffer size: 0 vbv_delay: N/A
-frame=   15 fps=0.0 q=23.0 size=       0KiB time=00:00:02.60 bitrate=   0.1kbits/s speed=5.01x    
-[vf#0:0 @ 000001db0a9ec700] Reconfiguring filter graph because video parameters changed to rgba(pc, gbr), 1008x681
-frame=   71 fps= 69 q=23.0 size=       0KiB time=00:00:13.80 bitrate=   0.0kbits/s speed=13.4x    
-[vf#0:0 @ 000001db0a9ec700] Reconfiguring filter graph because video parameters changed to rgb24(pc, gbr), 1008x681
-frame=  121 fps= 79 q=23.0 size=     256KiB time=00:00:23.80 bitrate=  88.1kbits/s speed=15.5x    
-frame=  178 fps= 86 q=23.0 size=     512KiB time=00:00:35.20 bitrate= 119.2kbits/s speed=17.1x    
-frame=  257 fps= 99 q=23.0 size=     512KiB time=00:00:51.00 bitrate=  82.2kbits/s speed=19.6x    
-[vf#0:0 @ 000001db0a9ec700] Reconfiguring filter graph because video parameters changed to rgba(pc, gbr), 1008x681
-[vf#0:0 @ 000001db0a9ec700] Reconfiguring filter graph because video parameters changed to rgb24(pc, gbr), 1008x681
-frame=  320 fps=102 q=23.0 size=     512KiB time=00:01:03.60 bitrate=  66.0kbits/s speed=20.3x    
-frame=  378 fps=103 q=23.0 size=    1024KiB time=00:01:15.20 bitrate= 111.6kbits/s speed=20.5x    
-frame=  454 fps=108 q=23.0 size=    1024KiB time=00:01:30.40 bitrate=  92.8kbits/s speed=21.6x    
-[out#0/mp4 @ 000001db0a920780] video:1207KiB audio:0KiB subtitle:0KiB other streams:0KiB global headers:0KiB muxing overhead: 0.585830%
-frame=  538 fps=119 q=-1.0 Lsize=    1214KiB time=00:01:47.20 bitrate=  92.8kbits/s speed=23.6x    
-[libx264 @ 000001db0a923000] frame I:8     Avg QP: 9.06  size: 48929
-[libx264 @ 000001db0a923000] frame P:143   Avg QP:15.14  size:  4358
-[libx264 @ 000001db0a923000] frame B:387   Avg QP:22.31  size:   569
-[libx264 @ 000001db0a923000] consecutive B-frames:  3.3%  0.7%  4.5% 91.4%
-[libx264 @ 000001db0a923000] mb I  I16..4: 53.9% 14.1% 31.9%
-[libx264 @ 000001db0a923000] mb P  I16..4:  3.2%  2.2%  2.7%  P16..4:  1.8%  0.5%  0.3%  0.0%  0.0%    skip:89.3%
-[libx264 @ 000001db0a923000] mb B  I16..4:  0.1%  0.3%  0.2%  B16..8:  1.8%  0.2%  0.1%  direct: 0.1%  skip:97.2%  L0:47.4% L1:50.5% BI: 2.1%
-[libx264 @ 000001db0a923000] 8x8 transform intra:24.5% inter:41.9%
-[libx264 @ 000001db0a923000] coded y,uvDC,uvAC intra: 36.8% 18.0% 13.7% inter: 0.6% 0.4% 0.1%
-[libx264 @ 000001db0a923000] i16 v,h,dc,p: 69% 28%  2%  2%
-[libx264 @ 000001db0a923000] i8 v,h,dc,ddl,ddr,vr,hd,vl,hu: 28% 20% 39%  2%  2%  2%  3%  2%  3%
-[libx264 @ 000001db0a923000] i4 v,h,dc,ddl,ddr,vr,hd,vl,hu: 37% 31% 12%  2%  3%  3%  4%  3%  4%
-[libx264 @ 000001db0a923000] i8c dc,h,v,p: 80% 12%  6%  2%
-[libx264 @ 000001db0a923000] Weighted P-Frames: Y:2.8% UV:2.1%
-[libx264 @ 000001db0a923000] ref P L0: 70.9%  9.4% 14.3%  5.3%  0.0%
-[libx264 @ 000001db0a923000] ref B L0: 71.7% 24.9%  3.4%
-[libx264 @ 000001db0a923000] ref B L1: 95.3%  4.7%
-[libx264 @ 000001db0a923000] kb/s:91.82
-[ 687s] Wrote D:\a\comfy-gpu-ci\comfy-gpu-ci\comfy-test-logs\HYWM2-1828\dev\windows-desktop\debug\electron_inspect\driver.mp4
+frame=    0 fps=0.0 q=0.0 size=       0KiB time=N/A bitrate=N/A speed=N/A    
+[vf#0:0 @ 000001bea2523300] Reconfiguring filter graph because video parameters changed to rgba(pc, gbr), 1008x681
+frame=   41 fps= 40 q=23.0 size=       0KiB time=00:00:07.80 bitrate=   0.0kbits/s speed=7.58x    
+[vf#0:0 @ 000001bea2523300] Reconfiguring filter graph because video parameters changed to rgb24(pc, gbr), 1008x681
+frame=  119 fps= 77 q=23.0 size=     256KiB time=00:00:23.40 bitrate=  89.6kbits/s speed=15.1x    
+frame=  190 fps= 92 q=23.0 size=     512KiB time=00:00:37.60 bitrate= 111.6kbits/s speed=18.2x    
+frame=  274 fps=106 q=23.0 size=     768KiB time=00:00:54.40 bitrate= 115.7kbits/s speed=  21x    
+[vf#0:0 @ 000001bea2523300] Reconfiguring filter graph because video parameters changed to rgba(pc, gbr), 1008x681
+[vf#0:0 @ 000001bea2523300] Reconfiguring filter graph because video parameters changed to rgb24(pc, gbr), 1008x681
+frame=  341 fps=109 q=23.0 size=     768KiB time=00:01:07.80 bitrate=  92.8kbits/s speed=21.7x    
+frame=  412 fps=113 q=23.0 size=    1280KiB time=00:01:22.00 bitrate= 127.9kbits/s speed=22.5x    
+frame=  513 fps=123 q=23.0 size=    1280KiB time=00:01:42.20 bitrate= 102.6kbits/s speed=24.4x    
+frame=  610 fps=129 q=23.0 size=    1280KiB time=00:02:01.60 bitrate=  86.2kbits/s speed=25.8x    
+frame=  698 fps=134 q=23.0 size=    1280KiB time=00:02:19.20 bitrate=  75.3kbits/s speed=26.6x    
+frame=  796 fps=138 q=23.0 size=    1280KiB time=00:02:38.80 bitrate=  66.0kbits/s speed=27.6x    
+frame=  888 fps=142 q=23.0 size=    1280KiB time=00:02:57.20 bitrate=  59.2kbits/s speed=28.3x    
+frame=  980 fps=144 q=23.0 size=    1536KiB time=00:03:15.60 bitrate=  64.3kbits/s speed=28.8x    
+[out#0/mp4 @ 000001bea2895600] video:1571KiB audio:0KiB subtitle:0KiB other streams:0KiB global headers:0KiB muxing overhead: 0.861409%
+frame= 1088 fps=151 q=-1.0 Lsize=    1584KiB time=00:03:37.20 bitrate=  59.8kbits/s speed=30.1x    
+[libx264 @ 000001bea28d8ac0] frame I:14    Avg QP: 7.12  size: 49136
+[libx264 @ 000001bea28d8ac0] frame P:281   Avg QP:16.86  size:  2175
+[libx264 @ 000001bea28d8ac0] frame B:793   Avg QP:22.35  size:   389
+[libx264 @ 000001bea28d8ac0] consecutive B-frames:  2.0%  1.8%  1.7% 94.5%
+[libx264 @ 000001bea28d8ac0] mb I  I16..4: 56.6% 11.6% 31.8%
+[libx264 @ 000001bea28d8ac0] mb P  I16..4:  1.3%  1.2%  1.2%  P16..4:  1.0%  0.3%  0.2%  0.0%  0.0%    skip:94.8%
+[libx264 @ 000001bea28d8ac0] mb B  I16..4:  0.1%  0.2%  0.1%  B16..8:  1.0%  0.1%  0.1%  direct: 0.1%  skip:98.4%  L0:52.6% L1:45.0% BI: 2.4%
+[libx264 @ 000001bea28d8ac0] 8x8 transform intra:22.9% inter:37.0%
+[libx264 @ 000001bea28d8ac0] coded y,uvDC,uvAC intra: 39.5% 17.5% 13.8% inter: 0.4% 0.2% 0.1%
+[libx264 @ 000001bea28d8ac0] i16 v,h,dc,p: 68% 29%  2%  1%
+[libx264 @ 000001bea28d8ac0] i8 v,h,dc,ddl,ddr,vr,hd,vl,hu: 35% 19% 34%  2%  2%  2%  2%  2%  3%
+[libx264 @ 000001bea28d8ac0] i4 v,h,dc,ddl,ddr,vr,hd,vl,hu: 38% 32% 12%  2%  3%  3%  4%  3%  4%
+[libx264 @ 000001bea28d8ac0] i8c dc,h,v,p: 80% 12%  6%  2%
+[libx264 @ 000001bea28d8ac0] Weighted P-Frames: Y:1.4% UV:1.1%
+[libx264 @ 000001bea28d8ac0] ref P L0: 67.6%  7.4% 17.0%  8.0%
+[libx264 @ 000001bea28d8ac0] ref B L0: 70.1% 25.8%  4.1%
+[libx264 @ 000001bea28d8ac0] ref B L1: 94.7%  5.3%
+[libx264 @ 000001bea28d8ac0] kb/s:59.11
+[1009s] Wrote D:\a\comfy-gpu-ci\comfy-gpu-ci\comfy-test-logs\HYWM2-1127\dev\windows-desktop\debug\electron_inspect\driver.mp4
 ffmpeg version 7.1-essentials_build-www.gyan.dev Copyright (c) 2000-2024 the FFmpeg developers
   built with gcc 14.2.0 (Rev1, Built by MSYS2 project)
   configuration: --enable-gpl --enable-version3 --enable-static --disable-w32threads --disable-autodetect --enable-fontconfig --enable-iconv --enable-gnutls --enable-libxml2 --enable-gmp --enable-bzlib --enable-lzma --enable-zlib --enable-libsrt --enable-libssh --enable-libzmq --enable-avisynth --enable-sdl2 --enable-libwebp --enable-libx264 --enable-libx265 --enable-libxvid --enable-libaom --enable-libopenjpeg --enable-libvpx --enable-mediafoundation --enable-libass --enable-libfreetype --enable-libfribidi --enable-libharfbuzz --enable-libvidstab --enable-libvmaf --enable-libzimg --enable-amf --enable-cuda-llvm --enable-cuvid --enable-dxva2 --enable-d3d11va --enable-d3d12va --enable-ffnvcodec --enable-libvpl --enable-nvdec --enable-nvenc --enable-vaapi --enable-libgme --enable-libopenmpt --enable-libopencore-amrwb --enable-libmp3lame --enable-libtheora --enable-libvo-amrwbenc --enable-libgsm --enable-libopencore-amrnb --enable-libopus --enable-libspeex --enable-libvorbis --enable-librubberband
@@ -220,16 +171,16 @@ ffmpeg version 7.1-essentials_build-www.gyan.dev Copyright (c) 2000-2024 the FFm
   libswscale      8.  3.100 /  8.  3.100
   libswresample   5.  3.100 /  5.  3.100
   libpostproc    58.  3.100 / 58.  3.100
-Input #0, image2, from 'D:\a\comfy-gpu-ci\comfy-gpu-ci\comfy-test-logs\HYWM2-1828\dev\windows-desktop\debug\electron_inspect\frames\frame_%06d.png':
-  Duration: 00:00:31.20, start: 0.000000, bitrate: N/A
+Input #0, image2, from 'D:\a\comfy-gpu-ci\comfy-gpu-ci\comfy-test-logs\HYWM2-1127\dev\windows-desktop\debug\electron_inspect\frames\frame_%06d.png':
+  Duration: 00:02:18.80, start: 0.000000, bitrate: N/A
   Stream #0:0: Video: png, rgb24(pc, gbr/bt709/iec61966-2-1), 1008x681, 5 fps, 5 tbr, 5 tbn
 Stream mapping:
   Stream #0:0 -> #0:0 (png (native) -> h264 (libx264))
 Press [q] to stop, [?] for help
-[libx264 @ 00000199fbc1b9c0] using cpu capabilities: MMX2 SSE2Fast SSSE3 SSE4.2 AVX FMA3 BMI2 AVX2
-[libx264 @ 00000199fbc1b9c0] profile High, level 3.1, 4:2:0, 8-bit
-[libx264 @ 00000199fbc1b9c0] 264 - core 164 r3192 c24e06c - H.264/MPEG-4 AVC codec - Copyleft 2003-2024 - http://www.videolan.org/x264.html - options: cabac=1 ref=3 deblock=1:0:0 analyse=0x3:0x113 me=hex subme=7 psy=1 psy_rd=1.00:0.00 mixed_ref=1 me_range=16 chroma_me=1 trellis=1 8x8dct=1 cqm=0 deadzone=21,11 fast_pskip=1 chroma_qp_offset=-2 threads=6 lookahead_threads=1 sliced_threads=0 nr=0 decimate=1 interlaced=0 bluray_compat=0 constrained_intra=0 bframes=3 b_pyramid=2 b_adapt=1 b_bias=0 direct=1 weightb=1 open_gop=0 weightp=2 keyint=250 keyint_min=5 scenecut=40 intra_refresh=0 rc_lookahead=40 rc=crf mbtree=1 crf=23.0 qcomp=0.60 qpmin=0 qpmax=69 qpstep=4 ip_ratio=1.40 aq=1:1.00
-Output #0, mp4, to 'D:\a\comfy-gpu-ci\comfy-gpu-ci\comfy-test-logs\HYWM2-1828\dev\windows-desktop\videos\depth_normal\driver.mp4':
+[libx264 @ 00000224a5483240] using cpu capabilities: MMX2 SSE2Fast SSSE3 SSE4.2 AVX FMA3 BMI2 AVX2 AVX512
+[libx264 @ 00000224a5483240] profile High, level 3.1, 4:2:0, 8-bit
+[libx264 @ 00000224a5483240] 264 - core 164 r3192 c24e06c - H.264/MPEG-4 AVC codec - Copyleft 2003-2024 - http://www.videolan.org/x264.html - options: cabac=1 ref=3 deblock=1:0:0 analyse=0x3:0x113 me=hex subme=7 psy=1 psy_rd=1.00:0.00 mixed_ref=1 me_range=16 chroma_me=1 trellis=1 8x8dct=1 cqm=0 deadzone=21,11 fast_pskip=1 chroma_qp_offset=-2 threads=6 lookahead_threads=1 sliced_threads=0 nr=0 decimate=1 interlaced=0 bluray_compat=0 constrained_intra=0 bframes=3 b_pyramid=2 b_adapt=1 b_bias=0 direct=1 weightb=1 open_gop=0 weightp=2 keyint=250 keyint_min=5 scenecut=40 intra_refresh=0 rc_lookahead=40 rc=crf mbtree=1 crf=23.0 qcomp=0.60 qpmin=0 qpmax=69 qpstep=4 ip_ratio=1.40 aq=1:1.00
+Output #0, mp4, to 'D:\a\comfy-gpu-ci\comfy-gpu-ci\comfy-test-logs\HYWM2-1127\dev\windows-desktop\videos\depth_normal\driver.mp4':
   Metadata:
     encoder         : Lavf61.7.100
   Stream #0:0: Video: h264 (avc1 / 0x31637661), yuv420p(tv, unknown/bt709/iec61966-2-1, progressive), 1008x682, q=2-31, 5 fps, 10240 tbn
@@ -237,28 +188,35 @@ Output #0, mp4, to 'D:\a\comfy-gpu-ci\comfy-gpu-ci\comfy-test-logs\HYWM2-1828\de
         encoder         : Lavc61.19.100 libx264
       Side data:
         cpb: bitrate max/min/avg: 0/0/0 buffer size: 0 vbv_delay: N/A
-frame=   20 fps=0.0 q=23.0 size=       0KiB time=00:00:03.60 bitrate=   0.1kbits/s speed=6.98x    
-frame=   86 fps= 84 q=23.0 size=       0KiB time=00:00:16.80 bitrate=   0.0kbits/s speed=16.5x    
-[out#0/mp4 @ 00000199fb7348c0] video:122KiB audio:0KiB subtitle:0KiB other streams:0KiB global headers:0KiB muxing overhead: 2.176985%
-frame=  156 fps=116 q=-1.0 Lsize=     125KiB time=00:00:30.80 bitrate=  33.2kbits/s speed=  23x    
-[libx264 @ 00000199fbc1b9c0] frame I:1     Avg QP: 9.95  size: 55091
-[libx264 @ 00000199fbc1b9c0] frame P:39    Avg QP:13.97  size:  1528
-[libx264 @ 00000199fbc1b9c0] frame B:116   Avg QP:22.54  size:    85
-[libx264 @ 00000199fbc1b9c0] consecutive B-frames:  0.6%  0.0%  1.9% 97.4%
-[libx264 @ 00000199fbc1b9c0] mb I  I16..4: 47.4% 20.3% 32.3%
-[libx264 @ 00000199fbc1b9c0] mb P  I16..4:  0.2%  0.1%  0.4%  P16..4:  1.1%  0.3%  0.1%  0.0%  0.0%    skip:97.7%
-[libx264 @ 00000199fbc1b9c0] mb B  I16..4:  0.0%  0.0%  0.0%  B16..8:  1.3%  0.0%  0.0%  direct: 0.0%  skip:98.6%  L0:50.5% L1:48.8% BI: 0.7%
-[libx264 @ 00000199fbc1b9c0] 8x8 transform intra:23.1% inter:27.7%
-[libx264 @ 00000199fbc1b9c0] coded y,uvDC,uvAC intra: 42.0% 20.1% 17.7% inter: 0.2% 0.1% 0.0%
-[libx264 @ 00000199fbc1b9c0] i16 v,h,dc,p: 48% 52%  0%  0%
-[libx264 @ 00000199fbc1b9c0] i8 v,h,dc,ddl,ddr,vr,hd,vl,hu: 48% 19% 31%  0%  0%  0%  0%  0%  0%
-[libx264 @ 00000199fbc1b9c0] i4 v,h,dc,ddl,ddr,vr,hd,vl,hu: 42% 34%  7%  2%  2%  3%  4%  2%  4%
-[libx264 @ 00000199fbc1b9c0] i8c dc,h,v,p: 68% 21% 10%  1%
-[libx264 @ 00000199fbc1b9c0] Weighted P-Frames: Y:0.0% UV:0.0%
-[libx264 @ 00000199fbc1b9c0] ref P L0: 66.9%  1.5% 17.8% 13.8%
-[libx264 @ 00000199fbc1b9c0] ref B L0: 73.7% 22.4%  3.9%
-[libx264 @ 00000199fbc1b9c0] ref B L1: 91.6%  8.4%
-[libx264 @ 00000199fbc1b9c0] kb/s:31.94
-[ 689s]   videos/depth_normal/driver.mp4 placed (frames 383..538)
-[ 689s]   screenshots/depth_normal_executed.png placed
-[ 689s]   removed D:\a\comfy-gpu-ci\comfy-gpu-ci\comfy-test-logs\HYWM2-1828\dev\windows-desktop\debug\electron_inspect\frames after successful encode
+frame=   30 fps=0.0 q=23.0 size=       0KiB time=00:00:05.60 bitrate=   0.1kbits/s speed=10.8x    
+frame=   98 fps= 93 q=23.0 size=       0KiB time=00:00:19.20 bitrate=   0.0kbits/s speed=18.3x    
+frame=  166 fps=106 q=23.0 size=       0KiB time=00:00:32.80 bitrate=   0.0kbits/s speed=  21x    
+frame=  242 fps=114 q=23.0 size=       0KiB time=00:00:48.00 bitrate=   0.0kbits/s speed=22.7x    
+frame=  322 fps=120 q=23.0 size=       0KiB time=00:01:04.00 bitrate=   0.0kbits/s speed=23.8x    
+frame=  410 fps=125 q=23.0 size=       0KiB time=00:01:21.60 bitrate=   0.0kbits/s speed=24.9x    
+frame=  486 fps=128 q=23.0 size=       0KiB time=00:01:36.80 bitrate=   0.0kbits/s speed=25.5x    
+frame=  558 fps=129 q=23.0 size=     256KiB time=00:01:51.20 bitrate=  18.9kbits/s speed=25.8x    
+frame=  629 fps=130 q=23.0 size=     256KiB time=00:02:05.40 bitrate=  16.7kbits/s speed=25.9x    
+[out#0/mp4 @ 00000224a5543840] video:341KiB audio:0KiB subtitle:0KiB other streams:0KiB global headers:0KiB muxing overhead: 2.626336%
+frame=  694 fps=136 q=-1.0 Lsize=     350KiB time=00:02:18.40 bitrate=  20.7kbits/s speed=27.2x    
+[libx264 @ 00000224a5483240] frame I:3     Avg QP: 7.89  size: 77483
+[libx264 @ 00000224a5483240] frame P:175   Avg QP:15.99  size:   513
+[libx264 @ 00000224a5483240] frame B:516   Avg QP:23.82  size:    51
+[libx264 @ 00000224a5483240] consecutive B-frames:  0.7%  0.3%  0.4% 98.6%
+[libx264 @ 00000224a5483240] mb I  I16..4: 49.2% 12.2% 38.6%
+[libx264 @ 00000224a5483240] mb P  I16..4:  0.1%  0.0%  0.1%  P16..4:  0.3%  0.1%  0.0%  0.0%  0.0%    skip:99.3%
+[libx264 @ 00000224a5483240] mb B  I16..4:  0.0%  0.0%  0.0%  B16..8:  0.4%  0.0%  0.0%  direct: 0.0%  skip:99.6%  L0:48.8% L1:49.9% BI: 1.3%
+[libx264 @ 00000224a5483240] 8x8 transform intra:14.4% inter:49.4%
+[libx264 @ 00000224a5483240] coded y,uvDC,uvAC intra: 49.6% 26.0% 23.9% inter: 0.1% 0.1% 0.0%
+[libx264 @ 00000224a5483240] i16 v,h,dc,p: 56% 43%  0%  0%
+[libx264 @ 00000224a5483240] i8 v,h,dc,ddl,ddr,vr,hd,vl,hu: 33% 19% 45%  1%  1%  1%  0%  1%  0%
+[libx264 @ 00000224a5483240] i4 v,h,dc,ddl,ddr,vr,hd,vl,hu: 40% 35%  8%  2%  3%  3%  3%  2%  4%
+[libx264 @ 00000224a5483240] i8c dc,h,v,p: 66% 22% 10%  2%
+[libx264 @ 00000224a5483240] Weighted P-Frames: Y:0.0% UV:0.0%
+[libx264 @ 00000224a5483240] ref P L0: 72.5%  1.3% 15.4% 10.8%
+[libx264 @ 00000224a5483240] ref B L0: 63.8% 29.9%  6.3%
+[libx264 @ 00000224a5483240] ref B L1: 90.9%  9.1%
+[libx264 @ 00000224a5483240] kb/s:20.10
+[1014s]   videos/depth_normal/driver.mp4 placed (frames 395..1088)
+[1014s]   screenshots/depth_normal_executed.png placed
+[1014s]   removed D:\a\comfy-gpu-ci\comfy-gpu-ci\comfy-test-logs\HYWM2-1127\dev\windows-desktop\debug\electron_inspect\frames after successful encode
