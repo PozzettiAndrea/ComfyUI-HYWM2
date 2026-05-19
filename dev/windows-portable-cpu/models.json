@@ -1,13 +1,13 @@
 {
-  "models_dir": "D:\\a\\comfy-gpu-ci\\comfy-gpu-ci\\test_workspaces\\HYWM2-1608\\portable-comfyui\\ComfyUI_windows_portable\\ComfyUI\\models",
+  "models_dir": "D:\\a\\comfy-gpu-ci\\comfy-gpu-ci\\test_workspaces\\HYWM2-1656\\portable-comfyui\\ComfyUI_windows_portable\\ComfyUI\\models",
   "summary": {
     "total_files": 14,
-    "total_size_bytes": 3293602235,
+    "total_size_bytes": 3293602236,
     "total_size_human": "3.1 GB"
   },
   "folders": {
     "hywm2": {
-      "total_size_bytes": 3273942243,
+      "total_size_bytes": 3273942244,
       "total_size_human": "3.0 GB",
       "source": {
         "type": "unknown"
@@ -30,8 +30,8 @@
         },
         {
           "path": ".cache\\huggingface\\download\\model.safetensors.metadata",
-          "size_bytes": 127,
-          "size_human": "127.0 B"
+          "size_bytes": 128,
+          "size_human": "128.0 B"
         },
         {
           "path": ".cache\\huggingface\\download\\config.json.metadata",
