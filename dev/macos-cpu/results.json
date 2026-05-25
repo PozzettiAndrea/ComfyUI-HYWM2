@@ -1,39 +1,46 @@
 {
-  "timestamp": "2026-05-15T05:29:04.607724+00:00",
+  "timestamp": "2026-05-25T19:33:20.615756+00:00",
   "platform": "macos",
   "hardware": {
-    "os": "macOS-15.7.4-arm64-arm-64bit",
+    "os": "macOS-15.7.7-arm64-arm-64bit",
     "cpu": "arm"
   },
-  "commit_hash": "dc78f95d71600811975c7615ffa9349f184a84f2",
-  "run_url": "https://github.com/PozzettiAndrea/comfy-gpu-ci/actions/runs/25901876161",
-  "success": false,
+  "commit_hash": "6c1600e340322febe028d2f7ed4167991c8115c8",
+  "run_url": "https://github.com/PozzettiAndrea/comfy-gpu-ci/actions/runs/26416335036",
+  "success": true,
   "summary": {
-    "total": 2,
-    "passed": 0,
-    "failed": 1
+    "total": 3,
+    "passed": 1,
+    "failed": 0
   },
   "workflows": [
     {
       "name": "depth_normal",
-      "status": "fail",
-      "duration_seconds": 7.06,
-      "error": "Workflow validation failed\n\nDetails:\ngraphToPrompt produced nodes without class_type: graphToPrompt: 6 nodes, missing class_type: [1,2], sample: {\"inputs\":{\"UNKNOWN\":false},\"_meta\":{}}",
+      "status": "pass",
+      "duration_seconds": 121.86,
+      "error": null,
       "hardware": {
-        "os": "macOS-15.7.4-arm64-arm-64bit",
+        "os": "macOS-15.7.7-arm64-arm-64bit",
         "cpu": "arm"
       },
       "resources": {
         "ram": {
-          "peak": 0.58,
-          "avg": 0.58
+          "peak": 3.27,
+          "avg": 1.5
         },
         "total_ram_gb": 7.0,
-        "samples": 7
+        "samples": 111
       }
     },
     {
       "name": "recon",
+      "status": "skipped",
+      "duration_seconds": 0,
+      "error": "Not configured for CPU runner",
+      "hardware": null
+    },
+    {
+      "name": "recon_memorybank",
       "status": "skipped",
       "duration_seconds": 0,
       "error": "Not configured for CPU runner",
