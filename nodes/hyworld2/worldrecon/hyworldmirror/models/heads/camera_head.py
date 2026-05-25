@@ -5,6 +5,7 @@ import torch.nn.functional as F
 
 from ..layers import Mlp, MlpFP32
 from ..layers.block import Block, DistBlock
+from comfy.ops import disable_weight_init as operations
 
 
 class CameraHead(nn.Module):
@@ -42,18 +43,18 @@ class CameraHead(nn.Module):
         )
 
         # Normalization for camera tokens and network output
-        self.token_norm = nn.LayerNorm(dim_in)
-        self.out_norm = nn.LayerNorm(dim_in)
+        self.token_norm = operations.LayerNorm(dim_in)
+        self.out_norm = operations.LayerNorm(dim_in)
 
         # Learnable initial camera parameter token
         self.init_token = nn.Parameter(torch.zeros(1, 1, self.out_dim))
-        self.param_embed = nn.Linear(self.out_dim, dim_in)
+        self.param_embed = operations.Linear(self.out_dim, dim_in)
 
         # Generate adaptive normalization parameters: shift, scale, and gate
-        self.adapt_norm_gen = nn.Sequential(nn.SiLU(), nn.Linear(dim_in, 3 * dim_in, bias=True))
+        self.adapt_norm_gen = nn.Sequential(nn.SiLU(), operations.Linear(dim_in, 3 * dim_in, bias=True))
 
         # Adaptive layer normalization (no learnable parameters)
-        self.adapt_norm = nn.LayerNorm(dim_in, elementwise_affine=False, eps=1e-6)
+        self.adapt_norm = operations.LayerNorm(dim_in, elementwise_affine=False, eps=1e-6)
         # self.param_predictor = Mlp(in_features=dim_in, hidden_features=dim_in // 2, out_features=self.out_dim, drop=0)
         self.param_predictor = MlpFP32(in_features=dim_in, hidden_features=dim_in // 2, out_features=self.out_dim, drop=0)
 

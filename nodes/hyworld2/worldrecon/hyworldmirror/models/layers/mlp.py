@@ -6,6 +6,7 @@
 from typing import Callable, Optional
 import torch
 from torch import Tensor, nn
+from comfy.ops import disable_weight_init as operations
 
 
 class Mlp(nn.Module):
@@ -21,9 +22,9 @@ class Mlp(nn.Module):
         super().__init__()
         out_features = out_features or in_features
         hidden_features = hidden_features or in_features
-        self.fc1 = nn.Linear(in_features, hidden_features, bias=bias)
+        self.fc1 = operations.Linear(in_features, hidden_features, bias=bias)
         self.act = act_layer()
-        self.fc2 = nn.Linear(hidden_features, out_features, bias=bias)
+        self.fc2 = operations.Linear(hidden_features, out_features, bias=bias)
         self.drop = nn.Dropout(drop)
 
     def forward(self, x: Tensor) -> Tensor:

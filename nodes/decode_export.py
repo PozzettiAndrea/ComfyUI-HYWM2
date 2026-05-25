@@ -4,12 +4,13 @@ The Decode* nodes (Depth / Normals / Points / Gaussians) used to live here
 but are now inlined into HYWM2Reconstruct's outputs. This module keeps:
 
   - shared decode helpers (used by reconstruct.py inline)
-  - HYWM2ExportPointsPLY  (HYWM2_POINTS    → STRING filepath)
-  - HYWM2ExportGaussiansPLY (HYWM2_GAUSSIANS → STRING filepath)
-  - HYWM2PreviewPointCloud (STRING filepath → VTK.js viewer)
+  - HYWM2ExportPointsPLY  (HYWM2_POINTS    -> STRING filepath)
+  - HYWM2ExportGaussiansPLY (HYWM2_GAUSSIANS -> STRING filepath)
+  - HYWM2PreviewPointCloud (STRING filepath -> VTK.js viewer)
 """
 
 import logging
+import sys
 from pathlib import Path
 from typing import Any
 
@@ -17,8 +18,23 @@ import numpy as np
 import torch
 import folder_paths
 from comfy_api.latest import io
+# Upstream's voxel-merge helper; we import it rather than re-implement to
+# stay in lockstep with the reference inference pipeline.
+from .hyworld2.worldrecon.hyworldmirror.utils.inference_utils import (
+    _voxel_prune_gaussians,
+)
 
 log = logging.getLogger("hywm2")
+# In the comfy-env subprocess worker the root logger isn't wired to
+# stderr, so plain log.info() silently dies. Attach a stderr handler
+# (matching the _p()/stderr-print pattern used by other nodes in the
+# pack). Idempotent so reconstruct.py + decode_export.py can both call.
+if not log.handlers:
+    _h = logging.StreamHandler(sys.stderr)
+    _h.setFormatter(logging.Formatter("[hywm2] %(message)s"))
+    log.addHandler(_h)
+    log.setLevel(logging.INFO)
+    log.propagate = False
 
 C0 = 0.28209479177387814  # SH degree-0 normalization
 
@@ -114,12 +130,12 @@ def _empty_image() -> torch.Tensor:
 
 def decode_depth_image(preds: dict, *, view_index: int = -1,
                        apply_mask: bool = True, colormap: str = "viridis") -> torch.Tensor:
-    """Per-view depth → IMAGE batch (per-frame normalized + colormapped + masked).
+    """Per-view depth -> IMAGE batch (per-frame normalized + colormapped + masked).
 
     Returns a 1×1 black IMAGE if the depth head was disabled.
     """
     if "depth" not in preds:
-        log.info("HYWM2 decode_depth_image: depth head disabled → empty IMAGE")
+        log.info("HYWM2 decode_depth_image: depth head disabled -> empty IMAGE")
         return _empty_image()
     depth = preds["depth"].detach().float().cpu()                # [B,S,H,W,1]
     if depth.dim() == 5:
@@ -152,12 +168,12 @@ def decode_depth_image(preds: dict, *, view_index: int = -1,
 
 def decode_normals_image(preds: dict, *, view_index: int = -1,
                          apply_mask: bool = True) -> torch.Tensor:
-    """Per-view normals → IMAGE batch (RGB = 0.5·(n+1), masked).
+    """Per-view normals -> IMAGE batch (RGB = 0.5·(n+1), masked).
 
     Returns a 1×1 black IMAGE if the normals head was disabled.
     """
     if "normals" not in preds:
-        log.info("HYWM2 decode_normals_image: normals head disabled → empty IMAGE")
+        log.info("HYWM2 decode_normals_image: normals head disabled -> empty IMAGE")
         return _empty_image()
     normals = preds["normals"].detach().float().cpu()            # [B,S,H,W,3]
     normals = select_views(normals, view_index)
@@ -171,14 +187,14 @@ def decode_normals_image(preds: dict, *, view_index: int = -1,
 def decode_points(preds: dict, imgs: torch.Tensor | None, *,
                   apply_mask: bool = True, conf_percentile: float = 0.0,
                   max_points: int = 2_000_000) -> dict:
-    """Predictions → HYWM2_POINTS (means + RGB-from-imgs, optionally filtered).
+    """Predictions -> HYWM2_POINTS (means + RGB-from-imgs, optionally filtered).
 
     Returns an empty HYWM2_POINTS dict if the points head was disabled.
     """
     if "pts3d" not in preds:
         # 1-row sentinel rather than (0,3): comfy-env's worker shm serializer
         # rejects 0-element tensors via `rebuild_storage_empty`.
-        log.info("HYWM2 decode_points: points head disabled → 1-row sentinel HYWM2_POINTS")
+        log.info("HYWM2 decode_points: points head disabled -> 1-row sentinel HYWM2_POINTS")
         return {"means": torch.zeros((1, 3)), "colors": torch.zeros((1, 3))}
     pts = preds["pts3d"].detach().float().cpu()                  # [B,S,H,W,3]
     if pts.dim() == 5:
@@ -211,8 +227,17 @@ def decode_points(preds: dict, imgs: torch.Tensor | None, *,
         thresh = torch.quantile(cv, conf_percentile / 100.0)
         keep &= (cv >= thresh)
 
-    means = means[keep]
-    cols = cols[keep]
+    # Guard against the filter collapsing to zero rows (comfy-env shm
+    # serializer rejects 0-element tensors via rebuild_storage_empty).
+    if int(keep.sum()) == 0:
+        log.info(
+            "HYWM2 decode_points: depth_mask+conf filter would leave 0/%d "
+            "points -- skipping filters (IPC requires >=1 row). Loosen the "
+            "thresholds.", means.shape[0],
+        )
+    else:
+        means = means[keep]
+        cols = cols[keep]
 
     if means.shape[0] > max_points and means.shape[0] > 0:
         idx = torch.randperm(means.shape[0])[:max_points]
@@ -223,15 +248,25 @@ def decode_points(preds: dict, imgs: torch.Tensor | None, *,
 
 
 def decode_gaussians(preds: dict, *, weight_threshold: float = 0.0,
+                     conf_percentile: float = 0.0,
+                     voxel_size: float = 0.0,
                      downsample: float = 1.0) -> dict:
-    """Predictions → HYWM2_GAUSSIANS (means/quats/scales/opacities/rgbs).
+    """Predictions -> HYWM2_GAUSSIANS (means/quats/scales/opacities/rgbs).
+
+    Filtering order: (1) hard weight_threshold, (2) percentile-based
+    confidence drop, (3) random downsample. Confidence source priority
+    matches upstream inference_utils.py:462-465:
+        pts3d_conf  > depth_conf  > splats['weights']
+    so the percentile filter still works when the pts/depth heads are
+    disabled (gs-only run) -- it falls back to the gs_head's own per-
+    Gaussian `weights` channel.
 
     Returns an empty HYWM2_GAUSSIANS dict if the gs head was disabled.
     """
     if "splats" not in preds:
         # 1-row sentinel rather than (0,…): comfy-env's worker shm serializer
         # rejects 0-element tensors via `rebuild_storage_empty`.
-        log.info("HYWM2 decode_gaussians: gs head disabled → 1-row sentinel HYWM2_GAUSSIANS")
+        log.info("HYWM2 decode_gaussians: gs head disabled -> 1-row sentinel HYWM2_GAUSSIANS")
         return {
             "means": torch.zeros((1, 3)),
             "quats": torch.tensor([[1.0, 0.0, 0.0, 0.0]]),  # identity quat
@@ -259,16 +294,125 @@ def decode_gaussians(preds: dict, *, weight_threshold: float = 0.0,
     sh_dc = sh[..., 0, :]                                         # [N,3]
     rgbs = (sh_dc * C0 + 0.5).clamp(0, 1)
 
+    def _apply_keep(keep_mask, current_means, current_quats, current_scales,
+                    current_opacities, current_rgbs, current_weights, label):
+        """Apply a boolean keep_mask -- but only if it would leave >=1 entry.
+        comfy-env's shm serializer rejects 0-element tensors (rebuild_storage_empty)
+        so we MUST never collapse to zero. If the mask would empty everything,
+        skip the filter and log loudly so the user knows their threshold
+        was too aggressive (or the underlying signal was bad/NaN).
+        """
+        n_kept = int(keep_mask.sum())
+        n_before = current_means.shape[0]
+        if n_kept == 0:
+            log.info(
+                "HYWM2 decode_gaussians: %s would leave 0/%d Gaussians "
+                "(threshold too aggressive OR confidence signal is degenerate "
+                "-- NaN/Inf in source?). Skipping this filter to keep result "
+                "non-empty (IPC requires >=1 row).",
+                label, n_before,
+            )
+            return (current_means, current_quats, current_scales,
+                    current_opacities, current_rgbs, current_weights)
+        log.info("HYWM2 decode_gaussians: %s kept %d/%d", label, n_kept, n_before)
+        return (
+            current_means[keep_mask], current_quats[keep_mask],
+            current_scales[keep_mask], current_opacities[keep_mask],
+            current_rgbs[keep_mask],
+            current_weights[keep_mask] if current_weights is not None else None,
+        )
+
     if weight_threshold > 0 and weights is not None:
         keep = weights >= weight_threshold
-        means, quats, scales, opacities, rgbs = (
-            means[keep], quats[keep], scales[keep], opacities[keep], rgbs[keep]
+        means, quats, scales, opacities, rgbs, weights = _apply_keep(
+            keep, means, quats, scales, opacities, rgbs, weights,
+            f"weight_threshold={weight_threshold}",
+        )
+
+    if conf_percentile > 0:
+        # Pick a confidence signal. The splats are laid out [N = S*H*W],
+        # matching pts3d_conf / depth_conf flattening order in upstream
+        # rasterization.py:488. If neither head is enabled, use the
+        # gs_head's own per-Gaussian weights (also [N]).
+        conf_src = None
+        src_name = None
+        for key in ("pts3d_conf", "depth_conf"):
+            if key in preds:
+                conf_t = preds[key].detach().float().cpu()
+                if conf_t.dim() == 4:
+                    conf_t = conf_t[0]
+                conf_src = conf_t.reshape(-1)
+                src_name = key
+                break
+        if conf_src is None and weights is not None:
+            conf_src = weights.reshape(-1)
+            src_name = "splats.weights"
+        if conf_src is not None and conf_src.numel() == means.shape[0]:
+            # Guard against NaN/Inf -- they poison torch.quantile (which
+            # then returns NaN, making `conf_src >= thresh` False everywhere
+            # and collapsing the output to 0 elements -> IPC explodes).
+            finite = torch.isfinite(conf_src)
+            n_bad = int((~finite).sum())
+            if n_bad > 0:
+                log.info(
+                    "HYWM2 decode_gaussians: %d/%d non-finite values in %s; "
+                    "computing quantile from finite values only and "
+                    "treating non-finite as fail-keep (low confidence)",
+                    n_bad, conf_src.numel(), src_name,
+                )
+            if finite.any():
+                thresh = torch.quantile(conf_src[finite], conf_percentile / 100.0)
+                keep = (conf_src >= thresh) & finite
+                means, quats, scales, opacities, rgbs, weights = _apply_keep(
+                    keep, means, quats, scales, opacities, rgbs, weights,
+                    f"conf_percentile={conf_percentile:.1f} via {src_name} thresh={float(thresh):.4f}",
+                )
+            else:
+                log.info(
+                    "HYWM2 decode_gaussians: ALL confidence values are non-finite "
+                    "in %s -- skipping percentile filter entirely",
+                    src_name,
+                )
+        elif conf_src is None:
+            log.info(
+                "HYWM2 decode_gaussians: conf_percentile=%.1f requested but "
+                "no confidence source found (pts3d_conf/depth_conf/weights "
+                "all missing) -- skipping filter",
+                conf_percentile,
+            )
+        else:
+            log.info(
+                "HYWM2 decode_gaussians: conf source size %d != gaussian "
+                "count %d -- skipping filter (likely a chunked/ragged "
+                "predictions shape; investigate if you see this)",
+                conf_src.numel(), means.shape[0],
+            )
+
+    # Voxel-merge Gaussians whose means fall in the same voxel-size cube.
+    # Weighted average of (means/scales/rgbs/opacities) by splats['weights'],
+    # quat re-normalized after summed-weighted average. Requires weights to
+    # be present (i.e., gs head produced the per-Gaussian weight channel).
+    # Upstream default is 0.002 world units (~2mm if scene is in meters).
+    if voxel_size > 0 and weights is not None and means.shape[0] > 0:
+        n_before = means.shape[0]
+        # Upstream signature: (means, scales, quats, colors, opacities, weights)
+        # -> returns (means, scales, quats, colors, opacities). No weights out.
+        means, scales, quats, rgbs, opacities = _voxel_prune_gaussians(
+            means, scales, quats, rgbs, opacities, weights,
+            voxel_size=float(voxel_size),
+        )
+        weights = None  # weights vector no longer matches the merged count
+        log.info(
+            "HYWM2 decode_gaussians: voxel_prune size=%.4f %d -> %d",
+            voxel_size, n_before, means.shape[0],
         )
 
     ratio = max(0.0, min(1.0, float(downsample)))
     if ratio < 1.0 and means.shape[0] > 0:
         n = means.shape[0]
-        k = max(1, int(round(n * ratio))) if ratio > 0 else 0
+        # Always keep at least 1 row; the comfy-env shm serializer rejects
+        # 0-element tensors. ratio=0 -> 1 (not 0).
+        k = max(1, int(round(n * ratio)))
         if k < n:
             idx = torch.randperm(n)[:k]
             means, quats, scales, opacities, rgbs = (
@@ -286,7 +430,7 @@ def decode_gaussians(preds: dict, *, weight_threshold: float = 0.0,
 # ---------------------------------------------------------------------------
 
 class HYWM2ExportPointsPLY(io.ComfyNode):
-    """HYWM2_POINTS → PLY filepath."""
+    """HYWM2_POINTS -> PLY filepath."""
 
     @classmethod
     def define_schema(cls):
@@ -327,7 +471,7 @@ class HYWM2ExportPointsPLY(io.ComfyNode):
 
 
 class HYWM2ExportGaussiansPLY(io.ComfyNode):
-    """HYWM2_GAUSSIANS → 3DGS PLY filepath (SuperSplat / Blender compatible)."""
+    """HYWM2_GAUSSIANS -> 3DGS PLY filepath (SuperSplat / Blender compatible)."""
 
     @classmethod
     def define_schema(cls):
@@ -367,7 +511,7 @@ class HYWM2ExportGaussiansPLY(io.ComfyNode):
 
 
 class HYWM2ExportGaussiansSplat(io.ComfyNode):
-    """HYWM2_GAUSSIANS → ``.splat`` (Antimatter15 binary, 32 B/Gaussian).
+    """HYWM2_GAUSSIANS -> ``.splat`` (Antimatter15 binary, 32 B/Gaussian).
 
     Format per Gaussian (sorted by visibility): position [12 B float32] +
     linear scales [12 B float32] + color RGBA8 [4 B uchar] + quaternion
@@ -415,7 +559,7 @@ class HYWM2ExportGaussiansSplat(io.ComfyNode):
             log.info("HYWM2ExportGaussiansSplat: 0 gaussians; wrote empty %s", out)
             return io.NodeOutput(str(out))
 
-        # Visibility sort: −Σexp(scale) · sigmoid(opacity).
+        # Visibility sort: -Sumexp(scale) · sigmoid(opacity).
         # If opacities are logits, sigmoid them; if already in 0..1 (which
         # happens when the model emits pre-sigmoided alphas), pass through.
         if (opacities.min() >= 0.0) and (opacities.max() <= 1.0):

@@ -99,7 +99,7 @@ class HYWM2SamplePanorama(io.ComfyNode):
     def define_schema(cls):
         return io.Schema(
             node_id="HYWM2SamplePanorama",
-            display_name="HYWM2 Sample Panorama (Equirect → Perspective)",
+            display_name="HYWM2 Sample Panorama (Equirect -> Perspective)",
             category="HYWM2",
             description=(
                 "Cover a 360°×180° equirectangular panorama with overlapping "

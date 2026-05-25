@@ -11,6 +11,7 @@ from .attention import Attention, DistAttention
 from .drop_path import DropPath
 from .layer_scale import LayerScale
 from .mlp import Mlp
+from comfy.ops import disable_weight_init as operations
 
 
 XFORMERS_AVAILABLE = False
@@ -32,7 +33,7 @@ class Block(nn.Module):
         init_values=None,
         drop_path: float = 0.0,
         act_layer: Callable[..., nn.Module] = nn.GELU,
-        norm_layer: Callable[..., nn.Module] = nn.LayerNorm,
+        norm_layer: Callable[..., nn.Module] = operations.LayerNorm,
         attn_class: Callable[..., nn.Module] = Attention,
         ffn_layer: Callable[..., nn.Module] = Mlp,
         qk_norm: bool = False,

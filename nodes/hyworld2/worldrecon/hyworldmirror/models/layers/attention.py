@@ -6,6 +6,7 @@ from torch import Tensor
 from torch import nn
 import torch.nn.functional as F
 import torch
+from comfy.ops import disable_weight_init as operations
 
 # Tolerant flash-attention import: prefer FA-3, fall back to FA-2, fall back
 # to PyTorch SDPA when neither is installed (e.g. CPU-only CI hosts).
@@ -39,7 +40,7 @@ class Attention(nn.Module):
         proj_bias: bool = True,
         attn_drop: float = 0.0,
         proj_drop: float = 0.0,
-        norm_layer: nn.Module = nn.LayerNorm,
+        norm_layer: nn.Module = operations.LayerNorm,
         qk_norm: bool = False,
         fused_attn: bool = True,  # use F.scaled_dot_product_attention or not
         rope=None,
@@ -51,11 +52,11 @@ class Attention(nn.Module):
         self.scale = self.head_dim**-0.5
         self.fused_attn = fused_attn
 
-        self.qkv = nn.Linear(dim, dim * 3, bias=qkv_bias)
+        self.qkv = operations.Linear(dim, dim * 3, bias=qkv_bias)
         self.q_norm = norm_layer(self.head_dim) if qk_norm else nn.Identity()
         self.k_norm = norm_layer(self.head_dim) if qk_norm else nn.Identity()
         self.attn_drop = nn.Dropout(attn_drop)
-        self.proj = nn.Linear(dim, dim, bias=proj_bias)
+        self.proj = operations.Linear(dim, dim, bias=proj_bias)
         self.proj_drop = nn.Dropout(proj_drop)
         self.rope = rope
 

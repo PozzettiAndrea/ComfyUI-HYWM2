@@ -4,7 +4,7 @@ Browser-side viewer for the 32 B/Gaussian Antimatter15 ``.splat`` binary
 format. Same mkkellogg renderer as the PLY viewer, but with a side panel
 that introspects the fixed splat record layout (position 0..11,
 scale 12..23, rgba8 24..27, quat-quantized 28..31) and runs the same
-sanity checks (alpha 0..255, quat dequantization round-trip ≈ unit
+sanity checks (alpha 0..255, quat dequantization round-trip ~ unit
 quaternion, scales positive, etc.).
 """
 

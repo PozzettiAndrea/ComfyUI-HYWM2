@@ -289,7 +289,7 @@ class WorldMirror(nn.Module, PyTorchModelHubMixin):
                 imgs, enable_bf16=self.enable_bf16, sp_size=sp_size, sp_group=sp_group,
             )
 
-        with torch.amp.autocast('cuda', enabled=(not self.enable_bf16), dtype=torch.float32):
+        if True:  # autocast removed: dtype handled per-op by comfy.ops manual_cast
             if sp_size > 1:
                 preds = self._gen_all_preds_frame_sp(
                     token_list, imgs, patch_start_idx, views, cond_flags,
@@ -713,7 +713,7 @@ class WorldMirror(nn.Module, PyTorchModelHubMixin):
         if self.enable_bf16:
             context_imgs = context_imgs.to(torch.bfloat16)
 
-        with torch.amp.autocast('cuda', enabled=(not self.enable_bf16), dtype=torch.bfloat16):
+        if True:  # autocast removed: dtype handled per-op by comfy.ops manual_cast
             if use_cond:
                 priors = self.extract_priors(views)
                 context_priors = (

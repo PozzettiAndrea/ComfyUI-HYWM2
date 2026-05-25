@@ -1,0 +1,538 @@
+{
+  "id": "2218331d-9226-4855-87ee-016c11117027",
+  "revision": 0,
+  "last_node_id": 32,
+  "last_link_id": 74,
+  "nodes": [
+    {
+      "id": 23,
+      "type": "HYWM2LoadMemoryBank",
+      "pos": [
+        465.1927144821772,
+        326.16387635067315
+      ],
+      "size": [
+        287.2798828125,
+        142
+      ],
+      "flags": {},
+      "order": 0,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "links": [
+            39
+          ]
+        },
+        {
+          "name": "extrinsics",
+          "type": "EXTRINSICS",
+          "links": [
+            40
+          ]
+        },
+        {
+          "name": "intrinsics",
+          "type": "INTRINSICS",
+          "links": [
+            41
+          ]
+        },
+        {
+          "name": "num_entries",
+          "type": "INT",
+          "links": null
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfyui-hywm2",
+        "ver": "89fa5c9c8cc25e0a7c0eb2183e868e35b2a3e989",
+        "Node name for S&R": "HYWM2LoadMemoryBank"
+      },
+      "widgets_values": [
+        "generated_memorybank_traj_5",
+        ""
+      ]
+    },
+    {
+      "id": 9,
+      "type": "PreviewImage",
+      "pos": [
+        1943.1328286486043,
+        259.4898844360391
+      ],
+      "size": [
+        486.4967158831041,
+        258
+      ],
+      "flags": {},
+      "order": 5,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "link": 72
+        }
+      ],
+      "outputs": [],
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.20.1",
+        "Node name for S&R": "PreviewImage"
+      },
+      "widgets_values": []
+    },
+    {
+      "id": 11,
+      "type": "PreviewImage",
+      "pos": [
+        1936.3963898202903,
+        616.796577980722
+      ],
+      "size": [
+        486.4967158831041,
+        258
+      ],
+      "flags": {},
+      "order": 6,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "link": 73
+        }
+      ],
+      "outputs": [],
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.20.1",
+        "Node name for S&R": "PreviewImage"
+      },
+      "widgets_values": []
+    },
+    {
+      "id": 20,
+      "type": "HYWM2ExportGaussiansSplat",
+      "pos": [
+        1589.3683222011614,
+        890.6363697001008
+      ],
+      "size": [
+        313.796484375,
+        82
+      ],
+      "flags": {},
+      "order": 7,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "gaussians",
+          "type": "HYWM2_GAUSSIANS",
+          "link": 74
+        }
+      ],
+      "outputs": [
+        {
+          "name": "filepath",
+          "type": "STRING",
+          "links": [
+            56
+          ]
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfyui-hywm2",
+        "ver": "7e2b433f5cec0653a2de4970aea41d72d416e17f",
+        "Node name for S&R": "HYWM2ExportGaussiansSplat",
+        "aux_id": "PozzettiAndrea/ComfyUI-HYWM2"
+      },
+      "widgets_values": [
+        "hywm2_gaussians",
+        ""
+      ]
+    },
+    {
+      "id": 4,
+      "type": "PreviewImage",
+      "pos": [
+        987.4537502795439,
+        949.843699343176
+      ],
+      "size": [
+        486.4967158831041,
+        258
+      ],
+      "flags": {},
+      "order": 3,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "link": 45
+        }
+      ],
+      "outputs": [],
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.20.1",
+        "Node name for S&R": "PreviewImage"
+      },
+      "widgets_values": []
+    },
+    {
+      "id": 1,
+      "type": "LoadHYWM2Model",
+      "pos": [
+        1253.3615113926608,
+        79.61591938519548
+      ],
+      "size": [
+        284.894140625,
+        202
+      ],
+      "flags": {},
+      "order": 1,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "model",
+          "type": "HYWM2_MODEL",
+          "links": [
+            66
+          ]
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfyui-hywm2",
+        "ver": "39d72b026677343feae8c2c14c675368712f2dcb",
+        "Node name for S&R": "LoadHYWM2Model",
+        "aux_id": "PozzettiAndrea/ComfyUI-HYWM2"
+      },
+      "widgets_values": [
+        "auto",
+        952,
+        "",
+        true,
+        true,
+        false,
+        true
+      ]
+    },
+    {
+      "id": 26,
+      "type": "HYWM2PreviewAndFilterViews",
+      "pos": [
+        804.7083923304992,
+        325.01768640844915
+      ],
+      "size": [
+        720,
+        540
+      ],
+      "flags": {},
+      "order": 2,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "link": 39
+        },
+        {
+          "name": "extrinsics",
+          "type": "EXTRINSICS",
+          "link": 40
+        },
+        {
+          "name": "intrinsics",
+          "type": "INTRINSICS",
+          "link": 41
+        }
+      ],
+      "outputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "links": [
+            45,
+            67
+          ]
+        },
+        {
+          "name": "extrinsics",
+          "type": "EXTRINSICS",
+          "links": [
+            68
+          ]
+        },
+        {
+          "name": "intrinsics",
+          "type": "INTRINSICS",
+          "links": [
+            69
+          ]
+        },
+        {
+          "name": "num_enabled",
+          "type": "INT",
+          "links": null
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfyui-hywm2",
+        "ver": "89fa5c9c8cc25e0a7c0eb2183e868e35b2a3e989",
+        "Node name for S&R": "HYWM2PreviewAndFilterViews"
+      },
+      "widgets_values": [
+        "[false,false,true,true,false,true,false,true,false,false,true,false,false,true,false,false,true,true,false,false,true,false,false,true,true,true,true,false,true,false,false,false,false,false,false,false,false,false,true,false,false,true,false,false,true,false,false,false,false,false,false,false,true,false,false,true,false,false,false,false,false,false,true,false,false,false,false]",
+        ""
+      ]
+    },
+    {
+      "id": 32,
+      "type": "HYWM2Reconstruct",
+      "pos": [
+        1558.7595689164466,
+        262.9809179158406
+      ],
+      "size": [
+        322.9765625,
+        422
+      ],
+      "flags": {},
+      "order": 4,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "model",
+          "type": "HYWM2_MODEL",
+          "link": 66
+        },
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "link": 67
+        },
+        {
+          "name": "prior_extrinsics",
+          "shape": 7,
+          "type": "EXTRINSICS",
+          "link": 68
+        },
+        {
+          "name": "prior_intrinsics",
+          "shape": 7,
+          "type": "INTRINSICS",
+          "link": 69
+        }
+      ],
+      "outputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "links": [
+            72
+          ]
+        },
+        {
+          "name": "normals",
+          "type": "IMAGE",
+          "links": [
+            73
+          ]
+        },
+        {
+          "name": "points",
+          "type": "HYWM2_POINTS",
+          "links": null
+        },
+        {
+          "name": "gaussians",
+          "type": "HYWM2_GAUSSIANS",
+          "links": [
+            74
+          ]
+        },
+        {
+          "name": "predicted_extrinsics",
+          "type": "EXTRINSICS",
+          "links": null
+        },
+        {
+          "name": "predicted_intrinsics",
+          "type": "INTRINSICS",
+          "links": null
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfyui-hywm2",
+        "ver": "89fa5c9c8cc25e0a7c0eb2183e868e35b2a3e989",
+        "Node name for S&R": "HYWM2Reconstruct"
+      },
+      "widgets_values": [
+        "",
+        "viridis",
+        true,
+        -1,
+        0,
+        2000000,
+        0,
+        10,
+        0.002,
+        1,
+        0,
+        true
+      ]
+    },
+    {
+      "id": 30,
+      "type": "HYWM2SplatAdvancedViewer",
+      "pos": [
+        1992.8867754936477,
+        1002.4210197803363
+      ],
+      "size": [
+        1071.8801057140154,
+        558
+      ],
+      "flags": {},
+      "order": 8,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "splat_path",
+          "type": "STRING",
+          "link": 56
+        }
+      ],
+      "outputs": [],
+      "properties": {
+        "cnr_id": "comfyui-hywm2",
+        "ver": "89fa5c9c8cc25e0a7c0eb2183e868e35b2a3e989",
+        "Node name for S&R": "HYWM2SplatAdvancedViewer",
+        "hywm2_viewer_state": "{\"cam\":{\"position\":[-0.2145387010820346,-0.09845307011463073,0.1229588980486721],\"quaternion\":[-0.3643322541665508,-0.221594116749874,0.9000910690865178,-0.08940986157271823]},\"target\":[0.40170031662118894,0.3656064936058513,-0.5133572139430091],\"opacity\":1,\"size\":1,\"fov\":50,\"bg\":\"#0a0a0a\",\"up\":\"-y\"}"
+      },
+      "widgets_values": [
+        ""
+      ]
+    }
+  ],
+  "links": [
+    [
+      39,
+      23,
+      0,
+      26,
+      0,
+      "IMAGE"
+    ],
+    [
+      40,
+      23,
+      1,
+      26,
+      1,
+      "EXTRINSICS"
+    ],
+    [
+      41,
+      23,
+      2,
+      26,
+      2,
+      "INTRINSICS"
+    ],
+    [
+      45,
+      26,
+      0,
+      4,
+      0,
+      "IMAGE"
+    ],
+    [
+      56,
+      20,
+      0,
+      30,
+      0,
+      "STRING"
+    ],
+    [
+      66,
+      1,
+      0,
+      32,
+      0,
+      "HYWM2_MODEL"
+    ],
+    [
+      67,
+      26,
+      0,
+      32,
+      1,
+      "IMAGE"
+    ],
+    [
+      68,
+      26,
+      1,
+      32,
+      2,
+      "EXTRINSICS"
+    ],
+    [
+      69,
+      26,
+      2,
+      32,
+      3,
+      "INTRINSICS"
+    ],
+    [
+      72,
+      32,
+      0,
+      9,
+      0,
+      "IMAGE"
+    ],
+    [
+      73,
+      32,
+      1,
+      11,
+      0,
+      "IMAGE"
+    ],
+    [
+      74,
+      32,
+      3,
+      20,
+      0,
+      "HYWM2_GAUSSIANS"
+    ]
+  ],
+  "groups": [],
+  "config": {},
+  "extra": {
+    "ds": {
+      "scale": 0.5137778836106726,
+      "offset": [
+        -243.22011974612053,
+        -15.485819279243273
+      ]
+    },
+    "frontendVersion": "1.44.19"
+  },
+  "version": 0.4
+}

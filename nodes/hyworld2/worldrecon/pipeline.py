@@ -224,7 +224,7 @@ def _wrap_model_fsdp(model, sp_group, device, use_cpu_offload=False, enable_bf16
     if rank == 0:
         total = sum(p.numel() for p in fsdp_model.parameters())
         local = sum(getattr(p, '_local_tensor', p).numel() for p in fsdp_model.parameters())
-        print(f"[FSDP] total={total/1e6:.1f}M, local≈{local/1e6:.1f}M")
+        print(f"[FSDP] total={total/1e6:.1f}M, local~{local/1e6:.1f}M")
     return fsdp_model
 
 
@@ -628,7 +628,7 @@ class WorldMirrorPipeline:
         model_bf16 = getattr(inner, 'enable_bf16', False)
 
         t0 = time.perf_counter()
-        with torch.amp.autocast("cuda", enabled=(not model_bf16 and use_amp), dtype=torch.bfloat16):
+        if True:  # autocast removed: dtype handled per-op by comfy.ops manual_cast
             fwd_kw = dict(views=views, cond_flags=cond_flags, is_inference=True)
             if self.sp_size > 1:
                 fwd_kw["sp_size"] = self.sp_size

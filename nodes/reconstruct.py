@@ -15,6 +15,7 @@ input batch as PNGs in a temp dir; same approach the upstream gradio app uses.
 import gc
 import logging
 import math
+import sys
 import tempfile
 from pathlib import Path
 from typing import Any
@@ -29,6 +30,16 @@ from comfy_api.latest import io
 # hosts where torch is built without CUDA.
 
 log = logging.getLogger("hywm2")
+# In the comfy-env subprocess worker the root logger isn't wired to
+# stderr, so plain log.info() silently dies. Attach a stderr handler
+# (matching the _p()/stderr-print pattern used by other nodes in the
+# pack). Idempotent so reconstruct.py + decode_export.py can both call.
+if not log.handlers:
+    _h = logging.StreamHandler(sys.stderr)
+    _h.setFormatter(logging.Formatter("[hywm2] %(message)s"))
+    log.addHandler(_h)
+    log.setLevel(logging.INFO)
+    log.propagate = False
 
 # Empirical: ViT tokens we can afford per GB of *free* VRAM during a
 # single forward pass (bf16 + FA-2). The FFN expansion is the binding
@@ -146,10 +157,58 @@ class HYWM2Reconstruct(io.ComfyNode):
                     tooltip="Drop Gaussians below this per-point weight (0 = keep all).",
                 ),
                 io.Float.Input(
+                    "gaussians_conf_percentile",
+                    default=10.0, min=0.0, max=99.0, step=1.0,
+                    tooltip="Drop bottom N%% of Gaussians by confidence "
+                            "(0 = keep all). Matches upstream's default "
+                            "(confidence_percentile=10.0 in pipeline.py). "
+                            "Confidence source priority: pts3d_conf > "
+                            "depth_conf > splats['weights']. If pts_head / "
+                            "depth_head are disabled (only gs enabled), "
+                            "falls back to the gs_head's per-Gaussian "
+                            "`weights` channel.",
+                ),
+                io.Float.Input(
+                    "gaussians_voxel_size",
+                    default=0.002, min=0.0, max=1.0, step=0.001,
+                    tooltip="Voxel-merge Gaussians whose means land in the "
+                            "same voxel-size cube. Weighted average via "
+                            "splats['weights'] (means/scales/colors/opacities) "
+                            "+ summed-weighted-then-renormalized quaternions. "
+                            "Matches upstream default (0.002 world units, "
+                            "~2mm if scene is in meters). 0 = disabled. "
+                            "Dramatic dedup in flat regions; preserves "
+                            "geometric detail in textured ones. Applied "
+                            "AFTER conf filter, BEFORE random downsample.",
+                ),
+                io.Float.Input(
                     "gaussians_downsample",
                     default=1.0, min=0.0, max=1.0, step=0.01,
                     tooltip="Random keep ratio for Gaussians (1.0 = keep all, 0.1 = keep 10%%).",
                 ),
+                io.Int.Input(
+                    "target_size_override",
+                    default=0, min=0, max=2048, step=14, optional=True,
+                    tooltip="EXPLICIT inference resolution (longest edge in "
+                            "pixels, snapped to multiples of 14). 0 = use "
+                            "LoadHYWM2Model.target_size + VRAM auto-shrink "
+                            "(current default behaviour). >0 = use this exact "
+                            "value, bypass both the model default AND the "
+                            "VRAM auto-shrink heuristic. Useful when you know "
+                            "your image's native size and want to run there "
+                            "(e.g., 832 -> set 826 = 14*59).",
+                ),
+                io.Boolean.Input(
+                    "bypass_vram_shrink",
+                    default=False, optional=True,
+                    tooltip="When True, skip the VRAM-based auto-shrink "
+                            "(`_auto_target_size`) and use the adaptive "
+                            "size (min of model.target_size and image's "
+                            "longest-edge-snapped-to-14). Will OOM if there "
+                            "isn't enough VRAM for that resolution at the "
+                            "given view count -- you take responsibility. "
+                            "Ignored if `target_size_override` > 0 (override "
+                            "already bypasses)."),
             ],
             outputs=[
                 io.Image.Output(
@@ -201,7 +260,11 @@ class HYWM2Reconstruct(io.ComfyNode):
         points_conf_percentile: float = 0.0,
         points_max: int = 2_000_000,
         gaussians_weight_threshold: float = 0.0,
+        gaussians_conf_percentile: float = 10.0,
+        gaussians_voxel_size: float = 0.002,
         gaussians_downsample: float = 1.0,
+        target_size_override: int = 0,
+        bypass_vram_shrink: bool = False,
     ):
         if not isinstance(model, dict) or "model_dir" not in model:
             raise ValueError(
@@ -244,8 +307,15 @@ class HYWM2Reconstruct(io.ComfyNode):
             import comfy.model_management as mm
 
             # Hand control of GPU residency to ComfyUI's model manager.
+            # When free VRAM is below model_size, ModelPatcher.partially_load
+            # will stream the manual_cast-wrapped Linear/LN/Conv layers per
+            # forward via comfy.ops.cast_bias_weight (see _rewrite_to_manual_cast).
             if cls._patcher is not None:
+                if torch.cuda.is_available():
+                    cls._log_vram("pre-load_models_gpu", pipeline.device, mm)
                 mm.load_models_gpu([cls._patcher])
+                if torch.cuda.is_available():
+                    cls._log_vram("post-load_models_gpu", pipeline.device, mm)
 
             # Resolution policy:
             #   1. Snap requested target down to image's actual longest edge
@@ -255,19 +325,47 @@ class HYWM2Reconstruct(io.ComfyNode):
             from .hyworld2.worldrecon.hyworldmirror.utils.inference_utils import (
                 compute_adaptive_target_size,
             )
-            target_size = int(model.get("target_size", 952))
-            adaptive = compute_adaptive_target_size(img_paths, target_size)
+            # Resolution policy.
+            # Priority order:
+            #   1. `target_size_override > 0`  -> use that exact value (snap to /14),
+            #      bypass both the model default AND the VRAM auto-shrink.
+            #   2. `bypass_vram_shrink=True`   -> compute `adaptive` from model
+            #      default + image native size; skip the VRAM auto-shrink.
+            #   3. Default                     -> model.target_size -> adaptive
+            #      -> _auto_target_size (current behaviour).
             free_gb = 0.0
             if torch.cuda.is_available():
                 try:
                     free_gb = mm.get_free_memory(pipeline.device) / (1024 ** 3)
                 except Exception:
                     free_gb = torch.cuda.mem_get_info(pipeline.device)[0] / (1024 ** 3)
-            effective = _auto_target_size(len(img_paths), adaptive, free_gb)
-            log.info(
-                "HYWM2Reconstruct: views=%d requested=%d adaptive=%d free=%.1fGB -> effective=%d",
-                len(img_paths), target_size, adaptive, free_gb, effective,
-            )
+
+            if int(target_size_override) > 0:
+                # Snap user value to multiple of 14, clamp to >= _MIN_EFFECTIVE.
+                snapped = (int(target_size_override) // _PATCH) * _PATCH
+                effective = max(_MIN_EFFECTIVE, snapped)
+                log.info(
+                    "HYWM2Reconstruct: target_size_override=%d -> effective=%d "
+                    "(bypassing both model default and VRAM auto-shrink; views=%d, free=%.1fGB)",
+                    target_size_override, effective, len(img_paths), free_gb,
+                )
+            else:
+                target_size = int(model.get("target_size", 952))
+                adaptive = compute_adaptive_target_size(img_paths, target_size)
+                if bypass_vram_shrink:
+                    effective = adaptive
+                    log.info(
+                        "HYWM2Reconstruct: bypass_vram_shrink=True -> "
+                        "views=%d requested=%d adaptive=%d free=%.1fGB -> effective=%d "
+                        "(VRAM auto-shrink skipped; OOM is on you)",
+                        len(img_paths), target_size, adaptive, free_gb, effective,
+                    )
+                else:
+                    effective = _auto_target_size(len(img_paths), adaptive, free_gb)
+                    log.info(
+                        "HYWM2Reconstruct: views=%d requested=%d adaptive=%d free=%.1fGB -> effective=%d",
+                        len(img_paths), target_size, adaptive, free_gb, effective,
+                    )
 
             prior_cam = prior_camera_json.strip() or None
             if prior_cam and not Path(prior_cam).is_file():
@@ -275,13 +373,22 @@ class HYWM2Reconstruct(io.ComfyNode):
 
             if torch.cuda.is_available():
                 torch.cuda.synchronize()
+                cls._log_vram("pre-forward", pipeline.device, mm)
+                torch.cuda.reset_peak_memory_stats(pipeline.device)
 
-            predictions, imgs, infer_time = pipeline._run_inference(
-                img_paths=img_paths,
-                target_size=effective,
-                prior_cam_path=prior_cam,
-                prior_depth_path=None,
-            )
+            try:
+                predictions, imgs, infer_time = pipeline._run_inference(
+                    img_paths=img_paths,
+                    target_size=effective,
+                    prior_cam_path=prior_cam,
+                    prior_depth_path=None,
+                )
+            except torch.cuda.OutOfMemoryError:
+                cls._log_oom_diagnostic(pipeline.device, effective, len(img_paths), mm)
+                raise
+
+            if torch.cuda.is_available():
+                cls._log_vram("post-forward", pipeline.device, mm)
 
         log.info("HYWM2Reconstruct: forward pass done in %.2fs", infer_time)
 
@@ -307,6 +414,8 @@ class HYWM2Reconstruct(io.ComfyNode):
         gaussians = decode_gaussians(
             predictions,
             weight_threshold=gaussians_weight_threshold,
+            conf_percentile=gaussians_conf_percentile,
+            voxel_size=gaussians_voxel_size,
             downsample=gaussians_downsample,
         )
 
@@ -392,7 +501,18 @@ class HYWM2Reconstruct(io.ComfyNode):
         import comfy.model_management as mm
         import comfy.model_patcher
 
-        # Move to CPU so ComfyUI ModelPatcher owns GPU residency policy.
+        # ComfyUI-native partial-offload setup. The model is already built
+        # from comfy.ops.disable_weight_init.* leaves (Linear / LayerNorm /
+        # Conv*d / ConvTranspose*d), so ModelPatcher.partially_load() can
+        # stream any layer it can't fit -- just by flipping the layer's
+        # `comfy_cast_weights` flag. We only need to:
+        #   1. Move the model to offload_device (so ModelPatcher.load()
+        #      owns every device transfer from this point on).
+        #   2. Pin tiny buffers (_resnet_mean/std, RoPE tables, etc.) to
+        #      load_device. ModelPatcher only walks parameters; buffers
+        #      stay wherever .to() left them. Without this, the very first
+        #      forward op `(images - _resnet_mean) / _resnet_std` would
+        #      crash with a CPU vs CUDA device-mismatch.
         load_device = mm.get_torch_device()
         offload_device = mm.unet_offload_device()
         try:
@@ -400,9 +520,11 @@ class HYWM2Reconstruct(io.ComfyNode):
             pipeline.device = load_device  # pipeline.forward will see this
         except Exception as e:
             log.warning("HYWM2Reconstruct: failed to offload pipeline.model to CPU: %s", e)
+        cls._pin_buffers_to_device(pipeline.model, load_device)
 
-        # Wrap in ModelPatcher so subsequent load_models_gpu cooperates with
-        # the rest of ComfyUI's VRAM budget (other workflows can evict us).
+        # Wrap in ModelPatcher so load_models_gpu can budget against the
+        # rest of ComfyUI's VRAM (other workflows can evict us; we'll
+        # auto-stream layers that don't fit via cast_bias_weight).
         cls._patcher = comfy.model_patcher.ModelPatcher(
             pipeline.model,
             load_device=load_device,
@@ -414,6 +536,85 @@ class HYWM2Reconstruct(io.ComfyNode):
         log.info("HYWM2Reconstruct: pipeline + patcher ready (load=%s offload=%s)",
                  load_device, offload_device)
         return pipeline
+
+    # ------------------------------------------------------------------
+    # Buffer pinning helper (ModelPatcher only touches parameters)
+    # ------------------------------------------------------------------
+    @classmethod
+    def _pin_buffers_to_device(cls, model, device) -> int:
+        """Move all module buffers to `device` and keep them there.
+
+        ModelPatcher streams *parameters* via cast_bias_weight, but never
+        touches buffers (they're not in `_load_list`). The HYWM2 backbone
+        has tiny but critical buffers like `_resnet_mean` / `_resnet_std`
+        that the very first op of the forward (`(images - mean) / std`)
+        reads. If we leave them on CPU after `.to(offload_device)`, the
+        input (on GPU) hits a device-mismatch crash. Solution: keep all
+        buffers resident on `device` permanently. They're tiny -- the
+        whole model has < 10 MB of buffer data.
+        """
+        n_moved = 0
+        for module in model.modules():
+            for name, buf in list(module._buffers.items()):
+                if buf is None or buf.device == device:
+                    continue
+                module._buffers[name] = buf.to(device)
+                n_moved += 1
+        log.info("HYWM2Reconstruct: pinned %d buffers to %s", n_moved, device)
+        return n_moved
+
+    # ------------------------------------------------------------------
+    # VRAM accounting helpers (so the user can see the actual numbers)
+    # ------------------------------------------------------------------
+    @staticmethod
+    def _log_vram(label: str, device, mm) -> None:
+        """Snapshot allocated / reserved / free / total VRAM on `device`."""
+        if not torch.cuda.is_available():
+            return
+        GB = 1024 ** 3
+        try:
+            free_b = mm.get_free_memory(device)
+        except Exception:
+            free_b = torch.cuda.mem_get_info(device)[0]
+        total_b = torch.cuda.get_device_properties(device).total_memory
+        alloc_b = torch.cuda.memory_allocated(device)
+        reserv_b = torch.cuda.memory_reserved(device)
+        peak_b = torch.cuda.max_memory_allocated(device)
+        log.info(
+            "HYWM2 VRAM[%s] alloc=%.2fGB peak=%.2fGB reserved=%.2fGB free=%.2fGB / total=%.2fGB",
+            label, alloc_b / GB, peak_b / GB, reserv_b / GB, free_b / GB, total_b / GB,
+        )
+
+    @classmethod
+    def _log_oom_diagnostic(cls, device, target_size: int, n_views: int, mm) -> None:
+        """When the forward OOMs, dump a full VRAM picture + a back-of-the-
+        envelope estimate of the worst single activation in the head path so
+        the user can see HOW close they are to fitting.
+        """
+        cls._log_vram("OOM", device, mm)
+        # Activation cost estimate at the input resolution. Patch dims are
+        # target_size / 14 on the longer side; we assume an aspect close to
+        # what we saw (476x826) for the shorter side. The biggest single
+        # intermediate is the gs_head conv1 output: [B*S, 256, H, W] in the
+        # model's compute dtype (bf16 by default).
+        # NOTE: this is a coarse estimate; real peak includes residuals,
+        # backbone activations, and grad-free workspace.
+        # Use a 476:826 ratio (the observed working shape) as a proxy.
+        long_edge = target_size
+        short_edge = int(round(target_size * 476 / 826 / 14)) * 14
+        gs_conv1_bytes = n_views * 256 * long_edge * short_edge * 2  # bf16
+        gs_feats_bytes = n_views * 128 * long_edge * short_edge * 2
+        GB = 1024 ** 3
+        log.info(
+            "HYWM2 OOM est: forward shape ~ [%d, *, %d, %d]; "
+            "gs_head conv1 activation alone ~ %.2f GB bf16, "
+            "gs_feats input ~ %.2f GB bf16. "
+            "Most likely OOM cause is one of these (head activation, not weights). "
+            "Mitigations: (a) reduce target_size_override, (b) reduce view count, "
+            "(c) chunk gs_head along view dim (see rasterization.py:186).",
+            n_views, short_edge, long_edge,
+            gs_conv1_bytes / GB, gs_feats_bytes / GB,
+        )
 
     # ------------------------------------------------------------------
     # ComfyUI IMAGE -> file paths

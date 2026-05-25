@@ -139,7 +139,7 @@ class LoadHYWM2Model(io.ComfyNode):
             )
             predict_camera = True
 
-        # Toggle → upstream "disable_heads" list (upstream uses 'normal'/'gs')
+        # Toggle -> upstream "disable_heads" list (upstream uses 'normal'/'gs')
         head_flags = {
             "camera": predict_camera,
             "depth": predict_depth,

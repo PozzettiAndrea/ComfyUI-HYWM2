@@ -4,6 +4,7 @@ import torch
 import torch.nn as nn
 
 from .dense_head import _BaseDPTHead
+from comfy.ops import disable_weight_init as operations
 
 
 class GSFeatHead(_BaseDPTHead):
@@ -32,7 +33,7 @@ class GSFeatHead(_BaseDPTHead):
         )
         conv2_in_channels = features // 2
         self.input_merger = nn.Sequential(
-            nn.Conv2d(3, conv2_in_channels, 7, 1, 3),
+            operations.Conv2d(3, conv2_in_channels, 7, 1, 3),
             nn.ReLU(),
         )
 

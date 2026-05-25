@@ -3,7 +3,7 @@
 Browser-side viewer with a 3D canvas (left) and a tabbed metadata panel
 (right) that introspects the actual fields present in the PLY file —
 their dtypes, counts, and how each is interpreted at render time
-(SH→RGB, exp(scale), normalized quaternion, sigmoid opacity, etc.).
+(SH->RGB, exp(scale), normalized quaternion, sigmoid opacity, etc.).
 
 The same per-field stats / interpretation / sanity-check / byte-layout
 table is also dumped to the **browser DevTools console** by
@@ -34,7 +34,7 @@ class HYWM2PLYAdvancedGaussianViewer(io.ComfyNode):
             description=(
                 "Preview a 3DGS PLY in 3D and inspect its raw field layout "
                 "(names, dtypes, counts) plus how each field is interpreted "
-                "by the viewer (SH→RGB, exp scales, normalized quats, "
+                "by the viewer (SH->RGB, exp scales, normalized quats, "
                 "sigmoid opacity). Open the browser DevTools console for a "
                 "full per-field stats / byte-layout / sanity-check dump on "
                 "every reload."
@@ -86,7 +86,7 @@ class HYWM2PLYAdvancedGaussianViewer(io.ComfyNode):
 
     @staticmethod
     def _build_view_url(ply_path: str) -> str:
-        """Map an on-disk path → ComfyUI /view URL preserving subfolder."""
+        """Map an on-disk path -> ComfyUI /view URL preserving subfolder."""
         normalized = ply_path.replace("\\", "/")
         for kind, root in (
             ("output", folder_paths.get_output_directory()),

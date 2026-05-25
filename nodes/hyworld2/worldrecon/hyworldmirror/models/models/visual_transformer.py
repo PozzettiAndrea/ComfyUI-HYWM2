@@ -12,6 +12,7 @@ from ..layers.block import Block, DistBlock
 from ...comm.padding import minimal_pad_to_divisible,depad_by_length,pad_by_length
 import torch.distributed as dist
 from ...comm.communication import _All2All,_Allgather
+from comfy.ops import disable_weight_init as operations
 
 logger = logging.getLogger(__name__)
 
@@ -188,9 +189,9 @@ class VisualGeometryTransformer(nn.Module):
         # Camera pose embedding
         if self.cond_methods[0] == "token":
             self.pose_embed = nn.Sequential(
-                nn.Linear(7, embed_dim, bias=True),
+                operations.Linear(7, embed_dim, bias=True),
                 nn.SiLU(),
-                nn.Linear(embed_dim, embed_dim, bias=True)
+                operations.Linear(embed_dim, embed_dim, bias=True)
             )
         else:
             raise NotImplementedError 
@@ -207,9 +208,9 @@ class VisualGeometryTransformer(nn.Module):
         # Ray direction embedding
         if self.cond_methods[2] == "token":
             self.ray_embed = nn.Sequential(
-                nn.Linear(4, embed_dim, bias=True),
+                operations.Linear(4, embed_dim, bias=True),
                 nn.SiLU(),
-                nn.Linear(embed_dim, embed_dim, bias=True)
+                operations.Linear(embed_dim, embed_dim, bias=True)
             )
         else:
             raise NotImplementedError
@@ -300,7 +301,7 @@ class VisualGeometryTransformer(nn.Module):
         if ch != 3:
             raise ValueError(f"Expected 3 input channels, got {ch}")
 
-        with torch.amp.autocast('cuda', enabled=(not enable_bf16), dtype=torch.bfloat16): 
+        if True:  # autocast removed: dtype handled per-op by comfy.ops manual_cast
             images = (images - self._resnet_mean) / self._resnet_std
             images = images.reshape(b * seq_len, ch, h, w)
             patch_tokens = self.patch_embed(images)
@@ -341,7 +342,7 @@ class VisualGeometryTransformer(nn.Module):
         _, patch_count, embed_dim = all_tokens.shape
         token_shape = (b, seq_len, patch_count, embed_dim)
         # Forward through attention blocks
-        with torch.amp.autocast('cuda', enabled=(not enable_bf16), dtype=torch.bfloat16):            
+        if True:  # autocast removed: dtype handled per-op by comfy.ops manual_cast
             outputs = []
             global_tokens = None
             if sp_size>1:

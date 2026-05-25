@@ -8,6 +8,7 @@ from torch.utils.checkpoint import checkpoint
 
 from ..layers.mlp import MlpFP32
 from ..utils.grid import create_uv_grid, position_grid_to_embed
+from comfy.ops import disable_weight_init as operations
 
 
 class _BaseDPTHead(nn.Module):
@@ -31,20 +32,20 @@ class _BaseDPTHead(nn.Module):
         self.gradient_checkpoint = gradient_checkpoint
         self._cast_pos_embed_dtype = _cast_pos_embed_dtype
 
-        self.norm = nn.LayerNorm(dim_in)
+        self.norm = operations.LayerNorm(dim_in)
         self.projects = nn.ModuleList([
-            nn.Conv2d(in_channels=dim_in, out_channels=oc, kernel_size=1, stride=1, padding=0)
+            operations.Conv2d(in_channels=dim_in, out_channels=oc, kernel_size=1, stride=1, padding=0)
             for oc in out_channels
         ])
         self.resize_layers = nn.ModuleList([
-            nn.ConvTranspose2d(
+            operations.ConvTranspose2d(
                 in_channels=out_channels[0], out_channels=out_channels[0], kernel_size=4, stride=4, padding=0
             ),
-            nn.ConvTranspose2d(
+            operations.ConvTranspose2d(
                 in_channels=out_channels[1], out_channels=out_channels[1], kernel_size=2, stride=2, padding=0
             ),
             nn.Identity(),
-            nn.Conv2d(
+            operations.Conv2d(
                 in_channels=out_channels[3], out_channels=out_channels[3], kernel_size=3, stride=2, padding=1
             ),
         ])
@@ -56,7 +57,7 @@ class _BaseDPTHead(nn.Module):
         self.scratch.refinenet4 = _make_fusion_block(features, has_residual=False)
 
         head_features_1 = features
-        self.scratch.output_conv1 = nn.Conv2d(
+        self.scratch.output_conv1 = operations.Conv2d(
             head_features_1, head_features_1 // 2, kernel_size=3, stride=1, padding=1
         )
 
@@ -194,13 +195,13 @@ class DPTHead(_BaseDPTHead):
         conv2_in_channels = features // 2
 
         self.scratch.output_conv2 = nn.Sequential(
-            nn.Conv2d(conv2_in_channels, head_features_2, kernel_size=3, stride=1, padding=1),
+            operations.Conv2d(conv2_in_channels, head_features_2, kernel_size=3, stride=1, padding=1),
             nn.ReLU(inplace=True),
-            nn.Conv2d(head_features_2, output_dim, kernel_size=1, stride=1, padding=0),
+            operations.Conv2d(head_features_2, output_dim, kernel_size=1, stride=1, padding=0),
         )
         if self.is_gsdpt:
             self.input_merger = nn.Sequential(
-                nn.Conv2d(3, conv2_in_channels, 7, 1, 3),
+                operations.Conv2d(3, conv2_in_channels, 7, 1, 3),
                 nn.ReLU()
                 )
 
@@ -484,17 +485,17 @@ def _make_scratch(in_shape: List[int], out_shape: int, groups: int = 1, expand: 
         if len(in_shape) >= 4:
             out_shape4 = out_shape * 8
 
-    scratch.layer1_rn = nn.Conv2d(
+    scratch.layer1_rn = operations.Conv2d(
         in_shape[0], out_shape1, kernel_size=3, stride=1, padding=1, bias=False, groups=groups
     )
-    scratch.layer2_rn = nn.Conv2d(
+    scratch.layer2_rn = operations.Conv2d(
         in_shape[1], out_shape2, kernel_size=3, stride=1, padding=1, bias=False, groups=groups
     )
-    scratch.layer3_rn = nn.Conv2d(
+    scratch.layer3_rn = operations.Conv2d(
         in_shape[2], out_shape3, kernel_size=3, stride=1, padding=1, bias=False, groups=groups
     )
     if len(in_shape) >= 4:
-        scratch.layer4_rn = nn.Conv2d(
+        scratch.layer4_rn = operations.Conv2d(
             in_shape[3], out_shape4, kernel_size=3, stride=1, padding=1, bias=False, groups=groups
         )
     return scratch
@@ -516,8 +517,8 @@ class ResidualConvUnit(nn.Module):
 
         self.bn = bn
         self.groups = groups
-        self.conv1 = nn.Conv2d(features, features, kernel_size=3, stride=1, padding=1, bias=True, groups=self.groups)
-        self.conv2 = nn.Conv2d(features, features, kernel_size=3, stride=1, padding=1, bias=True, groups=self.groups)
+        self.conv1 = operations.Conv2d(features, features, kernel_size=3, stride=1, padding=1, bias=True, groups=self.groups)
+        self.conv2 = operations.Conv2d(features, features, kernel_size=3, stride=1, padding=1, bias=True, groups=self.groups)
 
         self.norm1 = None
         self.norm2 = None
@@ -586,7 +587,7 @@ class FeatureFusionBlock(nn.Module):
         if self.expand == True:
             out_features = features // 2
 
-        self.out_conv = nn.Conv2d(
+        self.out_conv = operations.Conv2d(
             features, out_features, kernel_size=1, stride=1, padding=0, bias=True, groups=self.groups
         )
 

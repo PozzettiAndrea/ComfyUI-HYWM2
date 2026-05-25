@@ -15,6 +15,7 @@ from ..utils.geometry import depth_to_world_coords_points
 from ..utils import sh_utils, act_gs
 
 from typing import List
+from comfy.ops import disable_weight_init as operations
 
 
 def _gsplat_default_strategy_cls():
@@ -140,9 +141,9 @@ class GaussianSplatRenderer(nn.Module):
         gaussian_raw_channels = 4 + 3 + 1 + self.nums_sh * 3 + 1
 
         self.gs_head = nn.Sequential(
-            nn.Conv2d(feature_dim // 2, feature_dim, kernel_size=3, padding=1, bias=False),
+            operations.Conv2d(feature_dim // 2, feature_dim, kernel_size=3, padding=1, bias=False),
             nn.ReLU(True),
-            nn.Conv2d(feature_dim, gaussian_raw_channels, kernel_size=1),
+            operations.Conv2d(feature_dim, gaussian_raw_channels, kernel_size=1),
         )
         # Initialize weights and biases of the final layer by segments
         final_conv_layer = self.gs_head[-1]
