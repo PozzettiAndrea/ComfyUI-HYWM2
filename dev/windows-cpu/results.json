@@ -1,15 +1,15 @@
 {
-  "timestamp": "2026-05-19T16:59:18.735723+00:00",
+  "timestamp": "2026-05-25T19:33:22.263073+00:00",
   "platform": "windows",
   "hardware": {
-    "os": "Windows-10-10.0.26100-SP0",
-    "cpu": "AMD64 Family 25 Model 1 Stepping 1, AuthenticAMD"
+    "os": "Windows-2025Server-10.0.26100-SP0",
+    "cpu": "AMD64 Family 25 Model 17 Stepping 1, AuthenticAMD"
   },
-  "commit_hash": "88e5793e9e692b2e052bda07592f4ac3a1c4130f",
-  "run_url": "https://github.com/PozzettiAndrea/comfy-gpu-ci/actions/runs/26108973114",
+  "commit_hash": "6c1600e340322febe028d2f7ed4167991c8115c8",
+  "run_url": "https://github.com/PozzettiAndrea/comfy-gpu-ci/actions/runs/26416333698",
   "success": true,
   "summary": {
-    "total": 2,
+    "total": 3,
     "passed": 1,
     "failed": 0
   },
@@ -17,23 +17,30 @@
     {
       "name": "depth_normal",
       "status": "pass",
-      "duration_seconds": 224.71,
+      "duration_seconds": 249.07,
       "error": null,
       "hardware": {
-        "os": "Windows-10-10.0.26100-SP0",
-        "cpu": "AMD64 Family 25 Model 1 Stepping 1, AuthenticAMD"
+        "os": "Windows-2025Server-10.0.26100-SP0",
+        "cpu": "AMD64 Family 25 Model 17 Stepping 1, AuthenticAMD"
       },
       "resources": {
         "ram": {
-          "peak": 8.17,
-          "avg": 4.08
+          "peak": 7.72,
+          "avg": 4.07
         },
         "total_ram_gb": 16.0,
-        "samples": 224
+        "samples": 248
       }
     },
     {
       "name": "recon",
+      "status": "skipped",
+      "duration_seconds": 0,
+      "error": "Not configured for CPU runner",
+      "hardware": null
+    },
+    {
+      "name": "recon_memorybank",
       "status": "skipped",
       "duration_seconds": 0,
       "error": "Not configured for CPU runner",
