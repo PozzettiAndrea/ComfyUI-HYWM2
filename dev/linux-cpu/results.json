@@ -1,15 +1,15 @@
 {
-  "timestamp": "2026-05-19T17:06:30.466600+00:00",
+  "timestamp": "2026-05-25T19:29:38.344290+00:00",
   "platform": "linux",
   "hardware": {
     "os": "Linux-6.17.0-1013-azure-x86_64-with-glibc2.39",
     "cpu": "AMD EPYC 9V74 80-Core Processor"
   },
-  "commit_hash": "88e5793e9e692b2e052bda07592f4ac3a1c4130f",
-  "run_url": "https://github.com/PozzettiAndrea/comfy-gpu-ci/actions/runs/26108971457",
+  "commit_hash": "6c1600e340322febe028d2f7ed4167991c8115c8",
+  "run_url": "https://github.com/PozzettiAndrea/comfy-gpu-ci/actions/runs/26416333001",
   "success": true,
   "summary": {
-    "total": 2,
+    "total": 3,
     "passed": 1,
     "failed": 0
   },
@@ -17,7 +17,7 @@
     {
       "name": "depth_normal",
       "status": "pass",
-      "duration_seconds": 308.61,
+      "duration_seconds": 298.39,
       "error": null,
       "hardware": {
         "os": "Linux-6.17.0-1013-azure-x86_64-with-glibc2.39",
@@ -25,15 +25,22 @@
       },
       "resources": {
         "ram": {
-          "peak": 7.45,
-          "avg": 4.91
+          "peak": 6.56,
+          "avg": 4.85
         },
         "total_ram_gb": 15.6,
-        "samples": 308
+        "samples": 297
       }
     },
     {
       "name": "recon",
+      "status": "skipped",
+      "duration_seconds": 0,
+      "error": "Not configured for CPU runner",
+      "hardware": null
+    },
+    {
+      "name": "recon_memorybank",
       "status": "skipped",
       "duration_seconds": 0,
       "error": "Not configured for CPU runner",
