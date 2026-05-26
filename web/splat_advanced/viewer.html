@@ -12,6 +12,9 @@
   #splat-host canvas { display: block; }
   #status { position: absolute; left: 8px; top: 8px; padding: 4px 8px; background: rgba(20,20,20,0.85); border: 1px solid #2a2a2a; border-radius: 3px; pointer-events: none; max-width: calc(100% - 16px); font-size: 11px; z-index: 5; }
   #status.error { color: #ff8a8a; border-color: #5a2222; background: rgba(60,20,20,0.85); }
+  #load-bar { position: absolute; top: 0; left: 0; right: 0; height: 4px; background: rgba(0,0,0,0.35); z-index: 100; pointer-events: none; opacity: 0; transition: opacity 0.3s ease; }
+  #load-bar.show { opacity: 1; }
+  #load-fill { height: 100%; width: 0%; background: linear-gradient(90deg, #3a8, #6c6); transition: width 0.15s linear; }
   #axis-buttons { position: absolute; right: 8px; top: 8px; display: flex; gap: 2px; z-index: 5; }
   .axis-btn { padding: 2px 6px; background: rgba(20,20,20,0.85); border: 1px solid #2a2a2a; color: #bbb; font-size: 10px; cursor: pointer; border-radius: 2px; font-family: ui-monospace, "SF Mono", monospace; line-height: 1.2; min-width: 28px; }
   .axis-btn:hover { background: rgba(50,50,50,0.95); color: #fff; border-color: #555; }
@@ -36,6 +39,7 @@
 <div id="root">
   <div id="left">
     <div id="splat-host"></div>
+    <div id="load-bar"><div id="load-fill"></div></div>
     <div id="status">Awaiting .splat…</div>
     <div id="axis-buttons">
       <button class="axis-btn" data-view="+xy" title="Camera on +Z, looking at XY (front)">+XY</button>
@@ -100,10 +104,18 @@ import * as GaussianSplats3D from "@mkkellogg/gaussian-splats-3d";
 
 const status = document.getElementById("status");
 const splatHost = document.getElementById("splat-host");
+const loadBar = document.getElementById("load-bar");
+const loadFill = document.getElementById("load-fill");
 const setStatus = (msg, isErr=false) => {
   status.textContent = msg;
   status.classList.toggle("error", !!isErr);
 };
+function setLoadProgress(pct, label) {
+  if (pct == null) { loadBar.classList.remove("show"); return; }
+  loadBar.classList.add("show");
+  loadFill.style.width = `${Math.min(100, Math.max(0, pct)).toFixed(1)}%`;
+  if (label) setStatus(label);
+}
 window.parent?.postMessage({ type: "HYWM2_VIEWER_READY" }, "*");
 
 // ===========================================================
@@ -449,20 +461,51 @@ document.getElementById("size-mul").addEventListener("input", _scheduleRebuild);
 async function loadSplat(url, fileMeta) {
   currentSceneUrl = url;
   setStatus(`Fetching ${fileMeta.filename || ".splat"}…`);
+  setLoadProgress(0, null);
 
   const resp = await fetch(url);
   if (!resp.ok) throw new Error(`Fetch failed: ${resp.status} ${resp.statusText}`);
-  const buf = await resp.arrayBuffer();
+
+  // Stream chunks so the user gets live progress on multi-MB .splat files.
+  // Matches the pattern used by ComfyUI-GaussianPack's preview iframe.
+  const total = parseInt(resp.headers.get("Content-Length") || "0", 10);
+  const reader = resp.body?.getReader();
+  const chunks = [];
+  let received = 0;
+  if (reader) {
+    for (;;) {
+      const { done, value } = await reader.read();
+      if (done) break;
+      chunks.push(value);
+      received += value.byteLength;
+      if (total > 0) {
+        const mb  = (received / 1048576).toFixed(1);
+        const tmb = (total    / 1048576).toFixed(1);
+        setLoadProgress((received / total) * 100,
+          `Downloading ${mb} / ${tmb} MB…`);
+      }
+    }
+  } else {
+    // No streaming reader available — fall back to the bulk read.
+    const arr = new Uint8Array(await resp.arrayBuffer());
+    chunks.push(arr);
+    received = arr.byteLength;
+  }
+
+  const buf = new Uint8Array(received);
+  let _off = 0;
+  for (const c of chunks) { buf.set(c, _off); _off += c.byteLength; }
+
   // Stash original alpha for the slider.
-  _origBytes = new Uint8Array(buf);
+  _origBytes = buf;
   if (_lastBlobUrl) { URL.revokeObjectURL(_lastBlobUrl); _lastBlobUrl = null; }
-  setStatus(`Decoding ${(buf.byteLength / 1048576).toFixed(2)} MB…`);
+  setLoadProgress(100, `Decoding ${(buf.byteLength / 1048576).toFixed(2)} MB…`);
 
   // Compute bbox from positions only (used by axis-snap buttons + R-key
   // reframe). Skip the full decode + stats — we no longer surface those.
   const n = Math.floor(buf.byteLength / REC);
   if (n > 0) {
-    const dv = new DataView(buf);
+    const dv = new DataView(buf.buffer, buf.byteOffset, buf.byteLength);
     let minX = Infinity, minY = Infinity, minZ = Infinity;
     let maxX = -Infinity, maxY = -Infinity, maxZ = -Infinity;
     for (let i = 0; i < n; i++) {
@@ -488,6 +531,7 @@ async function loadSplat(url, fileMeta) {
     await rebuildScene();
   }
   setStatus(`Loaded ${n.toLocaleString()} splats.`);
+  setLoadProgress(null);
   frameBoundingBox();
 
   // The "Loaded successfully" phrase is the ready signal comfy-test
