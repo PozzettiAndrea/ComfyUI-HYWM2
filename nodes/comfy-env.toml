@@ -13,12 +13,6 @@ plyfile = ">=1.0.0"
 opencv = ">=4.9.0"
 huggingface_hub = "*"
 tqdm = "*"
-# --- world_gs_trainer.py deps (HY-World-2.0/hyworld2/worldgen) ---
-tensorboard = "*"
-torchmetrics = "*"
-imageio = "*"
-imagesize = "*"
-scikit-learn = "*"
 
 [target.linux-64.dependencies]
 c-compiler = "*"
@@ -36,6 +30,11 @@ transformers = "*"
 # --- world_gs_trainer.py deps (HY-World-2.0/hyworld2/worldgen) ---
 viser = "*"
 tyro = "*"
+tensorboard = "*"
+torchmetrics = "*"
+imageio = "*"
+imagesize = "*"
+scikit-learn = "*"
 
 [pypi-dependencies.nerfview]
 git = "https://github.com/nerfstudio-project/nerfview.git"
