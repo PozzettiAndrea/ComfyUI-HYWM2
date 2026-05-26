@@ -68,38 +68,6 @@ def _list_scene_folders() -> list[str]:
     return out or ["<none>"]
 
 
-def _list_pointclouds_under_scenes() -> list[str]:
-    """Scan every scene's pointclouds/ for .ply files.
-
-    Returns labels of the form "<tag>/<scene_name>/<pcd_filename>",
-    sorted. Used to populate the pointcloud dropdown. Returns ['<none>']
-    if nothing found.
-    """
-    try:
-        import folder_paths
-        roots = [
-            ("input", Path(folder_paths.get_input_directory())),
-            ("output", Path(folder_paths.get_output_directory())),
-        ]
-    except Exception:
-        return ["<none>"]
-
-    out: list[str] = []
-    for tag, root in roots:
-        if not root.is_dir():
-            continue
-        for scene in sorted(root.iterdir()):
-            if not _looks_like_scene(scene):
-                continue
-            pcd_dir = scene / "pointclouds"
-            if not pcd_dir.is_dir():
-                continue
-            for ply in sorted(pcd_dir.iterdir()):
-                if ply.is_file() and ply.suffix.lower() == ".ply":
-                    out.append(f"{tag}/{scene.name}/{ply.name}")
-    return out or ["<none>"]
-
-
 def _resolve_scene_path(label_or_path: str) -> Path:
     """Turn a dropdown label or override string into an absolute scene path."""
     import folder_paths
@@ -131,17 +99,6 @@ def _resolve_scene_path(label_or_path: str) -> Path:
     return p
 
 
-def _pick_latest(dir_: Path, suffix: str) -> Path | None:
-    """Pick the file in `dir_` with the most recent mtime (tiebreak: name)."""
-    if not dir_.is_dir():
-        return None
-    files = [p for p in dir_.iterdir() if p.is_file() and p.suffix.lower() == suffix]
-    if not files:
-        return None
-    files.sort(key=lambda p: (p.stat().st_mtime, p.name))
-    return files[-1]
-
-
 def _pick_latest_dir(dir_: Path) -> Path | None:
     """Pick the subdir with the most recent mtime (tiebreak: name)."""
     if not dir_.is_dir():
@@ -164,16 +121,22 @@ class HYWM2LoadScene(io.ComfyNode):
             category="HYWM2",
             description=(
                 "Load a WorldStereo scene folder in one node. Picks the "
-                "latest memorybank subdir + the latest pointcloud .ply by "
-                "mtime and emits everything the depth-correction flow "
-                "needs (images, extrinsics, intrinsics, fov, pcd).\n\n"
+                "latest memorybank subdir by mtime + the seed PCD at "
+                "<scene>/pointclouds/pointcloud_from_panorama.ply and "
+                "emits everything the depth-correction flow needs "
+                "(images, extrinsics, intrinsics, fov, pcd).\n\n"
                 "Scene folder layout:\n"
                 "  <scene>/memorybanks/<bank_name>/cameras.json + frames/\n"
-                "  <scene>/pointclouds/*.ply\n\n"
-                "The dropdown scans both ComfyUI/input/ and ComfyUI/output/ "
-                "for any top-level folder containing BOTH memorybanks/ + "
-                "pointclouds/. Restart ComfyUI to refresh after copying new "
-                "scenes in."
+                "  <scene>/pointclouds/pointcloud_from_panorama.ply\n\n"
+                "The pointcloud is HARDCODED to pointcloud_from_panorama.ply "
+                "— this node is the entry point of the depth-correction flow, "
+                "which always starts from the panorama-seeded PCD. To load "
+                "a different PCD by name (e.g. pointcloud_aligned), use "
+                "WorldStereoLoadPointCloud.\n\n"
+                "The scene dropdown scans both ComfyUI/input/ and "
+                "ComfyUI/output/ for any folder containing BOTH "
+                "memorybanks/ + pointclouds/. Restart ComfyUI to refresh "
+                "after copying new scenes in."
             ),
             inputs=[
                 io.Combo.Input(
@@ -189,17 +152,6 @@ class HYWM2LoadScene(io.ComfyNode):
                             "ComfyUI/output/) overriding the dropdown. Use "
                             "for scenes outside the standard input/output "
                             "directories."),
-                io.Combo.Input(
-                    "pointcloud",
-                    options=_list_pointclouds_under_scenes(),
-                    optional=True,
-                    tooltip="Pick a specific .ply by label. Lists every "
-                            "pointcloud found under any scene's "
-                            "pointclouds/ folder, formatted as "
-                            "'<root>/<scene>/<filename>'. <none> = fall "
-                            "through to pointcloud_override or the auto-"
-                            "pick-latest behavior. Must match the chosen "
-                            "scene; cross-scene picks raise an error."),
                 io.String.Input(
                     "bank_override", default="", multiline=False,
                     optional=True,
@@ -207,14 +159,6 @@ class HYWM2LoadScene(io.ComfyNode):
                             "Default = latest by mtime. Set to a bank name "
                             "(e.g. 'memorybank_traj_5') to pin a specific "
                             "one."),
-                io.String.Input(
-                    "pointcloud_override", default="", multiline=False,
-                    optional=True,
-                    tooltip="Path-based override (highest precedence). "
-                            "Absolute path OR filename relative to the "
-                            "scene's pointclouds/. Use for files not in "
-                            "the dropdown. Empty = use the `pointcloud` "
-                            "dropdown or auto-pick-latest."),
             ],
             outputs=[
                 io.Image.Output(
@@ -246,8 +190,7 @@ class HYWM2LoadScene(io.ComfyNode):
 
     @classmethod
     def execute(cls, scene: str, scene_override: str = "",
-                pointcloud: str = "<none>",
-                bank_override: str = "", pointcloud_override: str = ""):
+                bank_override: str = ""):
         # ---- Resolve scene folder -----------------------------------
         raw = (scene_override or "").strip() or scene
         scene_dir = _resolve_scene_path(raw)
@@ -334,58 +277,20 @@ class HYWM2LoadScene(io.ComfyNode):
                    f"fx={fx_values[worst]:.2f} (dev={rel_dev.max()*100:.2f}%)")
             fov_x_deg = math.degrees(2.0 * math.atan(W / (2.0 * fx_med)))
 
-        # ---- Pick + load pointcloud --------------------------------
-        # Precedence (most-specific wins):
-        #   1. pointcloud_override (free-form path / filename)
-        #   2. pointcloud (Combo dropdown, "<root>/<scene>/<filename>")
-        #   3. auto-pick latest .ply by mtime in scene's pointclouds/
+        # ---- Load pointcloud_from_panorama.ply ---------------------
+        # Hardcoded filename - this node is the entry point of the
+        # depth-correction flow, which always starts from the panorama-
+        # seeded PCD (NOT the post-alignment one). If you want to load
+        # a different PCD, use WorldStereoLoadPointCloud instead.
         import trimesh
         pcd_dir = scene_dir / "pointclouds"
-        if pointcloud_override.strip():
-            raw_pcd = pointcloud_override.strip()
-            pcd_path = Path(raw_pcd)
-            if not pcd_path.is_absolute():
-                pcd_path = pcd_dir / raw_pcd
-            if not pcd_path.is_file():
-                raise FileNotFoundError(
-                    f"HYWM2LoadScene: pointcloud_override {pcd_path} not found"
-                )
-        elif pointcloud and pointcloud != "<none>":
-            # Combo label: "<root>/<scene>/<filename>"
-            parts = pointcloud.split("/")
-            if len(parts) < 3:
-                raise ValueError(
-                    f"HYWM2LoadScene: pointcloud dropdown value "
-                    f"{pointcloud!r} not in expected '<root>/<scene>/"
-                    f"<filename>' shape."
-                )
-            pcd_tag, pcd_scene_name = parts[0], parts[1]
-            pcd_filename = "/".join(parts[2:])
-            # Strict cross-scene check: the picked PCD must live in the
-            # scene we resolved from the `scene` / `scene_override` inputs.
-            if pcd_scene_name != scene_dir.name:
-                raise ValueError(
-                    f"HYWM2LoadScene: pointcloud picker references scene "
-                    f"{pcd_scene_name!r} but scene resolves to "
-                    f"{scene_dir.name!r}. Either pick a pointcloud that "
-                    f"matches the chosen scene, or use pointcloud_override "
-                    f"for arbitrary paths."
-                )
-            pcd_path = pcd_dir / pcd_filename
-            if not pcd_path.is_file():
-                raise FileNotFoundError(
-                    f"HYWM2LoadScene: dropdown-selected PCD {pcd_path} "
-                    f"not found (scene moved? dropdown stale? restart "
-                    f"ComfyUI to refresh)"
-                )
-        else:
-            pcd_path = _pick_latest(pcd_dir, ".ply")
-            if pcd_path is None:
-                raise FileNotFoundError(
-                    f"HYWM2LoadScene: no .ply files in {pcd_dir}. Either "
-                    f"copy a pointcloud .ply in or pick one via the "
-                    f"`pointcloud` dropdown / `pointcloud_override` input."
-                )
+        pcd_path = pcd_dir / "pointcloud_from_panorama.ply"
+        if not pcd_path.is_file():
+            raise FileNotFoundError(
+                f"HYWM2LoadScene: {pcd_path} not found. Run "
+                f"WorldStereoSceneInit (which saves the seed PCD) before "
+                f"loading this scene."
+            )
         pcd = trimesh.load(str(pcd_path))
         if not hasattr(pcd, "vertices") or pcd.vertices.shape[0] == 0:
             raise ValueError(

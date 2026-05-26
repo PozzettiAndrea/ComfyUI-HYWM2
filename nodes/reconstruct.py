@@ -427,6 +427,60 @@ class HYWM2Reconstruct(io.ComfyNode):
                 dm = predictions["depth_mask"].detach().float().cpu()
                 dm = select_views(dm, view_index)
                 d = torch.where(dm >= 0.5, d, torch.zeros_like(d))
+
+            # Per-frame depth distribution stats. Helps diagnose alignment
+            # PASS1 SKIPs (often caused by HYWM2 producing few valid pixels
+            # on out-of-coverage views).
+            S_, H_, W_ = d.shape
+            total_px = int(H_ * W_)
+            valid_pcts: list = []
+            medians: list = []
+            mins: list = []
+            maxs: list = []
+            per_frame_lines: list = []
+            for s in range(S_):
+                ds = d[s]
+                valid = ds > 0
+                n_valid = int(valid.sum().item())
+                if n_valid > 0:
+                    dv = ds[valid]
+                    dmin = float(dv.min().item())
+                    dmed = float(dv.median().item())
+                    dmax = float(dv.max().item())
+                else:
+                    dmin = dmed = dmax = float("nan")
+                pct = 100.0 * n_valid / max(total_px, 1)
+                valid_pcts.append(pct)
+                medians.append(dmed)
+                mins.append(dmin)
+                maxs.append(dmax)
+                per_frame_lines.append(
+                    f"  frame {s:>3}: min={dmin:.3f} median={dmed:.3f} "
+                    f"max={dmax:.3f} valid={pct:.1f}% ({n_valid}/{total_px})"
+                )
+
+            if S_ <= 20:
+                log.info("HYWM2Reconstruct: depth stats per frame:")
+                for line in per_frame_lines:
+                    log.info(line)
+            else:
+                vp = np.asarray(valid_pcts, dtype=np.float64)
+                mds = np.asarray(medians, dtype=np.float64)
+                mds_valid = mds[~np.isnan(mds)]
+                vp_min_idx = int(np.argmin(vp))
+                p10, p50, p90 = np.percentile(vp, [10, 50, 90])
+                if mds_valid.size > 0:
+                    med_summary = float(np.median(mds_valid))
+                else:
+                    med_summary = float("nan")
+                log.info(
+                    "HYWM2Reconstruct: depth distribution across %d frames: "
+                    "p50_of_per_frame_median=%.3f | valid_pct: min=%.1f%% "
+                    "(frame %d) p10=%.1f%% median=%.1f%% p90=%.1f%%",
+                    S_, med_summary, float(vp.min()), vp_min_idx,
+                    float(p10), float(p50), float(p90),
+                )
+
             depth_raw_img = d.unsqueeze(-1).expand(-1, -1, -1, 3).contiguous()  # [S,H,W,3]
         else:
             depth_raw_img = _empty_image()
