@@ -1,5 +1,5 @@
 [cuda]
-packages = ["gsplat", "flash-attn", "fused-ssim"]
+packages = ["gsplat_0526", "flash-attn", "fused-ssim"]
 
 [dependencies]
 av = "*"
