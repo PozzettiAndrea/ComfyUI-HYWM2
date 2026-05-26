@@ -391,7 +391,36 @@ class HYWM2LoadScene(io.ComfyNode):
             raise ValueError(
                 f"HYWM2LoadScene: {pcd_path} loaded but has zero vertices"
             )
-        _p(f"pointcloud: {pcd_path.name} ({pcd.vertices.shape[0]} vertices)")
+
+        # Re-attach normals from sibling .normals.npy if present.
+        # trimesh's PLY writer doesn't preserve PointCloud.vertex_normals,
+        # so WorldStereoSavePointCloud / SceneInit save them separately.
+        # Mirrors upstream's global_normal.npy convention at
+        # traj_generate.py:382-384.
+        normals_npy = pcd_path.parent / f"{pcd_path.stem}.normals.npy"
+        if normals_npy.is_file():
+            try:
+                vn = np.load(str(normals_npy)).astype(np.float32)
+                n_v = int(np.asarray(pcd.vertices).shape[0])
+                if vn.shape == (n_v, 3):
+                    pcd.vertex_normals = vn
+                    if isinstance(getattr(pcd, "metadata", None), dict):
+                        pcd.metadata["vertex_normals"] = vn
+                    _p(f"pointcloud: {pcd_path.name} "
+                       f"({pcd.vertices.shape[0]} vertices)  +sibling normals "
+                       f"({vn.shape[0]} attached)")
+                else:
+                    _p(f"WARNING: sibling normals {normals_npy.name} shape "
+                       f"{vn.shape} != pcd ({n_v}, 3); ignoring")
+                    _p(f"pointcloud: {pcd_path.name} ({pcd.vertices.shape[0]} vertices)")
+            except Exception as e:
+                _p(f"WARNING: failed to load sibling normals "
+                   f"{normals_npy.name}: {type(e).__name__}: {e}")
+                _p(f"pointcloud: {pcd_path.name} ({pcd.vertices.shape[0]} vertices)")
+        else:
+            _p(f"pointcloud: {pcd_path.name} ({pcd.vertices.shape[0]} vertices) "
+               f"(no sibling .normals.npy; downstream alignment will fall back to "
+               f"KDTree PCA)")
 
         _p(f"loaded N={N}, image_size=({W},{H}), fov_x={fov_x_deg:.2f} deg")
         return io.NodeOutput(
