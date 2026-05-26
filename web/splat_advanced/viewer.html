@@ -48,7 +48,7 @@
     </div>
     <div id="mode-toolbar">
       <button id="spectate-btn" title="Toggle WASD fly-through (Esc to exit)">Spectate</button>
-      <div id="spectate-help">WASD = move · Mouse = look · Q/E = down/up · Shift = sprint · Esc = exit</div>
+      <div id="spectate-help">WASD = move · Mouse = look · Space/C = up/down · Shift = sprint · Esc = exit</div>
     </div>
   </div>
   <div id="right">
@@ -68,6 +68,8 @@
           <input type="range" id="opacity-mul" min="0" max="3" step="0.05" value="1" />
           <label for="size-mul">Splat size ×</label>
           <input type="range" id="size-mul" min="0.05" max="5" step="0.05" value="1" />
+          <label for="speed-mul">Spectate speed ×</label>
+          <input type="range" id="speed-mul" min="0.1" max="10" step="0.1" value="1" />
           <label for="background">Background</label>
           <input type="color" id="background" value="#0a0a0a" />
           <label for="up-axis">Up axis</label>
@@ -329,7 +331,7 @@ window.addEventListener("keydown", e => {
   const k = e.key.toLowerCase();
   keys.add(k);
   if (spectate && (k === "w" || k === "a" || k === "s" || k === "d" ||
-                   k === "q" || k === "e" || k === " ")) {
+                   k === "c" || k === "e" || k === " ")) {
     e.preventDefault();
   }
   if (k === "escape" && spectate) setSpectate(false);
@@ -352,15 +354,16 @@ function spectateTick() {
   cam.up.copy(up);
 
   const sceneSize = bbox ? bbox.getSize(new THREE.Vector3()).length() : 4;
-  const baseSpeed = Math.max(0.1, sceneSize * 0.3);
+  const speedMul = parseFloat(document.getElementById("speed-mul").value || "1");
+  const baseSpeed = Math.max(0.1, sceneSize * 0.3) * speedMul;
   const speed = (keys.has("shift") ? 4 : 1) * baseSpeed * dt;
 
   if (keys.has("w")) cam.position.addScaledVector(fwd, speed);
   if (keys.has("s")) cam.position.addScaledVector(fwd, -speed);
   if (keys.has("a")) cam.position.addScaledVector(right, -speed);
   if (keys.has("d")) cam.position.addScaledVector(right, speed);
-  if (keys.has("e") || keys.has(" ")) cam.position.addScaledVector(up, speed);
-  if (keys.has("q") || keys.has("control")) cam.position.addScaledVector(up, -speed);
+  if (keys.has(" ")) cam.position.addScaledVector(up, speed);
+  if (keys.has("c")) cam.position.addScaledVector(up, -speed);
 
   cam.lookAt(cam.position.clone().add(fwd));
   cam.updateMatrixWorld?.();
@@ -516,6 +519,7 @@ function snapshotState() {
     target: ctrl?.target ? ctrl.target.toArray() : null,
     opacity: parseFloat(document.getElementById("opacity-mul").value),
     size: parseFloat(document.getElementById("size-mul").value),
+    speed: parseFloat(document.getElementById("speed-mul").value),
     fov: parseFloat(document.getElementById("fov").value),
     bg: document.getElementById("background").value,
     up: document.getElementById("up-axis").value,
@@ -564,6 +568,9 @@ async function applyRestoredState(s) {
   }
   if (typeof s.size === "number") {
     document.getElementById("size-mul").value = String(s.size);
+  }
+  if (typeof s.speed === "number") {
+    document.getElementById("speed-mul").value = String(s.speed);
   }
   if (typeof s.fov === "number") {
     document.getElementById("fov").value = String(s.fov);
