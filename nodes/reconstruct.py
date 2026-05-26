@@ -242,6 +242,17 @@ class HYWM2Reconstruct(io.ComfyNode):
                         "in pixel units of the effective inference resolution)."
                     ),
                 ),
+                io.Image.Output(
+                    display_name="depth_raw",
+                    tooltip=(
+                        "Per-view raw float depth as IMAGE [N,H,W,3] (the depth value "
+                        "broadcast across 3 channels — mirrors MoGe2's depth_raw "
+                        "convention, so it composes with depth-viz nodes and pipes "
+                        "directly into WorldStereoAlignMemoryBankDepths / "
+                        "WorldStereoAlignDepthAndGrowPCD. Returns 1×1 zeros if the "
+                        "depth head is disabled."
+                    ),
+                ),
             ],
         )
 
@@ -396,12 +407,29 @@ class HYWM2Reconstruct(io.ComfyNode):
         from .decode_export import (
             decode_depth_image, decode_normals_image,
             decode_points, decode_gaussians,
+            select_views, _empty_image,
         )
 
         depth_img = decode_depth_image(
             predictions, view_index=view_index,
             apply_mask=apply_mask, colormap=depth_colormap,
         )
+
+        # Raw float depth for downstream alignment / metric consumers.
+        # Mirrors decode_depth_image's view-selection + masking but
+        # skips the per-frame normalize + colormap step.
+        if "depth" in predictions:
+            d = predictions["depth"].detach().float().cpu()             # [B,S,H,W,1] or [B,S,H,W]
+            if d.dim() == 5:
+                d = d.squeeze(-1)
+            d = select_views(d, view_index)                              # [S,H,W]
+            if apply_mask and "depth_mask" in predictions:
+                dm = predictions["depth_mask"].detach().float().cpu()
+                dm = select_views(dm, view_index)
+                d = torch.where(dm >= 0.5, d, torch.zeros_like(d))
+            depth_raw_img = d.unsqueeze(-1).expand(-1, -1, -1, 3).contiguous()  # [S,H,W,3]
+        else:
+            depth_raw_img = _empty_image()
         normals_img = decode_normals_image(
             predictions, view_index=view_index, apply_mask=apply_mask,
         )
@@ -446,7 +474,7 @@ class HYWM2Reconstruct(io.ComfyNode):
         if empty:
             log.info("HYWM2Reconstruct: empty outputs (head disabled): %s", ", ".join(empty))
 
-        return io.NodeOutput(depth_img, normals_img, points, gaussians, extrinsics_w2c, intr_t)
+        return io.NodeOutput(depth_img, normals_img, points, gaussians, extrinsics_w2c, intr_t, depth_raw_img)
 
     # ------------------------------------------------------------------
     # Pipeline lifecycle
