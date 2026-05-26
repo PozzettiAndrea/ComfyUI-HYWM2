@@ -15,6 +15,11 @@ web/*
 !web/ply_advanced_gaussian/**
 !web/splat_advanced/
 !web/splat_advanced/**
+# Hand-authored frontend widgets — re-include the js/ dir, ignore its
+# auto-populated contents, then whitelist our own files explicitly.
+!web/js/
+web/js/*
+!web/js/preview_views.js
 
 # Jupyter / IDE crud
 .ipynb_checkpoints/

@@ -56,8 +56,11 @@ class HYWM2PreviewAndFilterViews(io.ComfyNode):
                 "downstream.\n\n"
                 "First run: all views ON (so you can see what you have). "
                 "Subsequent runs use whatever toggle state you set. Re-queue "
-                "after editing toggles to push the new subset onwards."
+                "after editing toggles to push the new subset onwards.\n\n"
+                "Output node — can be queued on its own to preview a view "
+                "set without any downstream consumers wired."
             ),
+            is_output_node=True,
             inputs=[
                 io.Image.Input("images",
                     tooltip="[N, H, W, 3] multi-view image batch."),
