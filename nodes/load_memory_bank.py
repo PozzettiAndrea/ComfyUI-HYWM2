@@ -117,6 +117,21 @@ class HYWM2LoadMemoryBank(io.ComfyNode):
                 io.Int.Output(
                     display_name="num_entries",
                     tooltip="N. Number of frames + cameras loaded."),
+                io.Float.Output(
+                    display_name="fov_x_deg",
+                    tooltip="Horizontal field-of-view derived from the bank's "
+                            "intrinsics: 2·atan(W/(2·fx))·180/π. Bank entries "
+                            "are assumed to share a single camera; emits the "
+                            "median fx and warns if any entry differs by >1%. "
+                            "Wire directly into MoGe2Inference.fov_x_deg so "
+                            "MoGe2 doesn't have to estimate FoV."),
+                io.Custom("TRIMESH").Output(
+                    display_name="pointcloud",
+                    tooltip="Latest .ply found in the scene's sibling "
+                            "`pointclouds/` folder (selected by mtime). "
+                            "This is the global PCD anchor used by "
+                            "WorldStereoAlignDepthAndGrowPCD. Emits a 1-vertex "
+                            "placeholder + warning log if no .ply is present."),
             ],
         )
 
@@ -183,5 +198,53 @@ class HYWM2LoadMemoryBank(io.ComfyNode):
         extrinsics_t = torch.from_numpy(ext_np)
         intrinsics_t = torch.from_numpy(K_np)
 
+        # --- fov_x_deg from intrinsics --------------------------------
+        # Bank entries are expected to share a single camera. Use the
+        # median fx for robustness, warn if any entry differs >1%.
+        import math
+        fx_values = K_np[:, 0, 0].astype(np.float64)
+        fx_med = float(np.median(fx_values))
+        if fx_med <= 0:
+            _p(f"WARNING: median fx={fx_med} non-positive; fov_x_deg=0")
+            fov_x_deg = 0.0
+        else:
+            rel_dev = np.abs(fx_values - fx_med) / fx_med
+            if rel_dev.max() > 0.01:
+                worst = int(np.argmax(rel_dev))
+                _p(f"WARNING: intrinsics fx not uniform across {N} entries — "
+                   f"median={fx_med:.2f}, worst entry {worst} fx={fx_values[worst]:.2f} "
+                   f"(dev={rel_dev.max()*100:.2f}%)")
+            fov_x_deg = math.degrees(2.0 * math.atan(W / (2.0 * fx_med)))
+            _p(f"fov_x_deg={fov_x_deg:.2f} deg (W={W}, median fx={fx_med:.2f})")
+
+        # --- latest .ply from sibling pointclouds/ --------------------
+        # bank folder layout assumed: <scene>/memorybanks/<bank_name>/
+        # PCDs live at: <scene>/pointclouds/*.ply
+        try:
+            import trimesh
+            scene_dir = target.parent.parent
+            pcd_dir = scene_dir / "pointclouds"
+            plys = sorted(
+                pcd_dir.glob("*.ply"),
+                key=lambda p: (p.stat().st_mtime, p.name),
+            ) if pcd_dir.is_dir() else []
+            if plys:
+                latest = plys[-1]
+                pcd = trimesh.load(str(latest))
+                if not hasattr(pcd, "vertices") or pcd.vertices.shape[0] == 0:
+                    raise ValueError(f"{latest} loaded but has no vertices")
+                _p(f"loaded pointcloud: {latest.name} ({pcd.vertices.shape[0]} vertices)")
+            else:
+                pcd = trimesh.PointCloud(
+                    vertices=np.zeros((1, 3), dtype=np.float32))
+                _p(f"WARNING: no .ply in {pcd_dir} — emitting 1-vertex placeholder")
+        except Exception as e:
+            _p(f"WARNING: pointcloud load failed ({type(e).__name__}: {e}); "
+               f"emitting 1-vertex placeholder")
+            import trimesh
+            pcd = trimesh.PointCloud(vertices=np.zeros((1, 3), dtype=np.float32))
+
         _p(f"loaded {target}: N={N}, image_size=({W},{H})")
-        return io.NodeOutput(images_t, extrinsics_t, intrinsics_t, N)
+        return io.NodeOutput(
+            images_t, extrinsics_t, intrinsics_t, N, fov_x_deg, pcd,
+        )
