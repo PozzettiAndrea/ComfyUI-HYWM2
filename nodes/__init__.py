@@ -1,5 +1,6 @@
 from .load_model import LoadHYWM2Model
 from .load_memory_bank import HYWM2LoadMemoryBank
+from .load_scene import HYWM2LoadScene
 from .preview_and_filter_views import HYWM2PreviewAndFilterViews
 from .reconstruct import HYWM2Reconstruct
 from .sample_panorama import HYWM2SamplePanorama
@@ -15,6 +16,7 @@ from .splat_viewer import HYWM2SplatAdvancedViewer
 NODE_CLASS_MAPPINGS = {
     "LoadHYWM2Model": LoadHYWM2Model,
     "HYWM2LoadMemoryBank": HYWM2LoadMemoryBank,
+    "HYWM2LoadScene": HYWM2LoadScene,
     "HYWM2PreviewAndFilterViews": HYWM2PreviewAndFilterViews,
     "HYWM2Reconstruct": HYWM2Reconstruct,
     "HYWM2SamplePanorama": HYWM2SamplePanorama,
@@ -29,6 +31,7 @@ NODE_CLASS_MAPPINGS = {
 NODE_DISPLAY_NAME_MAPPINGS = {
     "LoadHYWM2Model": "(Down)Load HYWM2 Model",
     "HYWM2LoadMemoryBank": "HYWM2 Load Memory Bank",
+    "HYWM2LoadScene": "HYWM2 Load Scene",
     "HYWM2PreviewAndFilterViews": "HYWM2 Preview + Filter Views",
     "HYWM2Reconstruct": "HYWM2 Reconstruct",
     "HYWM2SamplePanorama": "HYWM2 Sample Panorama (Equirect -> Perspective)",
