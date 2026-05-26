@@ -8,8 +8,8 @@ multi-trajectory generation flow. Layout:
             memorybank_traj_0/ ... memorybank_traj_N/
                 cameras.json + frames/ + (optional) depths/
         pointclouds/
-            pointcloud_traj_0.ply ... pointcloud_traj_N.ply
-                (or pointcloud_initial.ply / pointcloud_final.ply)
+            pointcloud_from_panorama.ply       (seed from panorama anchor)
+            pointcloud_traj_<N>.ply            (per-call SavePointCloud output)
         panorama.png                  (optional, informational)
 
 This node emits everything downstream nodes need to run the depth-
