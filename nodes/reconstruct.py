@@ -253,6 +253,18 @@ class HYWM2Reconstruct(io.ComfyNode):
                         "depth head is disabled."
                     ),
                 ),
+                io.Image.Output(
+                    display_name="points_raw",
+                    tooltip=(
+                        "Per-view raw 3D point map IMAGE [N,H,W,3] with channels "
+                        "(X, Y, Z) in CAMERA SPACE (meters). Computed from depth + "
+                        "predicted_intrinsics via the pinhole unprojection "
+                        "(X = (u-cx)/fx · Z, Y = (v-cy)/fy · Z). Drop-in for "
+                        "PanoramaDepthMerge.face_points and MoGe2-style "
+                        "points_raw consumers. Returns 1×1 zeros if the depth "
+                        "head is disabled."
+                    ),
+                ),
             ],
         )
 
@@ -484,6 +496,7 @@ class HYWM2Reconstruct(io.ComfyNode):
             depth_raw_img = d.unsqueeze(-1).expand(-1, -1, -1, 3).contiguous()  # [S,H,W,3]
         else:
             depth_raw_img = _empty_image()
+            d = None  # signal points_raw to short-circuit below
         normals_img = decode_normals_image(
             predictions, view_index=view_index, apply_mask=apply_mask,
         )
@@ -518,6 +531,45 @@ class HYWM2Reconstruct(io.ComfyNode):
         else:
             intr_t = torch.eye(3).unsqueeze(0)
 
+        # ----- points_raw: per-view 3D point map in camera space -----
+        # Compute via pinhole unprojection: (X, Y, Z) = ((u-cx)/fx · Z,
+        # (v-cy)/fy · Z, Z). By construction ||points|| equals the
+        # ray distance that PanoramaDepthMerge.face_points consumes via
+        # np.linalg.norm. Predicted intrinsics are already in pixel units
+        # of the effective inference resolution — they match d's H,W
+        # exactly, so no rescale needed (unlike SharpPredictMetricDepth
+        # which has to bridge face-image-K to internal 1536² grid).
+        if d is not None and intr is not None:
+            S_p, H_p, W_p = d.shape
+            uu = torch.arange(W_p, dtype=torch.float32)
+            vv = torch.arange(H_p, dtype=torch.float32)
+            uu_g, vv_g = torch.meshgrid(uu, vv, indexing="xy")  # (H_p, W_p)
+            n_intr = int(intr_t.shape[0])
+            points_per_view = []
+            for s in range(S_p):
+                K_s = intr_t[min(s, n_intr - 1)]
+                fx = float(K_s[0, 0])
+                fy = float(K_s[1, 1])
+                cx = float(K_s[0, 2])
+                cy = float(K_s[1, 2])
+                x_cam = (uu_g - cx) / fx
+                y_cam = (vv_g - cy) / fy
+                Z_s = d[s]
+                points_per_view.append(
+                    torch.stack([x_cam * Z_s, y_cam * Z_s, Z_s], dim=-1)
+                )
+            points_raw_img = torch.stack(points_per_view, dim=0).contiguous()  # [S,H,W,3]
+            try:
+                pn = points_raw_img.norm(dim=-1)
+                log.info(
+                    "HYWM2Reconstruct: points_raw [%d,%d,%d,3], ||v||=%.2f-%.2fm",
+                    S_p, H_p, W_p, float(pn.min()), float(pn.max()),
+                )
+            except Exception:
+                pass
+        else:
+            points_raw_img = _empty_image()
+
         # Summary so the user can see at a glance which outputs are populated.
         empty = []
         if "depth" not in predictions:    empty.append("images(depth)")
@@ -528,7 +580,7 @@ class HYWM2Reconstruct(io.ComfyNode):
         if empty:
             log.info("HYWM2Reconstruct: empty outputs (head disabled): %s", ", ".join(empty))
 
-        return io.NodeOutput(depth_img, normals_img, points, gaussians, extrinsics_w2c, intr_t, depth_raw_img)
+        return io.NodeOutput(depth_img, normals_img, points, gaussians, extrinsics_w2c, intr_t, depth_raw_img, points_raw_img)
 
     # ------------------------------------------------------------------
     # Pipeline lifecycle
