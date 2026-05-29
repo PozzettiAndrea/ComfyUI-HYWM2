@@ -66,6 +66,153 @@ def _request_vram_eviction(needed_bytes: int) -> None:
         pass
 
 
+def _mem_snapshot() -> str:
+    """Compact 'RAM / swap / VRAM' snapshot string — same telemetry shape
+    WorldStereoGenerate prints around offload_everything (inference.py:430-454).
+    """
+    parts: list[str] = []
+    try:
+        import psutil
+        vm = psutil.virtual_memory()
+        sm = psutil.swap_memory()
+        parts.append(f"{vm.used / 1024**3:.1f}/{vm.total / 1024**3:.1f}GB ram")
+        parts.append(f"{sm.used / 1024**3:.1f}/{sm.total / 1024**3:.1f}GB swap")
+    except Exception as _e:
+        parts.append(f"ram=? ({type(_e).__name__})")
+    if torch.cuda.is_available():
+        try:
+            free, total = torch.cuda.mem_get_info()
+            used = (total - free) / 1024**3
+            parts.append(f"{used:.1f}/{total / 1024**3:.1f}GB vram")
+        except Exception as _e:
+            parts.append(f"vram=? ({type(_e).__name__})")
+    return ", ".join(parts)
+
+
+def _offload_everything() -> None:
+    """Aggressive eviction modeled on WorldStereoGenerate.offload_everything
+    (inference.py:421-470). Two-step:
+
+      1. Ask the parent ComfyUI process to evict EVERY model patcher across
+         sibling worker subprocesses (cross-worker dump via the IPC bridge).
+         Total budget = full GPU memory so the parent's _handle_vram_budget
+         treats it as 'evict whatever you can find'.
+      2. In-worker: unload every patcher this worker's `current_loaded_models`
+         knows about (HYWM2Reconstruct lives in the SAME hywm2-nodes worker as
+         us, so its DiT patcher is here too). Then soft_empty_cache + gc +
+         empty_cache for full release.
+
+    HYWM2's DiT will auto-reload on its next Reconstruct call. That's the
+    intended trade-off vs OOMing the trainer.
+    """
+    _p(f"offload_everything: before --> {_mem_snapshot()}")
+
+    # Cross-worker eviction (best-effort; no-op outside a comfy-env worker).
+    try:
+        import comfy_worker  # noqa: F401 - injected by comfy-env at worker startup
+        try:
+            if torch.cuda.is_available():
+                total_vram = torch.cuda.get_device_properties(0).total_memory
+            else:
+                total_vram = 0
+            comfy_worker.call_parent(
+                "request_vram_budget", total_size=int(total_vram),
+            )
+            _p(f"  -> cross-worker eviction requested ({total_vram / 1e9:.1f} GB)")
+        except Exception as e:
+            _p(f"  -> comfy_worker.call_parent failed: {type(e).__name__}: {e}")
+    except ImportError:
+        _p("  -> comfy_worker module unavailable; in-worker only")
+
+    # In-worker: unload everything this worker manages.
+    try:
+        import comfy.model_management as mm
+        try:
+            mm.unload_all_models()
+            _p("  -> mm.unload_all_models() done")
+        except Exception as e:
+            _p(f"  -> mm.unload_all_models() raised {type(e).__name__}: {e}")
+        try:
+            mm.soft_empty_cache()
+        except Exception:
+            pass
+    except Exception as e:
+        _p(f"  -> comfy.model_management unavailable: {e}")
+
+    gc.collect()
+    if torch.cuda.is_available():
+        torch.cuda.empty_cache()
+
+    _p(f"offload_everything: after  --> {_mem_snapshot()}")
+
+
+def _install_tqdm_throttle(interval_seconds: float = 5.0) -> callable:
+    """Monkey-patch `tqdm.tqdm.update` to emit a newline-terminated progress
+    line every `interval_seconds`. Worker stderr is line-buffered, so tqdm's
+    default `\\r`-based redraw stays invisible during a 5000-step training
+    run that takes 10-30 min. Periodic newline-terminated lines surface real
+    progress in the worker log.
+
+    Returns the restore function to call in a `finally` block.
+    """
+    import time
+    try:
+        import tqdm as _tqdm_mod
+    except ImportError:
+        _p("tqdm not importable; progress prints disabled")
+        return lambda: None
+
+    original_update = _tqdm_mod.tqdm.update
+    # Per-instance last-print timestamps (id(self) -> monotonic time).
+    last_print: dict[int, float] = {}
+
+    def _emit(self) -> None:
+        try:
+            n = int(self.n or 0)
+            total = int(self.total or 0)
+            pct = (100.0 * n / total) if total else 0.0
+            # tqdm.format_dict carries elapsed seconds + smoothed rate.
+            d = self.format_dict if hasattr(self, "format_dict") else {}
+            elapsed = float(d.get("elapsed", 0.0) or 0.0)
+            rate = (n / elapsed) if elapsed > 0 else 0.0
+            postfix = self.postfix if hasattr(self, "postfix") and self.postfix else ""
+            line = (
+                f"[HYWM2GaussianTrain]   step {n}/{total} ({pct:.1f}%) "
+                f"— {rate:.1f} it/s — elapsed {elapsed:.1f}s"
+            )
+            if postfix:
+                line += f" — {postfix}"
+            print(line, file=sys.stderr, flush=True)
+        except Exception as e:
+            print(f"[HYWM2GaussianTrain] tqdm throttle emit failed: {e}",
+                  file=sys.stderr, flush=True)
+
+    def _patched_update(self, n: int = 1) -> object:
+        ret = original_update(self, n)
+        try:
+            now = time.monotonic()
+            key = id(self)
+            last = last_print.get(key, 0.0)
+            if now - last >= interval_seconds:
+                last_print[key] = now
+                _emit(self)
+        except Exception:
+            pass
+        return ret
+
+    _tqdm_mod.tqdm.update = _patched_update
+    _p(f"tqdm throttle installed (every {interval_seconds:.0f}s)")
+
+    def _restore() -> None:
+        try:
+            _tqdm_mod.tqdm.update = original_update
+            _p("tqdm throttle restored")
+        except Exception:
+            pass
+
+    return _restore
+
+
 def _normalize_K_to_pixel(intr: torch.Tensor, W: int, H: int) -> torch.Tensor:
     """Sniff PanoPack-style normalized K (fx<2) and rescale to pixel-K for the
     given image (W, H). Same sniff used in Sharp's predict nodes
@@ -225,9 +372,11 @@ def _write_preload_pt(out_path: Path, gaussians: dict) -> None:
     payload = {
         "step": 0,
         "splats": {
-            "means": means,
-            "quats": quats,
+            # Position key is "means3d" not "means" — the trainer renames
+            # it at world_gs_trainer.py:444. Other keys match HYWM2_GAUSSIANS.
+            "means3d": means,
             "scales": scales,
+            "quats": quats,
             "opacities": opacities,
             "sh0": sh0,
             "shN": shN,
@@ -320,6 +469,23 @@ class HYWM2GaussianTrain(io.ComfyNode):
                             "to sys.path so `import hyworld2.worldgen."
                             "world_gs_trainer` resolves. Override if you moved "
                             "the repo. Leave blank to use the default."),
+                io.Boolean.Input(
+                    "offload_everything", default=True, optional=True,
+                    tooltip=(
+                        "Aggressive VRAM eviction before training (mirrors "
+                        "WorldStereoGenerate). When True, calls "
+                        "comfy_worker.call_parent('request_vram_budget', "
+                        "total_size=<full GPU>) to evict sibling-worker "
+                        "patchers, then mm.unload_all_models() to dump every "
+                        "patcher this worker registered (e.g. "
+                        "HYWM2Reconstruct's DiT — which lives in the SAME "
+                        "hywm2-nodes worker as us). HYWM2's DiT will "
+                        "auto-reload on its next Reconstruct call (~6-10s "
+                        "tax). When False, falls back to bounded "
+                        "_request_vram_eviction(~18 GB) only. Recommended "
+                        "True; only flip off if you know nothing else is "
+                        "resident and want to skip the reload."
+                    )),
                 io.Image.Input(
                     "depth_raw", optional=True,
                     tooltip="Optional per-view metric depth [N, H, W, 3] from "
@@ -363,6 +529,7 @@ class HYWM2GaussianTrain(io.ComfyNode):
         downsample_pts_num: int = 2_000_000,
         output_prefix: str = "hywm2_train",
         hyworld2_repo_path: str = "/home/work/HY-World-2.0",
+        offload_everything: bool = True,
         depth_raw: torch.Tensor | None = None,
         normals: torch.Tensor | None = None,
     ):
@@ -456,14 +623,21 @@ class HYWM2GaussianTrain(io.ComfyNode):
             _p(f"writing {N_img} normals to normals/ (8-bit RGB)...")
             _dump_normals(normals, gs_data / "normals", keys)
 
-        # ----- Request VRAM headroom from sibling workers -----
-        # Conservative estimate: training peak scales with point count + image
-        # resolution. ~18 GB request triggers eviction on a 24 GB card if any
-        # sibling worker holds a model (HYWM2's DiT, SHARP's UNet, etc.).
-        peak_estimate = int(18 * 1024**3)
-        _p(f"requesting cross-worker VRAM eviction (estimate: "
-           f"{peak_estimate / 1e9:.1f} GB)")
-        _request_vram_eviction(peak_estimate)
+        # ----- VRAM eviction -----
+        # Branch on offload_everything: aggressive (default) vs bounded.
+        if offload_everything:
+            _p("offload_everything=True -> aggressive eviction")
+            _offload_everything()
+        else:
+            # Bounded path: only ~18 GB requested via free_memory(N, device).
+            # Use when caller knows nothing else is resident and wants to
+            # skip the DiT reload tax. Training peak scales with point count
+            # + image res — 18 GB is a sane conservative estimate on a 24 GB
+            # card.
+            peak_estimate = int(18 * 1024**3)
+            _p(f"offload_everything=False -> bounded eviction "
+               f"(estimate: {peak_estimate / 1e9:.1f} GB)")
+            _request_vram_eviction(peak_estimate)
 
         # ----- Import the trainer in-process -----
         # Prepend the user-provided repo path to sys.path. Default to
@@ -544,9 +718,16 @@ class HYWM2GaussianTrain(io.ComfyNode):
            f"normal_loss={cfg.normal_loss}, downsample_pts_num={cfg.downsample_pts_num}")
 
         # ----- Run the trainer -----
+        # Install tqdm throttle so we get newline-terminated progress lines
+        # every 5s in the worker log (tqdm's default \\r updates are invisible
+        # through line-buffered worker stderr).
+        _restore_tqdm = _install_tqdm_throttle(interval_seconds=5.0)
         t0 = time.time()
-        # Single-GPU: world_size=1, local_rank=0, world_rank=0.
-        main(0, 0, 1, cfg)
+        try:
+            # Single-GPU: world_size=1, local_rank=0, world_rank=0.
+            main(0, 0, 1, cfg)
+        finally:
+            _restore_tqdm()
         elapsed = time.time() - t0
         _p(f"training done in {elapsed:.1f}s")
 
