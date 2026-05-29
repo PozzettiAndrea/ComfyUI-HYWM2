@@ -894,8 +894,19 @@ class HYWM2GaussianTrain(io.ComfyNode):
         _restore_tqdm = _install_tqdm_throttle(interval_seconds=5.0)
         t0 = time.time()
         try:
-            # Single-GPU: world_size=1, local_rank=0, world_rank=0.
-            main(0, 0, 1, cfg)
+            # ComfyUI's executor wraps the whole node-execution chain in
+            # `torch.inference_mode()` (execution.py:736). That's STRICTER
+            # than torch.no_grad -- tensors created inside can never have
+            # requires_grad=True, no matter what nn.Parameter does. The
+            # gaussian trainer needs gradient tracking on its splats
+            # (gsplat/strategy/default.py:150 calls .retain_grad() on
+            # info["means2d"], which crashes if the tensor was made in
+            # inference_mode). Escape via the documented opt-out:
+            # `torch.inference_mode(False)` toggles the per-thread flag,
+            # and `torch.enable_grad()` makes sure no_grad isn't set
+            # either. Single-GPU: world_size=1, local_rank=0, world_rank=0.
+            with torch.inference_mode(False), torch.enable_grad():
+                main(0, 0, 1, cfg)
         finally:
             _restore_tqdm()
         elapsed = time.time() - t0
