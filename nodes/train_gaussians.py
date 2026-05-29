@@ -213,6 +213,88 @@ def _install_tqdm_throttle(interval_seconds: float = 5.0) -> callable:
     return _restore
 
 
+def _rescale_extrinsics_for_scene_scale(
+    extrinsics: torch.Tensor, gaussian_means: torch.Tensor
+) -> tuple[torch.Tensor, torch.Tensor, float]:
+    """Defend against trainer's `Scene scale: 0.0` collapse.
+
+    HYWM2Reconstruct's `predicted_extrinsics` are normalized — the first
+    view is at identity (camera_0 at origin) and the rest sit close to it
+    in HYWM2's internal frame. The trainer's Parser computes
+    `scene_scale = max(camera-camera-distances)` (gs/opencv.py:987). When
+    all cameras are ~coincident that max is ~0, and downstream
+    `means_lr * scene_scale = 0` means positions never update during
+    training. Same factor multiplies the means-bound box for densification,
+    so we get no growth either.
+
+    Fix: rescale BOTH extrinsics translations AND gaussian means by
+    1 / median_camera_distance so cameras span ~unit scale. The two have
+    to scale together — moving cameras without moving gaussians would
+    change the relative geometry the splat encodes.
+
+    Returns (extrinsics_scaled, gaussian_means_scaled, scale_factor).
+    scale_factor is what we multiplied translations + means by; 1.0 if
+    no rescale was needed.
+    """
+    ext = extrinsics.detach().cpu().float().clone()
+    if ext.dim() == 4 and ext.shape[0] == 1:
+        ext = ext[0]
+    # Camera centers in world = -R^T @ t where w2c = [R | t].
+    R = ext[:, :3, :3]                              # [N, 3, 3]
+    t = ext[:, :3, 3:4]                             # [N, 3, 1]
+    centers = -torch.bmm(R.transpose(1, 2), t).squeeze(-1)  # [N, 3]
+    N = centers.shape[0]
+    if N < 2:
+        return extrinsics, gaussian_means, 1.0
+    # Pairwise distances (just the upper triangle is enough; this is N=12-ish).
+    cross = centers.unsqueeze(0) - centers.unsqueeze(1)     # [N, N, 3]
+    dists = cross.norm(dim=-1)                              # [N, N]
+    triu_idx = torch.triu_indices(N, N, offset=1)
+    pair_dists = dists[triu_idx[0], triu_idx[1]]            # [N*(N-1)/2]
+    median_dist = float(pair_dists.median().item())
+    max_dist = float(pair_dists.max().item())
+
+    print(
+        f"[HYWM2GaussianTrain] camera-camera distance stats (raw): "
+        f"median={median_dist:.6f} max={max_dist:.6f}",
+        file=sys.stderr, flush=True,
+    )
+
+    # If cameras span O(1) already, leave alone (avoid double-scaling on
+    # a real WorldStereo scene). Threshold at 0.1 = cameras within 10cm,
+    # which is the HYWM2-normalized regime.
+    if max_dist >= 0.1:
+        return extrinsics, gaussian_means, 1.0
+
+    # Target: median camera-camera distance = 1.0 in world units. Compute
+    # the scale factor as 1 / median (or 1 / max if median is degenerate).
+    pivot = max(median_dist, max_dist, 1e-9)
+    scale = 1.0 / pivot
+
+    # Scale translations of every w2c matrix. The trick: w2c moves world ->
+    # camera. If we scale world coords by `s`, the camera-frame coords stay
+    # the same iff we scale the translation by `s` too. So we replace
+    # t_new = t * s and leave R alone. Camera-camera distances become
+    # `s * dist`, matching what the means transform does.
+    ext_scaled = ext.clone()
+    ext_scaled[:, :3, 3] = ext[:, :3, 3] * scale
+    means_scaled = gaussian_means.detach().cpu().float() * scale
+
+    # Restore the input shape (preserve the singleton batch dim if the
+    # caller passed [1, N, 4, 4]).
+    if extrinsics.dim() == 4 and extrinsics.shape[0] == 1:
+        ext_scaled = ext_scaled.unsqueeze(0)
+
+    print(
+        f"[HYWM2GaussianTrain] rescaling extrinsics + means by {scale:.4f} "
+        f"(so median camera distance -> 1.0). Output PLY is in scaled "
+        f"world units; multiply by {1/scale:.4f} to recover original "
+        f"HYWM2 metric scale.",
+        file=sys.stderr, flush=True,
+    )
+    return ext_scaled, means_scaled, scale
+
+
 def _normalize_K_to_pixel(intr: torch.Tensor, W: int, H: int) -> torch.Tensor:
     """Sniff PanoPack-style normalized K (fx<2) and rescale to pixel-K for the
     given image (W, H). Same sniff used in Sharp's predict nodes
@@ -353,6 +435,7 @@ def _write_preload_pt(
     out_path: Path,
     gaussians: dict,
     max_gaussians: int = 0,
+    world_scale: float = 1.0,
 ) -> None:
     """Save HYWM2's full splat state as the trainer's preload_gs_path .pt.
 
@@ -369,12 +452,25 @@ def _write_preload_pt(
     millions of gaussians (its tile-intersection workspace scales as
     O(N_gaussians × max_overlapping_tiles), which blows up on a 24 GB
     card at N > ~1M).
+
+    `world_scale != 1.0` rescales both means (linear) and scales (additive
+    in log space: log(s · world_scale) = log(s) + log(world_scale)). The
+    trainer's scales are stored in log-space (`world_gs_trainer.py:408`,
+    `scales = torch.log(...)`); we have to match that representation.
     """
     means = gaussians["means"].detach().float().cpu()
     quats = gaussians["quats"].detach().float().cpu()
     scales = gaussians["scales"].detach().float().cpu()
     opacities = gaussians["opacities"].detach().float().cpu()
     rgbs = gaussians["rgbs"].detach().float().cpu().clamp(0, 1)
+
+    # World rescale (mirrors _rescale_extrinsics_for_scene_scale on the
+    # gaussian side). means scale linearly; log-space scales pick up a
+    # log(world_scale) offset.
+    if world_scale != 1.0:
+        means = means * float(world_scale)
+        scales = scales + math.log(float(world_scale))
+
     N = means.shape[0]
 
     # Optional random subsample. Deterministic per-N via a seeded generator
@@ -634,6 +730,17 @@ class HYWM2GaussianTrain(io.ComfyNode):
         _p(f"writing {N_img} images to images/...")
         _dump_image_batch(images, gs_data / "images", keys)
 
+        # Defend against the trainer's Scene scale = 0 collapse. HYWM2's
+        # predicted_extrinsics are normalized (first view at identity, rest
+        # nearby) so the trainer's max-camera-distance-based scene_scale
+        # would be ~0, which zeros out the means learning rate. Rescale
+        # extrinsics translations AND gaussian means together so cameras
+        # span ~unit world distance. No-op for already-spread cameras
+        # (e.g. real WorldStereo exports).
+        ext, gaussian_means_scaled, world_scale = _rescale_extrinsics_for_scene_scale(
+            ext, means_t,
+        )
+
         _p("writing cameras.json...")
         _write_cameras_json(gs_data / "cameras.json", ext, intr_pixel, keys)
 
@@ -646,14 +753,22 @@ class HYWM2GaussianTrain(io.ComfyNode):
         _p("writing points.ply (1-vertex placeholder, init_type=random)")
         _write_points_ply(
             gs_data / "points.ply",
-            means_t[:1].detach().cpu(),
+            gaussian_means_scaled[:1].detach().cpu(),
             (gaussians.get("rgbs") if gaussians.get("rgbs") is not None
              else torch.full((N_gauss, 3), 0.5))[:1].detach().cpu(),
         )
 
         _p("writing preload_gs.pt (HYWM2 splat hot-start)...")
         preload_path = gs_data / "preload_gs.pt"
-        _write_preload_pt(preload_path, gaussians, max_gaussians=int(preload_max_gaussians))
+        # Pass world_scale through so _write_preload_pt scales BOTH means
+        # AND log-scales: log(s * scale) = log(s) + log(scale). gaussian
+        # scales encode physical extent in world units, so a world rescale
+        # has to track both.
+        _write_preload_pt(
+            preload_path, gaussians,
+            max_gaussians=int(preload_max_gaussians),
+            world_scale=float(world_scale),
+        )
 
         depth_loss_on = depth_raw is not None
         normal_loss_on = normals is not None
@@ -748,13 +863,17 @@ class HYWM2GaussianTrain(io.ComfyNode):
 
         # Architecture: HYWM2_GAUSSIANS is treated as a half-trained CHECKPOINT
         # the trainer resumes from. The trainer always builds an initial
-        # params block (sfm or random) before concatenating preload_gs_path
-        # onto it (world_gs_trainer.py:386-451 path); we minimize that block
-        # to a single throwaway gaussian by forcing init_type="random" +
-        # init_num_pts=1. Densification kills it within the first prune
-        # cycle, so the effective starting state is HYWM2's full preload.
+        # params block (sfm or random) BEFORE concatenating preload_gs_path
+        # onto it (world_gs_trainer.py:386-451). There's no "skip init" path
+        # — we have to pick some init_num_pts. We minimize to the smallest
+        # number that satisfies the trainer's `knn(points, k=4)` at line 406
+        # which derives initial scales from the 4 nearest neighbors of each
+        # point. sklearn needs >= k+1 = 5 points; bump to 100 for a comfy
+        # margin. Densification prunes these 100 random gaussians within
+        # the first prune cycle (~step 100), so by step 200 the effective
+        # training state is HYWM2's full preload.
         cfg.init_type = "random"
-        cfg.init_num_pts = 1
+        cfg.init_num_pts = 100
 
         # Step list rescale (matches __main__ behavior at world_gs_trainer.py:2601).
         try:
