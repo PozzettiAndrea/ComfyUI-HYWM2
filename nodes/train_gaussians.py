@@ -478,27 +478,20 @@ class HYWM2GaussianTrain(io.ComfyNode):
                             "milestones + at max_steps - 1. Required True if "
                             "you want a final PLY out."),
                 io.Int.Input(
-                    "downsample_pts_num", default=100_000,
-                    min=1_000, max=20_000_000,
-                    tooltip="Cap on the seeded point count after sfm-init "
-                            "downsampling (points.ply path). training.sh "
-                            "uses 2_000_000 because its scenes are seeded "
-                            "from large WorldStereo exports; for "
-                            "HYWM2Reconstruct's already-dense gaussian "
-                            "output the preload IS the seed, so 100k here "
-                            "is enough. Increase if you're feeding a sparse "
-                            "preload and want a denser points.ply backbone."),
-                io.Int.Input(
-                    "preload_max_gaussians", default=500_000,
-                    min=10_000, max=20_000_000,
-                    tooltip="Cap on the preload gaussian count (random "
-                            "subsample). Defends against OOM in gsplat's "
-                            "isect_tiles, whose tile-intersection workspace "
-                            "is O(N_gaussians × max_overlapping_tiles). At "
-                            "5-7M gaussians on a 24 GB card it OOMs before "
-                            "step 0. 500k is a safe default; bump if you "
-                            "have headroom and want to preserve more of "
-                            "HYWM2's initial reconstruction."),
+                    "preload_max_gaussians", default=0,
+                    min=0, max=20_000_000,
+                    tooltip="OPTIONAL safety cap on the preload gaussian count "
+                            "(random subsample). 0 = disabled (default; pass "
+                            "every input gaussian through as the training "
+                            "warm-start). Set a positive value (e.g. 500_000) "
+                            "if a HYWM2Reconstruct run produced more gaussians "
+                            "than fit in VRAM and you want a quick "
+                            "node-side downsample without re-running the "
+                            "predictor. Primary control over count is "
+                            "HYWM2Reconstruct's own filters "
+                            "(gaussians_downsample / gaussians_voxel_size / "
+                            "gaussians_conf_percentile) — shape upstream "
+                            "where possible."),
                 io.String.Input(
                     "output_prefix", default="hywm2_train", optional=True,
                     tooltip="Subdir prefix under ComfyUI's output dir. Final "
@@ -568,8 +561,7 @@ class HYWM2GaussianTrain(io.ComfyNode):
         max_steps: int = 5000,
         preset: str = "default",
         save_ply: bool = True,
-        downsample_pts_num: int = 100_000,
-        preload_max_gaussians: int = 500_000,
+        preload_max_gaussians: int = 0,
         output_prefix: str = "hywm2_train",
         hyworld2_repo_path: str = "/home/work/HY-World-2.0",
         offload_everything: bool = True,
@@ -645,13 +637,19 @@ class HYWM2GaussianTrain(io.ComfyNode):
         _p("writing cameras.json...")
         _write_cameras_json(gs_data / "cameras.json", ext, intr_pixel, keys)
 
-        _p(f"writing points.ply ({N_gauss} colored vertices)...")
-        rgbs_t = gaussians.get("rgbs")
-        if rgbs_t is None:
-            # Fall back to neutral grey if HYWM2_GAUSSIANS doesn't carry rgbs
-            # (1-row sentinel etc.). Trainer optimizes colors anyway.
-            rgbs_t = torch.full((N_gauss, 3), 0.5, dtype=torch.float32)
-        _write_points_ply(gs_data / "points.ply", means_t, rgbs_t)
+        # points.ply is now a 1-vertex placeholder — the trainer's Parser
+        # requires the file to exist (gs/opencv.py:712-722, trimesh.load on
+        # missing file would raise), but with cfg.init_type='random' and
+        # init_num_pts=1 below, the sfm/random branches both produce just
+        # ONE garbage gaussian that gets pruned out within densification's
+        # first cycle. The REAL starting state is the HYWM2 preload.
+        _p("writing points.ply (1-vertex placeholder, init_type=random)")
+        _write_points_ply(
+            gs_data / "points.ply",
+            means_t[:1].detach().cpu(),
+            (gaussians.get("rgbs") if gaussians.get("rgbs") is not None
+             else torch.full((N_gauss, 3), 0.5))[:1].detach().cpu(),
+        )
 
         _p("writing preload_gs.pt (HYWM2 splat hot-start)...")
         preload_path = gs_data / "preload_gs.pt"
@@ -744,10 +742,19 @@ class HYWM2GaussianTrain(io.ComfyNode):
         cfg.max_steps = int(max_steps)
         cfg.save_ply = bool(save_ply)
         cfg.disable_viewer = True
-        cfg.downsample_pts_num = int(downsample_pts_num)
         cfg.preload_gs_path = str(preload_path)
         cfg.depth_loss = bool(depth_loss_on)
         cfg.normal_loss = bool(normal_loss_on)
+
+        # Architecture: HYWM2_GAUSSIANS is treated as a half-trained CHECKPOINT
+        # the trainer resumes from. The trainer always builds an initial
+        # params block (sfm or random) before concatenating preload_gs_path
+        # onto it (world_gs_trainer.py:386-451 path); we minimize that block
+        # to a single throwaway gaussian by forcing init_type="random" +
+        # init_num_pts=1. Densification kills it within the first prune
+        # cycle, so the effective starting state is HYWM2's full preload.
+        cfg.init_type = "random"
+        cfg.init_num_pts = 1
 
         # Step list rescale (matches __main__ behavior at world_gs_trainer.py:2601).
         try:
@@ -758,7 +765,8 @@ class HYWM2GaussianTrain(io.ComfyNode):
         _p(f"starting trainer: data_dir={cfg.data_dir}, "
            f"result_dir={cfg.result_dir}, max_steps={cfg.max_steps}, "
            f"save_ply={cfg.save_ply}, depth_loss={cfg.depth_loss}, "
-           f"normal_loss={cfg.normal_loss}, downsample_pts_num={cfg.downsample_pts_num}")
+           f"normal_loss={cfg.normal_loss}, init_type=random+init_num_pts=1, "
+           f"preload_gs_path={cfg.preload_gs_path}")
 
         # ----- Run the trainer -----
         # Install tqdm throttle so we get newline-terminated progress lines
