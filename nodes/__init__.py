@@ -4,6 +4,7 @@ from .load_scene import HYWM2LoadScene
 from .preview_and_filter_views import HYWM2PreviewAndFilterViews
 from .reconstruct import HYWM2Reconstruct
 from .sample_panorama import HYWM2SamplePanorama
+from .train_gaussians import HYWM2GaussianTrain
 from .decode_export import (
     HYWM2ExportPointsPLY,
     HYWM2ExportGaussiansPLY,
@@ -20,6 +21,7 @@ NODE_CLASS_MAPPINGS = {
     "HYWM2PreviewAndFilterViews": HYWM2PreviewAndFilterViews,
     "HYWM2Reconstruct": HYWM2Reconstruct,
     "HYWM2SamplePanorama": HYWM2SamplePanorama,
+    "HYWM2GaussianTrain": HYWM2GaussianTrain,
     "HYWM2ExportPointsPLY": HYWM2ExportPointsPLY,
     "HYWM2ExportGaussiansPLY": HYWM2ExportGaussiansPLY,
     "HYWM2ExportGaussiansSplat": HYWM2ExportGaussiansSplat,
@@ -35,6 +37,7 @@ NODE_DISPLAY_NAME_MAPPINGS = {
     "HYWM2PreviewAndFilterViews": "HYWM2 Preview + Filter Views",
     "HYWM2Reconstruct": "HYWM2 Reconstruct",
     "HYWM2SamplePanorama": "HYWM2 Sample Panorama (Equirect -> Perspective)",
+    "HYWM2GaussianTrain": "HYWM2 Train Gaussians",
     "HYWM2ExportPointsPLY": "HYWM2 Export Points PLY",
     "HYWM2ExportGaussiansPLY": "HYWM2 Export Gaussians PLY",
     "HYWM2ExportGaussiansSplat": "HYWM2 Export Gaussians .splat",
