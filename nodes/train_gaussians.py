@@ -328,16 +328,37 @@ def _dump_image_batch(images: torch.Tensor, out_dir: Path, keys: list[str]) -> N
         Image.fromarray(arr).save(out_dir / f"{keys[i]}.png")
 
 
-def _dump_depths(depths: torch.Tensor, out_dir: Path, keys: list[str]) -> float:
+def _dump_depths(
+    depths: torch.Tensor,
+    out_dir: Path,
+    keys: list[str],
+    target_h: int | None = None,
+    target_w: int | None = None,
+) -> float:
     """Save per-frame metric depth as 16-bit grayscale PNGs. Returns the scale
     factor used (so the trainer-side decode can match: depth_meters = png / scale).
 
     depths: [N, H, W] or [N, H, W, 1|3] float meters.
+
+    target_h / target_w: if provided and != depth dims, resize each frame to
+    (target_h, target_w) via bilinear. The trainer reads depths/<key>.png at
+    the IMAGE resolution; if they were predicted at a different size (e.g.
+    HYWM2Reconstruct ran at adaptive 756² but images are 768²), the
+    depth_loss tensor-shape multiply at world_gs_trainer.py:1218 crashes.
     """
     out_dir.mkdir(parents=True, exist_ok=True)
     d = depths.detach().cpu().float()
     if d.dim() == 4 and d.shape[-1] in (1, 3, 4):
         d = d[..., 0]  # collapse channel — depth scalar replicated to RGB
+    # Resize if requested.
+    if target_h and target_w and (d.shape[-2] != target_h or d.shape[-1] != target_w):
+        d_resized = torch.nn.functional.interpolate(
+            d.unsqueeze(1),  # (N, 1, H, W)
+            size=(int(target_h), int(target_w)),
+            mode="bilinear",
+            align_corners=False,
+        ).squeeze(1)
+        d = d_resized
     # Use a per-batch scale so values map nicely into uint16's [0, 65535] range.
     max_d = float(d.max().item())
     if max_d <= 1e-6:
@@ -349,14 +370,39 @@ def _dump_depths(depths: torch.Tensor, out_dir: Path, keys: list[str]) -> float:
     return scale
 
 
-def _dump_normals(normals: torch.Tensor, out_dir: Path, keys: list[str]) -> None:
+def _dump_normals(
+    normals: torch.Tensor,
+    out_dir: Path,
+    keys: list[str],
+    target_h: int | None = None,
+    target_w: int | None = None,
+) -> None:
     """Save per-frame normals as 8-bit RGB PNGs. Input shape [N, H, W, 3]
     expected in [-1, 1] (so (n+1)/2 = [0, 1] = RGB). HYWM2Reconstruct.normals
     already emits in viz form (n+1)/2 ∈ [0, 1] per `decode_normals_image` —
     so we just need to cast.
+
+    target_h / target_w: if provided and != normal dims, resize each frame
+    to (target_h, target_w) via bilinear. The trainer reads
+    normals/<key>.png at the IMAGE resolution; if they were predicted at a
+    different size (e.g. HYWM2Reconstruct's adaptive 756² for 768² images),
+    the normal_loss tensor multiply at world_gs_trainer.py:1218 crashes.
     """
     out_dir.mkdir(parents=True, exist_ok=True)
-    n_np = normals.detach().cpu().clamp(0, 1).float().numpy()
+    n = normals.detach().cpu().clamp(0, 1).float()
+    # Resize if requested. Bilinear is OK for normal-map viz space
+    # (subsequent (n+1)/2 inverse leaves vectors approximately normalized;
+    # trainer re-normalizes anyway).
+    if target_h and target_w and (n.shape[-3] != target_h or n.shape[-2] != target_w):
+        # (N, H, W, 3) -> (N, 3, H, W) for interpolate, back to (N, H, W, 3).
+        n_resized = torch.nn.functional.interpolate(
+            n.permute(0, 3, 1, 2),
+            size=(int(target_h), int(target_w)),
+            mode="bilinear",
+            align_corners=False,
+        ).permute(0, 2, 3, 1).contiguous()
+        n = n_resized.clamp(0, 1)
+    n_np = n.numpy()
     arr = (n_np * 255.0 + 0.5).clip(0, 255).astype(np.uint8)
     for i, frame in enumerate(arr):
         Image.fromarray(frame).save(out_dir / f"{keys[i]}.png")
@@ -601,6 +647,24 @@ class HYWM2GaussianTrain(io.ComfyNode):
                             "world_gs_trainer` resolves. Override if you moved "
                             "the repo. Leave blank to use the default."),
                 io.Boolean.Input(
+                    "resize_inputs", default=True, optional=True,
+                    tooltip=(
+                        "When True (default), the optional depth_raw and "
+                        "normals inputs are bilinear-resized to match the "
+                        "images batch's (H, W) before they're written to "
+                        "depths/ and normals/. HYWM2Reconstruct's adaptive "
+                        "target_size often differs from the IMAGE input's "
+                        "native size (e.g. images are 768×768 but HYWM2 ran "
+                        "at 756×756), and the trainer's normal/depth loss "
+                        "tensor-multiply at world_gs_trainer.py:1218 "
+                        "requires matching dims. When False, the node "
+                        "errors out with a clear shape-mismatch message "
+                        "instead of silently rescaling — use this if you've "
+                        "carefully prepared depth/normal maps at the image "
+                        "resolution and want a hard guard against unintended "
+                        "rescaling."
+                    )),
+                io.Boolean.Input(
                     "offload_everything", default=True, optional=True,
                     tooltip=(
                         "Aggressive VRAM eviction before training (mirrors "
@@ -660,6 +724,7 @@ class HYWM2GaussianTrain(io.ComfyNode):
         preload_max_gaussians: int = 0,
         output_prefix: str = "hywm2_train",
         hyworld2_repo_path: str = "/home/work/HY-World-2.0",
+        resize_inputs: bool = True,
         offload_everything: bool = True,
         depth_raw: torch.Tensor | None = None,
         normals: torch.Tensor | None = None,
@@ -772,12 +837,54 @@ class HYWM2GaussianTrain(io.ComfyNode):
 
         depth_loss_on = depth_raw is not None
         normal_loss_on = normals is not None
+
+        # Resolution-mismatch handling. The trainer reads depths/normals
+        # at the image resolution and multiplies them against rendered
+        # tensors — if they're not the same shape it crashes. Bilinear-
+        # resize when resize_inputs=True; otherwise error out loudly.
+        def _check_or_resize(tensor: torch.Tensor, name: str) -> tuple[int | None, int | None]:
+            """Return (target_h, target_w) for the dump helper. Raises if
+            shapes mismatch and resize_inputs is False."""
+            if tensor is None:
+                return None, None
+            t = tensor
+            if t.dim() == 3:
+                t_h, t_w = int(t.shape[-2]), int(t.shape[-1])
+            elif t.dim() == 4:
+                # [N, H, W, C] convention from HYWM2Reconstruct.
+                if t.shape[-1] in (1, 3, 4):
+                    t_h, t_w = int(t.shape[1]), int(t.shape[2])
+                else:
+                    # legacy [N, C, H, W]
+                    t_h, t_w = int(t.shape[-2]), int(t.shape[-1])
+            else:
+                raise ValueError(f"{name}: unexpected shape {tuple(t.shape)}")
+            if t_h == H_img and t_w == W_img:
+                return None, None  # no resize needed
+            if not resize_inputs:
+                raise ValueError(
+                    f"HYWM2GaussianTrain: {name} is {t_h}×{t_w} but images "
+                    f"are {H_img}×{W_img}. The trainer's depth/normal loss "
+                    f"requires matching dimensions (world_gs_trainer.py:1218 "
+                    f"does normals_gt * normals_pred_mask which broadcasts "
+                    f"across channels but NOT across height/width). Either "
+                    f"set resize_inputs=True (default) to bilinear-resize "
+                    f"to {H_img}×{W_img}, OR provide {name} pre-resized to "
+                    f"match the images batch."
+                )
+            _p(f"  {name}: resize {t_h}×{t_w} -> {H_img}×{W_img} (resize_inputs=True)")
+            return H_img, W_img
+
         if depth_loss_on:
             _p(f"writing {N_img} depths to depths/ (16-bit grayscale)...")
-            _dump_depths(depth_raw, gs_data / "depths", keys)
+            d_h, d_w = _check_or_resize(depth_raw, "depth_raw")
+            _dump_depths(depth_raw, gs_data / "depths", keys,
+                         target_h=d_h, target_w=d_w)
         if normal_loss_on:
             _p(f"writing {N_img} normals to normals/ (8-bit RGB)...")
-            _dump_normals(normals, gs_data / "normals", keys)
+            n_h, n_w = _check_or_resize(normals, "normals")
+            _dump_normals(normals, gs_data / "normals", keys,
+                          target_h=n_h, target_w=n_w)
 
         # ----- VRAM eviction -----
         # Branch on offload_everything: aggressive (default) vs bounded.
