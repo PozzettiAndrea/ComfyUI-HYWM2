@@ -349,16 +349,26 @@ def _write_points_ply(
     PlyData([PlyElement.describe(arr, "vertex")], text=False).write(str(out_path))
 
 
-def _write_preload_pt(out_path: Path, gaussians: dict) -> None:
+def _write_preload_pt(
+    out_path: Path,
+    gaussians: dict,
+    max_gaussians: int = 0,
+) -> None:
     """Save HYWM2's full splat state as the trainer's preload_gs_path .pt.
 
     Schema the trainer expects (world_gs_trainer.py:442-451):
-        {"splats": {"means", "quats", "scales", "opacities", "sh0", "shN"}}
+        {"splats": {"means3d", "quats", "scales", "opacities", "sh0", "shN"}}
     where sh0 is [N, 1, 3] and shN is [N, K, 3] (K depends on sh_degree).
 
     Conversion from HYWM2_GAUSSIANS:
         rgbs ∈ [0, 1] -> sh0 = (rgbs - 0.5) / C0      (inverse of rgb_to_sh)
         shN -> zeros at shape [N, 0, 3]               (sh_degree=0 default)
+
+    `max_gaussians > 0` caps the preload via random subsample. Defends
+    against OOM in gsplat's isect_tiles when HYWM2's prediction has
+    millions of gaussians (its tile-intersection workspace scales as
+    O(N_gaussians × max_overlapping_tiles), which blows up on a 24 GB
+    card at N > ~1M).
     """
     means = gaussians["means"].detach().float().cpu()
     quats = gaussians["quats"].detach().float().cpu()
@@ -366,6 +376,25 @@ def _write_preload_pt(out_path: Path, gaussians: dict) -> None:
     opacities = gaussians["opacities"].detach().float().cpu()
     rgbs = gaussians["rgbs"].detach().float().cpu().clamp(0, 1)
     N = means.shape[0]
+
+    # Optional random subsample. Deterministic per-N via a seeded generator
+    # so reruns are reproducible.
+    if 0 < max_gaussians < N:
+        g = torch.Generator(device="cpu").manual_seed(N)
+        keep_idx = torch.randperm(N, generator=g)[:max_gaussians]
+        means = means[keep_idx]
+        quats = quats[keep_idx]
+        scales = scales[keep_idx]
+        opacities = opacities[keep_idx]
+        rgbs = rgbs[keep_idx]
+        N = max_gaussians
+        # Log via print directly since module-level _p isn't in scope here.
+        print(
+            f"[HYWM2GaussianTrain] preload subsampled {gaussians['means'].shape[0]} "
+            f"-> {N} gaussians (cap)",
+            file=sys.stderr, flush=True,
+        )
+
     sh0 = ((rgbs - 0.5) / _C0).unsqueeze(1)  # [N, 1, 3]
     shN = torch.zeros((N, 0, 3), dtype=torch.float32)
 
@@ -449,14 +478,27 @@ class HYWM2GaussianTrain(io.ComfyNode):
                             "milestones + at max_steps - 1. Required True if "
                             "you want a final PLY out."),
                 io.Int.Input(
-                    "downsample_pts_num", default=2_000_000,
-                    min=10_000, max=20_000_000,
+                    "downsample_pts_num", default=100_000,
+                    min=1_000, max=20_000_000,
                     tooltip="Cap on the seeded point count after sfm-init "
-                            "downsampling. Matches training.sh's "
-                            "--downsample-pts-num 2_000_000. Lower = faster "
-                            "init / less memory; higher = denser starting "
-                            "geometry. Final count after training is governed "
-                            "by densification, not this."),
+                            "downsampling (points.ply path). training.sh "
+                            "uses 2_000_000 because its scenes are seeded "
+                            "from large WorldStereo exports; for "
+                            "HYWM2Reconstruct's already-dense gaussian "
+                            "output the preload IS the seed, so 100k here "
+                            "is enough. Increase if you're feeding a sparse "
+                            "preload and want a denser points.ply backbone."),
+                io.Int.Input(
+                    "preload_max_gaussians", default=500_000,
+                    min=10_000, max=20_000_000,
+                    tooltip="Cap on the preload gaussian count (random "
+                            "subsample). Defends against OOM in gsplat's "
+                            "isect_tiles, whose tile-intersection workspace "
+                            "is O(N_gaussians × max_overlapping_tiles). At "
+                            "5-7M gaussians on a 24 GB card it OOMs before "
+                            "step 0. 500k is a safe default; bump if you "
+                            "have headroom and want to preserve more of "
+                            "HYWM2's initial reconstruction."),
                 io.String.Input(
                     "output_prefix", default="hywm2_train", optional=True,
                     tooltip="Subdir prefix under ComfyUI's output dir. Final "
@@ -526,7 +568,8 @@ class HYWM2GaussianTrain(io.ComfyNode):
         max_steps: int = 5000,
         preset: str = "default",
         save_ply: bool = True,
-        downsample_pts_num: int = 2_000_000,
+        downsample_pts_num: int = 100_000,
+        preload_max_gaussians: int = 500_000,
         output_prefix: str = "hywm2_train",
         hyworld2_repo_path: str = "/home/work/HY-World-2.0",
         offload_everything: bool = True,
@@ -612,7 +655,7 @@ class HYWM2GaussianTrain(io.ComfyNode):
 
         _p("writing preload_gs.pt (HYWM2 splat hot-start)...")
         preload_path = gs_data / "preload_gs.pt"
-        _write_preload_pt(preload_path, gaussians)
+        _write_preload_pt(preload_path, gaussians, max_gaussians=int(preload_max_gaussians))
 
         depth_loss_on = depth_raw is not None
         normal_loss_on = normals is not None
