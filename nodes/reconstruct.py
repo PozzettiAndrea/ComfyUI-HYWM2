@@ -41,29 +41,144 @@ if not log.handlers:
     log.setLevel(logging.INFO)
     log.propagate = False
 
-# Empirical: ViT tokens we can afford per GB of *free* VRAM during a
-# single forward pass (bf16 + FA-2). The FFN expansion is the binding
-# constraint.
-_TOKENS_PER_GB = 1500
 _PATCH = 14
 _MIN_EFFECTIVE = 224  # absolute floor (matches DINO pretraining min)
 
 
-def _auto_target_size(num_views: int, requested: int, free_gb: float) -> int:
-    """Snap `requested` down so total tokens stay inside the VRAM budget.
+# ---------------------------------------------------------------------------
+# Camera-frame rebasing helpers (MIRROR of train_gaussians.py — keep in sync)
+#
+# HYWM2's reconstruction pipeline anchors view 0 to identity in its internal
+# world frame for numerical stability of the pose head. As a side effect, the
+# output gaussians + predicted_extrinsics live in this rebased frame, NOT in
+# the prior_extrinsics frame the user supplied. We undo the rebase at the
+# output boundary so downstream consumers (training, preview, export) see
+# everything in the original prior frame — "just works" instead of needing
+# special handling.
+# ---------------------------------------------------------------------------
 
-    Returns a multiple of 14 in [_MIN_EFFECTIVE, requested].
+def _matrix_to_quaternion_wxyz(R: torch.Tensor) -> torch.Tensor:
+    """3×3 rotation matrix -> wxyz unit quaternion (Shepperd's method)."""
+    R = R.float().cpu()
+    trace = R[0, 0] + R[1, 1] + R[2, 2]
+    if trace > 0.0:
+        s = float((1.0 + trace).sqrt() * 2.0)
+        w = 0.25 * s
+        x = (R[2, 1] - R[1, 2]).item() / s
+        y = (R[0, 2] - R[2, 0]).item() / s
+        z = (R[1, 0] - R[0, 1]).item() / s
+    elif R[0, 0] >= R[1, 1] and R[0, 0] >= R[2, 2]:
+        s = float((1.0 + R[0, 0] - R[1, 1] - R[2, 2]).sqrt() * 2.0)
+        w = (R[2, 1] - R[1, 2]).item() / s
+        x = 0.25 * s
+        y = (R[0, 1] + R[1, 0]).item() / s
+        z = (R[0, 2] + R[2, 0]).item() / s
+    elif R[1, 1] >= R[2, 2]:
+        s = float((1.0 + R[1, 1] - R[0, 0] - R[2, 2]).sqrt() * 2.0)
+        w = (R[0, 2] - R[2, 0]).item() / s
+        x = (R[0, 1] + R[1, 0]).item() / s
+        y = 0.25 * s
+        z = (R[1, 2] + R[2, 1]).item() / s
+    else:
+        s = float((1.0 + R[2, 2] - R[0, 0] - R[1, 1]).sqrt() * 2.0)
+        w = (R[1, 0] - R[0, 1]).item() / s
+        x = (R[0, 2] + R[2, 0]).item() / s
+        y = (R[1, 2] + R[2, 1]).item() / s
+        z = 0.25 * s
+    q = torch.tensor([w, x, y, z], dtype=torch.float32)
+    return q / q.norm()
+
+
+def _quat_multiply_wxyz(q1: torch.Tensor, q2: torch.Tensor) -> torch.Tensor:
+    """Hamilton product q1 ⊗ q2 in wxyz convention. Broadcasts on leading dims."""
+    w1, x1, y1, z1 = q1.unbind(-1)
+    w2, x2, y2, z2 = q2.unbind(-1)
+    w = w1 * w2 - x1 * x2 - y1 * y2 - z1 * z2
+    x = w1 * x2 + x1 * w2 + y1 * z2 - z1 * y2
+    y = w1 * y2 - x1 * z2 + y1 * w2 + z1 * x2
+    z = w1 * z2 + x1 * y2 - y1 * x2 + z1 * w2
+    return torch.stack([w, x, y, z], dim=-1)
+
+
+def _rebase_outputs_to_prior_frame(
+    gaussians: dict | None,
+    predicted_w2c: torch.Tensor,
+    prior_w2c: torch.Tensor,
+) -> tuple[dict | None, torch.Tensor]:
+    """Transform HYWM2 outputs from its rebased world frame back to the
+    user's `prior_extrinsics` frame.
+
+    Both `predicted_w2c` and `prior_w2c` describe the SAME 12 physical
+    cameras, just in two different world conventions. The rigid transform
+    T_h2p = inv(W_h_0) @ W_p_0 ... actually:
+
+        g_p = inv(W_p_0) @ W_h_0 @ g_h   (point in prior world)
+              ───────────────────
+              T_h2p
+
+    With HYWM2 anchoring `W_h_0 ≈ I`, T_h2p ≈ W_p_0 — i.e. apply prior's
+    view-0 w2c to the HYWM2 gaussians and predicted-extrinsics get a
+    matching post-multiplication by inv(T_h2p).
+
+    Transforms:
+      - gaussians["means"]: homogeneous transform by T_h2p.
+      - gaussians["quats"]: pre-multiply by rotation quat of T_h2p.
+      - predicted_w2c[i]:   W_h_i @ inv(T_h2p)  →  becomes prior-frame w2c.
+      - scales / opacities / rgbs / sh0: unchanged (rotation-invariant
+        within the band-0 SH approximation).
+
+    No-op fast path when T ≈ I (within 1e-4).
     """
-    if num_views <= 0 or free_gb <= 0:
-        return requested
-    budget_tokens = max(2000, int(free_gb * _TOKENS_PER_GB))
-    patches_per_view = budget_tokens / num_views
-    eff = int(_PATCH * math.sqrt(max(patches_per_view, 1)))
-    eff = (eff // _PATCH) * _PATCH
-    eff = max(_MIN_EFFECTIVE, min(eff, requested))
-    # Snap requested too in case caller didn't
-    eff = (eff // _PATCH) * _PATCH
-    return max(_MIN_EFFECTIVE, eff)
+    W_h_0 = predicted_w2c[0].float().cpu()
+    W_p_0 = prior_w2c[0].float().cpu()
+    if W_h_0.shape == (3, 4):
+        W_h_0 = torch.cat([W_h_0, torch.tensor([[0., 0., 0., 1.]])], dim=0)
+    if W_p_0.shape == (3, 4):
+        W_p_0 = torch.cat([W_p_0, torch.tensor([[0., 0., 0., 1.]])], dim=0)
+
+    T_h2p = torch.linalg.inv(W_p_0) @ W_h_0       # HYWM2 world -> prior world
+    if torch.allclose(T_h2p, torch.eye(4), atol=1e-4):
+        log.info("HYWM2Reconstruct: predicted frame already aligned to prior "
+                 "frame (no rebasing needed)")
+        return gaussians, predicted_w2c
+
+    # Two transforms in opposite directions:
+    #
+    #   Gaussians: g_p = T_h2p @ g_h         (apply T_h2p to means/quats)
+    #   Extrinsics: new_W_p_i = W_h_i @ inv(T_h2p)
+    #
+    # Derivation: keep the same physical view across the frame change:
+    #     c_i = W_h_i @ g_h               (HYWM2 frame)
+    #         = W_h_i @ inv(T_h2p) @ g_p   (substituting g_h)
+    #         = new_W_p_i @ g_p            (prior frame, by construction)
+    # So new_W_p_i = W_h_i @ inv(T_h2p). When HYWM2 doesn't refine the
+    # poses (predicted is a pure rebase of prior), this reduces to
+    # new_W_p_i = W_p_i exactly.
+    R = T_h2p[:3, :3]
+    t = T_h2p[:3, 3]
+    inv_T = torch.linalg.inv(T_h2p)
+    log.info(
+        f"HYWM2Reconstruct: rebasing outputs to prior frame "
+        f"(|R_T_h2p - I|_F={float((R - torch.eye(3)).norm()):.4f}, "
+        f"|t_T_h2p|={float(t.norm()):.4f})"
+    )
+
+    # Transform gaussians by T_h2p (HYWM2 world -> prior world).
+    if gaussians is not None and isinstance(gaussians, dict) and "means" in gaussians:
+        means = gaussians["means"].float().cpu()
+        gaussians = dict(gaussians)
+        gaussians["means"] = (R @ means.T).T + t
+        if "quats" in gaussians:
+            quats = gaussians["quats"].float().cpu()
+            q_R = _matrix_to_quaternion_wxyz(R)
+            q_R_b = q_R.unsqueeze(0).expand(quats.shape[0], 4)
+            gaussians["quats"] = _quat_multiply_wxyz(q_R_b, quats)
+
+    # Post-multiply each predicted w2c by inv(T_h2p) so projected views
+    # match the now-rebased gaussians.
+    new_predicted = torch.matmul(predicted_w2c.float().cpu(), inv_T)
+
+    return gaussians, new_predicted
 
 
 class HYWM2Reconstruct(io.ComfyNode):
@@ -198,17 +313,6 @@ class HYWM2Reconstruct(io.ComfyNode):
                             "your image's native size and want to run there "
                             "(e.g., 832 -> set 826 = 14*59).",
                 ),
-                io.Boolean.Input(
-                    "bypass_vram_shrink",
-                    default=False, optional=True,
-                    tooltip="When True, skip the VRAM-based auto-shrink "
-                            "(`_auto_target_size`) and use the adaptive "
-                            "size (min of model.target_size and image's "
-                            "longest-edge-snapped-to-14). Will OOM if there "
-                            "isn't enough VRAM for that resolution at the "
-                            "given view count -- you take responsibility. "
-                            "Ignored if `target_size_override` > 0 (override "
-                            "already bypasses)."),
             ],
             outputs=[
                 io.Image.Output(
@@ -265,6 +369,19 @@ class HYWM2Reconstruct(io.ComfyNode):
                         "head is disabled."
                     ),
                 ),
+                io.Image.Output(
+                    display_name="depth_conf",
+                    tooltip=(
+                        "Per-pixel depth confidence IMAGE [N,H,W,3] from the "
+                        "depth head (broadcast across 3 channels). Higher = "
+                        "model is more certain about that pixel's depth. "
+                        "Typically dips at corners, edges, occlusion "
+                        "boundaries — useful signal for plane-snapping "
+                        "post-processing (chain into a confidence-guided "
+                        "edge sharpener to mitigate chamfered corners). "
+                        "Returns 1×1 zeros if the depth head is disabled."
+                    ),
+                ),
             ],
         )
 
@@ -287,7 +404,6 @@ class HYWM2Reconstruct(io.ComfyNode):
         gaussians_voxel_size: float = 0.002,
         gaussians_downsample: float = 1.0,
         target_size_override: int = 0,
-        bypass_vram_shrink: bool = False,
     ):
         if not isinstance(model, dict) or "model_dir" not in model:
             raise ValueError(
@@ -296,6 +412,19 @@ class HYWM2Reconstruct(io.ComfyNode):
             )
         if images is None or images.numel() == 0:
             raise ValueError("HYWM2Reconstruct: images batch is empty")
+
+        # 6-stage progress bar for the ComfyUI per-node chrome.
+        # Stages: 1=preprocess inputs, 2=load pipeline, 3=forward pass,
+        # 4=decode predictions, 5=rebase to prior frame, 6=points_raw + emit.
+        # Stage 3 is the long one — bar will appear "stuck" there during
+        # the actual model forward, which is the expected/honest signal.
+        try:
+            from comfy.utils import ProgressBar
+            _pbar = ProgressBar(6)
+        except Exception:
+            class _NoPbar:
+                def update(self, *_a, **_kw): pass
+            _pbar = _NoPbar()
 
         log.info(
             "HYWM2Reconstruct: model_dir=%s, images shape=%s, prior_camera_json=%r, "
@@ -309,8 +438,10 @@ class HYWM2Reconstruct(io.ComfyNode):
         # file-path-based preprocessing (resize + center-crop + 1/14 snap).
         with tempfile.TemporaryDirectory(prefix="hywm2_") as tmp_str:
             tmp_dir = Path(tmp_str)
+            log.info("stage 1/6: preprocess inputs (dump images + prior cam JSON)")
             img_paths = cls._dump_image_batch(images, tmp_dir)
             log.info("HYWM2Reconstruct: wrote %d frame(s) to %s", len(img_paths), tmp_dir)
+            _pbar.update(1)
 
             # If the user passed in tensors, materialize them as the prior
             # JSON the upstream pipeline expects.
@@ -323,7 +454,9 @@ class HYWM2Reconstruct(io.ComfyNode):
                     img_paths, tmp_dir, prior_extrinsics, prior_intrinsics
                 )
 
+            log.info("stage 2/6: load pipeline (cached if config unchanged)")
             pipeline = cls._get_pipeline(model)
+            _pbar.update(1)
 
             # Lazy import — comfy.model_management probes CUDA at load time
             # and crashes on CPU-only CI hosts.
@@ -340,55 +473,50 @@ class HYWM2Reconstruct(io.ComfyNode):
                 if torch.cuda.is_available():
                     cls._log_vram("post-load_models_gpu", pipeline.device, mm)
 
-            # Resolution policy:
-            #   1. Snap requested target down to image's actual longest edge
-            #      (compute_adaptive_target_size handles 1/14 snap + clamp).
-            #   2. Auto-shrink further based on view count + free VRAM so a
-            #      21-view 952 panorama doesn't OOM on an 8 GB card.
+            # Resolution policy (no VRAM auto-shrink):
+            #   1. `target_size_override > 0`  -> use that exact value, snapped
+            #      to a multiple of 14 (ViT patch size).
+            #   2. Default                     -> compute_adaptive_target_size:
+            #      min(image_longest_edge, model.target_size) snapped to /14.
+            #      Keeps the image at its native resolution when smaller than
+            #      the model's training resolution (default 952); caps at the
+            #      training resolution for larger inputs (positional encoding
+            #      doesn't extrapolate well past that).
+            # If the resulting resolution OOMs, `_log_oom_diagnostic` prints
+            # a breakdown; user picks a smaller `target_size_override`.
             from .hyworld2.worldrecon.hyworldmirror.utils.inference_utils import (
                 compute_adaptive_target_size,
             )
-            # Resolution policy.
-            # Priority order:
-            #   1. `target_size_override > 0`  -> use that exact value (snap to /14),
-            #      bypass both the model default AND the VRAM auto-shrink.
-            #   2. `bypass_vram_shrink=True`   -> compute `adaptive` from model
-            #      default + image native size; skip the VRAM auto-shrink.
-            #   3. Default                     -> model.target_size -> adaptive
-            #      -> _auto_target_size (current behaviour).
             free_gb = 0.0
+            # Free-VRAM read kept for logging only.
             if torch.cuda.is_available():
                 try:
                     free_gb = mm.get_free_memory(pipeline.device) / (1024 ** 3)
                 except Exception:
                     free_gb = torch.cuda.mem_get_info(pipeline.device)[0] / (1024 ** 3)
 
+            # Predictable, non-VRAM-based effective resolution. No auto-
+            # shrink: the user gets exactly the size they asked for (or
+            # the input-aware adaptive fallback when no override). OOM is
+            # surfaced via `_log_oom_diagnostic` if it happens — the user
+            # picks a smaller `target_size_override` next time.
             if int(target_size_override) > 0:
-                # Snap user value to multiple of 14, clamp to >= _MIN_EFFECTIVE.
                 snapped = (int(target_size_override) // _PATCH) * _PATCH
                 effective = max(_MIN_EFFECTIVE, snapped)
                 log.info(
                     "HYWM2Reconstruct: target_size_override=%d -> effective=%d "
-                    "(bypassing both model default and VRAM auto-shrink; views=%d, free=%.1fGB)",
+                    "(views=%d, free=%.1fGB)",
                     target_size_override, effective, len(img_paths), free_gb,
                 )
             else:
                 target_size = int(model.get("target_size", 952))
-                adaptive = compute_adaptive_target_size(img_paths, target_size)
-                if bypass_vram_shrink:
-                    effective = adaptive
-                    log.info(
-                        "HYWM2Reconstruct: bypass_vram_shrink=True -> "
-                        "views=%d requested=%d adaptive=%d free=%.1fGB -> effective=%d "
-                        "(VRAM auto-shrink skipped; OOM is on you)",
-                        len(img_paths), target_size, adaptive, free_gb, effective,
-                    )
-                else:
-                    effective = _auto_target_size(len(img_paths), adaptive, free_gb)
-                    log.info(
-                        "HYWM2Reconstruct: views=%d requested=%d adaptive=%d free=%.1fGB -> effective=%d",
-                        len(img_paths), target_size, adaptive, free_gb, effective,
-                    )
+                effective = compute_adaptive_target_size(img_paths, target_size)
+                log.info(
+                    "HYWM2Reconstruct: views=%d requested=%d -> effective=%d "
+                    "(input-aware; free=%.1fGB)",
+                    len(img_paths), target_size, effective, free_gb,
+                )
+
 
             prior_cam = prior_camera_json.strip() or None
             if prior_cam and not Path(prior_cam).is_file():
@@ -399,6 +527,8 @@ class HYWM2Reconstruct(io.ComfyNode):
                 cls._log_vram("pre-forward", pipeline.device, mm)
                 torch.cuda.reset_peak_memory_stats(pipeline.device)
 
+            log.info("stage 3/6: forward pass @ effective=%d, views=%d",
+                     effective, len(img_paths))
             try:
                 predictions, imgs, infer_time = pipeline._run_inference(
                     img_paths=img_paths,
@@ -409,6 +539,7 @@ class HYWM2Reconstruct(io.ComfyNode):
             except torch.cuda.OutOfMemoryError:
                 cls._log_oom_diagnostic(pipeline.device, effective, len(img_paths), mm)
                 raise
+            _pbar.update(1)
 
             if torch.cuda.is_available():
                 cls._log_vram("post-forward", pipeline.device, mm)
@@ -416,6 +547,7 @@ class HYWM2Reconstruct(io.ComfyNode):
         log.info("HYWM2Reconstruct: forward pass done in %.2fs", infer_time)
 
         # ----- inline decode (formerly Decode* nodes) -----
+        log.info("stage 4/6: decode predictions (depth/normals/points/gaussians)")
         from .decode_export import (
             decode_depth_image, decode_normals_image,
             decode_points, decode_gaussians,
@@ -497,6 +629,28 @@ class HYWM2Reconstruct(io.ComfyNode):
         else:
             depth_raw_img = _empty_image()
             d = None  # signal points_raw to short-circuit below
+
+        # Per-pixel depth confidence from the depth head. Useful for
+        # detecting where the model is uncertain — chamfered corners,
+        # occlusion edges — so downstream nodes can confidence-guide a
+        # plane-snap or edge-sharpen post-process.
+        if "depth_conf" in predictions:
+            dc = predictions["depth_conf"].detach().float().cpu()           # [B,S,H,W,1] or [B,S,H,W]
+            if dc.dim() == 5:
+                dc = dc.squeeze(-1)
+            dc = select_views(dc, view_index)                                # [S,H,W]
+            depth_conf_img = dc.unsqueeze(-1).expand(-1, -1, -1, 3).contiguous()  # [S,H,W,3]
+            try:
+                log.info(
+                    "HYWM2Reconstruct: depth_conf [%d,%d,%d], range=[%.3f, %.3f] "
+                    "median=%.3f",
+                    dc.shape[0], dc.shape[1], dc.shape[2],
+                    float(dc.min()), float(dc.max()), float(dc.median()),
+                )
+            except Exception:
+                pass
+        else:
+            depth_conf_img = _empty_image()
         normals_img = decode_normals_image(
             predictions, view_index=view_index, apply_mask=apply_mask,
         )
@@ -513,8 +667,18 @@ class HYWM2Reconstruct(io.ComfyNode):
             voxel_size=gaussians_voxel_size,
             downsample=gaussians_downsample,
         )
+        _pbar.update(1)
 
         # ----- predicted cameras (CameraPack convention: w2c [N,4,4], K [N,3,3]) -----
+        # When `predict_camera=True`, use the camera head's outputs (HYWM2
+        # may refine the priors slightly). When it's disabled, fall back to
+        # the user's `prior_extrinsics` / `prior_intrinsics` so downstream
+        # consumers (HYWM2GaussianTrain.gaussians_extrinsics,
+        # PreviewGaussianCamera, points_raw unprojection) get valid camera
+        # data instead of a 1×4×4 / 1×3×3 identity placeholder. The
+        # frame-rebase block below is still gated on `c2w is not None`
+        # (only meaningful when HYWM2 produced its own poses), so the
+        # fallback skips rebasing — outputs are already in prior frame.
         c2w = predictions.get("camera_poses")          # [B,S,4,4] (OpenCV c2w)
         intr = predictions.get("camera_intrs")         # [B,S,3,3]
         if c2w is not None:
@@ -522,12 +686,57 @@ class HYWM2Reconstruct(io.ComfyNode):
             if c2w_t.dim() == 4 and c2w_t.shape[0] == 1:
                 c2w_t = c2w_t[0]                       # [S,4,4]
             extrinsics_w2c = torch.linalg.inv(c2w_t)
+        elif prior_extrinsics is not None:
+            extrinsics_w2c = prior_extrinsics.detach().float().cpu()
+            if extrinsics_w2c.dim() == 4 and extrinsics_w2c.shape[0] == 1:
+                extrinsics_w2c = extrinsics_w2c[0]
+            log.info(
+                "HYWM2Reconstruct: predicted_extrinsics fallback — using "
+                "prior_extrinsics [%s] (predict_camera=False)",
+                "×".join(str(s) for s in extrinsics_w2c.shape),
+            )
         else:
             extrinsics_w2c = torch.eye(4).unsqueeze(0)
+
         if intr is not None:
             intr_t = intr.detach().float().cpu()
             if intr_t.dim() == 4 and intr_t.shape[0] == 1:
                 intr_t = intr_t[0]                     # [S,3,3]
+        elif prior_intrinsics is not None:
+            # Fallback: user-supplied K. Sniff normalized vs pixel-K and
+            # rescale to the effective inference resolution (depth's W if
+            # available, else `effective`) so downstream consumers expect-
+            # ing inference-res intrinsics get a matching K.
+            pi = prior_intrinsics.detach().float().cpu()
+            if pi.dim() == 4 and pi.shape[0] == 1:
+                pi = pi[0]
+            if pi.dim() == 2:
+                pi = pi.unsqueeze(0)
+            W_inf = int(d.shape[-1]) if d is not None else int(effective)
+            if float(pi[0, 0, 0]) < 2.0:
+                pi[..., :2, :] = pi[..., :2, :] * W_inf
+                log.info(
+                    "HYWM2Reconstruct: predicted_intrinsics fallback — "
+                    "prior_intrinsics normalized; rescaled to pixel-K at "
+                    "inference res %d (predict_camera=False)", W_inf,
+                )
+            else:
+                W_input = int(images.shape[2]) if images is not None else W_inf
+                if W_input > 0 and W_input != W_inf:
+                    pi[..., :2, :] = pi[..., :2, :] * (W_inf / W_input)
+                    log.info(
+                        "HYWM2Reconstruct: predicted_intrinsics fallback — "
+                        "prior_intrinsics at %d → rescaled to inference res %d "
+                        "(×%.4f, predict_camera=False)",
+                        W_input, W_inf, W_inf / W_input,
+                    )
+                else:
+                    log.info(
+                        "HYWM2Reconstruct: predicted_intrinsics fallback — "
+                        "using prior_intrinsics as-is at res %d "
+                        "(predict_camera=False)", W_inf,
+                    )
+            intr_t = pi
         else:
             intr_t = torch.eye(3).unsqueeze(0)
 
@@ -539,7 +748,15 @@ class HYWM2Reconstruct(io.ComfyNode):
         # of the effective inference resolution — they match d's H,W
         # exactly, so no rescale needed (unlike SharpPredictMetricDepth
         # which has to bridge face-image-K to internal 1536² grid).
-        if d is not None and intr is not None:
+        #
+        # `intr_t` is now always populated (predicted camera head → first;
+        # prior_intrinsics → fallback; identity placeholder → last resort).
+        # If we hit the identity placeholder (no head + no prior), the
+        # unprojection produces garbage; skip via the dim/shape check below.
+        intr_valid = intr_t is not None and intr_t.shape[0] >= 1 and not torch.equal(
+            intr_t[0], torch.eye(3)
+        )
+        if d is not None and intr_valid:
             S_p, H_p, W_p = d.shape
             uu = torch.arange(W_p, dtype=torch.float32)
             vv = torch.arange(H_p, dtype=torch.float32)
@@ -570,6 +787,40 @@ class HYWM2Reconstruct(io.ComfyNode):
         else:
             points_raw_img = _empty_image()
 
+        # Rebase outputs back to the user's `prior_extrinsics` frame.
+        # HYWM2's pose head anchors view 0 to identity in its internal
+        # world; without this rebase, gaussians + predicted_extrinsics
+        # come out in HYWM2's rebased frame, which doesn't match the
+        # frame the caller supplied via `prior_extrinsics`. Result was
+        # "each rendered view shows the wrong image" downstream.
+        # See `_rebase_outputs_to_prior_frame` for the math.
+        log.info("stage 5/6: rebase outputs to prior frame (+ predicted cameras + points_raw)")
+        _pbar.update(1)
+        if (prior_extrinsics is not None
+                and c2w is not None
+                and isinstance(extrinsics_w2c, torch.Tensor)
+                and extrinsics_w2c.dim() == 3
+                and extrinsics_w2c.shape[0] >= 1):
+            try:
+                prior_t = prior_extrinsics
+                if prior_t.dim() == 4 and prior_t.shape[0] == 1:
+                    prior_t = prior_t[0]
+                if prior_t.shape[0] == extrinsics_w2c.shape[0]:
+                    gaussians, extrinsics_w2c = _rebase_outputs_to_prior_frame(
+                        gaussians, extrinsics_w2c, prior_t,
+                    )
+                else:
+                    log.info(
+                        "HYWM2Reconstruct: skipping prior-frame rebase — "
+                        "N mismatch (prior=%d, predicted=%d).",
+                        int(prior_t.shape[0]), int(extrinsics_w2c.shape[0]),
+                    )
+            except Exception as e:
+                log.info(
+                    "HYWM2Reconstruct: prior-frame rebase failed (%s); "
+                    "returning outputs in HYWM2's internal frame.", e,
+                )
+
         # Summary so the user can see at a glance which outputs are populated.
         empty = []
         if "depth" not in predictions:    empty.append("images(depth)")
@@ -580,7 +831,18 @@ class HYWM2Reconstruct(io.ComfyNode):
         if empty:
             log.info("HYWM2Reconstruct: empty outputs (head disabled): %s", ", ".join(empty))
 
-        return io.NodeOutput(depth_img, normals_img, points, gaussians, extrinsics_w2c, intr_t, depth_raw_img, points_raw_img)
+        log.info("stage 6/6: emit outputs")
+        _pbar.update(1)
+
+        # Option-B (hybrid) ComfyUI-native cleanup: drop our class-level
+        # reference to the ModelPatcher so ComfyUI's LRU (current_loaded_models
+        # / free_memory) can fully evict it when another node needs VRAM.
+        # The `_pipeline` cache stays so warm re-runs are still fast — re-
+        # wrapping `pipeline.model` in a fresh patcher on the next call is
+        # cheap when the weights are already where they need to be.
+        cls._patcher = None
+
+        return io.NodeOutput(depth_img, normals_img, points, gaussians, extrinsics_w2c, intr_t, depth_raw_img, points_raw_img, depth_conf_img)
 
     # ------------------------------------------------------------------
     # Pipeline lifecycle
